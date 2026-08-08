@@ -1,0 +1,1882 @@
+---
+const contactLink = "/contact/";
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="UPSC Civil Services Examination — complete information on UPSC Prelims, Mains, syllabus, eligibility, preparation strategy, PYQs, current affairs, optional subjects and resources."
+  />
+
+  <meta
+    name="keywords"
+    content="UPSC, UPSC CSE, UPSC Civil Services, UPSC Prelims, UPSC Mains, UPSC syllabus, UPSC eligibility, UPSC preparation, UPSC PYQ"
+  />
+
+  <title>
+    UPSC Civil Services Examination | Habitat IAS
+  </title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #f5f7fb;
+
+      color: #172033;
+
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+
+    /* =========================
+       HEADER
+    ========================= */
+
+    .site-header {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 1000;
+
+      background:
+        rgba(255, 255, 255, 0.97);
+
+      border-bottom:
+        1px solid #e5e9f2;
+
+      backdrop-filter:
+        blur(10px);
+    }
+
+    .nav {
+
+      max-width: 1280px;
+
+      min-height: 82px;
+
+      margin: 0 auto;
+
+      padding: 14px 28px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      color: #1657d9;
+
+      font-size: 25px;
+
+      font-weight: 800;
+
+      white-space: nowrap;
+    }
+
+    .logo-mark {
+
+      width: 48px;
+
+      height: 48px;
+
+      border-radius: 13px;
+
+      background: #1657d9;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 25px;
+
+      font-weight: 800;
+    }
+
+    .nav-links {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: flex-end;
+
+      gap: 22px;
+
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+
+      color: #44506a;
+
+      font-size: 15px;
+
+      font-weight: 700;
+
+      transition: 0.2s ease;
+    }
+
+    .nav-links a:hover {
+
+      color: #1657d9;
+    }
+
+    .nav-cta {
+
+      background: #1657d9;
+
+      color: white !important;
+
+      padding: 13px 20px;
+
+      border-radius: 10px;
+    }
+
+
+    /* =========================
+       HERO
+    ========================= */
+
+    .hero {
+
+      background:
+        linear-gradient(
+          135deg,
+          #102f82 0%,
+          #1657d9 55%,
+          #2d72e8 100%
+        );
+
+      color: white;
+
+      padding:
+        90px
+        28px
+        115px;
+    }
+
+    .hero-inner {
+
+      max-width: 1100px;
+
+      margin: 0 auto;
+
+      text-align: center;
+    }
+
+    .eyebrow {
+
+      display: inline-block;
+
+      padding: 8px 17px;
+
+      border-radius: 999px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.35);
+
+      background:
+        rgba(255, 255, 255, 0.1);
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+      letter-spacing: 0.8px;
+
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+
+      font-size:
+        clamp(
+          44px,
+          6vw,
+          76px
+        );
+
+      line-height: 1.02;
+
+      font-weight: 900;
+
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+
+      color: #ffd43b;
+    }
+
+    .hero p {
+
+      max-width: 800px;
+
+      margin: 0 auto;
+
+      font-size: 19px;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.9
+        );
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .main {
+
+      max-width: 1200px;
+
+      margin:
+        -65px
+        auto
+        0;
+
+      position: relative;
+
+      z-index: 5;
+
+      padding:
+        0 22px
+        80px;
+    }
+
+
+    /* =========================
+       INTRO CARD
+    ========================= */
+
+    .intro {
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 40px;
+
+      margin-bottom: 35px;
+
+      text-align: center;
+
+      box-shadow:
+        0 20px 60px
+        rgba(
+          20,
+          42,
+          85,
+          0.12
+        );
+    }
+
+    .intro h2 {
+
+      color: #14213d;
+
+      font-size: 36px;
+
+      line-height: 1.1;
+
+      margin-bottom: 12px;
+    }
+
+    .intro p {
+
+      max-width: 800px;
+
+      margin: 0 auto;
+
+      color: #68748a;
+
+      font-size: 16px;
+    }
+
+
+    /* =========================
+       QUICK STATS
+    ========================= */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 16px;
+
+      margin-bottom: 35px;
+    }
+
+    .stat {
+
+      background: white;
+
+      border:
+        1px solid
+        #e2e7f0;
+
+      border-radius: 16px;
+
+      padding: 25px;
+
+      text-align: center;
+
+      box-shadow:
+        0 8px 25px
+        rgba(
+          20,
+          42,
+          85,
+          0.05
+        );
+    }
+
+    .stat-number {
+
+      color: #1657d9;
+
+      font-size: 30px;
+
+      font-weight: 900;
+
+      margin-bottom: 5px;
+    }
+
+    .stat-title {
+
+      color: #172033;
+
+      font-size: 14px;
+
+      font-weight: 800;
+    }
+
+    .stat-description {
+
+      color: #7a8599;
+
+      font-size: 12px;
+
+      margin-top: 3px;
+    }
+
+
+    /* =========================
+       MODULE SECTION
+    ========================= */
+
+    .section {
+
+      background: white;
+
+      border-radius: 22px;
+
+      padding: 40px;
+
+      margin-bottom: 35px;
+
+      box-shadow:
+        0 15px 45px
+        rgba(
+          20,
+          42,
+          85,
+          0.08
+        );
+    }
+
+    .section-heading {
+
+      text-align: center;
+
+      margin-bottom: 30px;
+    }
+
+    .section-label {
+
+      color: #1657d9;
+
+      font-size: 13px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+
+      margin-bottom: 7px;
+    }
+
+    .section-heading h2 {
+
+      color: #14213d;
+
+      font-size: 34px;
+
+      line-height: 1.1;
+
+      margin-bottom: 10px;
+    }
+
+    .section-heading p {
+
+      max-width: 750px;
+
+      margin: 0 auto;
+
+      color: #68748a;
+    }
+
+
+    /* =========================
+       MODULE GRID
+    ========================= */
+
+    .module-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 17px;
+    }
+
+    .module-card {
+
+      display: block;
+
+      background: #f8faff;
+
+      border:
+        1px solid
+        #e1e7f1;
+
+      border-radius: 16px;
+
+      padding: 24px;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    .module-card:hover {
+
+      transform:
+        translateY(-4px);
+
+      border-color:
+        #bfd0f3;
+
+      box-shadow:
+        0 12px 30px
+        rgba(
+          20,
+          42,
+          85,
+          0.08
+        );
+    }
+
+    .module-icon {
+
+      width: 50px;
+
+      height: 50px;
+
+      border-radius: 13px;
+
+      background: #eaf1ff;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 23px;
+
+      margin-bottom: 16px;
+    }
+
+    .module-card h3 {
+
+      color: #172033;
+
+      font-size: 20px;
+
+      margin-bottom: 7px;
+    }
+
+    .module-card p {
+
+      color: #6c778c;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+    .module-arrow {
+
+      display: block;
+
+      margin-top: 15px;
+
+      color: #1657d9;
+
+      font-size: 13px;
+
+      font-weight: 900;
+    }
+
+
+    /* =========================
+       EXAM STAGES
+    ========================= */
+
+    .stages {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 18px;
+    }
+
+    .stage {
+
+      border:
+        1px solid
+        #e1e7f1;
+
+      border-radius: 16px;
+
+      padding: 25px;
+
+      background: white;
+
+      position: relative;
+    }
+
+    .stage-number {
+
+      width: 40px;
+
+      height: 40px;
+
+      border-radius: 10px;
+
+      background: #1657d9;
+
+      color: white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+      margin-bottom: 15px;
+    }
+
+    .stage h3 {
+
+      color: #172033;
+
+      font-size: 21px;
+
+      margin-bottom: 7px;
+    }
+
+    .stage p {
+
+      color: #6c778c;
+
+      font-size: 14px;
+    }
+
+
+    /* =========================
+       SUBJECT AREAS
+    ========================= */
+
+    .subject-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 12px;
+    }
+
+    .subject {
+
+      padding: 14px;
+
+      border-radius: 10px;
+
+      background: #f5f7fb;
+
+      border:
+        1px solid
+        #e4e8ef;
+
+      color: #46536a;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       CTA
+    ========================= */
+
+    .cta {
+
+      background:
+        linear-gradient(
+          135deg,
+          #102f82,
+          #1657d9
+        );
+
+      color: white;
+
+      border-radius: 22px;
+
+      padding:
+        60px
+        35px;
+
+      text-align: center;
+    }
+
+    .cta h2 {
+
+      font-size: 36px;
+
+      margin-bottom: 10px;
+    }
+
+    .cta p {
+
+      max-width: 750px;
+
+      margin:
+        0 auto
+        25px;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.82
+        );
+    }
+
+    .cta-button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background: #ffd43b;
+
+      color: #14213d;
+
+      padding: 14px 25px;
+
+      border-radius: 10px;
+
+      font-size: 15px;
+
+      font-weight: 900;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    .footer {
+
+      background: #101a2d;
+
+      color: white;
+
+      padding: 50px 28px;
+    }
+
+    .footer-inner {
+
+      max-width: 1180px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 30px;
+    }
+
+    .footer-brand {
+
+      font-size: 23px;
+
+      font-weight: 900;
+
+      margin-bottom: 4px;
+    }
+
+    .footer small {
+
+      color: #9da8bb;
+    }
+
+    .footer-links {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 20px;
+    }
+
+    .footer-links a {
+
+      color: #d6dce8;
+
+      font-size: 14px;
+
+      font-weight: 600;
+    }
+
+    .footer-links a:hover {
+
+      color: white;
+    }
+
+
+    /* =========================
+       TABLET
+    ========================= */
+
+    @media (max-width: 900px) {
+
+      .nav {
+
+        flex-direction: column;
+
+        padding:
+          16px
+          20px;
+      }
+
+      .nav-links {
+
+        justify-content: center;
+
+        gap:
+          14px
+          18px;
+      }
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .module-grid {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .stages {
+
+        grid-template-columns:
+          1fr;
+      }
+
+      .subject-grid {
+
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .footer-inner {
+
+        flex-direction: column;
+
+        text-align: center;
+      }
+
+      .footer-links {
+
+        justify-content: center;
+      }
+    }
+
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .hero {
+
+        padding:
+          55px
+          20px
+          90px;
+      }
+
+      .main {
+
+        padding-left: 14px;
+
+        padding-right: 14px;
+      }
+
+      .intro,
+      .section {
+
+        padding:
+          27px
+          20px;
+      }
+
+      .intro h2 {
+
+        font-size: 29px;
+      }
+
+      .section-heading h2 {
+
+        font-size: 29px;
+      }
+
+      .stats {
+
+        grid-template-columns:
+          1fr;
+      }
+
+      .module-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+      .subject-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+      .cta {
+
+        padding:
+          45px
+          20px;
+      }
+
+      .cta h2 {
+
+        font-size: 29px;
+      }
+
+      .nav-links a {
+
+        font-size: 13px;
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =========================
+       HEADER
+  ========================= -->
+
+  <header class="site-header">
+
+    <nav class="nav">
+
+      <a href="/" class="logo">
+
+        <span class="logo-mark">
+          H
+        </span>
+
+        Habitat IAS
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/upsc/">
+          UPSC
+        </a>
+
+        <a href="/guidance/">
+          Guidance
+        </a>
+
+        <a href="/trends/">
+          Trends
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/jharkhand/">
+          Jharkhand
+        </a>
+
+        <a href="/resources/">
+          Resources
+        </a>
+
+        <a href="/contact/">
+          Contact
+        </a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =========================
+       HERO
+  ========================= -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div class="eyebrow">
+        HABITAT IAS • CIVIL SERVICES
+      </div>
+
+      <h1>
+        UPSC Civil Services
+        <span>Examination</span>
+      </h1>
+
+      <p>
+        A comprehensive preparation hub for the Union Public
+        Service Commission Civil Services Examination — covering
+        Prelims, Mains, syllabus, PYQs, current affairs,
+        optional subjects, strategy and resources.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       MAIN
+  ========================= -->
+
+  <main class="main">
+
+
+    <!-- INTRO -->
+
+    <section class="intro">
+
+      <h2>
+        Your UPSC Preparation Hub
+      </h2>
+
+      <p>
+        Understand the examination from the ground up and access
+        structured resources for every stage of the Civil Services
+        Examination. Detailed modules will be developed
+        progressively.
+      </p>
+
+    </section>
+
+
+    <!-- =========================
+         QUICK OVERVIEW
+    ========================= -->
+
+    <section class="stats">
+
+      <div class="stat">
+
+        <div class="stat-number">
+          3
+        </div>
+
+        <div class="stat-title">
+          Examination Stages
+        </div>
+
+        <div class="stat-description">
+          Prelims, Mains & Interview
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-number">
+          2
+        </div>
+
+        <div class="stat-title">
+          Prelims Papers
+        </div>
+
+        <div class="stat-description">
+          GS Paper-I & CSAT
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-number">
+          9
+        </div>
+
+        <div class="stat-title">
+          Written Components
+        </div>
+
+        <div class="stat-description">
+          Essay, GS & Optional papers
+        </div>
+
+      </div>
+
+
+      <div class="stat">
+
+        <div class="stat-number">
+          1
+        </div>
+
+        <div class="stat-title">
+          Personality Test
+        </div>
+
+        <div class="stat-description">
+          Interview stage
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CORE UPSC MODULES
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div class="section-label">
+          EXPLORE UPSC
+        </div>
+
+        <h2>
+          Complete UPSC Preparation
+        </h2>
+
+        <p>
+          Explore individual modules covering the major dimensions
+          of the Civil Services Examination.
+        </p>
+
+      </div>
+
+
+      <div class="module-grid">
+
+
+        <a
+          href="/upsc/overview/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🏛️
+          </div>
+
+          <h3>
+            UPSC Overview
+          </h3>
+
+          <p>
+            Understand the Civil Services Examination, its stages,
+            structure and selection process.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/eligibility/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🎯
+          </div>
+
+          <h3>
+            Eligibility
+          </h3>
+
+          <p>
+            Educational qualification, age requirements, attempts
+            and category-wise eligibility.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/exam-pattern/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📋
+          </div>
+
+          <h3>
+            Exam Pattern
+          </h3>
+
+          <p>
+            Understand Prelims, Mains and Personality Test structure
+            and marking schemes.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/syllabus/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📚
+          </div>
+
+          <h3>
+            Complete Syllabus
+          </h3>
+
+          <p>
+            Detailed Prelims and Mains syllabus arranged in a
+            structured format.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/prelims/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📝
+          </div>
+
+          <h3>
+            Prelims
+          </h3>
+
+          <p>
+            GS Paper-I and CSAT preparation, PYQs, strategy and
+            important areas.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/mains/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📑
+          </div>
+
+          <h3>
+            Mains
+          </h3>
+
+          <p>
+            Essay, General Studies, Optional and answer-writing
+            preparation.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/optional/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🎓
+          </div>
+
+          <h3>
+            Optional Subjects
+          </h3>
+
+          <p>
+            Optional subject information, syllabus, PYQs and
+            preparation resources.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/pyq/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🔎
+          </div>
+
+          <h3>
+            Previous Year Questions
+          </h3>
+
+          <p>
+            Analyse previous year questions and understand recurring
+            themes and question patterns.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/current-affairs/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📰
+          </div>
+
+          <h3>
+            Current Affairs
+          </h3>
+
+          <p>
+            Important current affairs and their relevance for
+            Prelims and Mains.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/strategy/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🚀
+          </div>
+
+          <h3>
+            Preparation Strategy
+          </h3>
+
+          <p>
+            Study planning, revision, note-making, answer writing
+            and examination strategy.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/resources/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🗂️
+          </div>
+
+          <h3>
+            Books & Resources
+          </h3>
+
+          <p>
+            Recommended books, reports, websites and useful
+            preparation resources.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/mock-tests/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🧪
+          </div>
+
+          <h3>
+            Mock Tests
+          </h3>
+
+          <p>
+            Practice tests and examination simulations for
+            systematic preparation.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/trends/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            📊
+          </div>
+
+          <h3>
+            UPSC Trends
+          </h3>
+
+          <p>
+            Topic frequency, PYQ trends, subject distribution and
+            important recurring areas.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/answer-writing/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            ✍️
+          </div>
+
+          <h3>
+            Answer Writing
+          </h3>
+
+          <p>
+            Learn how to structure, enrich and improve UPSC Mains
+            answers.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+
+        <a
+          href="/upsc/interview/"
+          class="module-card"
+        >
+
+          <div class="module-icon">
+            🎤
+          </div>
+
+          <h3>
+            Personality Test
+          </h3>
+
+          <p>
+            Understand the UPSC interview and develop an effective
+            personality-test preparation approach.
+          </p>
+
+          <span class="module-arrow">
+            Explore →
+          </span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         EXAMINATION STAGES
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div class="section-label">
+          EXAM STRUCTURE
+        </div>
+
+        <h2>
+          Three Stages of the UPSC CSE
+        </h2>
+
+        <p>
+          The Civil Services Examination progresses through
+          Preliminary Examination, Main Examination and Personality
+          Test.
+        </p>
+
+      </div>
+
+
+      <div class="stages">
+
+
+        <article class="stage">
+
+          <div class="stage-number">
+            01
+          </div>
+
+          <h3>
+            Preliminary Examination
+          </h3>
+
+          <p>
+            Objective screening stage consisting of General Studies
+            Paper-I and Civil Services Aptitude Test (CSAT).
+          </p>
+
+        </article>
+
+
+        <article class="stage">
+
+          <div class="stage-number">
+            02
+          </div>
+
+          <h3>
+            Main Examination
+          </h3>
+
+          <p>
+            Descriptive written examination covering Essay,
+            General Studies and Optional Subject papers.
+          </p>
+
+        </article>
+
+
+        <article class="stage">
+
+          <div class="stage-number">
+            03
+          </div>
+
+          <h3>
+            Personality Test
+          </h3>
+
+          <p>
+            The final personality assessment stage conducted by
+            the Union Public Service Commission.
+          </p>
+
+        </article>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAJOR SUBJECT AREAS
+    ========================= -->
+
+    <section class="section">
+
+      <div class="section-heading">
+
+        <div class="section-label">
+          PREPARATION AREAS
+        </div>
+
+        <h2>
+          Major UPSC Study Domains
+        </h2>
+
+        <p>
+          The website will progressively develop detailed resources
+          across these major areas.
+        </p>
+
+      </div>
+
+
+      <div class="subject-grid">
+
+        <div class="subject">
+          Indian Polity
+        </div>
+
+        <div class="subject">
+          Indian History
+        </div>
+
+        <div class="subject">
+          World History
+        </div>
+
+        <div class="subject">
+          Indian Geography
+        </div>
+
+        <div class="subject">
+          World Geography
+        </div>
+
+        <div class="subject">
+          Indian Economy
+        </div>
+
+        <div class="subject">
+          Environment & Ecology
+        </div>
+
+        <div class="subject">
+          Science & Technology
+        </div>
+
+        <div class="subject">
+          International Relations
+        </div>
+
+        <div class="subject">
+          Governance
+        </div>
+
+        <div class="subject">
+          Social Issues
+        </div>
+
+        <div class="subject">
+          Ethics
+        </div>
+
+        <div class="subject">
+          Essay
+        </div>
+
+        <div class="subject">
+          Current Affairs
+        </div>
+
+        <div class="subject">
+          CSAT
+        </div>
+
+        <div class="subject">
+          Optional Subject
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         DEVELOPMENT NOTICE
+    ========================= -->
+
+    <section class="section">
+
+      <div class="intro">
+
+        <h2>
+          UPSC Content Will Be Added Progressively
+        </h2>
+
+        <p>
+          This section is being developed as a comprehensive UPSC
+          preparation hub. Detailed syllabus, PYQs, subject-wise
+          resources, current affairs, trends, strategies and
+          examination guidance will be added module by module.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CTA
+    ========================= -->
+
+    <section class="cta">
+
+      <h2>
+        Preparing for Civil Services?
+      </h2>
+
+      <p>
+        Stay connected with Habitat IAS for educational resources,
+        examination analysis and preparation content for aspirants.
+      </p>
+
+      <a
+        href={contactLink}
+        class="cta-button"
+      >
+        Contact Habitat IAS →
+      </a>
+
+    </section>
+
+
+  </main>
+
+
+  <!-- =========================
+       FOOTER
+  ========================= -->
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          Habitat IAS
+        </div>
+
+        <small>
+          Civil Services preparation and educational resources.
+        </small>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/upsc/">
+          UPSC
+        </a>
+
+        <a href="/trends/">
+          Trends
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/contact/">
+          Contact
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+</body>
+
+</html>

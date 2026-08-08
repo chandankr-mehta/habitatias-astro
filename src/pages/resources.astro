@@ -1,0 +1,1697 @@
+---
+const resources = [
+  {
+    icon: "📖",
+    title: "Recommended Books",
+    description:
+      "A structured collection of books and reference material useful for building conceptual understanding.",
+    tag: "REFERENCE",
+    link: "#books"
+  },
+  {
+    icon: "📄",
+    title: "Previous Year Papers",
+    description:
+      "Access and organise previous examination papers for systematic practice and pattern analysis.",
+    tag: "PYQ",
+    link: "/pyq/"
+  },
+  {
+    icon: "📋",
+    title: "Syllabus & Exam Pattern",
+    description:
+      "Keep the official syllabus and examination structure easily accessible during preparation.",
+    tag: "SYLLABUS",
+    link: "#syllabus"
+  },
+  {
+    icon: "📑",
+    title: "Important PDFs",
+    description:
+      "A dedicated space for useful PDFs, study material and documents selected for aspirants.",
+    tag: "PDF",
+    link: "#pdfs"
+  },
+  {
+    icon: "📊",
+    title: "Reports & Data",
+    description:
+      "Important reports, statistics and data sources that can strengthen conceptual and current preparation.",
+    tag: "DATA",
+    link: "#reports"
+  },
+  {
+    icon: "🔗",
+    title: "Useful Links",
+    description:
+      "Important official and educational resources collected in one convenient location.",
+    tag: "LINKS",
+    link: "#links"
+  }
+];
+
+const principles = [
+  {
+    number: "01",
+    title: "Use Fewer, Better Sources",
+    text:
+      "Avoid collecting excessive material. Select resources that genuinely contribute to your preparation."
+  },
+  {
+    number: "02",
+    title: "Verify Important Information",
+    text:
+      "For examination-critical facts, laws, notifications and current information, prefer authoritative sources."
+  },
+  {
+    number: "03",
+    title: "Connect Resources with PYQs",
+    text:
+      "Use additional resources to understand concepts identified through the syllabus and previous year questions."
+  }
+];
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="Habitat IAS Resources — JPSC books, previous year papers, syllabus, PDFs, reports, data and useful preparation resources."
+  />
+
+  <meta
+    name="keywords"
+    content="JPSC resources, JPSC books, JPSC syllabus, JPSC previous year papers, JPSC PDFs, JPSC study material"
+  />
+
+  <title>JPSC Resources | Habitat IAS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #172033;
+
+      background: #f7f9fc;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    /* ================= HEADER ================= */
+
+    .header {
+      position: sticky;
+
+      top: 0;
+
+      z-index: 1000;
+
+      background: rgba(255,255,255,0.97);
+
+      border-bottom: 1px solid #e5eaf2;
+
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      max-width: 1240px;
+
+      min-height: 78px;
+
+      margin: auto;
+
+      padding: 0 24px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      color: #1657d9;
+
+      font-size: 24px;
+
+      font-weight: 900;
+    }
+
+    .brand-icon {
+      width: 43px;
+
+      height: 43px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 12px;
+
+      color: white;
+
+      background: #1657d9;
+
+      box-shadow:
+        0 8px 22px rgba(22,87,217,0.25);
+    }
+
+    .nav-links {
+      display: flex;
+
+      align-items: center;
+
+      gap: 18px;
+    }
+
+    .nav-links a {
+      color: #536078;
+
+      font-size: 14px;
+
+      font-weight: 800;
+    }
+
+    .nav-links a:hover {
+      color: #1657d9;
+    }
+
+    .nav-links .active {
+      color: #1657d9;
+    }
+
+    .nav-cta {
+      padding: 12px 18px;
+
+      border-radius: 10px;
+
+      color: white !important;
+
+      background: #1657d9;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      color: white;
+
+      background:
+        radial-gradient(
+          circle at 82% 18%,
+          rgba(255,209,61,0.18),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #0c347d,
+          #1657d9,
+          #2872e8
+        );
+    }
+
+    .hero-inner {
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding: 82px 24px 92px;
+    }
+
+    .hero-label {
+      color: #ffd13d;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.3px;
+
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+
+      margin: 16px 0 20px;
+
+      font-size: clamp(45px,6vw,72px);
+
+      line-height: 1;
+
+      letter-spacing: -2.5px;
+    }
+
+    .hero h1 span {
+      color: #ffd13d;
+    }
+
+    .hero p {
+      max-width: 800px;
+
+      margin: 0;
+
+      color: rgba(255,255,255,0.86);
+
+      font-size: 18px;
+
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 14px 21px;
+
+      border-radius: 11px;
+
+      font-size: 14px;
+
+      font-weight: 850;
+
+      transition: 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      color: #172033;
+
+      background: #ffd13d;
+    }
+
+    .secondary {
+      color: white;
+
+      background: rgba(255,255,255,0.08);
+
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* ================= GENERAL ================= */
+
+    .section {
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding: 75px 24px;
+    }
+
+    .heading {
+      max-width: 850px;
+
+      margin-bottom: 40px;
+    }
+
+    .section-label {
+      color: #1657d9;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      text-transform: uppercase;
+    }
+
+    .heading h2 {
+      margin: 10px 0;
+
+      font-size: clamp(32px,4vw,46px);
+
+      line-height: 1.1;
+
+      letter-spacing: -1.5px;
+    }
+
+    .heading p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 16px;
+
+      line-height: 1.7;
+    }
+
+    /* ================= RESOURCE GRID ================= */
+
+    .resource-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 19px;
+    }
+
+    .resource-card {
+      min-height: 285px;
+
+      padding: 27px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      background: white;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 18px;
+
+      transition: 0.25s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 18px 40px rgba(30,50,90,0.09);
+    }
+
+    .resource-top {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      margin-bottom: 19px;
+    }
+
+    .resource-icon {
+      width: 54px;
+
+      height: 54px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 15px;
+
+      background: #edf3ff;
+
+      font-size: 25px;
+    }
+
+    .resource-tag {
+      padding: 6px 9px;
+
+      border-radius: 7px;
+
+      color: #1657d9;
+
+      background: #edf3ff;
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: 0.6px;
+    }
+
+    .resource-card h3 {
+      margin: 0 0 10px;
+
+      font-size: 20px;
+    }
+
+    .resource-card p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+    .resource-link {
+      margin-top: auto;
+
+      padding-top: 20px;
+
+      color: #1657d9;
+
+      font-size: 12px;
+
+      font-weight: 900;
+    }
+
+    /* ================= SYLLABUS ================= */
+
+    .syllabus {
+      background: white;
+    }
+
+    .syllabus-box {
+      display: grid;
+
+      grid-template-columns:
+        0.9fr 1.4fr;
+
+      gap: 35px;
+
+      padding: 38px;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 21px;
+
+      background: white;
+    }
+
+    .syllabus-box h3 {
+      margin: 0 0 12px;
+
+      font-size: 26px;
+    }
+
+    .syllabus-box p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+    .syllabus-points {
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 10px;
+    }
+
+    .syllabus-point {
+      padding: 12px;
+
+      border-radius: 9px;
+
+      color: #536078;
+
+      background: #f1f4f8;
+
+      font-size: 12px;
+
+      font-weight: 750;
+    }
+
+    /* ================= BOOKS ================= */
+
+    .books-section {
+      background: #f7f9fc;
+    }
+
+    .book-resource {
+      padding: 32px;
+
+      background: white;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 20px;
+    }
+
+    .book-resource h3 {
+      margin: 0 0 10px;
+
+      font-size: 25px;
+    }
+
+    .book-resource p {
+      max-width: 800px;
+
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.7;
+    }
+
+    .book-meta {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+
+      margin-top: 22px;
+    }
+
+    .book-meta span {
+      padding: 8px 11px;
+
+      border-radius: 7px;
+
+      color: #536078;
+
+      background: #f1f4f8;
+
+      font-size: 11px;
+
+      font-weight: 750;
+    }
+
+    /* ================= PRINCIPLES ================= */
+
+    .principles {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 18px;
+    }
+
+    .principle {
+      padding: 27px;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 18px;
+
+      background: white;
+    }
+
+    .principle-number {
+      color: #1657d9;
+
+      font-size: 13px;
+
+      font-weight: 950;
+
+      letter-spacing: 1px;
+    }
+
+    .principle h3 {
+      margin: 13px 0 9px;
+
+      font-size: 19px;
+    }
+
+    .principle p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 13px;
+
+      line-height: 1.65;
+    }
+
+    /* ================= LINKS ================= */
+
+    .links-section {
+      color: white;
+
+      background:
+        radial-gradient(
+          circle at 82% 20%,
+          rgba(255,209,61,0.18),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #102f78,
+          #1657d9
+        );
+    }
+
+    .links-inner {
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding: 75px 24px;
+    }
+
+    .links-section .section-label {
+      color: #ffd13d;
+    }
+
+    .links-section h2 {
+      max-width: 850px;
+
+      margin: 10px 0 15px;
+
+      font-size: clamp(34px,4vw,50px);
+
+      line-height: 1.05;
+
+      letter-spacing: -1.5px;
+    }
+
+    .links-section p {
+      max-width: 800px;
+
+      margin: 0;
+
+      color: rgba(255,255,255,0.80);
+
+      font-size: 16px;
+
+      line-height: 1.7;
+    }
+
+    .link-points {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap: 13px;
+
+      margin-top: 30px;
+    }
+
+    .link-point {
+      padding: 18px;
+
+      border-radius: 12px;
+
+      color: white;
+
+      background: rgba(255,255,255,0.08);
+
+      border: 1px solid rgba(255,255,255,0.12);
+
+      font-size: 13px;
+
+      font-weight: 750;
+    }
+
+    /* ================= CTA ================= */
+
+    .cta {
+      max-width: 1190px;
+
+      margin: auto;
+
+      padding: 75px 24px;
+    }
+
+    .cta-box {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 30px;
+
+      padding: 45px;
+
+      color: white;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #102f78,
+          #1657d9
+        );
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px;
+
+      font-size: 32px;
+    }
+
+    .cta-box p {
+      margin: 0;
+
+      color: rgba(255,255,255,0.78);
+
+      line-height: 1.6;
+    }
+
+    /* ================= FOOTER ================= */
+
+    .footer {
+      padding: 45px 24px;
+
+      color: #9ba7ba;
+
+      background: #101827;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+
+      margin: auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .footer-brand {
+      margin-bottom: 7px;
+
+      color: white;
+
+      font-size: 21px;
+
+      font-weight: 900;
+    }
+
+    .footer-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 18px;
+    }
+
+    .footer-links a {
+      color: #c5cfdd;
+
+      font-size: 13px;
+
+      font-weight: 700;
+    }
+
+    .footer-links a:hover {
+      color: white;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 1000px) {
+
+      .resource-grid,
+      .principles {
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+      .link-points {
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+    }
+
+    @media (max-width: 850px) {
+
+      .syllabus-box {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 700px) {
+
+      .nav {
+        min-height: 70px;
+
+        padding: 0 18px;
+      }
+
+      .nav-links {
+        gap: 7px;
+      }
+
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .hero-inner {
+        padding: 60px 20px 70px;
+      }
+
+      .section {
+        padding: 60px 20px;
+      }
+
+      .resource-grid,
+      .principles,
+      .link-points {
+        grid-template-columns: 1fr;
+      }
+
+      .syllabus-box {
+        padding: 25px;
+      }
+
+      .syllabus-points {
+        grid-template-columns: 1fr;
+      }
+
+      .links-inner {
+        padding: 60px 20px;
+      }
+
+      .cta {
+        padding: 0 20px 60px;
+      }
+
+      .cta-box {
+        padding: 30px 24px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="header">
+
+    <nav class="nav">
+
+      <a
+        href="/"
+        class="brand"
+      >
+
+        <span class="brand-icon">
+          H
+        </span>
+
+        Habitat IAS
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/guidance/">
+          Guidance
+        </a>
+
+        <a href="/trends/">
+          Trends
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/jharkhand/">
+          Jharkhand
+        </a>
+
+        <a
+          href="/resources/"
+          class="active"
+        >
+          Resources
+        </a>
+
+        <a
+          href="https://linktr.ee/HabitatIAS"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-cta"
+        >
+          Get the Book
+        </a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div class="hero-label">
+        HABITAT IAS • JPSC RESOURCES
+      </div>
+
+      <h1>
+        The right
+        <span>resources.</span>
+        Less noise.
+      </h1>
+
+      <p>
+        A structured resource hub for JPSC aspirants —
+        bringing useful books, previous year papers, syllabus
+        information, PDFs, reports and authoritative links
+        into one organised place.
+      </p>
+
+      <div class="hero-actions">
+
+        <a
+          href="#resources"
+          class="button primary"
+        >
+          Explore Resources →
+        </a>
+
+        <a
+          href="/pyq/"
+          class="button secondary"
+        >
+          Start with PYQs
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       RESOURCE CATEGORIES
+  ====================================================== -->
+
+  <section
+    class="section"
+    id="resources"
+  >
+
+    <div class="heading">
+
+      <div class="section-label">
+        RESOURCE HUB
+      </div>
+
+      <h2>
+        Everything organised in one place.
+      </h2>
+
+      <p>
+        The purpose of this section is not to provide an endless
+        collection of links. It is to organise resources according
+        to their actual use in JPSC preparation.
+      </p>
+
+    </div>
+
+
+    <div class="resource-grid">
+
+      {
+        resources.map((resource) => (
+
+          <article class="resource-card">
+
+            <div class="resource-top">
+
+              <div class="resource-icon">
+                {resource.icon}
+              </div>
+
+              <span class="resource-tag">
+                {resource.tag}
+              </span>
+
+            </div>
+
+            <h3>
+              {resource.title}
+            </h3>
+
+            <p>
+              {resource.description}
+            </p>
+
+            <a
+              href={resource.link}
+              class="resource-link"
+            >
+              Explore →
+            </a>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       SYLLABUS
+  ====================================================== -->
+
+  <section
+    class="section syllabus"
+    id="syllabus"
+  >
+
+    <div class="syllabus-box">
+
+      <div>
+
+        <div class="section-label">
+          SYLLABUS & EXAM PATTERN
+        </div>
+
+        <h3>
+          Keep the syllabus at the centre of preparation.
+        </h3>
+
+        <p>
+          Every resource should ultimately serve the syllabus.
+          Use the official examination structure to decide
+          what deserves attention and what does not.
+        </p>
+
+      </div>
+
+
+      <div class="syllabus-points">
+
+        <div class="syllabus-point">
+          Prelims Syllabus
+        </div>
+
+        <div class="syllabus-point">
+          Mains Syllabus
+        </div>
+
+        <div class="syllabus-point">
+          Examination Pattern
+        </div>
+
+        <div class="syllabus-point">
+          Subject Structure
+        </div>
+
+        <div class="syllabus-point">
+          Jharkhand-Specific Areas
+        </div>
+
+        <div class="syllabus-point">
+          Optional / Paper Information
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       BOOKS
+  ====================================================== -->
+
+  <section
+    class="section books-section"
+    id="books"
+  >
+
+    <div class="heading">
+
+      <div class="section-label">
+        BOOKS & REFERENCES
+      </div>
+
+      <h2>
+        Build a focused source list.
+      </h2>
+
+      <p>
+        More books do not automatically mean better preparation.
+        The final resource list should be practical, relevant
+        and compatible with repeated revision.
+      </p>
+
+    </div>
+
+
+    <div class="book-resource">
+
+      <h3>
+        JPSC Prelims Decoded: Topic-Wise PYQs
+      </h3>
+
+      <p>
+        Habitat IAS's PYQ resource is designed around topic-wise
+        and subject-wise previous year questions, with explanations
+        and examination-oriented analysis.
+      </p>
+
+
+      <div class="book-meta">
+
+        <span>
+          JPSC Prelims
+        </span>
+
+        <span>
+          Topic-Wise PYQs
+        </span>
+
+        <span>
+          Subject-Wise
+        </span>
+
+        <span>
+          Detailed Explanation
+        </span>
+
+        <span>
+          Digital Edition
+        </span>
+
+      </div>
+
+
+      <div class="hero-actions">
+
+        <a
+          href="/book/"
+          class="button"
+          style="color:white;background:#1657d9;"
+        >
+          View Book →
+        </a>
+
+        <a
+          href="https://linktr.ee/HabitatIAS"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="button"
+          style="color:#1657d9;background:white;border:2px solid #1657d9;"
+        >
+          Get the E-Book
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       RESOURCE PRINCIPLES
+  ====================================================== -->
+
+  <section class="section">
+
+    <div class="heading">
+
+      <div class="section-label">
+        RESOURCE STRATEGY
+      </div>
+
+      <h2>
+        Use resources intelligently.
+      </h2>
+
+      <p>
+        Resources are useful only when they improve understanding,
+        revision or examination performance.
+      </p>
+
+    </div>
+
+
+    <div class="principles">
+
+      {
+        principles.map((principle) => (
+
+          <article class="principle">
+
+            <div class="principle-number">
+              {principle.number}
+            </div>
+
+            <h3>
+              {principle.title}
+            </h3>
+
+            <p>
+              {principle.text}
+            </p>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       IMPORTANT PDFs
+  ====================================================== -->
+
+  <section
+    class="section syllabus"
+    id="pdfs"
+  >
+
+    <div class="syllabus-box">
+
+      <div>
+
+        <div class="section-label">
+          IMPORTANT PDFs
+        </div>
+
+        <h3>
+          A dedicated place for downloadable material.
+        </h3>
+
+        <p>
+          This section can later contain verified study PDFs,
+          government documents, reports, examination documents
+          and other material provided by Habitat IAS.
+        </p>
+
+      </div>
+
+
+      <div class="syllabus-points">
+
+        <div class="syllabus-point">
+          Study PDFs
+        </div>
+
+        <div class="syllabus-point">
+          Government Documents
+        </div>
+
+        <div class="syllabus-point">
+          Reports
+        </div>
+
+        <div class="syllabus-point">
+          Maps & Figures
+        </div>
+
+        <div class="syllabus-point">
+          Revision Material
+        </div>
+
+        <div class="syllabus-point">
+          Exam Documents
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       REPORTS & DATA
+  ====================================================== -->
+
+  <section
+    class="section"
+    id="reports"
+  >
+
+    <div class="heading">
+
+      <div class="section-label">
+        REPORTS & DATA
+      </div>
+
+      <h2>
+        Use data to strengthen understanding.
+      </h2>
+
+      <p>
+        Important reports, statistics and datasets can provide
+        valuable context for geography, economy, environment,
+        development and contemporary issues.
+      </p>
+
+    </div>
+
+
+    <div class="resource-grid">
+
+      <article class="resource-card">
+
+        <div class="resource-top">
+
+          <div class="resource-icon">
+            📊
+          </div>
+
+          <span class="resource-tag">
+            DATA
+          </span>
+
+        </div>
+
+        <h3>
+          Government Statistics
+        </h3>
+
+        <p>
+          Important official statistics and datasets useful
+          for understanding India and Jharkhand.
+        </p>
+
+      </article>
+
+
+      <article class="resource-card">
+
+        <div class="resource-top">
+
+          <div class="resource-icon">
+            📈
+          </div>
+
+          <span class="resource-tag">
+            REPORTS
+          </span>
+
+        </div>
+
+        <h3>
+          Development Reports
+        </h3>
+
+        <p>
+          Selected development and socioeconomic reports that
+          can strengthen analytical understanding.
+        </p>
+
+      </article>
+
+
+      <article class="resource-card">
+
+        <div class="resource-top">
+
+          <div class="resource-icon">
+            🌍
+          </div>
+
+          <span class="resource-tag">
+            GEOGRAPHY
+          </span>
+
+        </div>
+
+        <h3>
+          Maps & Spatial Data
+        </h3>
+
+        <p>
+          Useful maps, geographical datasets and visual material
+          for geography-oriented preparation.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       USEFUL LINKS
+  ====================================================== -->
+
+  <section
+    class="links-section"
+    id="links"
+  >
+
+    <div class="links-inner">
+
+      <div class="section-label">
+        USEFUL LINKS
+      </div>
+
+      <h2>
+        Important resources, without the clutter.
+      </h2>
+
+      <p>
+        This section can be expanded with verified official
+        websites and educational resources as the platform grows.
+      </p>
+
+
+      <div class="link-points">
+
+        <div class="link-point">
+          🏛️ Official Government Sources
+        </div>
+
+        <div class="link-point">
+          📋 Examination Notifications
+        </div>
+
+        <div class="link-point">
+          📚 Educational Resources
+        </div>
+
+        <div class="link-point">
+          📊 Data & Reports
+        </div>
+
+      </div>
+
+
+      <div class="hero-actions">
+
+        <a
+          href="/guidance/"
+          class="button primary"
+        >
+          Read Exam Guidance →
+        </a>
+
+        <a
+          href="/trends/"
+          class="button secondary"
+        >
+          Explore Exam Trends
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CTA
+  ====================================================== -->
+
+  <section class="cta">
+
+    <div class="cta-box">
+
+      <div>
+
+        <h2>
+          Study less randomly. Prepare more deliberately.
+        </h2>
+
+        <p>
+          Combine the right resources with PYQs, notes,
+          examination trends and regular testing.
+        </p>
+
+      </div>
+
+
+      <a
+        href="/pyq/"
+        class="button primary"
+      >
+        Start with JPSC PYQs →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          Habitat IAS
+        </div>
+
+        <small>
+          Focused preparation for JPSC aspirants.
+        </small>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/guidance/">
+          Guidance
+        </a>
+
+        <a href="/trends/">
+          Trends
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/jharkhand/">
+          Jharkhand
+        </a>
+
+        <a href="/resources/">
+          Resources
+        </a>
+
+        <a
+          href="https://linktr.ee/HabitatIAS"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get the Book
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+</body>
+
+</html>

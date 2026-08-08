@@ -1,0 +1,829 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta
+      name="description"
+      content="Habitat IAS JPSC Notes — structured and exam-oriented study material for JPSC aspirants."
+    />
+
+    <title>JPSC Notes | Habitat IAS</title>
+
+    <style>
+      :root {
+        --blue: #1457d9;
+        --blue-dark: #0d3f9e;
+        --yellow: #ffd33d;
+        --text: #172033;
+        --muted: #657087;
+        --light: #f5f8ff;
+        --white: #ffffff;
+        --border: #e4e9f2;
+        --shadow: 0 18px 50px rgba(20, 53, 110, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        background: #fff;
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1180px, calc(100% - 40px));
+        margin: auto;
+      }
+
+      /* NAVIGATION */
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(20, 87, 217, 0.08);
+      }
+
+      .nav {
+        min-height: 82px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--blue);
+        font-size: 25px;
+        font-weight: 850;
+        white-space: nowrap;
+      }
+
+      .brand-mark {
+        width: 48px;
+        height: 48px;
+        display: grid;
+        place-items: center;
+        border-radius: 13px;
+        background: var(--blue);
+        color: white;
+        font-size: 24px;
+        font-weight: 900;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        font-size: 15px;
+        font-weight: 700;
+        color: #46536b;
+      }
+
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+
+      .nav-cta {
+        background: var(--blue);
+        color: white !important;
+        padding: 13px 20px;
+        border-radius: 11px;
+      }
+
+      /* HERO */
+
+      .hero {
+        background:
+          radial-gradient(
+            circle at 85% 20%,
+            rgba(255, 255, 255, 0.13),
+            transparent 30%
+          ),
+          linear-gradient(120deg, #103d99, #1457d9, #2d72e8);
+        color: white;
+      }
+
+      .hero-inner {
+        padding: 90px 0;
+        min-height: 480px;
+        display: flex;
+        align-items: center;
+      }
+
+      .hero-content {
+        max-width: 850px;
+      }
+
+      .eyebrow {
+        color: var(--yellow);
+        font-size: 13px;
+        font-weight: 850;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .hero h1 {
+        margin: 14px 0 20px;
+        font-size: clamp(48px, 7vw, 82px);
+        line-height: 0.98;
+        letter-spacing: -0.055em;
+      }
+
+      .hero h1 span {
+        color: var(--yellow);
+      }
+
+      .hero p {
+        max-width: 720px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      /* SECTION */
+
+      .section {
+        padding: 85px 0;
+      }
+
+      .section-light {
+        background: var(--light);
+      }
+
+      .section-heading {
+        max-width: 720px;
+        margin-bottom: 42px;
+      }
+
+      .section-heading .eyebrow {
+        color: var(--blue);
+      }
+
+      .section-heading h2 {
+        margin: 10px 0;
+        font-size: clamp(34px, 5vw, 52px);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+      }
+
+      /* SUBJECT CARDS */
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 22px;
+      }
+
+      .card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(20, 53, 110, 0.05);
+        transition: 0.2s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow);
+      }
+
+      .icon {
+        width: 50px;
+        height: 50px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: #eaf1ff;
+        color: var(--blue);
+        font-weight: 900;
+        margin-bottom: 20px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
+      }
+
+      .card p {
+        margin: 0 0 20px;
+        color: var(--muted);
+      }
+
+      .card-link {
+        color: var(--blue);
+        font-weight: 800;
+      }
+
+      /* FEATURE */
+
+      .feature {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 50px;
+        align-items: center;
+      }
+
+      .feature-box {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 25px;
+        padding: 35px;
+        box-shadow: var(--shadow);
+      }
+
+      .feature-box h3 {
+        margin-top: 0;
+        font-size: 28px;
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 25px 0 0;
+      }
+
+      .feature-list li {
+        display: flex;
+        gap: 12px;
+        margin: 14px 0;
+        color: var(--muted);
+      }
+
+      .check {
+        width: 23px;
+        height: 23px;
+        flex: 0 0 23px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #eaf1ff;
+        color: var(--blue);
+        font-weight: 900;
+      }
+
+      /* CTA */
+
+      .cta {
+        background: linear-gradient(135deg, #1457d9, #2d72e8);
+        color: white;
+        border-radius: 28px;
+        padding: 55px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .cta h2 {
+        margin: 0 0 10px;
+        font-size: clamp(30px, 4vw, 45px);
+        line-height: 1.05;
+      }
+
+      .cta p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 12px 22px;
+        border-radius: 11px;
+        font-weight: 800;
+      }
+
+      .button-primary {
+        background: var(--yellow);
+        color: #14213a;
+      }
+
+      .button-white {
+        background: white;
+        color: var(--blue);
+      }
+
+      /* FOOTER */
+
+      .footer {
+        background: #0a1429;
+        color: white;
+        padding: 60px 0 25px;
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        gap: 40px;
+        padding-bottom: 40px;
+      }
+
+      .footer-brand {
+        font-size: 25px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+
+      .footer p,
+      .footer a {
+        color: rgba(255, 255, 255, 0.65);
+      }
+
+      .footer h4 {
+        margin: 0 0 14px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      .copyright {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 13px;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 1050px) {
+        .nav-links {
+          gap: 13px;
+          font-size: 13px;
+        }
+
+        .feature {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 800px) {
+        .nav {
+          padding: 14px 0;
+        }
+
+        .nav-links {
+          display: none;
+        }
+
+        .hero-inner {
+          padding: 70px 0;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta {
+          padding: 40px 28px;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .container {
+          width: calc(100% - 28px);
+        }
+
+        .brand {
+          font-size: 21px;
+        }
+
+        .brand-mark {
+          width: 42px;
+          height: 42px;
+        }
+
+        .section {
+          padding: 65px 0;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-box {
+          padding: 25px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- HEADER -->
+
+    <header class="site-header">
+      <div class="container nav">
+        <a href="/" class="brand">
+          <span class="brand-mark">H</span>
+          <span>Habitat IAS</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="/">Home</a>
+          <a href="/notes/">Notes</a>
+          <a href="/pyq/">JPSC PYQ</a>
+          <a href="/book/">Book</a>
+          <a href="/guidance/">Guidance</a>
+          <a href="/trends/">Trends</a>
+          <a href="/mock-tests/">Mock Tests</a>
+          <a href="/jharkhand/">Jharkhand</a>
+          <a href="/resources/">Resources</a>
+          <a href="/contact/">Contact</a>
+
+          <a
+            href="https://linktr.ee/HabitatIAS"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-cta"
+          >
+            Get the Book
+          </a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- HERO -->
+
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-content">
+          <div class="eyebrow">
+            HABITAT IAS • JPSC STUDY MATERIAL
+          </div>
+
+          <h1>
+            Study Smarter.
+            <span>Build Stronger Concepts.</span>
+          </h1>
+
+          <p>
+            Structured, focused and examination-oriented notes designed to
+            help JPSC aspirants build conceptual clarity and prepare with
+            direction.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTES -->
+
+    <section class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div class="eyebrow">JPSC Notes</div>
+
+          <h2>
+            Structured notes for serious preparation.
+          </h2>
+
+          <p>
+            Use subject-wise study material to strengthen concepts and connect
+            static knowledge with the requirements of the examination.
+          </p>
+        </div>
+
+        <div class="grid">
+          <article class="card">
+            <div class="icon">H</div>
+
+            <h3>History</h3>
+
+            <p>
+              Ancient, Medieval and Modern Indian History with important
+              concepts and examination-oriented coverage.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">G</div>
+
+            <h3>Geography</h3>
+
+            <p>
+              Physical Geography, Indian Geography and important geographical
+              concepts relevant to JPSC.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">P</div>
+
+            <h3>Polity</h3>
+
+            <p>
+              Constitution, Parliament, Judiciary, Fundamental Rights and
+              important constitutional provisions.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">E</div>
+
+            <h3>Economy</h3>
+
+            <p>
+              Core economic concepts, Indian economy and important areas for
+              competitive examination preparation.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">S</div>
+
+            <h3>Science & Technology</h3>
+
+            <p>
+              Physics, Chemistry, Biology, Space Technology, Defence
+              Technology and emerging developments.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">E</div>
+
+            <h3>Environment</h3>
+
+            <p>
+              Ecology, biodiversity, climate change, environmental conventions
+              and important environmental issues.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">J</div>
+
+            <h3>Jharkhand</h3>
+
+            <p>
+              Jharkhand history, geography, economy, polity, culture,
+              movements and state-specific topics.
+            </p>
+
+            <a href="/jharkhand/" class="card-link">
+              Jharkhand Notes →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">C</div>
+
+            <h3>Current Affairs</h3>
+
+            <p>
+              Important national, international and Jharkhand current affairs
+              relevant to the examination.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Current Affairs →
+            </a>
+          </article>
+
+          <article class="card">
+            <div class="icon">I</div>
+
+            <h3>International Relations</h3>
+
+            <p>
+              International organisations, groupings, India's neighbourhood
+              and important global developments.
+            </p>
+
+            <a href="/resources/" class="card-link">
+              Study Resources →
+            </a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- APPROACH -->
+
+    <section class="section section-light">
+      <div class="container">
+        <div class="feature">
+          <div>
+            <div class="section-heading">
+              <div class="eyebrow">Habitat IAS Approach</div>
+
+              <h2>
+                Notes should help you understand, not just memorise.
+              </h2>
+
+              <p>
+                Effective preparation requires conceptual clarity, structured
+                revision and continuous connection with previous year
+                questions.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-box">
+            <h3>What makes the notes useful?</h3>
+
+            <ul class="feature-list">
+              <li>
+                <span class="check">✓</span>
+                <span>Structured subject-wise organisation.</span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>Focus on important examination concepts.</span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>Useful for revision and repeated study.</span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>Designed around competitive examination needs.</span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>Connected with PYQ-based preparation.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PYQ CONNECTION -->
+
+    <section class="section">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>
+              Connect your notes with PYQs.
+            </h2>
+
+            <p>
+              Understand how the examination converts concepts into actual
+              questions.
+            </p>
+          </div>
+
+          <a href="/pyq/" class="button button-primary">
+            Explore JPSC PYQ
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">Habitat IAS</div>
+
+            <p>
+              Focused preparation resources for JPSC aspirants.
+            </p>
+          </div>
+
+          <div>
+            <h4>Preparation</h4>
+
+            <div class="footer-links">
+              <a href="/notes/">Notes</a>
+              <a href="/pyq/">JPSC PYQ</a>
+              <a href="/mock-tests/">Mock Tests</a>
+              <a href="/trends/">Trends</a>
+            </div>
+          </div>
+
+          <div>
+            <h4>Resources</h4>
+
+            <div class="footer-links">
+              <a href="/guidance/">Guidance</a>
+              <a href="/jharkhand/">Jharkhand</a>
+              <a href="/resources/">Resources</a>
+              <a href="/book/">Book</a>
+            </div>
+          </div>
+
+          <div>
+            <h4>Connect</h4>
+
+            <div class="footer-links">
+              <a href="/contact/">Contact</a>
+
+              <a
+                href="https://www.youtube.com/@habitatias"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                YouTube
+              </a>
+
+              <a
+                href="https://t.me/Habitat_IAS"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Telegram
+              </a>
+
+              <a
+                href="https://x.com/Habitatias"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                X / Twitter
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="copyright">
+          © 2026 Habitat IAS. All rights reserved.
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

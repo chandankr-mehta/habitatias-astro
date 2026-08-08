@@ -1,0 +1,32 @@
+{
+  "name": "Habitat IAS",
+  "short_name": "Habitat IAS",
+  "description": "Exam-oriented preparation for JPSC and UPSC aspirants through PYQs, notes, trends, mock tests and focused study resources.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#1657d9",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": [
+    "education",
+    "books",
+    "reference"
+  ],
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

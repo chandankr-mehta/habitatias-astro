@@ -1,0 +1,1237 @@
+---
+const sections = [
+  {
+    number: "01",
+    title: "Know the Examination",
+    description:
+      "Start by understanding the JPSC syllabus, examination structure, previous year papers and the nature of questions.",
+    points: [
+      "Understand the complete syllabus",
+      "Analyse previous year questions",
+      "Identify recurring topics",
+      "Understand the level of questions"
+    ]
+  },
+  {
+    number: "02",
+    title: "Build Your Foundation",
+    description:
+      "Develop conceptual clarity before moving towards intensive question practice and revision.",
+    points: [
+      "Cover core concepts",
+      "Use structured notes",
+      "Connect related topics",
+      "Avoid unnecessary sources"
+    ]
+  },
+  {
+    number: "03",
+    title: "Use PYQs Strategically",
+    description:
+      "Previous year questions should be used as a learning and analysis tool, not merely as a test.",
+    points: [
+      "Solve topic-wise PYQs",
+      "Study explanations",
+      "Identify repeated concepts",
+      "Record important patterns"
+    ]
+  },
+  {
+    number: "04",
+    title: "Revise Systematically",
+    description:
+      "Revision converts information into recall. Build multiple revision cycles instead of relying on one reading.",
+    points: [
+      "Short revision notes",
+      "Repeated revision",
+      "Active recall",
+      "Spaced revision"
+    ]
+  },
+  {
+    number: "05",
+    title: "Practice Tests",
+    description:
+      "Regular testing helps identify knowledge gaps, improve accuracy and develop examination temperament.",
+    points: [
+      "Topic tests",
+      "Subject tests",
+      "Full-length mocks",
+      "Analyse mistakes"
+    ]
+  },
+  {
+    number: "06",
+    title: "Improve Continuously",
+    description:
+      "Use test performance and PYQ analysis to continuously modify your preparation strategy.",
+    points: [
+      "Track weak areas",
+      "Reduce repeated mistakes",
+      "Improve accuracy",
+      "Update your priorities"
+    ]
+  }
+];
+
+const strategies = [
+  {
+    icon: "🎯",
+    title: "Prelims Strategy",
+    text: "Build preparation around the syllabus, PYQs, conceptual clarity, revision and repeated practice."
+  },
+  {
+    icon: "📚",
+    title: "Subject Strategy",
+    text: "Prioritise subjects and topics according to syllabus relevance, PYQ trends and your preparation level."
+  },
+  {
+    icon: "🔁",
+    title: "Revision Strategy",
+    text: "Use multiple revision cycles with active recall rather than repeatedly reading the same material."
+  },
+  {
+    icon: "📝",
+    title: "PYQ Strategy",
+    text: "Analyse why questions were asked, what concept they test and how the examination approaches a topic."
+  },
+  {
+    icon: "⏱️",
+    title: "Time Management",
+    text: "Divide available preparation time between learning, revision, PYQs, tests and mistake analysis."
+  },
+  {
+    icon: "🧪",
+    title: "Mock Test Strategy",
+    text: "Treat mock tests as diagnostic tools. Analyse wrong answers, guesses and questions that consumed excessive time."
+  }
+];
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="description"
+    content="JPSC Exam Guidance by Habitat IAS — preparation strategy, PYQ strategy, revision, mock tests and subject-wise guidance."
+  />
+
+  <title>JPSC Exam Guidance | Habitat IAS</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+      color: #172033;
+      background: #f7f9fc;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+
+      background: rgba(255,255,255,0.97);
+
+      border-bottom: 1px solid #e5eaf2;
+
+      backdrop-filter: blur(12px);
+    }
+
+    .nav {
+      max-width: 1240px;
+      min-height: 78px;
+
+      margin: auto;
+      padding: 0 24px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      color: #1657d9;
+
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .brand-icon {
+      width: 43px;
+      height: 43px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 12px;
+
+      color: white;
+      background: #1657d9;
+
+      box-shadow:
+        0 8px 22px rgba(22,87,217,0.25);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: #536078;
+
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .nav-links a:hover {
+      color: #1657d9;
+    }
+
+    .nav-links .active {
+      color: #1657d9;
+    }
+
+    .nav-button {
+      padding: 12px 18px;
+
+      border-radius: 10px;
+
+      color: white !important;
+      background: #1657d9;
+    }
+
+    /* HERO */
+
+    .hero {
+      color: white;
+
+      background:
+        radial-gradient(
+          circle at 82% 18%,
+          rgba(255,209,61,0.18),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #0c347d,
+          #1657d9,
+          #2872e8
+        );
+    }
+
+    .hero-inner {
+      max-width: 1240px;
+      margin: auto;
+
+      padding: 80px 24px 90px;
+    }
+
+    .label {
+      color: #1657d9;
+
+      font-size: 12px;
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      text-transform: uppercase;
+    }
+
+    .hero .label {
+      color: #ffd13d;
+    }
+
+    .hero h1 {
+      max-width: 900px;
+
+      margin: 15px 0 20px;
+
+      font-size: clamp(45px, 6vw, 72px);
+
+      line-height: 1;
+
+      letter-spacing: -2.5px;
+    }
+
+    .hero h1 span {
+      color: #ffd13d;
+    }
+
+    .hero p {
+      max-width: 780px;
+
+      margin: 0;
+
+      color: rgba(255,255,255,0.85);
+
+      font-size: 18px;
+
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 12px;
+
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      padding: 14px 21px;
+
+      border-radius: 11px;
+
+      font-weight: 850;
+
+      transition: 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      color: #172033;
+      background: #ffd13d;
+    }
+
+    .secondary {
+      color: white;
+
+      background: rgba(255,255,255,0.08);
+
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* SECTION */
+
+    .section {
+      max-width: 1240px;
+
+      margin: auto;
+
+      padding: 75px 24px;
+    }
+
+    .heading {
+      max-width: 800px;
+
+      margin-bottom: 40px;
+    }
+
+    .heading h2 {
+      margin: 10px 0;
+
+      font-size: clamp(32px,4vw,46px);
+
+      line-height: 1.1;
+
+      letter-spacing: -1.5px;
+    }
+
+    .heading p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 16px;
+
+      line-height: 1.7;
+    }
+
+    /* STRATEGY GRID */
+
+    .strategy-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 19px;
+    }
+
+    .strategy-card {
+      min-height: 235px;
+
+      padding: 27px;
+
+      background: white;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 18px;
+
+      transition: 0.25s ease;
+    }
+
+    .strategy-card:hover {
+      transform: translateY(-5px);
+
+      box-shadow:
+        0 18px 40px rgba(30,50,90,0.09);
+    }
+
+    .strategy-icon {
+      width: 50px;
+      height: 50px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 18px;
+
+      border-radius: 14px;
+
+      background: #edf3ff;
+
+      font-size: 24px;
+    }
+
+    .strategy-card h3 {
+      margin: 0 0 10px;
+
+      font-size: 20px;
+    }
+
+    .strategy-card p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+    /* ROADMAP */
+
+    .roadmap {
+      background: white;
+    }
+
+    .roadmap-list {
+      display: grid;
+
+      gap: 16px;
+    }
+
+    .roadmap-card {
+      display: grid;
+
+      grid-template-columns:
+        90px 1fr;
+
+      gap: 25px;
+
+      padding: 27px;
+
+      background: #fff;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 18px;
+    }
+
+    .roadmap-number {
+      color: #1657d9;
+
+      font-size: 31px;
+
+      font-weight: 950;
+    }
+
+    .roadmap-content h3 {
+      margin: 0 0 8px;
+
+      font-size: 22px;
+    }
+
+    .roadmap-content > p {
+      margin: 0 0 17px;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+    .point-list {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+    .point {
+      padding: 7px 10px;
+
+      border-radius: 7px;
+
+      color: #536078;
+
+      background: #f2f5fa;
+
+      font-size: 11px;
+
+      font-weight: 750;
+    }
+
+    /* MISTAKES */
+
+    .mistakes {
+      background: #f7f9fc;
+    }
+
+    .mistake-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 18px;
+    }
+
+    .mistake-card {
+      padding: 27px;
+
+      background: white;
+
+      border: 1px solid #e2e8f1;
+
+      border-radius: 18px;
+    }
+
+    .mistake-card h3 {
+      margin: 0 0 10px;
+
+      font-size: 19px;
+    }
+
+    .mistake-card p {
+      margin: 0;
+
+      color: #68748a;
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+    .warning {
+      display: inline-block;
+
+      margin-bottom: 15px;
+
+      padding: 7px 10px;
+
+      border-radius: 7px;
+
+      color: #8b5d00;
+
+      background: #fff4cc;
+
+      font-size: 11px;
+
+      font-weight: 900;
+
+      text-transform: uppercase;
+    }
+
+    /* CTA */
+
+    .cta {
+      max-width: 1190px;
+
+      margin: auto;
+
+      padding: 0 24px 75px;
+    }
+
+    .cta-box {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 30px;
+
+      padding: 45px;
+
+      color: white;
+
+      border-radius: 24px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #102f78,
+          #1657d9
+        );
+    }
+
+    .cta-box h2 {
+      margin: 0 0 10px;
+
+      font-size: 32px;
+    }
+
+    .cta-box p {
+      margin: 0;
+
+      color: rgba(255,255,255,0.78);
+
+      line-height: 1.6;
+    }
+
+    /* FOOTER */
+
+    .footer {
+      padding: 45px 24px;
+
+      color: #9ba7ba;
+
+      background: #101827;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+
+      margin: auto;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 25px;
+    }
+
+    .footer-brand {
+      margin-bottom: 7px;
+
+      color: white;
+
+      font-size: 21px;
+
+      font-weight: 900;
+    }
+
+    .footer-links {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 20px;
+    }
+
+    .footer-links a {
+      color: #c5cfdd;
+
+      font-size: 14px;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1000px) {
+
+      .strategy-grid,
+      .mistake-grid {
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+    }
+
+    @media (max-width: 700px) {
+
+      .nav {
+        min-height: 70px;
+      }
+
+      .nav-links {
+        gap: 8px;
+      }
+
+      .nav-links a:not(.nav-button) {
+        display: none;
+      }
+
+      .strategy-grid,
+      .mistake-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .roadmap-card {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+      }
+
+      .hero-inner {
+        padding: 60px 20px 70px;
+      }
+
+      .section {
+        padding: 60px 20px;
+      }
+
+      .cta {
+        padding: 0 20px 60px;
+      }
+
+      .cta-box {
+        padding: 30px 24px;
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+
+  <header class="header">
+
+    <nav class="nav">
+
+      <a href="/" class="brand">
+
+        <span class="brand-icon">
+          H
+        </span>
+
+        Habitat IAS
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/guidance/" class="active">
+          Guidance
+        </a>
+
+        <a
+          href="https://linktr.ee/HabitatIAS"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="nav-button"
+        >
+          Get the Book
+        </a>
+
+      </div>
+
+    </nav>
+
+  </header>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div class="label">
+        HABITAT IAS • EXAM GUIDANCE
+      </div>
+
+      <h1>
+        Prepare with a
+        <span>strategy.</span>
+      </h1>
+
+      <p>
+        JPSC preparation is not only about collecting study
+        material. Build your preparation around the syllabus,
+        previous year questions, revision, practice and
+        continuous analysis.
+      </p>
+
+      <div class="hero-actions">
+
+        <a
+          href="#strategy"
+          class="button primary"
+        >
+          Explore Strategy →
+        </a>
+
+        <a
+          href="/pyq/"
+          class="button secondary"
+        >
+          Analyse JPSC PYQs
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= CORE STRATEGIES ================= -->
+
+  <section
+    class="section"
+    id="strategy"
+  >
+
+    <div class="heading">
+
+      <div class="label">
+        PREPARATION STRATEGY
+      </div>
+
+      <h2>
+        Six pillars of effective JPSC preparation.
+      </h2>
+
+      <p>
+        Use these principles to organise your preparation
+        instead of studying without a defined direction.
+      </p>
+
+    </div>
+
+
+    <div class="strategy-grid">
+
+      {
+        strategies.map((strategy) => (
+
+          <article class="strategy-card">
+
+            <div class="strategy-icon">
+              {strategy.icon}
+            </div>
+
+            <h3>
+              {strategy.title}
+            </h3>
+
+            <p>
+              {strategy.text}
+            </p>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ROADMAP ================= -->
+
+  <section class="section roadmap">
+
+    <div class="heading">
+
+      <div class="label">
+        PREPARATION ROADMAP
+      </div>
+
+      <h2>
+        A systematic preparation cycle.
+      </h2>
+
+      <p>
+        Move through these stages repeatedly. The exact duration
+        should depend on your available time and preparation level.
+      </p>
+
+    </div>
+
+
+    <div class="roadmap-list">
+
+      {
+        sections.map((section) => (
+
+          <article class="roadmap-card">
+
+            <div class="roadmap-number">
+              {section.number}
+            </div>
+
+            <div class="roadmap-content">
+
+              <h3>
+                {section.title}
+              </h3>
+
+              <p>
+                {section.description}
+              </p>
+
+              <div class="point-list">
+
+                {
+                  section.points.map((point) => (
+                    <span class="point">
+                      {point}
+                    </span>
+                  ))
+                }
+
+              </div>
+
+            </div>
+
+          </article>
+
+        ))
+      }
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= MISTAKES ================= -->
+
+  <section class="section mistakes">
+
+    <div class="heading">
+
+      <div class="label">
+        AVOID THESE MISTAKES
+      </div>
+
+      <h2>
+        Common preparation problems.
+      </h2>
+
+      <p>
+        A good strategy also requires knowing what not to do.
+      </p>
+
+    </div>
+
+
+    <div class="mistake-grid">
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 01
+        </div>
+
+        <h3>
+          Too Many Sources
+        </h3>
+
+        <p>
+          Continuously changing books, teachers and resources
+          can reduce revision and create unnecessary confusion.
+        </p>
+
+      </article>
+
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 02
+        </div>
+
+        <h3>
+          Ignoring PYQs
+        </h3>
+
+        <p>
+          Preparing without studying previous year questions
+          makes it difficult to understand the examination's
+          actual priorities.
+        </p>
+
+      </article>
+
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 03
+        </div>
+
+        <h3>
+          Passive Reading
+        </h3>
+
+        <p>
+          Reading repeatedly without active recall, questions
+          or testing can create an illusion of preparation.
+        </p>
+
+      </article>
+
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 04
+        </div>
+
+        <h3>
+          No Revision System
+        </h3>
+
+        <p>
+          Learning new material continuously without scheduled
+          revision leads to rapid forgetting.
+        </p>
+
+      </article>
+
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 05
+        </div>
+
+        <h3>
+          Not Analysing Tests
+        </h3>
+
+        <p>
+          A mock-test score alone is not enough. Analyse incorrect,
+          guessed and time-consuming questions.
+        </p>
+
+      </article>
+
+
+      <article class="mistake-card">
+
+        <div class="warning">
+          Mistake 06
+        </div>
+
+        <h3>
+          Studying Without Priorities
+        </h3>
+
+        <p>
+          Give greater attention to important and recurring
+          areas rather than distributing effort equally everywhere.
+        </p>
+
+      </article>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= PYQ CONNECTION ================= -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <div class="label">
+        PYQ-FIRST APPROACH
+      </div>
+
+      <h1>
+        Let the
+        <span>questions guide</span>
+        your preparation.
+      </h1>
+
+      <p>
+        Analyse previous year questions to understand recurring
+        topics, question framing, conceptual priorities and
+        examination trends.
+      </p>
+
+      <div class="hero-actions">
+
+        <a
+          href="/pyq/"
+          class="button primary"
+        >
+          Explore JPSC PYQs →
+        </a>
+
+        <a
+          href="/notes/"
+          class="button secondary"
+        >
+          Study Notes
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FINAL CTA ================= -->
+
+  <section class="cta">
+
+    <div class="cta-box">
+
+      <div>
+
+        <h2>
+          Prepare systematically with Habitat IAS.
+        </h2>
+
+        <p>
+          Notes, PYQs, guidance, trends and mock-test preparation
+          in one focused platform.
+        </p>
+
+      </div>
+
+      <a
+        href="/pyq/"
+        class="button primary"
+      >
+        Start with PYQs →
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer class="footer">
+
+    <div class="footer-inner">
+
+      <div>
+
+        <div class="footer-brand">
+          Habitat IAS
+        </div>
+
+        <small>
+          Focused preparation for JPSC aspirants.
+        </small>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQ
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/guidance/">
+          Guidance
+        </a>
+
+        <a
+          href="https://linktr.ee/HabitatIAS"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Get the Book
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+</body>
+
+</html>

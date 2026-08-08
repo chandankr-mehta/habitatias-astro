@@ -1,0 +1,1226 @@
+---
+const jpscLinks = [
+  { label: "JPSC PYQ", href: "/pyq/" },
+  { label: "JPSC Notes", href: "/notes/" },
+  { label: "JPSC Trends", href: "/trends/" },
+  { label: "JPSC Mock Tests", href: "/mock-tests/" },
+  { label: "Jharkhand Special", href: "/jharkhand/" },
+];
+
+const upscLinks = [
+  { label: "UPSC Home", href: "/upsc/" },
+  { label: "Overview", href: "/upsc/" },
+  { label: "Syllabus", href: "/upsc/" },
+  { label: "Prelims", href: "/upsc/" },
+  { label: "Mains", href: "/upsc/" },
+  { label: "PYQs", href: "/upsc/" },
+  { label: "Current Affairs", href: "/upsc/" },
+  { label: "Strategy", href: "/upsc/" },
+  { label: "Resources", href: "/upsc/" },
+];
+---
+
+<header class="site-header">
+
+  <div class="header-container">
+
+    <!-- =====================================================
+         BRAND
+    ====================================================== -->
+
+    <a
+      href="/"
+      class="brand"
+      aria-label="Habitat IAS Home"
+    >
+
+      <span class="brand-mark">
+        H
+      </span>
+
+      <span class="brand-name">
+        Habitat IAS
+      </span>
+
+    </a>
+
+
+    <!-- =====================================================
+         DESKTOP NAVIGATION
+    ====================================================== -->
+
+    <nav
+      class="desktop-navigation"
+      aria-label="Main navigation"
+    >
+
+      <!-- HOME -->
+
+      <a
+        href="/"
+        class="nav-link"
+      >
+        Home
+      </a>
+
+
+      <!-- =================================================
+           JPSC DROPDOWN
+      ================================================== -->
+
+      <div class="nav-dropdown">
+
+        <button
+          type="button"
+          class="nav-dropdown-button"
+          aria-haspopup="true"
+        >
+          JPSC
+          <span class="dropdown-arrow">⌄</span>
+        </button>
+
+        <div class="dropdown-menu">
+
+          <div class="dropdown-heading">
+            JPSC Preparation
+          </div>
+
+          {jpscLinks.map((item) => (
+            <a
+              href={item.href}
+              class="dropdown-link"
+            >
+              {item.label}
+            </a>
+          ))}
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           UPSC DROPDOWN
+      ================================================== -->
+
+      <div class="nav-dropdown">
+
+        <button
+          type="button"
+          class="nav-dropdown-button"
+          aria-haspopup="true"
+        >
+          UPSC
+          <span class="dropdown-arrow">⌄</span>
+        </button>
+
+        <div class="dropdown-menu upsc-dropdown">
+
+          <div class="dropdown-heading">
+            UPSC Preparation
+          </div>
+
+          {upscLinks.map((item) => (
+            <a
+              href={item.href}
+              class="dropdown-link"
+            >
+              {item.label}
+            </a>
+          ))}
+
+        </div>
+
+      </div>
+
+
+      <!-- BOOK -->
+
+      <a
+        href="/book/"
+        class="nav-link"
+      >
+        Book
+      </a>
+
+
+      <!-- GUIDANCE -->
+
+      <a
+        href="/guidance/"
+        class="nav-link"
+      >
+        Guidance
+      </a>
+
+
+      <!-- TRENDS -->
+
+      <a
+        href="/trends/"
+        class="nav-link"
+      >
+        Trends
+      </a>
+
+
+      <!-- MOCK TESTS -->
+
+      <a
+        href="/mock-tests/"
+        class="nav-link"
+      >
+        Mock Tests
+      </a>
+
+
+      <!-- RESOURCES -->
+
+      <a
+        href="/resources/"
+        class="nav-link"
+      >
+        Resources
+      </a>
+
+
+      <!-- CONTACT -->
+
+      <a
+        href="/contact/"
+        class="nav-link"
+      >
+        Contact
+      </a>
+
+    </nav>
+
+
+    <!-- =====================================================
+         DESKTOP BOOK BUTTON
+    ====================================================== -->
+
+    <a
+      href="/book/"
+      class="header-book-button"
+    >
+      Get the Book
+    </a>
+
+
+    <!-- =====================================================
+         MOBILE MENU BUTTON
+    ====================================================== -->
+
+    <button
+      type="button"
+      class="mobile-menu-button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="mobile-navigation"
+    >
+
+      <span></span>
+      <span></span>
+      <span></span>
+
+    </button>
+
+  </div>
+
+
+  <!-- =======================================================
+       MOBILE NAVIGATION
+  ======================================================== -->
+
+  <div
+    id="mobile-navigation"
+    class="mobile-navigation"
+    aria-hidden="true"
+  >
+
+    <div class="mobile-navigation-inner">
+
+
+      <!-- HOME -->
+
+      <a
+        href="/"
+        class="mobile-nav-link"
+      >
+        Home
+      </a>
+
+
+      <!-- =================================================
+           MOBILE JPSC
+      ================================================== -->
+
+      <div class="mobile-dropdown">
+
+        <button
+          type="button"
+          class="mobile-dropdown-button"
+          aria-expanded="false"
+        >
+          <span>JPSC</span>
+          <span class="mobile-arrow">+</span>
+        </button>
+
+        <div class="mobile-dropdown-content">
+
+          {jpscLinks.map((item) => (
+            <a
+              href={item.href}
+              class="mobile-sub-link"
+            >
+              {item.label}
+            </a>
+          ))}
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           MOBILE UPSC
+      ================================================== -->
+
+      <div class="mobile-dropdown">
+
+        <button
+          type="button"
+          class="mobile-dropdown-button"
+          aria-expanded="false"
+        >
+          <span>UPSC</span>
+          <span class="mobile-arrow">+</span>
+        </button>
+
+        <div class="mobile-dropdown-content">
+
+          {upscLinks.map((item) => (
+            <a
+              href={item.href}
+              class="mobile-sub-link"
+            >
+              {item.label}
+            </a>
+          ))}
+
+        </div>
+
+      </div>
+
+
+      <!-- BOOK -->
+
+      <a
+        href="/book/"
+        class="mobile-nav-link"
+      >
+        Book
+      </a>
+
+
+      <!-- GUIDANCE -->
+
+      <a
+        href="/guidance/"
+        class="mobile-nav-link"
+      >
+        Guidance
+      </a>
+
+
+      <!-- TRENDS -->
+
+      <a
+        href="/trends/"
+        class="mobile-nav-link"
+      >
+        Trends
+      </a>
+
+
+      <!-- MOCK TESTS -->
+
+      <a
+        href="/mock-tests/"
+        class="mobile-nav-link"
+      >
+        Mock Tests
+      </a>
+
+
+      <!-- RESOURCES -->
+
+      <a
+        href="/resources/"
+        class="mobile-nav-link"
+      >
+        Resources
+      </a>
+
+
+      <!-- CONTACT -->
+
+      <a
+        href="/contact/"
+        class="mobile-nav-link"
+      >
+        Contact
+      </a>
+
+
+      <!-- MOBILE BOOK BUTTON -->
+
+      <a
+        href="/book/"
+        class="mobile-book-button"
+      >
+        Get the Book
+      </a>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<style>
+
+  /* =========================================================
+     HEADER VARIABLES
+  ========================================================= */
+
+  .site-header {
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    background: #ffffff;
+    border-bottom: 1px solid #e7edf7;
+  }
+
+
+  /* =========================================================
+     HEADER CONTAINER
+  ========================================================= */
+
+  .header-container {
+    width: min(1320px, calc(100% - 48px));
+    min-height: 88px;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+
+  /* =========================================================
+     BRAND
+  ========================================================= */
+
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 13px;
+
+    flex-shrink: 0;
+
+    color: #1657d9;
+    font-weight: 900;
+    text-decoration: none;
+  }
+
+
+  .brand-mark {
+    width: 54px;
+    height: 54px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+
+    background: #1657d9;
+    color: #ffffff;
+
+    font-size: 26px;
+    font-weight: 900;
+
+    box-shadow:
+      0 8px 20px rgba(22, 87, 217, 0.18);
+  }
+
+
+  .brand-name {
+    font-size: 29px;
+    line-height: 1;
+    letter-spacing: -0.8px;
+    white-space: nowrap;
+  }
+
+
+  /* =========================================================
+     DESKTOP NAVIGATION
+  ========================================================= */
+
+  .desktop-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 27px;
+
+    flex: 1;
+  }
+
+
+  .nav-link,
+  .nav-dropdown-button {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+
+    padding: 12px 0;
+
+    border: 0;
+    background: transparent;
+
+    color: #40516f;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 750;
+
+    text-decoration: none;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+      color 0.2s ease;
+  }
+
+
+  .nav-link:hover,
+  .nav-dropdown-button:hover {
+    color: #1657d9;
+  }
+
+
+  .nav-dropdown-button {
+    appearance: none;
+  }
+
+
+  .dropdown-arrow {
+    margin-top: -3px;
+    font-size: 17px;
+    transition: transform 0.2s ease;
+  }
+
+
+  /* =========================================================
+     DESKTOP DROPDOWN
+  ========================================================= */
+
+  .nav-dropdown {
+    position: relative;
+  }
+
+
+  .dropdown-menu {
+    position: absolute;
+
+    top: calc(100% + 8px);
+    left: 50%;
+
+    width: 235px;
+
+    padding: 12px;
+
+    transform:
+      translateX(-50%)
+      translateY(8px);
+
+    opacity: 0;
+    visibility: hidden;
+
+    border: 1px solid #e2e9f5;
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+      0 18px 45px rgba(16, 42, 80, 0.14);
+
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease,
+      visibility 0.18s ease;
+  }
+
+
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+      translateX(-50%)
+      translateY(0);
+  }
+
+
+  .nav-dropdown:hover .dropdown-arrow {
+    transform: rotate(180deg);
+  }
+
+
+  .dropdown-heading {
+    padding: 10px 12px 9px;
+
+    color: #1657d9;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+
+  .dropdown-link {
+    display: block;
+
+    padding: 11px 12px;
+
+    border-radius: 8px;
+
+    color: #40516f;
+
+    font-size: 14px;
+    font-weight: 650;
+
+    text-decoration: none;
+
+    transition:
+      background 0.18s ease,
+      color 0.18s ease;
+  }
+
+
+  .dropdown-link:hover {
+    background: #eef4ff;
+    color: #1657d9;
+  }
+
+
+  /* =========================================================
+     DESKTOP BOOK BUTTON
+  ========================================================= */
+
+  .header-book-button {
+    flex-shrink: 0;
+
+    min-width: 145px;
+    min-height: 56px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 20px;
+
+    border-radius: 14px;
+
+    background: #1657d9;
+    color: #ffffff;
+
+    font-size: 16px;
+    font-weight: 850;
+
+    text-align: center;
+    text-decoration: none;
+
+    box-shadow:
+      0 10px 25px rgba(22, 87, 217, 0.18);
+
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+
+  .header-book-button:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 14px 30px rgba(22, 87, 217, 0.27);
+  }
+
+
+  /* =========================================================
+     MOBILE MENU BUTTON
+  ========================================================= */
+
+  .mobile-menu-button {
+    display: none;
+
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 5px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: #1657d9;
+
+    cursor: pointer;
+  }
+
+
+  .mobile-menu-button span {
+    display: block;
+
+    width: 22px;
+    height: 2px;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+
+  /* =========================================================
+     MOBILE NAVIGATION
+  ========================================================= */
+
+  .mobile-navigation {
+    display: none;
+  }
+
+
+  /* =========================================================
+     TABLET
+  ========================================================= */
+
+  @media (max-width: 1050px) {
+
+    .header-container {
+      width: min(100% - 32px, 1000px);
+      gap: 20px;
+    }
+
+    .desktop-navigation {
+      gap: 17px;
+    }
+
+    .nav-link,
+    .nav-dropdown-button {
+      font-size: 14px;
+    }
+
+    .brand-name {
+      font-size: 25px;
+    }
+
+    .brand-mark {
+      width: 50px;
+      height: 50px;
+    }
+
+    .header-book-button {
+      min-width: 125px;
+      min-height: 52px;
+      font-size: 14px;
+    }
+
+  }
+
+
+  /* =========================================================
+     MOBILE — IMPORTANT
+  ========================================================= */
+
+  @media (max-width: 850px) {
+
+    .site-header {
+      position: sticky;
+      top: 0;
+    }
+
+
+    .header-container {
+      width: 100%;
+
+      min-height: 64px;
+
+      padding:
+        8px 16px;
+
+      gap: 12px;
+    }
+
+
+    /* BRAND */
+
+    .brand {
+      gap: 9px;
+    }
+
+
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+
+      border-radius: 10px;
+
+      font-size: 20px;
+    }
+
+
+    .brand-name {
+      font-size: 21px;
+      letter-spacing: -0.4px;
+    }
+
+
+    /* HIDE DESKTOP NAV */
+
+    .desktop-navigation,
+    .header-book-button {
+      display: none;
+    }
+
+
+    /* SHOW MOBILE BUTTON */
+
+    .mobile-menu-button {
+      display: flex;
+
+      margin-left: auto;
+    }
+
+
+    /* MOBILE NAV */
+
+    .mobile-navigation {
+      display: block;
+
+      max-height: 0;
+
+      overflow: hidden;
+
+      background: #ffffff;
+
+      border-top: 0 solid #e7edf7;
+
+      opacity: 0;
+
+      transition:
+        max-height 0.28s ease,
+        opacity 0.2s ease,
+        border-top 0.2s ease;
+    }
+
+
+    .mobile-navigation.is-open {
+      max-height: calc(100vh - 64px);
+
+      overflow-y: auto;
+
+      opacity: 1;
+
+      border-top: 1px solid #e7edf7;
+    }
+
+
+    .mobile-navigation-inner {
+      width: 100%;
+
+      padding: 8px 16px 18px;
+    }
+
+
+    /* MOBILE NORMAL LINKS */
+
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+
+      min-height: 48px;
+
+      padding: 11px 4px;
+
+      border-bottom: 1px solid #edf1f7;
+
+      color: #344765;
+
+      font-size: 15px;
+      font-weight: 750;
+
+      text-decoration: none;
+    }
+
+
+    .mobile-nav-link:hover {
+      color: #1657d9;
+    }
+
+
+    /* MOBILE DROPDOWN */
+
+    .mobile-dropdown {
+      border-bottom: 1px solid #edf1f7;
+    }
+
+
+    .mobile-dropdown-button {
+      width: 100%;
+
+      min-height: 48px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 11px 4px;
+
+      border: 0;
+      background: transparent;
+
+      color: #344765;
+
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 750;
+
+      text-align: left;
+
+      cursor: pointer;
+    }
+
+
+    .mobile-dropdown-button:hover {
+      color: #1657d9;
+    }
+
+
+    .mobile-arrow {
+      display: grid;
+      place-items: center;
+
+      width: 24px;
+      height: 24px;
+
+      color: #1657d9;
+
+      font-size: 21px;
+      font-weight: 400;
+
+      transition:
+        transform 0.2s ease;
+    }
+
+
+    .mobile-dropdown.is-open .mobile-arrow {
+      transform: rotate(45deg);
+    }
+
+
+    .mobile-dropdown-content {
+      display: grid;
+
+      grid-template-rows: 0fr;
+
+      transition:
+        grid-template-rows 0.25s ease;
+    }
+
+
+    .mobile-dropdown-content > * {
+      overflow: hidden;
+    }
+
+
+    .mobile-dropdown.is-open .mobile-dropdown-content {
+      grid-template-rows: 1fr;
+    }
+
+
+    .mobile-sub-link {
+      display: block;
+
+      padding:
+        9px 12px
+        9px 22px;
+
+      color: #66758e;
+
+      font-size: 14px;
+      font-weight: 600;
+
+      text-decoration: none;
+
+      background: #f8faff;
+
+      transition:
+        color 0.18s ease,
+        background 0.18s ease;
+    }
+
+
+    .mobile-sub-link:hover {
+      color: #1657d9;
+      background: #eef4ff;
+    }
+
+
+    /* MOBILE BOOK BUTTON */
+
+    .mobile-book-button {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      min-height: 48px;
+
+      margin-top: 14px;
+
+      border-radius: 10px;
+
+      background: #1657d9;
+      color: #ffffff;
+
+      font-size: 15px;
+      font-weight: 800;
+
+      text-decoration: none;
+    }
+
+  }
+
+
+  /* =========================================================
+     VERY SMALL PHONES
+  ========================================================= */
+
+  @media (max-width: 420px) {
+
+    .header-container {
+      min-height: 60px;
+
+      padding:
+        7px 12px;
+    }
+
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+
+      border-radius: 9px;
+
+      font-size: 19px;
+    }
+
+
+    .brand-name {
+      font-size: 19px;
+    }
+
+
+    .mobile-menu-button {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 10px;
+    }
+
+
+    .mobile-menu-button span {
+      width: 20px;
+    }
+
+
+    .mobile-navigation.is-open {
+      max-height: calc(100vh - 60px);
+    }
+
+  }
+
+</style>
+
+
+<script>
+
+  /* =========================================================
+     MOBILE MENU
+  ========================================================= */
+
+  const mobileMenuButton =
+    document.querySelector(".mobile-menu-button");
+
+  const mobileNavigation =
+    document.querySelector("#mobile-navigation");
+
+
+  if (mobileMenuButton && mobileNavigation) {
+
+    mobileMenuButton.addEventListener("click", () => {
+
+      const isOpen =
+        mobileNavigation.classList.toggle("is-open");
+
+      mobileMenuButton.setAttribute(
+        "aria-expanded",
+        String(isOpen)
+      );
+
+      mobileNavigation.setAttribute(
+        "aria-hidden",
+        String(!isOpen)
+      );
+
+
+      /* Animate hamburger */
+
+      const bars =
+        mobileMenuButton.querySelectorAll("span");
+
+
+      if (isOpen) {
+
+        bars[0].style.transform =
+          "translateY(7px) rotate(45deg)";
+
+        bars[1].style.opacity =
+          "0";
+
+        bars[2].style.transform =
+          "translateY(-7px) rotate(-45deg)";
+
+        mobileMenuButton.setAttribute(
+          "aria-label",
+          "Close navigation menu"
+        );
+
+      } else {
+
+        bars[0].style.transform =
+          "";
+
+        bars[1].style.opacity =
+          "";
+
+        bars[2].style.transform =
+          "";
+
+        mobileMenuButton.setAttribute(
+          "aria-label",
+          "Open navigation menu"
+        );
+
+      }
+
+    });
+
+
+    /* =======================================================
+       CLOSE MOBILE MENU AFTER CLICKING A LINK
+    ======================================================== */
+
+    mobileNavigation
+      .querySelectorAll("a")
+      .forEach((link) => {
+
+        link.addEventListener("click", () => {
+
+          mobileNavigation.classList.remove(
+            "is-open"
+          );
+
+          mobileMenuButton.setAttribute(
+            "aria-expanded",
+            "false"
+          );
+
+          mobileNavigation.setAttribute(
+            "aria-hidden",
+            "true"
+          );
+
+
+          const bars =
+            mobileMenuButton.querySelectorAll("span");
+
+
+          bars[0].style.transform = "";
+          bars[1].style.opacity = "";
+          bars[2].style.transform = "";
+
+          mobileMenuButton.setAttribute(
+            "aria-label",
+            "Open navigation menu"
+          );
+
+        });
+
+      });
+
+  }
+
+
+  /* =========================================================
+     MOBILE JPSC / UPSC DROPDOWNS
+  ========================================================= */
+
+  document
+    .querySelectorAll(".mobile-dropdown-button")
+    .forEach((button) => {
+
+      button.addEventListener("click", () => {
+
+        const parent =
+          button.closest(".mobile-dropdown");
+
+        if (!parent) return;
+
+
+        const isOpen =
+          parent.classList.toggle("is-open");
+
+
+        button.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+      });
+
+    });
+
+</script>

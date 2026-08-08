@@ -1,17 +1,1743 @@
 ---
-
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SEO from "../components/SEO.astro";
 ---
 
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <SEO
+      title="Habitat IAS | JPSC & UPSC Preparation"
+      description="Habitat IAS provides structured and exam-oriented preparation resources for JPSC and UPSC aspirants, including PYQs, notes, trends, mock tests, guidance and study resources."
+      canonical="/"
+      keywords="JPSC preparation, JPSC PYQ, JPSC notes, JPSC mock test, Jharkhand PSC, UPSC preparation, UPSC PYQ, Habitat IAS"
+    />
+
+    <meta
+      name="theme-color"
+      content="#1657d9"
+    />
+  </head>
+
+  <body>
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <Header />
+
+
+    <main>
+
+      <!-- ===================================================
+           HERO SECTION
+      ==================================================== -->
+
+      <section class="hero">
+
+        <div class="hero-background"></div>
+
+        <div class="hero-container">
+
+          <!-- LEFT -->
+
+          <div class="hero-content">
+
+            <div class="hero-label">
+              HABITAT IAS • JPSC & UPSC PREPARATION
+            </div>
+
+            <h1 class="hero-title">
+              Prepare
+              <br />
+              Smarter.
+              <br />
+
+              <span>
+                Understand
+              </span>
+
+              <br />
+
+              <span>
+                the Exam.
+              </span>
+            </h1>
+
+            <p class="hero-description">
+              Exam-oriented preparation built around previous year
+              questions, structured notes, trend analysis, mock tests
+              and focused study resources.
+            </p>
+
+            <div class="hero-actions">
+
+              <a
+                href="/pyq/"
+                class="button button-yellow"
+              >
+                Explore JPSC PYQs
+              </a>
+
+              <a
+                href="#approach"
+                class="button button-outline-light"
+              >
+                How We Prepare
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <!-- RIGHT -->
+
+          <div class="hero-card">
+
+            <div class="hero-card-label">
+              HABITAT IAS APPROACH
+            </div>
+
+            <h2>
+              Preparation built around
+              the actual examination.
+            </h2>
+
+            <div class="hero-points">
+
+              <div class="hero-point">
+                <span>✓</span>
+                <p>
+                  Study from structured and exam-oriented notes.
+                </p>
+              </div>
+
+              <div class="hero-point">
+                <span>✓</span>
+                <p>
+                  Understand previous year question patterns.
+                </p>
+              </div>
+
+              <div class="hero-point">
+                <span>✓</span>
+                <p>
+                  Identify high-priority topics through trend analysis.
+                </p>
+              </div>
+
+              <div class="hero-point">
+                <span>✓</span>
+                <p>
+                  Practice with focused mock tests.
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           APPROACH
+      ==================================================== -->
+
+      <section
+        class="section approach-section"
+        id="approach"
+      >
+
+        <div class="container">
+
+          <div class="section-heading">
+
+            <div class="section-label">
+              HABITAT IAS METHOD
+            </div>
+
+            <h2>
+              Preparation with
+              <span>purpose.</span>
+            </h2>
+
+            <p>
+              Instead of studying everything equally, understand
+              the examination first and prepare according to
+              what the examination actually demands.
+            </p>
+
+          </div>
+
+
+          <div class="approach-grid">
+
+            <div class="approach-card">
+
+              <div class="approach-number">
+                01
+              </div>
+
+              <h3>
+                Understand
+              </h3>
+
+              <p>
+                Build conceptual clarity through structured
+                and focused study material.
+              </p>
+
+            </div>
+
+
+            <div class="approach-card">
+
+              <div class="approach-number">
+                02
+              </div>
+
+              <h3>
+                Analyse
+              </h3>
+
+              <p>
+                Study PYQs and question distribution to identify
+                recurring patterns and important areas.
+              </p>
+
+            </div>
+
+
+            <div class="approach-card">
+
+              <div class="approach-number">
+                03
+              </div>
+
+              <h3>
+                Prioritise
+              </h3>
+
+              <p>
+                Focus your preparation on high-value topics
+                without ignoring complete syllabus coverage.
+              </p>
+
+            </div>
+
+
+            <div class="approach-card">
+
+              <div class="approach-number">
+                04
+              </div>
+
+              <h3>
+                Practise
+              </h3>
+
+              <p>
+                Reinforce preparation through PYQs, mock tests
+                and repeated revision.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           BOOK SECTION
+      ==================================================== -->
+
+      <section class="section book-section">
+
+        <div class="container">
+
+          <div class="book-layout">
+
+            <!-- BOOK COVER -->
+
+            <div class="book-cover">
+
+              <img
+                src="/book-cover.jpg"
+                alt="JPSC Prelims Decoded: Topic-Wise PYQs book cover"
+                width="1024"
+                height="1536"
+                loading="eager"
+                decoding="async"
+              />
+
+            </div>
+
+
+            <!-- BOOK CONTENT -->
+
+            <div class="book-content">
+
+              <div class="section-label">
+                JPSC PRELIMS • PREVIOUS YEAR QUESTIONS
+              </div>
+
+              <h2>
+                JPSC Prelims
+                <span>Decoded.</span>
+              </h2>
+
+              <p class="book-description">
+                Topic-wise and subject-wise segregation of JPSC
+                previous year questions with detailed explanations,
+                trend analysis and an exam-focused approach.
+              </p>
+
+
+              <div class="book-features">
+
+                <div class="book-feature">
+                  ✓ Topic-wise segregation
+                </div>
+
+                <div class="book-feature">
+                  ✓ Subject-wise coverage
+                </div>
+
+                <div class="book-feature">
+                  ✓ Detailed explanations
+                </div>
+
+                <div class="book-feature">
+                  ✓ Exam trend analysis
+                </div>
+
+                <div class="book-feature">
+                  ✓ Repeated question analysis
+                </div>
+
+                <div class="book-feature">
+                  ✓ Jharkhand-specific coverage
+                </div>
+
+              </div>
+
+
+              <div class="book-price">
+
+                <span>
+                  Book Price
+                </span>
+
+                <strong>
+                  ₹299
+                </strong>
+
+              </div>
+
+
+              <div class="book-actions">
+
+                <a
+                  href="/book/"
+                  class="button button-primary"
+                >
+                  Get the Book →
+                </a>
+
+                <a
+                  href="/book/"
+                  class="button button-secondary"
+                >
+                  View Book Details
+                </a>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           TRENDS
+      ==================================================== -->
+
+      <section class="section trends-preview">
+
+        <div class="container">
+
+          <div class="section-heading">
+
+            <div class="section-label">
+              JPSC QUESTION TRENDS
+            </div>
+
+            <h2>
+              Understand the
+              <span>question pattern.</span>
+            </h2>
+
+            <p>
+              See how questions have been distributed across
+              important JPSC Prelims sections.
+            </p>
+
+          </div>
+
+
+          <div class="trend-preview-grid">
+
+            <!-- CURRENT AFFAIRS -->
+
+            <article class="trend-card">
+
+              <div class="trend-image-wrapper">
+
+                <img
+                  src="/current-affairs-trend.jpg"
+                  alt="JPSC Current Affairs topic-wise question distribution and trend analysis"
+                  class="trend-image"
+                  width="1024"
+                  height="1448"
+                  loading="lazy"
+                  decoding="async"
+                />
+
+              </div>
+
+              <div class="trend-card-content">
+
+                <div class="trend-tag">
+                  CURRENT AFFAIRS
+                </div>
+
+                <h3>
+                  Current Affairs Trend
+                </h3>
+
+                <p>
+                  Topic-wise distribution of questions and
+                  high-priority areas identified from JPSC
+                  previous year papers.
+                </p>
+
+                <a href="/trends/">
+                  Explore Trends →
+                </a>
+
+              </div>
+
+            </article>
+
+
+            <!-- ENVIRONMENT -->
+
+            <article class="trend-card">
+
+              <div class="trend-image-wrapper">
+
+                <img
+                  src="/environment-trend.jpg"
+                  alt="JPSC Environment topic-wise question distribution and trend analysis"
+                  class="trend-image"
+                  width="1024"
+                  height="1448"
+                  loading="lazy"
+                  decoding="async"
+                />
+
+              </div>
+
+              <div class="trend-card-content">
+
+                <div class="trend-tag">
+                  ENVIRONMENT
+                </div>
+
+                <h3>
+                  Environment Trend
+                </h3>
+
+                <p>
+                  Topic-wise question distribution and
+                  interpretation of Environment questions
+                  asked in JPSC Prelims.
+                </p>
+
+                <a href="/trends/">
+                  Explore Trends →
+                </a>
+
+              </div>
+
+            </article>
+
+          </div>
+
+
+          <div class="center-action">
+
+            <a
+              href="/trends/"
+              class="button button-primary"
+            >
+              View Complete Trends →
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           MOCK TESTS
+      ==================================================== -->
+
+      <section class="section mock-section">
+
+        <div class="container">
+
+          <div class="mock-layout">
+
+            <div class="mock-content">
+
+              <div class="section-label">
+                JPSC MOCK TESTS
+              </div>
+
+              <h2>
+                Practice like the
+                <span>real examination.</span>
+              </h2>
+
+              <p>
+                A focused collection of JPSC Prelims mock tests
+                designed around the examination structure,
+                General Studies and Jharkhand-specific preparation.
+              </p>
+
+              <div class="mock-stats">
+
+                <div>
+                  <strong>25</strong>
+                  <span>Total Tests</span>
+                </div>
+
+                <div>
+                  <strong>10</strong>
+                  <span>GS Tests</span>
+                </div>
+
+                <div>
+                  <strong>5</strong>
+                  <span>Jharkhand Special</span>
+                </div>
+
+                <div>
+                  <strong>10</strong>
+                  <span>Simulation Tests</span>
+                </div>
+
+              </div>
+
+              <a
+                href="/mock-tests/"
+                class="button button-primary"
+              >
+                Explore Mock Tests →
+              </a>
+
+            </div>
+
+
+            <div class="mock-card">
+
+              <div class="mock-icon">
+                ✓
+              </div>
+
+              <h3>
+                Exam-focused practice
+              </h3>
+
+              <ul>
+
+                <li>
+                  Mixed General Studies practice
+                </li>
+
+                <li>
+                  Jharkhand-specific questions
+                </li>
+
+                <li>
+                  Full examination simulation
+                </li>
+
+                <li>
+                  Revision-oriented testing
+                </li>
+
+              </ul>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           JPSC RESOURCES
+      ==================================================== -->
+
+      <section class="section resources-section">
+
+        <div class="container">
+
+          <div class="section-heading">
+
+            <div class="section-label">
+              JPSC PREPARATION
+            </div>
+
+            <h2>
+              Everything you need
+              <span>in one place.</span>
+            </h2>
+
+          </div>
+
+
+          <div class="resource-grid">
+
+            <a
+              href="/notes/"
+              class="resource-card"
+            >
+
+              <span class="resource-number">
+                01
+              </span>
+
+              <h3>
+                JPSC Notes
+              </h3>
+
+              <p>
+                Structured study material for focused preparation.
+              </p>
+
+              <span class="resource-link">
+                Explore Notes →
+              </span>
+
+            </a>
+
+
+            <a
+              href="/pyq/"
+              class="resource-card"
+            >
+
+              <span class="resource-number">
+                02
+              </span>
+
+              <h3>
+                JPSC PYQs
+              </h3>
+
+              <p>
+                Previous year questions organised for systematic
+                examination analysis.
+              </p>
+
+              <span class="resource-link">
+                Explore PYQs →
+              </span>
+
+            </a>
+
+
+            <a
+              href="/guidance/"
+              class="resource-card"
+            >
+
+              <span class="resource-number">
+                03
+              </span>
+
+              <h3>
+                Guidance
+              </h3>
+
+              <p>
+                Preparation strategy, examination guidance and
+                practical study direction.
+              </p>
+
+              <span class="resource-link">
+                Get Guidance →
+              </span>
+
+            </a>
+
+
+            <a
+              href="/jharkhand/"
+              class="resource-card"
+            >
+
+              <span class="resource-number">
+                04
+              </span>
+
+              <h3>
+                Jharkhand Special
+              </h3>
+
+              <p>
+                Dedicated resources for Jharkhand-specific
+                examination preparation.
+              </p>
+
+              <span class="resource-link">
+                Explore Jharkhand →
+              </span>
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           UPSC
+      ==================================================== -->
+
+      <section class="section upsc-section">
+
+        <div class="container">
+
+          <div class="upsc-layout">
+
+            <div>
+
+              <div class="section-label">
+                UPSC PREPARATION
+              </div>
+
+              <h2>
+                UPSC preparation,
+                <span>structured.</span>
+              </h2>
+
+              <p>
+                Explore UPSC-focused resources covering
+                examination overview, syllabus, Prelims,
+                Mains, PYQs, current affairs, strategy and
+                preparation resources.
+              </p>
+
+              <a
+                href="/upsc/"
+                class="button button-light"
+              >
+                Explore UPSC →
+              </a>
+
+            </div>
+
+
+            <div class="upsc-links">
+
+              <a href="/upsc/">
+                UPSC Overview
+              </a>
+
+              <a href="/upsc/">
+                Syllabus
+              </a>
+
+              <a href="/upsc/">
+                Prelims
+              </a>
+
+              <a href="/upsc/">
+                Mains
+              </a>
+
+              <a href="/upsc/">
+                PYQs
+              </a>
+
+              <a href="/upsc/">
+                Current Affairs
+              </a>
+
+              <a href="/upsc/">
+                Strategy
+              </a>
+
+              <a href="/upsc/">
+                Resources
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           FINAL CTA
+      ==================================================== -->
+
+      <section class="section final-cta">
+
+        <div class="container">
+
+          <div class="cta-box">
+
+            <div class="section-label">
+              HABITAT IAS
+            </div>
+
+            <h2>
+              Prepare smarter.
+              <br />
+              Understand the exam.
+            </h2>
+
+            <p>
+              Build your preparation around the examination,
+              not around endless study material.
+            </p>
+
+            <div class="cta-actions">
+
+              <a
+                href="/book/"
+                class="button button-yellow"
+              >
+                Get the JPSC Book →
+              </a>
+
+              <a
+                href="/mock-tests/"
+                class="button button-outline-light"
+              >
+                Start Practising →
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <Footer />
+
+
+    <!-- =====================================================
+         GLOBAL STYLES
+    ====================================================== -->
+
+    <style>
+
+      :global(*) {
+        box-sizing: border-box;
+      }
+
+      :global(html) {
+        scroll-behavior: smooth;
+      }
+
+      :global(body) {
+        margin: 0;
+        font-family:
+          Arial,
+          Helvetica,
+          sans-serif;
+        color: #10264d;
+        background: #ffffff;
+        overflow-x: hidden;
+      }
+
+      :global(a) {
+        text-decoration: none;
+      }
+
+
+      /* =====================================================
+         VARIABLES
+      ====================================================== */
+
+      :root {
+        --blue: #1657d9;
+        --dark-blue: #0d2450;
+        --deep-blue: #102a61;
+        --yellow: #ffd43b;
+        --light-blue: #eef4ff;
+        --border: #dce5f5;
+        --text: #10264d;
+        --muted: #64748b;
+        --white: #ffffff;
+      }
+
+
+      /* =====================================================
+         COMMON
+      ====================================================== */
+
+      .container {
+        width: min(1200px, calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .section {
+        padding: 100px 0;
+      }
+
+      .section-heading {
+        max-width: 760px;
+        margin-bottom: 55px;
+      }
+
+      .section-label {
+        display: inline-block;
+        margin-bottom: 18px;
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+        text-transform: uppercase;
+      }
+
+      .section-heading h2,
+      .book-content h2,
+      .mock-content h2,
+      .upsc-section h2 {
+        margin: 0 0 20px;
+        font-size: clamp(38px, 5vw, 62px);
+        line-height: 1.02;
+        letter-spacing: -2px;
+        color: var(--dark-blue);
+      }
+
+      .section-heading h2 span,
+      .book-content h2 span,
+      .mock-content h2 span,
+      .upsc-section h2 span {
+        color: var(--blue);
+      }
+
+      .section-heading p,
+      .book-description,
+      .mock-content > p,
+      .upsc-section p {
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.75;
+      }
+
+
+      /* =====================================================
+         BUTTONS
+      ====================================================== */
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 52px;
+        padding: 0 26px;
+        border-radius: 10px;
+        font-weight: 800;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background 0.2s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+      }
+
+      .button-primary {
+        background: var(--blue);
+        color: var(--white);
+        box-shadow: 0 10px 25px rgba(22, 87, 217, 0.18);
+      }
+
+      .button-primary:hover {
+        box-shadow: 0 14px 30px rgba(22, 87, 217, 0.28);
+      }
+
+      .button-secondary {
+        background: var(--white);
+        color: var(--blue);
+        border: 1px solid var(--blue);
+      }
+
+      .button-yellow {
+        background: var(--yellow);
+        color: #10264d;
+      }
+
+      .button-outline-light {
+        color: var(--white);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+      }
+
+      .button-light {
+        background: var(--white);
+        color: var(--blue);
+      }
+
+
+      /* =====================================================
+         HERO
+      ====================================================== */
+
+      .hero {
+        position: relative;
+        min-height: 650px;
+        overflow: hidden;
+        background:
+          linear-gradient(
+            120deg,
+            #123f9f 0%,
+            #1657d9 60%,
+            #2d6ce4 100%
+          );
+      }
+
+      .hero-container {
+        position: relative;
+        z-index: 2;
+        width: min(1320px, calc(100% - 60px));
+        min-height: 650px;
+        margin: 0 auto;
+        padding: 88px 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .hero-content {
+        color: var(--white);
+      }
+
+      .hero-label {
+        display: inline-flex;
+        padding: 12px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 30px;
+        color: white;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1px;
+      }
+
+      .hero-title {
+        margin: 40px 0 25px;
+        color: white;
+        font-size: clamp(58px, 7vw, 104px);
+        line-height: 0.91;
+        letter-spacing: -5px;
+        font-weight: 900;
+      }
+
+      .hero-title span {
+        color: var(--yellow);
+      }
+
+      .hero-description {
+        max-width: 650px;
+        margin-bottom: 35px;
+        color: rgba(255, 255, 255, 0.84);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .hero-card {
+        padding: 48px;
+        border-radius: 28px;
+        background: white;
+        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      .hero-card-label {
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.4px;
+      }
+
+      .hero-card h2 {
+        margin: 20px 0 28px;
+        color: var(--dark-blue);
+        font-size: clamp(30px, 3vw, 44px);
+        line-height: 1.1;
+      }
+
+      .hero-points {
+        display: grid;
+        gap: 16px;
+      }
+
+      .hero-point {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+      }
+
+      .hero-point span {
+        flex: 0 0 30px;
+        width: 30px;
+        height: 30px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: #edf3ff;
+        color: var(--blue);
+        font-weight: 900;
+      }
+
+      .hero-point p {
+        margin: 3px 0 0;
+        color: #526783;
+        line-height: 1.5;
+      }
+
+
+      /* =====================================================
+         APPROACH
+      ====================================================== */
+
+      .approach-section {
+        background: #ffffff;
+      }
+
+      .approach-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .approach-card {
+        position: relative;
+        padding: 30px;
+        min-height: 250px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .approach-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(16, 42, 97, 0.09);
+      }
+
+      .approach-number {
+        margin-bottom: 30px;
+        color: var(--blue);
+        font-size: 14px;
+        font-weight: 900;
+      }
+
+      .approach-card h3 {
+        margin: 0 0 12px;
+        color: var(--dark-blue);
+        font-size: 25px;
+      }
+
+      .approach-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+
+      /* =====================================================
+         BOOK
+      ====================================================== */
+
+      .book-section {
+        background: #f5f8ff;
+      }
+
+      .book-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 430px) 1fr;
+        gap: 90px;
+        align-items: center;
+      }
+
+      .book-cover {
+        width: 100%;
+        max-width: 430px;
+        margin: 0 auto;
+      }
+
+      .book-cover img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow:
+          0 25px 50px rgba(13, 36, 80, 0.18);
+      }
+
+      .book-content {
+        max-width: 700px;
+      }
+
+      .book-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin: 30px 0;
+      }
+
+      .book-feature {
+        padding: 17px 20px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: white;
+        color: #345276;
+        font-weight: 600;
+      }
+
+      .book-price {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        margin: 30px 0;
+      }
+
+      .book-price span {
+        color: var(--muted);
+        font-weight: 600;
+      }
+
+      .book-price strong {
+        color: var(--blue);
+        font-size: 34px;
+      }
+
+      .book-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+
+      /* =====================================================
+         TRENDS
+      ====================================================== */
+
+      .trends-preview {
+        background: white;
+      }
+
+      .trend-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 28px;
+      }
+
+      .trend-card {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: white;
+        box-shadow: 0 10px 35px rgba(16, 42, 97, 0.06);
+      }
+
+      .trend-image-wrapper {
+        overflow: hidden;
+        background: #f4f6fa;
+      }
+
+      .trend-image {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .trend-card-content {
+        padding: 28px;
+      }
+
+      .trend-tag {
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 1.2px;
+      }
+
+      .trend-card h3 {
+        margin: 0 0 10px;
+        color: var(--dark-blue);
+        font-size: 26px;
+      }
+
+      .trend-card p {
+        margin: 0 0 20px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .trend-card a {
+        color: var(--blue);
+        font-weight: 800;
+      }
+
+      .center-action {
+        margin-top: 40px;
+        text-align: center;
+      }
+
+
+      /* =====================================================
+         MOCK TESTS
+      ====================================================== */
+
+      .mock-section {
+        background: #f5f8ff;
+      }
+
+      .mock-layout {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 70px;
+        align-items: center;
+      }
+
+      .mock-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin: 35px 0;
+      }
+
+      .mock-stats div {
+        padding: 20px;
+        border-radius: 14px;
+        background: white;
+        border: 1px solid var(--border);
+        text-align: center;
+      }
+
+      .mock-stats strong {
+        display: block;
+        color: var(--blue);
+        font-size: 30px;
+      }
+
+      .mock-stats span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .mock-card {
+        padding: 42px;
+        border-radius: 24px;
+        background: var(--dark-blue);
+        color: white;
+        box-shadow: 0 20px 45px rgba(13, 36, 80, 0.18);
+      }
+
+      .mock-icon {
+        width: 52px;
+        height: 52px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 25px;
+        border-radius: 50%;
+        background: var(--yellow);
+        color: var(--dark-blue);
+        font-size: 25px;
+        font-weight: 900;
+      }
+
+      .mock-card h3 {
+        margin: 0 0 25px;
+        font-size: 28px;
+      }
+
+      .mock-card ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+      }
+
+      .mock-card li {
+        padding: 13px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.12);
+        color: rgba(255,255,255,0.78);
+      }
+
+
+      /* =====================================================
+         RESOURCES
+      ====================================================== */
+
+      .resources-section {
+        background: white;
+      }
+
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+      }
+
+      .resource-card {
+        padding: 30px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .resource-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(16, 42, 97, 0.09);
+      }
+
+      .resource-number {
+        display: block;
+        margin-bottom: 35px;
+        color: var(--blue);
+        font-weight: 900;
+      }
+
+      .resource-card h3 {
+        margin: 0 0 10px;
+        color: var(--dark-blue);
+        font-size: 24px;
+      }
+
+      .resource-card p {
+        min-height: 75px;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .resource-link {
+        display: inline-block;
+        margin-top: 15px;
+        color: var(--blue);
+        font-weight: 800;
+      }
+
+
+      /* =====================================================
+         UPSC
+      ====================================================== */
+
+      .upsc-section {
+        background: var(--dark-blue);
+        color: white;
+      }
+
+      .upsc-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .upsc-section .section-label {
+        color: var(--yellow);
+      }
+
+      .upsc-section h2 {
+        color: white;
+      }
+
+      .upsc-section h2 span {
+        color: var(--yellow);
+      }
+
+      .upsc-section p {
+        color: rgba(255,255,255,0.72);
+      }
+
+      .upsc-links {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+
+      .upsc-links a {
+        padding: 22px;
+        border: 1px solid rgba(255,255,255,0.14);
+        border-radius: 12px;
+        color: white;
+        background: rgba(255,255,255,0.04);
+        font-weight: 700;
+        transition: background 0.2s ease;
+      }
+
+      .upsc-links a:hover {
+        background: rgba(255,255,255,0.10);
+      }
+
+
+      /* =====================================================
+         FINAL CTA
+      ====================================================== */
+
+      .final-cta {
+        background:
+          linear-gradient(
+            120deg,
+            #123f9f,
+            #2163dd
+          );
+      }
+
+      .cta-box {
+        max-width: 850px;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+      }
+
+      .cta-box .section-label {
+        color: var(--yellow);
+      }
+
+      .cta-box h2 {
+        margin: 0 0 20px;
+        color: white;
+        font-size: clamp(42px, 6vw, 70px);
+        line-height: 1;
+        letter-spacing: -2px;
+      }
+
+      .cta-box p {
+        max-width: 650px;
+        margin: 0 auto 30px;
+        color: rgba(255,255,255,0.78);
+        font-size: 18px;
+        line-height: 1.7;
+      }
+
+      .cta-actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+
+      /* =====================================================
+         TABLET
+      ====================================================== */
+
+      @media (max-width: 1000px) {
+
+        .hero-container {
+          grid-template-columns: 1fr;
+          gap: 45px;
+        }
+
+        .hero-card {
+          max-width: 700px;
+        }
+
+        .approach-grid,
+        .resource-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .book-layout {
+          grid-template-columns: 320px 1fr;
+          gap: 50px;
+        }
+
+        .mock-layout,
+        .upsc-layout {
+          grid-template-columns: 1fr;
+        }
+
+      }
+
+
+      /* =====================================================
+         MOBILE
+      ====================================================== */
+
+      @media (max-width: 700px) {
+
+        .container {
+          width: min(100% - 32px, 600px);
+        }
+
+        .section {
+          padding: 70px 0;
+        }
+
+        .hero-container {
+          width: min(100% - 32px, 600px);
+          min-height: auto;
+          padding: 65px 0;
+        }
+
+        .hero-title {
+          margin-top: 30px;
+          font-size: clamp(52px, 15vw, 76px);
+          letter-spacing: -3px;
+        }
+
+        .hero-description {
+          font-size: 16px;
+        }
+
+        .hero-card {
+          padding: 28px;
+          border-radius: 20px;
+        }
+
+        .hero-card h2 {
+          font-size: 30px;
+        }
+
+        .approach-grid,
+        .resource-grid,
+        .trend-preview-grid,
+        .book-features,
+        .mock-stats,
+        .upsc-links {
+          grid-template-columns: 1fr;
+        }
+
+        .book-layout {
+          grid-template-columns: 1fr;
+          gap: 45px;
+        }
+
+        .book-cover {
+          max-width: 340px;
+        }
+
+        .book-content h2,
+        .section-heading h2,
+        .mock-content h2,
+        .upsc-section h2 {
+          font-size: 42px;
+        }
+
+        .mock-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .upsc-links {
+          grid-template-columns: 1fr;
+        }
+
+        .button {
+          width: 100%;
+        }
+
+        .hero-actions,
+        .book-actions,
+        .cta-actions {
+          flex-direction: column;
+        }
+
+        .cta-box h2 {
+          font-size: 46px;
+        }
+
+      }
+
+
+      /* =====================================================
+         SMALL MOBILE
+      ====================================================== */
+
+      @media (max-width: 420px) {
+
+        .hero-title {
+          font-size: 50px;
+        }
+
+        .mock-stats {
+          grid-template-columns: 1fr 1fr;
+        }
+
+        .section-heading h2,
+        .book-content h2,
+        .mock-content h2,
+        .upsc-section h2 {
+          font-size: 36px;
+          letter-spacing: -1.5px;
+        }
+
+      }
+
+    </style>
+
+  </body>
 </html>

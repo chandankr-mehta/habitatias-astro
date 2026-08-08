@@ -1,0 +1,641 @@
+---
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="robots"
+    content="noindex, nofollow"
+  />
+
+  <title>
+    Page Not Found | Habitat IAS
+  </title>
+
+  <meta
+    name="description"
+    content="The page you're looking for could not be found. Explore Habitat IAS for JPSC and UPSC preparation resources."
+  />
+
+</head>
+
+
+<body>
+
+  <!-- GLOBAL HEADER -->
+
+  <Header />
+
+
+  <!-- =====================================================
+       404 CONTENT
+  ====================================================== -->
+
+  <main class="error-page">
+
+    <div class="error-container">
+
+
+      <!-- ERROR NUMBER -->
+
+      <div class="error-number">
+        404
+      </div>
+
+
+      <!-- SMALL LABEL -->
+
+      <div class="error-label">
+        PAGE NOT FOUND
+      </div>
+
+
+      <!-- TITLE -->
+
+      <h1>
+        Looks like you've
+        <span>taken a wrong turn.</span>
+      </h1>
+
+
+      <!-- DESCRIPTION -->
+
+      <p class="error-description">
+
+        The page you're looking for doesn't exist, may have been
+        moved, or the URL may be incorrect.
+
+        Don't worry — you can continue exploring Habitat IAS.
+
+      </p>
+
+
+      <!-- BUTTONS -->
+
+      <div class="error-actions">
+
+        <a
+          href="/"
+          class="error-button primary"
+        >
+          ← Back to Home
+        </a>
+
+
+        <a
+          href="/pyq/"
+          class="error-button secondary"
+        >
+          Explore JPSC
+        </a>
+
+
+        <a
+          href="/upsc/"
+          class="error-button secondary"
+        >
+          Explore UPSC
+        </a>
+
+      </div>
+
+
+      <!-- QUICK LINKS -->
+
+      <div class="quick-links">
+
+        <p>
+          Or explore:
+        </p>
+
+
+        <div class="quick-link-list">
+
+          <a href="/notes/">
+            Notes
+          </a>
+
+          <a href="/trends/">
+            Trends
+          </a>
+
+          <a href="/mock-tests/">
+            Mock Tests
+          </a>
+
+          <a href="/resources/">
+            Resources
+          </a>
+
+          <a href="/book/">
+            JPSC PYQ Book
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- GLOBAL FOOTER -->
+
+  <Footer />
+
+
+  <style>
+
+    /* =====================================================
+       404 PAGE
+    ====================================================== */
+
+    .error-page {
+
+      min-height: 620px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding:
+        90px
+        25px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #f7f9fd 0%,
+          #ffffff 50%,
+          #eef4ff 100%
+        );
+
+      position: relative;
+
+      overflow: hidden;
+
+    }
+
+
+    /* BACKGROUND CIRCLE */
+
+    .error-page::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 500px;
+
+      height: 500px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(
+          22,
+          87,
+          217,
+          0.045
+        );
+
+      top: -250px;
+
+      right: -170px;
+
+    }
+
+
+    .error-page::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 350px;
+
+      height: 350px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(
+          255,
+          212,
+          59,
+          0.06
+        );
+
+      bottom: -190px;
+
+      left: -150px;
+
+    }
+
+
+    /* =====================================================
+       CONTAINER
+    ====================================================== */
+
+    .error-container {
+
+      position: relative;
+
+      z-index: 2;
+
+      width: 100%;
+
+      max-width: 850px;
+
+      margin: 0 auto;
+
+      text-align: center;
+
+    }
+
+
+    /* =====================================================
+       404 NUMBER
+    ====================================================== */
+
+    .error-number {
+
+      font-size:
+        clamp(
+          110px,
+          20vw,
+          210px
+        );
+
+      line-height: 0.85;
+
+      font-weight: 950;
+
+      letter-spacing: -10px;
+
+      color: #1657d9;
+
+      margin-bottom: 30px;
+
+      text-shadow:
+        0 15px 35px
+        rgba(
+          22,
+          87,
+          217,
+          0.12
+        );
+
+    }
+
+
+    /* =====================================================
+       LABEL
+    ====================================================== */
+
+    .error-label {
+
+      display: inline-block;
+
+      padding:
+        8px
+        15px;
+
+      border-radius: 999px;
+
+      background: #eaf1ff;
+
+      color: #1657d9;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      margin-bottom: 18px;
+
+    }
+
+
+    /* =====================================================
+       TITLE
+    ====================================================== */
+
+    .error-container h1 {
+
+      color: #14213d;
+
+      font-size:
+        clamp(
+          34px,
+          5vw,
+          55px
+        );
+
+      line-height: 1.1;
+
+      letter-spacing: -1.5px;
+
+      margin:
+        0
+        auto
+        18px;
+
+      max-width: 750px;
+
+    }
+
+
+    .error-container h1 span {
+
+      color: #1657d9;
+
+    }
+
+
+    /* =====================================================
+       DESCRIPTION
+    ====================================================== */
+
+    .error-description {
+
+      max-width: 650px;
+
+      margin:
+        0
+        auto
+        30px;
+
+      color: #68758c;
+
+      font-size: 16px;
+
+      line-height: 1.8;
+
+    }
+
+
+    /* =====================================================
+       BUTTONS
+    ====================================================== */
+
+    .error-actions {
+
+      display: flex;
+
+      justify-content: center;
+
+      align-items: center;
+
+      gap: 10px;
+
+      flex-wrap: wrap;
+
+      margin-bottom: 35px;
+
+    }
+
+
+    .error-button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 48px;
+
+      padding:
+        12px
+        20px;
+
+      border-radius: 10px;
+
+      font-size: 14px;
+
+      font-weight: 850;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+    }
+
+
+    .error-button:hover {
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .error-button.primary {
+
+      background: #1657d9;
+
+      color: #ffffff;
+
+      box-shadow:
+        0 10px 25px
+        rgba(
+          22,
+          87,
+          217,
+          0.18
+        );
+
+    }
+
+
+    .error-button.primary:hover {
+
+      background: #1048bb;
+
+    }
+
+
+    .error-button.secondary {
+
+      background: #ffffff;
+
+      color: #3e4b64;
+
+      border:
+        1px solid #dce3ef;
+
+    }
+
+
+    .error-button.secondary:hover {
+
+      color: #1657d9;
+
+      border-color:
+        #b9c9e8;
+
+      background: #f8faff;
+
+    }
+
+
+    /* =====================================================
+       QUICK LINKS
+    ====================================================== */
+
+    .quick-links {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 15px;
+
+      flex-wrap: wrap;
+
+      color: #7a869b;
+
+      font-size: 13px;
+
+    }
+
+
+    .quick-links p {
+
+      margin: 0;
+
+      font-weight: 700;
+
+    }
+
+
+    .quick-link-list {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      flex-wrap: wrap;
+
+    }
+
+
+    .quick-link-list a {
+
+      color: #1657d9;
+
+      font-weight: 750;
+
+      padding:
+        4px
+        7px;
+
+      border-radius: 6px;
+
+    }
+
+
+    .quick-link-list a:hover {
+
+      background: #eaf1ff;
+
+    }
+
+
+    /* =====================================================
+       MOBILE
+    ====================================================== */
+
+    @media (max-width: 600px) {
+
+      .error-page {
+
+        min-height: 550px;
+
+        padding:
+          70px
+          18px;
+
+      }
+
+
+      .error-number {
+
+        font-size: 125px;
+
+        letter-spacing: -7px;
+
+        margin-bottom: 25px;
+
+      }
+
+
+      .error-container h1 {
+
+        font-size: 34px;
+
+      }
+
+
+      .error-description {
+
+        font-size: 15px;
+
+      }
+
+
+      .error-actions {
+
+        flex-direction: column;
+
+      }
+
+
+      .error-button {
+
+        width: 100%;
+
+        max-width: 280px;
+
+      }
+
+
+      .quick-links {
+
+        flex-direction: column;
+
+        gap: 8px;
+
+      }
+
+    }
+
+  </style>
+
+</body>
+
+</html>

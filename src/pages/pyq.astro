@@ -1,0 +1,756 @@
+---
+const bookLink = "https://linktr.ee/HabitatIAS";
+
+const subjects = [
+  {
+    icon: "🏛️",
+    title: "Indian Polity",
+    description: "Constitution, Fundamental Rights, Parliament, Judiciary, President, Governor and constitutional bodies.",
+    tag: "High Priority",
+  },
+  {
+    icon: "🌍",
+    title: "Geography",
+    description: "Physical geography, Indian geography, resources, rivers, climate, soils and geographical concepts.",
+    tag: "Core GS",
+  },
+  {
+    icon: "📜",
+    title: "History",
+    description: "Ancient, Medieval and Modern Indian History with emphasis on concepts repeatedly tested by JPSC.",
+    tag: "Core GS",
+  },
+  {
+    icon: "💰",
+    title: "Indian Economy",
+    description: "Basic economics, national income, banking, budget, taxation, planning and economic development.",
+    tag: "Important",
+  },
+  {
+    icon: "🔬",
+    title: "Science & Technology",
+    description: "Physics, Chemistry, Biology, Space Technology, Defence Technology, Computer and IT.",
+    tag: "Scoring",
+  },
+  {
+    icon: "🌱",
+    title: "Environment",
+    description: "Ecology, biodiversity, conservation, climate change, pollution and environmental institutions.",
+    tag: "Important",
+  },
+  {
+    icon: "🌐",
+    title: "International Relations",
+    description: "International organisations, groupings, India's neighbourhood and major global developments.",
+    tag: "GS",
+  },
+  {
+    icon: "🟢",
+    title: "Jharkhand Special",
+    description: "Jharkhand history, geography, movement, economy, culture, schemes, laws and contemporary issues.",
+    tag: "JPSC Special",
+  },
+];
+
+const features = [
+  "Topic-wise PYQ classification",
+  "Subject-wise analysis",
+  "Year-wise question trends",
+  "Detailed explanations",
+  "Repeated concepts identified",
+  "High-priority topics",
+  "Exam-focused preparation",
+  "Pattern and trend analysis",
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta
+      name="description"
+      content="JPSC Previous Year Questions — topic-wise, subject-wise and year-wise PYQ analysis by Habitat IAS."
+    />
+    <title>JPSC PYQ | Habitat IAS</title>
+
+    <style>
+      :global(*) {
+        box-sizing: border-box;
+      }
+
+      :global(html) {
+        scroll-behavior: smooth;
+      }
+
+      :global(body) {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: #172033;
+        background: #f7f9fc;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid #e8edf5;
+      }
+
+      .nav {
+        max-width: 1240px;
+        margin: auto;
+        min-height: 78px;
+        padding: 0 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 30px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+        color: #1657d9;
+        font-weight: 800;
+        font-size: 24px;
+      }
+
+      .brand-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #1657d9;
+        color: white;
+        font-weight: 900;
+        box-shadow: 0 8px 22px rgba(22, 87, 217, 0.22);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 28px;
+      }
+
+      .nav-links a {
+        color: #4d5870;
+        text-decoration: none;
+        font-size: 15px;
+        font-weight: 700;
+      }
+
+      .nav-links a:hover {
+        color: #1657d9;
+      }
+
+      .nav-cta {
+        background: #1657d9 !important;
+        color: white !important;
+        padding: 13px 20px;
+        border-radius: 10px;
+      }
+
+      .hero {
+        background:
+          radial-gradient(circle at 80% 20%, rgba(255, 210, 63, 0.22), transparent 25%),
+          linear-gradient(135deg, #0c378f 0%, #1657d9 58%, #2872e8 100%);
+        color: white;
+        padding: 78px 24px 86px;
+      }
+
+      .hero-inner {
+        max-width: 1180px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 55px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        padding: 9px 15px;
+        border: 1px solid rgba(255,255,255,0.3);
+        border-radius: 999px;
+        background: rgba(255,255,255,0.1);
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+      }
+
+      .hero h1 {
+        margin: 22px 0 18px;
+        font-size: clamp(46px, 6vw, 76px);
+        line-height: 0.98;
+        letter-spacing: -3px;
+      }
+
+      .hero h1 span {
+        color: #ffd13d;
+      }
+
+      .hero p {
+        max-width: 700px;
+        margin: 0;
+        font-size: 19px;
+        line-height: 1.75;
+        color: rgba(255,255,255,0.88);
+      }
+
+      .hero-buttons {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 22px;
+        border-radius: 11px;
+        text-decoration: none;
+        font-weight: 800;
+        border: 1px solid transparent;
+      }
+
+      .button-primary {
+        background: #ffd13d;
+        color: #182033;
+      }
+
+      .button-secondary {
+        border-color: rgba(255,255,255,0.35);
+        color: white;
+        background: rgba(255,255,255,0.08);
+      }
+
+      .hero-card {
+        background: white;
+        color: #172033;
+        border-radius: 24px;
+        padding: 30px;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.2);
+      }
+
+      .hero-card-label {
+        color: #1657d9;
+        font-weight: 900;
+        font-size: 12px;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+      }
+
+      .hero-card h2 {
+        margin: 12px 0 22px;
+        font-size: 27px;
+        line-height: 1.2;
+      }
+
+      .check-list {
+        display: grid;
+        gap: 13px;
+      }
+
+      .check {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: #536077;
+        line-height: 1.45;
+      }
+
+      .check-icon {
+        flex: 0 0 23px;
+        width: 23px;
+        height: 23px;
+        border-radius: 50%;
+        background: #eaf1ff;
+        color: #1657d9;
+        display: grid;
+        place-items: center;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .section {
+        max-width: 1180px;
+        margin: auto;
+        padding: 78px 24px;
+      }
+
+      .section-heading {
+        max-width: 760px;
+        margin-bottom: 38px;
+      }
+
+      .section-label {
+        color: #1657d9;
+        font-weight: 900;
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+      }
+
+      .section h2 {
+        margin: 10px 0 12px;
+        font-size: clamp(32px, 4vw, 46px);
+        letter-spacing: -1.5px;
+        line-height: 1.1;
+      }
+
+      .section-heading p {
+        margin: 0;
+        color: #68748a;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+
+      .feature {
+        background: white;
+        border: 1px solid #e7ebf2;
+        border-radius: 15px;
+        padding: 20px;
+        font-weight: 750;
+        line-height: 1.4;
+        box-shadow: 0 8px 25px rgba(27, 45, 80, 0.04);
+      }
+
+      .feature::before {
+        content: "✓";
+        display: inline-grid;
+        place-items: center;
+        width: 25px;
+        height: 25px;
+        margin-right: 9px;
+        border-radius: 50%;
+        background: #eaf1ff;
+        color: #1657d9;
+        font-size: 13px;
+      }
+
+      .subjects {
+        background: white;
+      }
+
+      .subject-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+      }
+
+      .subject-card {
+        background: #fff;
+        border: 1px solid #e4e9f1;
+        border-radius: 18px;
+        padding: 24px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .subject-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 18px 45px rgba(31, 55, 95, 0.1);
+      }
+
+      .subject-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 14px;
+        background: #edf3ff;
+        display: grid;
+        place-items: center;
+        font-size: 25px;
+        margin-bottom: 18px;
+      }
+
+      .subject-card h3 {
+        margin: 0 0 9px;
+        font-size: 20px;
+      }
+
+      .subject-card p {
+        margin: 0;
+        color: #68748a;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .tag {
+        display: inline-block;
+        margin-top: 18px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #f0f4fa;
+        color: #526078;
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .analysis {
+        background: #f7f9fc;
+      }
+
+      .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+
+      .analysis-card {
+        background: white;
+        border-radius: 18px;
+        border: 1px solid #e4e9f1;
+        padding: 28px;
+      }
+
+      .analysis-number {
+        font-size: 36px;
+        font-weight: 900;
+        color: #1657d9;
+      }
+
+      .analysis-card h3 {
+        margin: 8px 0;
+      }
+
+      .analysis-card p {
+        color: #68748a;
+        line-height: 1.6;
+        margin-bottom: 0;
+      }
+
+      .cta {
+        max-width: 1180px;
+        margin: 0 auto 80px;
+        padding: 0 24px;
+      }
+
+      .cta-box {
+        border-radius: 25px;
+        padding: 48px;
+        color: white;
+        background: linear-gradient(135deg, #102f78, #1657d9);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .cta-box h2 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+
+      .cta-box p {
+        margin: 0;
+        color: rgba(255,255,255,0.8);
+        line-height: 1.6;
+      }
+
+      .price {
+        font-size: 28px;
+        font-weight: 900;
+        margin-top: 15px;
+        color: #ffd13d;
+      }
+
+      .footer {
+        background: #101827;
+        color: #b6c0d0;
+        padding: 45px 24px;
+      }
+
+      .footer-inner {
+        max-width: 1180px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+      }
+
+      .footer-brand {
+        color: white;
+        font-weight: 900;
+        font-size: 20px;
+        margin-bottom: 7px;
+      }
+
+      .footer small {
+        color: #8e9aaf;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .footer-links a {
+        color: #c9d2e0;
+        text-decoration: none;
+        font-size: 14px;
+      }
+
+      @media (max-width: 950px) {
+        .hero-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .subject-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .nav {
+          min-height: 70px;
+        }
+
+        .nav-links a:not(.nav-cta) {
+          display: none;
+        }
+
+        .hero {
+          padding-top: 55px;
+        }
+
+        .hero h1 {
+          letter-spacing: -2px;
+        }
+
+        .feature-grid,
+        .subject-grid,
+        .analysis-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta-box,
+        .footer-inner {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .cta-box {
+          padding: 32px 25px;
+        }
+
+        .section {
+          padding: 58px 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="nav">
+        <a href="/" class="brand">
+          <span class="brand-icon">H</span>
+          Habitat IAS
+        </a>
+
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/#resources">Resources</a>
+          <a href="/pyq">JPSC PYQ</a>
+          <a href="/#modules">Modules</a>
+          <a href="/#contact">Contact</a>
+          <a class="nav-cta" href={bookLink} target="_blank" rel="noopener">
+            Get the Book
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">JPSC PRELIMS • PYQ ANALYSIS</div>
+
+            <h1>
+              Decode the
+              <span>JPSC PYQs.</span>
+            </h1>
+
+            <p>
+              Understand what JPSC actually asks. Study previous year
+              questions topic-wise, subject-wise and year-wise — and identify
+              the patterns that matter for your preparation.
+            </p>
+
+            <div class="hero-buttons">
+              <a href="#subjects" class="button button-primary">
+                Explore PYQs
+              </a>
+
+              <a href={bookLink} target="_blank" rel="noopener" class="button button-secondary">
+                Get JPSC PYQ Book
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-card-label">Habitat IAS PYQ Approach</div>
+
+            <h2>Prepare from the examination pattern.</h2>
+
+            <div class="check-list">
+              {
+                features.slice(0, 6).map((feature) => (
+                  <div class="check">
+                    <span class="check-icon">✓</span>
+                    <span>{feature}</span>
+                  </div>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-heading">
+          <div class="section-label">Why PYQs matter</div>
+          <h2>Don't just solve PYQs. Decode them.</h2>
+          <p>
+            Previous year questions reveal the areas JPSC repeatedly tests,
+            the level of conceptual understanding expected and the subjects
+            that deserve greater attention.
+          </p>
+        </div>
+
+        <div class="feature-grid">
+          {
+            features.map((feature) => (
+              <div class="feature">{feature}</div>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section subjects" id="subjects">
+        <div class="section-heading">
+          <div class="section-label">PYQ Subjects</div>
+          <h2>Explore JPSC PYQs by subject.</h2>
+          <p>
+            The module will progressively organize JPSC questions into
+            structured subject and topic categories.
+          </p>
+        </div>
+
+        <div class="subject-grid">
+          {
+            subjects.map((subject) => (
+              <article class="subject-card">
+                <div class="subject-icon">{subject.icon}</div>
+                <h3>{subject.title}</h3>
+                <p>{subject.description}</p>
+                <span class="tag">{subject.tag}</span>
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="section analysis">
+        <div class="section-heading">
+          <div class="section-label">Exam Trend Analysis</div>
+          <h2>Turn previous papers into a preparation strategy.</h2>
+          <p>
+            We will use PYQs to identify recurring themes, important areas,
+            question distribution and preparation priorities.
+          </p>
+        </div>
+
+        <div class="analysis-grid">
+          <div class="analysis-card">
+            <div class="analysis-number">01</div>
+            <h3>Topic Frequency</h3>
+            <p>
+              Identify topics that appear repeatedly across JPSC examinations.
+            </p>
+          </div>
+
+          <div class="analysis-card">
+            <div class="analysis-number">02</div>
+            <h3>Question Pattern</h3>
+            <p>
+              Understand how JPSC frames questions and tests conceptual
+              understanding.
+            </p>
+          </div>
+
+          <div class="analysis-card">
+            <div class="analysis-number">03</div>
+            <h3>Priority Areas</h3>
+            <p>
+              Separate high-priority, moderate-priority and low-frequency
+              areas for efficient preparation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta">
+        <div class="cta-box">
+          <div>
+            <h2>JPSC Prelims Decoded</h2>
+
+            <p>
+              Topic-wise JPSC PYQs with detailed explanation and an
+              exam-focused approach.
+            </p>
+
+            <div class="price">₹299</div>
+          </div>
+
+          <a
+            href={bookLink}
+            target="_blank"
+            rel="noopener"
+            class="button button-primary"
+          >
+            Get the Book →
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        <div>
+          <div class="footer-brand">Habitat IAS</div>
+          <small>Focused preparation for JPSC aspirants.</small>
+        </div>
+
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/book">Book</a>
+          <a href="/pyq">JPSC PYQ</a>
+          <a href={bookLink} target="_blank" rel="noopener">Linktree</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

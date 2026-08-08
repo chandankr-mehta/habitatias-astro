@@ -1,0 +1,209 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  keywords?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = "Habitat IAS | JPSC & UPSC Preparation",
+
+  description =
+    "Habitat IAS provides exam-oriented preparation resources for JPSC and UPSC aspirants, including previous year questions, notes, trend analysis, mock tests and focused study resources.",
+
+  canonical,
+
+  image = "/og-image.jpg",
+
+  keywords =
+    "JPSC, JPSC preparation, JPSC PYQ, JPSC notes, JPSC mock test, Jharkhand PSC, JPSC Prelims, UPSC, UPSC preparation, UPSC PYQ, UPSC notes, Habitat IAS",
+
+  noindex = false,
+} = Astro.props;
+
+
+/* =========================================================
+   SITE URL
+========================================================= */
+
+const siteUrl =
+  import.meta.env.PUBLIC_SITE_URL ||
+  "https://habitatias.com";
+
+
+/* =========================================================
+   CANONICAL URL
+========================================================= */
+
+const canonicalUrl = canonical
+  ? new URL(canonical, siteUrl).href
+  : Astro.url.href;
+
+
+/* =========================================================
+   SOCIAL IMAGE
+========================================================= */
+
+const imageUrl =
+  new URL(image, siteUrl).href;
+
+---
+
+<!-- =======================================================
+     BASIC SEO
+======================================================== -->
+
+<title>{title}</title>
+
+<meta
+  name="description"
+  content={description}
+/>
+
+<meta
+  name="keywords"
+  content={keywords}
+/>
+
+<meta
+  name="author"
+  content="Habitat IAS"
+/>
+
+<meta
+  name="robots"
+  content={
+    noindex
+      ? "noindex, nofollow"
+      : "index, follow"
+  }
+/>
+
+
+<!-- =======================================================
+     CANONICAL
+======================================================== -->
+
+<link
+  rel="canonical"
+  href={canonicalUrl}
+/>
+
+
+<!-- =======================================================
+     FAVICON
+======================================================== -->
+
+<link
+  rel="icon"
+  type="image/png"
+  href="/favicon.png"
+/>
+
+<link
+  rel="apple-touch-icon"
+  href="/favicon.png"
+/>
+
+
+<!-- =======================================================
+     WEB APP MANIFEST
+======================================================== -->
+
+<link
+  rel="manifest"
+  href="/site.webmanifest"
+/>
+
+
+<!-- =======================================================
+     THEME
+======================================================== -->
+
+<meta
+  name="theme-color"
+  content="#1657d9"
+/>
+
+
+<!-- =======================================================
+     OPEN GRAPH
+======================================================== -->
+
+<meta
+  property="og:type"
+  content="website"
+/>
+
+<meta
+  property="og:site_name"
+  content="Habitat IAS"
+/>
+
+<meta
+  property="og:title"
+  content={title}
+/>
+
+<meta
+  property="og:description"
+  content={description}
+/>
+
+<meta
+  property="og:url"
+  content={canonicalUrl}
+/>
+
+<meta
+  property="og:image"
+  content={imageUrl}
+/>
+
+<meta
+  property="og:image:alt"
+  content={title}
+/>
+
+
+<!-- =======================================================
+     X / TWITTER
+======================================================== -->
+
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+/>
+
+<meta
+  name="twitter:title"
+  content={title}
+/>
+
+<meta
+  name="twitter:description"
+  content={description}
+/>
+
+<meta
+  name="twitter:image"
+  content={imageUrl}
+/>
+
+<meta
+  name="twitter:image:alt"
+  content={title}
+/>
+
+
+<!-- =======================================================
+     REFERRER / SECURITY
+======================================================== -->
+
+<meta
+  name="referrer"
+  content="strict-origin-when-cross-origin"
+/>

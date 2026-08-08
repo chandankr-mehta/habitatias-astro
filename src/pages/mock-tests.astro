@@ -1,0 +1,1553 @@
+---
+const bookLink = "https://linktr.ee/HabitatIAS";
+
+const tests = [
+  {
+    number: "01",
+    title: "History",
+    description: "Ancient, Medieval and Modern Indian History.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "02",
+    title: "Geography",
+    description: "Physical, Indian and World Geography.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "03",
+    title: "Indian Polity",
+    description: "Constitution, Parliament, Judiciary and Governance.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "04",
+    title: "Economy",
+    description: "Indian Economy, development and economic concepts.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "05",
+    title: "Science & Technology",
+    description: "Physics, Chemistry, Biology, Space and Defence Technology.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "06",
+    title: "Environment",
+    description: "Ecology, biodiversity, climate change and conservation.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "07",
+    title: "Current Affairs",
+    description: "Important national, international and Jharkhand current affairs.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "08",
+    title: "International Relations",
+    description: "International organisations, groupings and India's neighbourhood.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "09",
+    title: "General Studies",
+    description: "Mixed GS concepts and miscellaneous examination areas.",
+    category: "Subject-wise GS",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "10",
+    title: "Mixed GS",
+    description: "Comprehensive mixed test covering major Paper-I areas.",
+    category: "Subject-wise GS",
+    questions: "50 Questions",
+    time: "50 Minutes",
+  },
+];
+
+const jharkhandTests = [
+  {
+    number: "01",
+    title: "Jharkhand History",
+    description: "History, movements and important historical events of Jharkhand.",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "02",
+    title: "Jharkhand Geography",
+    description: "Physical geography, rivers, minerals, forests and districts.",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "03",
+    title: "Jharkhand Economy",
+    description: "Industries, minerals, agriculture, development and state economy.",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "04",
+    title: "Jharkhand Culture & Society",
+    description: "Tribes, festivals, languages, literature, art and culture.",
+    questions: "25 Questions",
+    time: "25 Minutes",
+  },
+  {
+    number: "05",
+    title: "Jharkhand Complete",
+    description: "Mixed Jharkhand Special test covering major state-specific areas.",
+    questions: "50 Questions",
+    time: "50 Minutes",
+  },
+];
+
+const paperOneTests = [
+  {
+    number: "01",
+    title: "Paper-I Simulation 01",
+  },
+  {
+    number: "02",
+    title: "Paper-I Simulation 02",
+  },
+  {
+    number: "03",
+    title: "Paper-I Simulation 03",
+  },
+  {
+    number: "04",
+    title: "Paper-I Simulation 04",
+  },
+  {
+    number: "05",
+    title: "Paper-I Simulation 05",
+  },
+];
+
+const paperTwoTests = [
+  {
+    number: "01",
+    title: "Paper-II Simulation 01",
+  },
+  {
+    number: "02",
+    title: "Paper-II Simulation 02",
+  },
+  {
+    number: "03",
+    title: "Paper-II Simulation 03",
+  },
+  {
+    number: "04",
+    title: "Paper-II Simulation 04",
+  },
+  {
+    number: "05",
+    title: "Paper-II Simulation 05",
+  },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="JPSC Mock Tests by Habitat IAS — subject-wise tests, Jharkhand Special tests and full Paper-I and Paper-II simulations."
+    />
+
+    <meta
+      name="keywords"
+      content="JPSC Mock Test, JPSC Prelims Mock Test, JPSC Test Series, Jharkhand PSC Mock Test, JPSC Paper 1, JPSC Paper 2"
+    />
+
+    <title>JPSC Mock Tests | Habitat IAS</title>
+
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family:
+          Arial,
+          Helvetica,
+          sans-serif;
+        background: #f5f7fb;
+        color: #172033;
+        line-height: 1.6;
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      /* =========================
+         HEADER
+      ========================= */
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+
+        background: rgba(255, 255, 255, 0.97);
+
+        border-bottom: 1px solid #e5e9f2;
+
+        backdrop-filter: blur(10px);
+      }
+
+      .nav {
+        max-width: 1280px;
+        min-height: 82px;
+
+        margin: 0 auto;
+        padding: 14px 28px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 25px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        color: #1657d9;
+
+        font-size: 25px;
+        font-weight: 800;
+
+        white-space: nowrap;
+      }
+
+      .logo-mark {
+        width: 48px;
+        height: 48px;
+
+        border-radius: 13px;
+
+        background: #1657d9;
+
+        color: white;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 25px;
+        font-weight: 800;
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+
+        justify-content: flex-end;
+
+        gap: 22px;
+
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: #44506a;
+
+        font-size: 15px;
+        font-weight: 700;
+
+        transition: 0.2s ease;
+      }
+
+      .nav-links a:hover {
+        color: #1657d9;
+      }
+
+      .nav-cta {
+        background: #1657d9;
+
+        color: white !important;
+
+        padding: 13px 20px;
+
+        border-radius: 10px;
+      }
+
+      /* =========================
+         HERO
+      ========================= */
+
+      .hero {
+        background:
+          linear-gradient(
+            135deg,
+            #102f82,
+            #1657d9,
+            #2d72e8
+          );
+
+        color: white;
+
+        padding: 85px 28px 105px;
+      }
+
+      .hero-inner {
+        max-width: 1050px;
+
+        margin: 0 auto;
+
+        text-align: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+
+        padding: 8px 17px;
+
+        border-radius: 999px;
+
+        border: 1px solid rgba(255, 255, 255, 0.35);
+
+        background: rgba(255, 255, 255, 0.1);
+
+        font-size: 13px;
+        font-weight: 800;
+
+        letter-spacing: 0.7px;
+
+        margin-bottom: 20px;
+      }
+
+      .hero h1 {
+        font-size: clamp(44px, 6vw, 76px);
+
+        line-height: 1.02;
+
+        font-weight: 900;
+
+        margin-bottom: 20px;
+      }
+
+      .hero h1 span {
+        color: #ffd43b;
+      }
+
+      .hero p {
+        max-width: 780px;
+
+        margin: 0 auto;
+
+        font-size: 19px;
+
+        color: rgba(255, 255, 255, 0.9);
+      }
+
+      /* =========================
+         MAIN
+      ========================= */
+
+      .main {
+        max-width: 1200px;
+
+        margin: -65px auto 0;
+
+        position: relative;
+
+        z-index: 5;
+
+        padding: 0 22px 80px;
+      }
+
+      /* =========================
+         OVERVIEW
+      ========================= */
+
+      .overview {
+        background: white;
+
+        border-radius: 22px;
+
+        padding: 35px 40px;
+
+        box-shadow:
+          0 20px 60px rgba(20, 42, 85, 0.12);
+
+        margin-bottom: 35px;
+
+        text-align: center;
+      }
+
+      .overview h2 {
+        font-size: 34px;
+
+        color: #14213d;
+
+        margin-bottom: 10px;
+      }
+
+      .overview p {
+        max-width: 760px;
+
+        margin: 0 auto;
+
+        color: #68748a;
+      }
+
+      /* =========================
+         TEST SECTION
+      ========================= */
+
+      .test-section {
+        background: white;
+
+        border-radius: 22px;
+
+        padding: 38px;
+
+        margin-bottom: 35px;
+
+        box-shadow:
+          0 15px 45px rgba(20, 42, 85, 0.08);
+      }
+
+      .section-header {
+        display: flex;
+
+        align-items: flex-end;
+
+        justify-content: space-between;
+
+        gap: 20px;
+
+        margin-bottom: 30px;
+      }
+
+      .section-label {
+        color: #1657d9;
+
+        font-size: 13px;
+
+        font-weight: 900;
+
+        letter-spacing: 1px;
+
+        margin-bottom: 7px;
+      }
+
+      .section-header h2 {
+        color: #14213d;
+
+        font-size: 34px;
+
+        line-height: 1.1;
+      }
+
+      .section-header p {
+        color: #68748a;
+
+        margin-top: 8px;
+
+        max-width: 700px;
+      }
+
+      .count-badge {
+        background: #eaf1ff;
+
+        color: #1657d9;
+
+        padding: 10px 17px;
+
+        border-radius: 999px;
+
+        font-size: 14px;
+
+        font-weight: 900;
+
+        white-space: nowrap;
+      }
+
+      /* =========================
+         TEST GRID
+      ========================= */
+
+      .test-grid {
+        display: grid;
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 17px;
+      }
+
+      .test-card {
+        border: 1px solid #e1e7f1;
+
+        border-radius: 16px;
+
+        padding: 23px;
+
+        background: #fff;
+
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      .test-card:hover {
+        transform: translateY(-3px);
+
+        border-color: #cbd9f5;
+
+        box-shadow:
+          0 12px 30px rgba(20, 42, 85, 0.08);
+      }
+
+      .test-top {
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 15px;
+
+        margin-bottom: 14px;
+      }
+
+      .test-number {
+        width: 42px;
+        height: 42px;
+
+        flex: 0 0 42px;
+
+        border-radius: 11px;
+
+        background: #eaf1ff;
+
+        color: #1657d9;
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        font-size: 14px;
+
+        font-weight: 900;
+      }
+
+      .test-tag {
+        color: #718096;
+
+        font-size: 12px;
+
+        font-weight: 800;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.4px;
+      }
+
+      .test-card h3 {
+        color: #172033;
+
+        font-size: 21px;
+
+        margin-bottom: 7px;
+      }
+
+      .test-card p {
+        color: #6c778c;
+
+        font-size: 14px;
+
+        min-height: 44px;
+
+        margin-bottom: 17px;
+      }
+
+      .test-meta {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        margin-bottom: 18px;
+      }
+
+      .meta {
+        background: #f4f6fa;
+
+        color: #59657a;
+
+        border-radius: 8px;
+
+        padding: 7px 10px;
+
+        font-size: 12px;
+
+        font-weight: 700;
+      }
+
+      .start-button {
+        display: inline-flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        width: 100%;
+
+        min-height: 44px;
+
+        border-radius: 9px;
+
+        background: #1657d9;
+
+        color: white;
+
+        font-size: 14px;
+
+        font-weight: 800;
+
+        transition: 0.2s ease;
+      }
+
+      .start-button:hover {
+        background: #0d46ba;
+      }
+
+      /* =========================
+         SIMULATION
+      ========================= */
+
+      .simulation-grid {
+        display: grid;
+
+        grid-template-columns:
+          repeat(2, 1fr);
+
+        gap: 17px;
+      }
+
+      .simulation-card {
+        border-radius: 17px;
+
+        padding: 25px;
+
+        border: 1px solid #dce4f2;
+
+        background:
+          linear-gradient(
+            135deg,
+            #f7faff,
+            #ffffff
+          );
+      }
+
+      .simulation-card.paper-two {
+        background:
+          linear-gradient(
+            135deg,
+            #fffaf0,
+            #ffffff
+          );
+      }
+
+      .simulation-label {
+        color: #1657d9;
+
+        font-size: 12px;
+
+        font-weight: 900;
+
+        letter-spacing: 0.8px;
+
+        margin-bottom: 7px;
+      }
+
+      .paper-two .simulation-label {
+        color: #9a6900;
+      }
+
+      .simulation-card h3 {
+        font-size: 21px;
+
+        color: #172033;
+
+        margin-bottom: 7px;
+      }
+
+      .simulation-card p {
+        color: #68748a;
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+      }
+
+      .simulation-button {
+        display: inline-flex;
+
+        width: 100%;
+
+        align-items: center;
+        justify-content: center;
+
+        min-height: 44px;
+
+        border-radius: 9px;
+
+        background: #1657d9;
+
+        color: white;
+
+        font-weight: 800;
+
+        font-size: 14px;
+      }
+
+      .paper-two .simulation-button {
+        background: #b47a00;
+      }
+
+      /* =========================
+         LOCKED CTA
+      ========================= */
+
+      .premium {
+        position: relative;
+
+        background:
+          linear-gradient(
+            135deg,
+            #101f3e,
+            #172e5a
+          );
+
+        color: white;
+
+        border-radius: 22px;
+
+        padding: 55px 40px;
+
+        text-align: center;
+
+        overflow: hidden;
+      }
+
+      .premium::before {
+        content: "";
+
+        position: absolute;
+
+        width: 320px;
+        height: 320px;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.04);
+
+        top: -170px;
+        right: -80px;
+      }
+
+      .lock {
+        position: relative;
+
+        width: 62px;
+        height: 62px;
+
+        margin: 0 auto 17px;
+
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.1);
+
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        font-size: 28px;
+      }
+
+      .premium h2 {
+        position: relative;
+
+        font-size: 34px;
+
+        margin-bottom: 12px;
+      }
+
+      .premium p {
+        position: relative;
+
+        max-width: 760px;
+
+        margin: 0 auto 25px;
+
+        color: rgba(255, 255, 255, 0.78);
+      }
+
+      .purchase {
+        position: relative;
+
+        display: inline-flex;
+
+        align-items: center;
+        justify-content: center;
+
+        background: #ffd43b;
+
+        color: #14213d;
+
+        padding: 14px 24px;
+
+        border-radius: 10px;
+
+        font-size: 15px;
+
+        font-weight: 900;
+      }
+
+      .price {
+        position: relative;
+
+        margin-top: 10px;
+
+        font-size: 13px;
+
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      /* =========================
+         FOOTER
+      ========================= */
+
+      .footer {
+        background: #101a2d;
+
+        color: white;
+
+        padding: 50px 28px;
+      }
+
+      .footer-inner {
+        max-width: 1180px;
+
+        margin: 0 auto;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-between;
+
+        gap: 30px;
+      }
+
+      .footer-brand {
+        font-size: 23px;
+
+        font-weight: 900;
+
+        margin-bottom: 4px;
+      }
+
+      .footer small {
+        color: #9da8bb;
+      }
+
+      .footer-links {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 20px;
+      }
+
+      .footer-links a {
+        color: #d6dce8;
+
+        font-size: 14px;
+
+        font-weight: 600;
+      }
+
+      .footer-links a:hover {
+        color: white;
+      }
+
+      /* =========================
+         TABLET
+      ========================= */
+
+      @media (max-width: 900px) {
+
+        .nav {
+          flex-direction: column;
+
+          padding: 16px 20px;
+        }
+
+        .nav-links {
+          justify-content: center;
+
+          gap: 14px 18px;
+        }
+
+        .section-header {
+          align-items: flex-start;
+
+          flex-direction: column;
+        }
+
+        .test-grid,
+        .simulation-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* =========================
+         MOBILE
+      ========================= */
+
+      @media (max-width: 600px) {
+
+        .hero {
+          padding: 55px 20px 90px;
+        }
+
+        .main {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .overview,
+        .test-section {
+          padding: 25px 20px;
+        }
+
+        .section-header h2 {
+          font-size: 28px;
+        }
+
+        .count-badge {
+          white-space: normal;
+        }
+
+        .premium {
+          padding: 40px 20px;
+        }
+
+        .premium h2 {
+          font-size: 28px;
+        }
+
+        .footer-inner {
+          flex-direction: column;
+
+          text-align: center;
+        }
+
+        .footer-links {
+          justify-content: center;
+        }
+
+        .nav-links a {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="site-header">
+
+      <nav class="nav">
+
+        <a href="/" class="logo">
+
+          <span class="logo-mark">
+            H
+          </span>
+
+          Habitat IAS
+
+        </a>
+
+        <div class="nav-links">
+
+          <a href="/">
+            Home
+          </a>
+
+          <a href="/notes/">
+            Notes
+          </a>
+
+          <a href="/pyq/">
+            JPSC PYQ
+          </a>
+
+          <a href="/book/">
+            Book
+          </a>
+
+          <a href="/guidance/">
+            Guidance
+          </a>
+
+          <a href="/trends/">
+            Trends
+          </a>
+
+          <a href="/mock-tests/">
+            Mock Tests
+          </a>
+
+          <a href="/jharkhand/">
+            Jharkhand
+          </a>
+
+          <a href="/resources/">
+            Resources
+          </a>
+
+          <a href="/contact/">
+            Contact
+          </a>
+
+          <a
+            href={bookLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-cta"
+          >
+            Get the Book
+          </a>
+
+        </div>
+
+      </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================= -->
+
+    <section class="hero">
+
+      <div class="hero-inner">
+
+        <div class="eyebrow">
+          HABITAT IAS • JPSC PREPARATION
+        </div>
+
+        <h1>
+          JPSC
+          <span>Mock Tests</span>
+        </h1>
+
+        <p>
+          Practice systematically with subject-wise tests,
+          Jharkhand Special tests and full examination simulations
+          designed for JPSC Prelims preparation.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+
+      <!-- OVERVIEW -->
+
+      <section class="overview">
+
+        <h2>
+          25 Tests. One Complete Practice System.
+        </h2>
+
+        <p>
+          The test series is divided into 10 subject-wise GS tests,
+          5 Jharkhand Special tests and 10 full examination simulations
+          — 5 for Paper-I and 5 for Paper-II.
+        </p>
+
+      </section>
+
+
+      <!-- =====================================================
+           SUBJECT-WISE TESTS
+      ====================================================== -->
+
+      <section class="test-section">
+
+        <div class="section-header">
+
+          <div>
+
+            <div class="section-label">
+              CATEGORY 01
+            </div>
+
+            <h2>
+              Subject-wise GS Tests
+            </h2>
+
+            <p>
+              Build subject-level command before moving to complete
+              examination simulations.
+            </p>
+
+          </div>
+
+          <div class="count-badge">
+            10 Tests
+          </div>
+
+        </div>
+
+
+        <div class="test-grid">
+
+          {
+            tests.map((test) => (
+
+              <article class="test-card">
+
+                <div class="test-top">
+
+                  <div class="test-number">
+                    {test.number}
+                  </div>
+
+                  <div class="test-tag">
+                    {test.category}
+                  </div>
+
+                </div>
+
+                <h3>
+                  {test.title}
+                </h3>
+
+                <p>
+                  {test.description}
+                </p>
+
+                <div class="test-meta">
+
+                  <span class="meta">
+                    {test.questions}
+                  </span>
+
+                  <span class="meta">
+                    {test.time}
+                  </span>
+
+                </div>
+
+                <a
+                  href={bookLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="start-button"
+                >
+                  Start Test →
+                </a>
+
+              </article>
+
+            ))
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           JHARKHAND SPECIAL
+      ====================================================== -->
+
+      <section class="test-section">
+
+        <div class="section-header">
+
+          <div>
+
+            <div class="section-label">
+              CATEGORY 02
+            </div>
+
+            <h2>
+              Jharkhand Special
+            </h2>
+
+            <p>
+              Dedicated state-specific tests covering the major
+              areas required for JPSC preparation.
+            </p>
+
+          </div>
+
+          <div class="count-badge">
+            5 Tests
+          </div>
+
+        </div>
+
+
+        <div class="test-grid">
+
+          {
+            jharkhandTests.map((test) => (
+
+              <article class="test-card">
+
+                <div class="test-top">
+
+                  <div class="test-number">
+                    {test.number}
+                  </div>
+
+                  <div class="test-tag">
+                    Jharkhand Special
+                  </div>
+
+                </div>
+
+                <h3>
+                  {test.title}
+                </h3>
+
+                <p>
+                  {test.description}
+                </p>
+
+                <div class="test-meta">
+
+                  <span class="meta">
+                    {test.questions}
+                  </span>
+
+                  <span class="meta">
+                    {test.time}
+                  </span>
+
+                </div>
+
+                <a
+                  href={bookLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="start-button"
+                >
+                  Start Test →
+                </a>
+
+              </article>
+
+            ))
+          }
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           FULL SIMULATION
+      ====================================================== -->
+
+      <section class="test-section">
+
+        <div class="section-header">
+
+          <div>
+
+            <div class="section-label">
+              CATEGORY 03
+            </div>
+
+            <h2>
+              Full Exam Simulation
+            </h2>
+
+            <p>
+              Simulate the examination environment with separate
+              Paper-I and Paper-II practice tests.
+            </p>
+
+          </div>
+
+          <div class="count-badge">
+            10 Tests
+          </div>
+
+        </div>
+
+
+        <!-- PAPER I -->
+
+        <div style="margin-bottom: 35px;">
+
+          <h3
+            style="
+              color:#14213d;
+              font-size:24px;
+              margin-bottom:16px;
+            "
+          >
+            Paper-I Simulation
+          </h3>
+
+          <div class="simulation-grid">
+
+            {
+              paperOneTests.map((test) => (
+
+                <article class="simulation-card">
+
+                  <div class="simulation-label">
+                    PAPER-I
+                  </div>
+
+                  <h3>
+                    {test.title}
+                  </h3>
+
+                  <p>
+                    Full-length Paper-I simulation for
+                    examination practice.
+                  </p>
+
+                  <a
+                    href={bookLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="simulation-button"
+                  >
+                    Start Simulation →
+                  </a>
+
+                </article>
+
+              ))
+            }
+
+          </div>
+
+        </div>
+
+
+        <!-- PAPER II -->
+
+        <div>
+
+          <h3
+            style="
+              color:#14213d;
+              font-size:24px;
+              margin-bottom:16px;
+            "
+          >
+            Paper-II Simulation
+          </h3>
+
+          <div class="simulation-grid">
+
+            {
+              paperTwoTests.map((test) => (
+
+                <article class="simulation-card paper-two">
+
+                  <div class="simulation-label">
+                    PAPER-II
+                  </div>
+
+                  <h3>
+                    {test.title}
+                  </h3>
+
+                  <p>
+                    Full-length Paper-II simulation for
+                    examination practice.
+                  </p>
+
+                  <a
+                    href={bookLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="simulation-button"
+                  >
+                    Start Simulation →
+                  </a>
+
+                </article>
+
+              ))
+            }
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =====================================================
+           PREMIUM CTA
+      ====================================================== -->
+
+      <section class="premium">
+
+        <div class="lock">
+          🔒
+        </div>
+
+        <h2>
+          Complete Test Series Coming Soon
+        </h2>
+
+        <p>
+          The 25-test structure is designed for systematic JPSC
+          preparation. Access to the complete test series,
+          questions, answers and explanations will be provided
+          through Habitat IAS.
+        </p>
+
+        <a
+          href={bookLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="purchase"
+        >
+          Get JPSC Prelims Decoded →
+        </a>
+
+        <div class="price">
+          JPSC Prelims Decoded • ₹299
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer class="footer">
+
+      <div class="footer-inner">
+
+        <div>
+
+          <div class="footer-brand">
+            Habitat IAS
+          </div>
+
+          <small>
+            Focused preparation for JPSC aspirants.
+          </small>
+
+        </div>
+
+
+        <div class="footer-links">
+
+          <a href="/">
+            Home
+          </a>
+
+          <a href="/notes/">
+            Notes
+          </a>
+
+          <a href="/pyq/">
+            JPSC PYQ
+          </a>
+
+          <a href="/book/">
+            Book
+          </a>
+
+          <a href="/trends/">
+            Trends
+          </a>
+
+          <a href="/jharkhand/">
+            Jharkhand
+          </a>
+
+          <a href="/contact/">
+            Contact
+          </a>
+
+        </div>
+
+      </div>
+
+    </footer>
+
+  </body>
+</html>
