@@ -1,0 +1,2935 @@
+---
+/*
+=========================================================
+HABITAT IAS
+JPSC PRELIMS DECODED
+BOOK PURCHASE / CHECKOUT PAGE
+=========================================================
+
+EDITIONS
+
+Hindi Edition   : ₹249
+English Edition : ₹299
+
+The edition is read by the browser from:
+
+/book/buy?edition=hindi
+/book/buy?edition=english
+
+The browser NEVER decides the actual payment amount.
+
+The server decides and verifies:
+Hindi   = ₹249
+English = ₹299
+=========================================================
+*/
+
+const sampleBook =
+  "https://drive.google.com/file/d/1gy_Im2Qs9Z7pwpYGUn7QSH0lJ4cwO5a5/view?usp=sharing";
+
+const bookTitle =
+  "JPSC Prelims Decoded: Topic-Wise PYQs";
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#1557d6"
+  />
+
+  <title>
+    Purchase | Habitat IAS
+  </title>
+
+  <meta
+    name="description"
+    content="Purchase JPSC Prelims Decoded: Topic-Wise PYQs digital PDF from Habitat IAS."
+  />
+
+  <!-- =====================================================
+       RAZORPAY CHECKOUT
+       ===================================================== -->
+
+  <script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+  ></script>
+
+
+  <style>
+
+    /* =====================================================
+       ROOT
+       ===================================================== */
+
+    :root {
+
+      --blue: #1557d6;
+      --blue-dark: #0d3f9f;
+      --blue-light: #eef4ff;
+
+      --yellow: #ffd43b;
+
+      --text: #13213c;
+      --muted: #667085;
+
+      --border: #e5eaf2;
+
+      --white: #ffffff;
+      --bg: #f7f9fc;
+
+      --green: #159447;
+      --green-light: #eaf8ef;
+
+      --red: #c62828;
+      --red-light: #fff1f1;
+
+      --shadow:
+        0 18px 50px rgba(15, 39, 83, 0.10);
+
+      --radius: 20px;
+
+    }
+
+
+    /* =====================================================
+       RESET
+       ===================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+
+    body {
+
+      margin: 0;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color: var(--text);
+
+      background: var(--bg);
+
+      line-height: 1.6;
+
+    }
+
+
+    a {
+
+      color: inherit;
+
+      text-decoration: none;
+
+    }
+
+
+    button,
+    input {
+
+      font: inherit;
+
+    }
+
+
+    button {
+
+      cursor: pointer;
+
+    }
+
+
+    /* =====================================================
+       HEADER
+       ===================================================== */
+
+    .site-header {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 1000;
+
+      background:
+        rgba(255,255,255,0.97);
+
+      border-bottom:
+        1px solid var(--border);
+
+      backdrop-filter:
+        blur(12px);
+
+    }
+
+
+    .nav {
+
+      width:
+        min(
+          1200px,
+          calc(100% - 40px)
+        );
+
+      min-height: 76px;
+
+      margin: 0 auto;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 25px;
+
+    }
+
+
+    .brand {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      color: var(--blue);
+
+      font-size: 24px;
+
+      font-weight: 900;
+
+      white-space: nowrap;
+
+    }
+
+
+    .brand-mark {
+
+      width: 44px;
+
+      height: 44px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 13px;
+
+      color: white;
+
+      background: var(--blue);
+
+      font-weight: 900;
+
+      box-shadow:
+        0 8px 20px
+        rgba(21,87,214,0.22);
+
+    }
+
+
+    .nav-links {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 20px;
+
+      color: #3f4d68;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+    }
+
+
+    .nav-links a:hover {
+
+      color: var(--blue);
+
+    }
+
+
+    .nav-cta {
+
+      padding:
+        11px 18px;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      color: white;
+
+      background: var(--blue);
+
+      font-weight: 800;
+
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .hero {
+
+      padding:
+        65px 20px 55px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1145ad,
+          #2164e2
+        );
+
+    }
+
+
+    .hero-inner {
+
+      width:
+        min(
+          1100px,
+          calc(100% - 20px)
+        );
+
+      margin: 0 auto;
+
+      text-align: center;
+
+    }
+
+
+    .eyebrow {
+
+      display: inline-flex;
+
+      padding:
+        7px 14px;
+
+      border:
+        1px solid
+        rgba(255,255,255,0.4);
+
+      border-radius: 999px;
+
+      font-size: 11px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .hero h1 {
+
+      margin:
+        20px 0 12px;
+
+      font-size:
+        clamp(34px, 5vw, 55px);
+
+      line-height: 1.05;
+
+      letter-spacing: -2px;
+
+    }
+
+
+    .hero h1 span {
+
+      color: var(--yellow);
+
+    }
+
+
+    .hero p {
+
+      max-width: 700px;
+
+      margin: 0 auto;
+
+      color:
+        rgba(255,255,255,0.88);
+
+      font-size: 17px;
+
+    }
+
+
+    /* =====================================================
+       CHECKOUT
+       ===================================================== */
+
+    .checkout-section {
+
+      width:
+        min(
+          1100px,
+          calc(100% - 40px)
+        );
+
+      margin: 0 auto;
+
+      padding:
+        65px 0 90px;
+
+    }
+
+
+    .checkout-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        minmax(0,1.1fr)
+        minmax(320px,0.9fr);
+
+      gap: 30px;
+
+      align-items: start;
+
+    }
+
+
+    /* =====================================================
+       CARD
+       ===================================================== */
+
+    .card {
+
+      padding: 30px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 22px;
+
+      background: white;
+
+      box-shadow: var(--shadow);
+
+    }
+
+
+    .card-label {
+
+      margin-bottom: 7px;
+
+      color: var(--blue);
+
+      font-size: 11px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.4px;
+
+      text-transform: uppercase;
+
+    }
+
+
+    .card h2 {
+
+      margin:
+        0 0 8px;
+
+      font-size: 28px;
+
+      line-height: 1.2;
+
+    }
+
+
+    .card-description {
+
+      margin:
+        0 0 25px;
+
+      color: var(--muted);
+
+      font-size: 14px;
+
+    }
+
+
+    /* =====================================================
+       EDITION
+       ===================================================== */
+
+    .edition-banner {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 18px;
+
+      margin-bottom: 25px;
+
+      border:
+        1px solid #dce8ff;
+
+      border-radius: 16px;
+
+      background:
+        var(--blue-light);
+
+    }
+
+
+    .edition-left {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+    }
+
+
+    .edition-icon {
+
+      width: 45px;
+
+      height: 45px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 12px;
+
+      background: white;
+
+      font-size: 24px;
+
+    }
+
+
+    .edition-name {
+
+      font-size: 16px;
+
+      font-weight: 900;
+
+    }
+
+
+    .edition-language {
+
+      color: var(--muted);
+
+      font-size: 12px;
+
+    }
+
+
+    .edition-price {
+
+      color: var(--blue);
+
+      font-size: 26px;
+
+      font-weight: 950;
+
+      white-space: nowrap;
+
+    }
+
+
+    /* =====================================================
+       FORM
+       ===================================================== */
+
+    .form-group {
+
+      margin-bottom: 18px;
+
+    }
+
+
+    .form-group label {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #344054;
+
+      font-size: 13px;
+
+      font-weight: 800;
+
+    }
+
+
+    .form-group input {
+
+      width: 100%;
+
+      min-height: 50px;
+
+      padding:
+        12px 14px;
+
+      border:
+        1px solid #d8dee9;
+
+      border-radius: 12px;
+
+      outline: none;
+
+      color: var(--text);
+
+      background: white;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    }
+
+
+    .form-group input:focus {
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(21,87,214,0.10);
+
+    }
+
+
+    .form-help {
+
+      margin-top: 5px;
+
+      color: #8a94a8;
+
+      font-size: 11px;
+
+    }
+
+
+    /* =====================================================
+       PAYMENT BUTTON
+       ===================================================== */
+
+    .payment-button {
+
+      width: 100%;
+
+      min-height: 55px;
+
+      margin-top: 8px;
+
+      padding:
+        13px 20px;
+
+      border: 0;
+
+      border-radius: 13px;
+
+      color: #17233a;
+
+      background: var(--yellow);
+
+      box-shadow:
+        0 10px 25px
+        rgba(0,0,0,0.13);
+
+      font-size: 15px;
+
+      font-weight: 900;
+
+      transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+
+    }
+
+
+    .payment-button:hover:not(:disabled) {
+
+      transform:
+        translateY(-2px);
+
+    }
+
+
+    .payment-button:disabled {
+
+      cursor: not-allowed;
+
+      opacity: 0.65;
+
+    }
+
+
+    /* =====================================================
+       SECURITY
+       ===================================================== */
+
+    .security-notice {
+
+      display: flex;
+
+      gap: 10px;
+
+      margin-top: 17px;
+
+      padding: 14px;
+
+      border-radius: 13px;
+
+      background: #f5f7fb;
+
+      color: #667085;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .security-icon {
+
+      flex: 0 0 auto;
+
+      font-size: 16px;
+
+    }
+
+
+    /* =====================================================
+       SUMMARY
+       ===================================================== */
+
+    .summary-card {
+
+      position: sticky;
+
+      top: 105px;
+
+    }
+
+
+    .summary-title {
+
+      margin-bottom: 20px;
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+    }
+
+
+    .summary-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding:
+        13px 0;
+
+      border-bottom:
+        1px solid var(--border);
+
+      font-size: 14px;
+
+    }
+
+
+    .summary-row span:first-child {
+
+      color: var(--muted);
+
+    }
+
+
+    .summary-row span:last-child {
+
+      text-align: right;
+
+      font-weight: 800;
+
+    }
+
+
+    .summary-total {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding-top: 20px;
+
+    }
+
+
+    .summary-total-label {
+
+      font-size: 18px;
+
+      font-weight: 900;
+
+    }
+
+
+    .summary-total-price {
+
+      color: var(--blue);
+
+      font-size: 30px;
+
+      font-weight: 950;
+
+    }
+
+
+    /* =====================================================
+       BENEFITS
+       ===================================================== */
+
+    .benefits {
+
+      display: grid;
+
+      gap: 12px;
+
+      margin-top: 25px;
+
+    }
+
+
+    .benefit {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 10px;
+
+      color: #526079;
+
+      font-size: 13px;
+
+    }
+
+
+    .benefit-icon {
+
+      width: 22px;
+
+      height: 22px;
+
+      display: grid;
+
+      place-items: center;
+
+      flex: 0 0 auto;
+
+      border-radius: 50%;
+
+      color: var(--green);
+
+      background:
+        var(--green-light);
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    .error-message {
+
+      display: none;
+
+      margin-bottom: 18px;
+
+      padding:
+        13px 15px;
+
+      border:
+        1px solid #ffd2d2;
+
+      border-radius: 12px;
+
+      color: var(--red);
+
+      background: var(--red-light);
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+    }
+
+
+    .error-message.show {
+
+      display: block;
+
+    }
+
+
+    /* =====================================================
+       SUCCESS
+       ===================================================== */
+
+    .success-message {
+
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 20px;
+
+      border:
+        1px solid #b9e8c8;
+
+      border-radius: 16px;
+
+      color: #126b34;
+
+      background:
+        var(--green-light);
+
+      font-size: 13px;
+
+      line-height: 1.6;
+
+    }
+
+
+    .success-message.show {
+
+      display: block;
+
+    }
+
+
+    .success-title {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      font-size: 22px;
+
+      font-weight: 900;
+
+    }
+
+
+    .download-section {
+
+      display: none;
+
+      margin-top: 20px;
+
+      padding: 20px;
+
+      border:
+        1px solid #b7e4c7;
+
+      border-radius: 15px;
+
+      background: white;
+
+    }
+
+
+    .download-section.show {
+
+      display: block;
+
+    }
+
+
+    .download-title {
+
+      margin-bottom: 8px;
+
+      color: #126b34;
+
+      font-size: 18px;
+
+      font-weight: 900;
+
+    }
+
+
+    .download-details {
+
+      margin-bottom: 16px;
+
+      color: #526079;
+
+      font-size: 13px;
+
+    }
+
+
+    .download-button {
+
+      display: inline-block;
+
+      padding:
+        13px 22px;
+
+      border-radius: 11px;
+
+      color: white;
+
+      background:
+        var(--blue);
+
+      font-size: 14px;
+
+      font-weight: 900;
+
+    }
+
+
+    .download-button:hover {
+
+      background:
+        var(--blue-dark);
+
+    }
+
+
+    .download-expiry {
+
+      margin-top: 12px;
+
+      color: #8a94a8;
+
+      font-size: 11px;
+
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer {
+
+      padding:
+        35px 20px;
+
+      color: #aab6cc;
+
+      background: #091a3b;
+
+      text-align: center;
+
+      font-size: 13px;
+
+    }
+
+
+    .footer strong {
+
+      color: white;
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 850px) {
+
+      .nav {
+
+        width:
+          calc(100% - 28px);
+
+      }
+
+
+      .nav-links {
+
+        display: none;
+
+      }
+
+
+      .checkout-grid {
+
+        grid-template-columns: 1fr;
+
+      }
+
+
+      .summary-card {
+
+        position: static;
+
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .hero {
+
+        padding:
+          45px 15px;
+
+      }
+
+
+      .checkout-section {
+
+        width:
+          calc(100% - 28px);
+
+        padding:
+          40px 0 60px;
+
+      }
+
+
+      .card {
+
+        padding: 22px;
+
+        border-radius: 18px;
+
+      }
+
+
+      .edition-banner {
+
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .edition-price {
+
+        margin-left: 58px;
+
+      }
+
+
+      .brand {
+
+        font-size: 20px;
+
+      }
+
+
+      .brand-mark {
+
+        width: 38px;
+
+        height: 38px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="site-header">
+
+    <nav class="nav">
+
+      <a
+        href="/"
+        class="brand"
+      >
+
+        <span class="brand-mark">
+          H
+        </span>
+
+        <span>
+          Habitat IAS
+        </span>
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/book/">
+          Book
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQs
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/contact/">
+          Contact
+        </a>
+
+      </div>
+
+
+      <a
+        href="/book/"
+        class="nav-cta"
+      >
+        Back to Book
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       HERO
+       ===================================================== -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <span class="eyebrow">
+        Habitat IAS • Secure Checkout
+      </span>
+
+
+      <h1>
+        Complete Your
+        <span>Purchase</span>
+      </h1>
+
+
+      <p>
+        Purchase your personalized digital copy of
+        JPSC Prelims Decoded: Topic-Wise PYQs.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CHECKOUT
+       ===================================================== -->
+
+  <main class="checkout-section">
+
+    <div class="checkout-grid">
+
+
+      <!-- =================================================
+           CUSTOMER INFORMATION
+           ================================================= -->
+
+      <section class="card">
+
+        <div class="card-label">
+          Customer Details
+        </div>
+
+
+        <h2>
+          Your Information
+        </h2>
+
+
+        <p class="card-description">
+          Enter your details carefully. Your name and email
+          will be associated with your digital purchase.
+        </p>
+
+
+        <!-- =================================================
+             EDITION
+             ================================================= -->
+
+        <div
+          class="edition-banner"
+          id="editionBanner"
+        >
+
+          <div class="edition-left">
+
+            <div
+              class="edition-icon"
+              id="editionIcon"
+            >
+              🇮🇳
+            </div>
+
+
+            <div>
+
+              <div
+                class="edition-name"
+                id="editionName"
+              >
+                Hindi Edition
+              </div>
+
+
+              <div class="edition-language">
+                Digital PDF • Secure Delivery
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="edition-price"
+            id="editionPrice"
+          >
+            ₹249
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             ERROR
+             ================================================= -->
+
+        <div
+          id="errorMessage"
+          class="error-message"
+          role="alert"
+        ></div>
+
+
+        <!-- =================================================
+             FORM
+             ================================================= -->
+
+        <form
+          id="checkoutForm"
+          novalidate
+        >
+
+
+          <!-- NAME -->
+
+          <div class="form-group">
+
+            <label for="name">
+              Full Name *
+            </label>
+
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              maxlength="100"
+              required
+            />
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address *
+            </label>
+
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              maxlength="150"
+              required
+            />
+
+
+            <div class="form-help">
+              Your purchase and delivery information
+              will be associated with this email.
+            </div>
+
+          </div>
+
+
+          <!-- MOBILE -->
+
+          <div class="form-group">
+
+            <label for="mobile">
+              Mobile Number *
+            </label>
+
+
+            <input
+              id="mobile"
+              name="mobile"
+              type="tel"
+              inputmode="numeric"
+              placeholder="10-digit mobile number"
+              autocomplete="tel"
+              maxlength="10"
+              required
+            />
+
+
+            <div class="form-help">
+              Enter a valid Indian mobile number.
+            </div>
+
+          </div>
+
+
+          <!-- PAYMENT BUTTON -->
+
+          <button
+            id="paymentButton"
+            class="payment-button"
+            type="submit"
+          >
+            Continue to Secure Payment — ₹249
+          </button>
+
+        </form>
+
+
+        <!-- =================================================
+             SECURITY
+             ================================================= -->
+
+        <div class="security-notice">
+
+          <div class="security-icon">
+            🔒
+          </div>
+
+
+          <div>
+
+            <strong>
+              Secure payment
+            </strong>
+
+            <br />
+
+            Your payment will be processed through Razorpay.
+            Do not enter card, UPI PIN or banking passwords
+            anywhere except the official Razorpay checkout.
+
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             SUCCESS
+             ================================================= -->
+
+        <div
+          id="successMessage"
+          class="success-message"
+        >
+
+          <span class="success-title">
+            ✅ Payment Successful
+          </span>
+
+
+          <div id="successOrderText">
+            Your payment has been successfully verified.
+          </div>
+
+
+          <!-- =================================================
+               DOWNLOAD
+               ================================================= -->
+
+          <div
+            id="downloadSection"
+            class="download-section"
+          >
+
+            <div class="download-title">
+              📚 Your Book Is Ready
+            </div>
+
+
+            <div
+              id="downloadDetails"
+              class="download-details"
+            >
+              Your secure download link has been generated.
+            </div>
+
+
+            <a
+              id="downloadButton"
+              class="download-button"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📥 Download Your PDF
+            </a>
+
+
+            <div class="download-expiry">
+              🔒 This secure download link expires after
+              1 hour. Please download your book before it expires.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           ORDER SUMMARY
+           ================================================= -->
+
+      <aside class="card summary-card">
+
+        <div class="card-label">
+          Order Summary
+        </div>
+
+
+        <div class="summary-title">
+          JPSC Prelims Decoded
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Book
+          </span>
+
+          <span>
+            JPSC Prelims Decoded
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Edition
+          </span>
+
+          <span id="summaryEdition">
+            Hindi Edition
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Language
+          </span>
+
+          <span id="summaryLanguage">
+            Hindi
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Format
+          </span>
+
+          <span>
+            Digital PDF
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Delivery
+          </span>
+
+          <span>
+            Secure Download
+          </span>
+
+        </div>
+
+
+        <div class="summary-total">
+
+          <span class="summary-total-label">
+            Total
+          </span>
+
+
+          <span
+            class="summary-total-price"
+            id="summaryPrice"
+          >
+            ₹249
+          </span>
+
+        </div>
+
+
+        <!-- =================================================
+             BENEFITS
+             ================================================= -->
+
+        <div class="benefits">
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Topic-wise JPSC PYQs
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Subject-wise organization
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Detailed explanations
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Question trend analysis
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Secure digital copy
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Secure digital delivery
+            </span>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- =================================================
+             SAMPLE
+             ================================================= -->
+
+        <a
+          href={sampleBook}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="
+            display:block;
+            margin-top:25px;
+            padding:13px;
+            border:1px solid #e5eaf2;
+            border-radius:12px;
+            text-align:center;
+            color:#1557d6;
+            background:#fff;
+            font-weight:800;
+            font-size:13px;
+          "
+        >
+          📖 View Book Sample
+        </a>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer class="footer">
+
+    <strong>
+      Habitat IAS
+    </strong>
+
+    <br />
+
+    JPSC & UPSC Preparation Resources
+
+    <br />
+
+    © {new Date().getFullYear()}
+    Habitat IAS. All rights reserved.
+
+  </footer>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+       ===================================================== -->
+
+  <script is:inline>
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      () => {
+
+
+        /* =================================================
+           1. READ EDITION
+           ================================================= */
+
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+
+        const requestedEdition =
+          (
+            params.get("edition") ||
+            "hindi"
+          )
+            .trim()
+            .toLowerCase();
+
+
+        /*
+         * Only two editions are allowed.
+         */
+
+        const edition =
+          requestedEdition === "english"
+            ? "english"
+            : "hindi";
+
+
+        /* =================================================
+           2. EDITION CONFIGURATION
+           ================================================= */
+
+        const editionConfig = {
+
+          hindi: {
+
+            name:
+              "Hindi Edition",
+
+            language:
+              "Hindi",
+
+            price:
+              249,
+
+            icon:
+              "🇮🇳",
+
+            razorpayDescription:
+              "JPSC Prelims Decoded — Hindi Edition"
+
+          },
+
+
+          english: {
+
+            name:
+              "English Edition",
+
+            language:
+              "English",
+
+            price:
+              299,
+
+            icon:
+              "🇬🇧",
+
+            razorpayDescription:
+              "JPSC Prelims Decoded — English Edition"
+
+          }
+
+        };
+
+
+        const selected =
+          editionConfig[edition];
+
+
+        /* =================================================
+           3. ELEMENTS
+           ================================================= */
+
+        const editionIcon =
+          document.getElementById(
+            "editionIcon"
+          );
+
+
+        const editionName =
+          document.getElementById(
+            "editionName"
+          );
+
+
+        const editionPrice =
+          document.getElementById(
+            "editionPrice"
+          );
+
+
+        const summaryEdition =
+          document.getElementById(
+            "summaryEdition"
+          );
+
+
+        const summaryLanguage =
+          document.getElementById(
+            "summaryLanguage"
+          );
+
+
+        const summaryPrice =
+          document.getElementById(
+            "summaryPrice"
+          );
+
+
+        const paymentButton =
+          document.getElementById(
+            "paymentButton"
+          );
+
+
+        const form =
+          document.getElementById(
+            "checkoutForm"
+          );
+
+
+        const nameInput =
+          document.getElementById(
+            "name"
+          );
+
+
+        const emailInput =
+          document.getElementById(
+            "email"
+          );
+
+
+        const mobileInput =
+          document.getElementById(
+            "mobile"
+          );
+
+
+        const errorMessage =
+          document.getElementById(
+            "errorMessage"
+          );
+
+
+        const successMessage =
+          document.getElementById(
+            "successMessage"
+          );
+
+
+        const successOrderText =
+          document.getElementById(
+            "successOrderText"
+          );
+
+
+        const downloadSection =
+          document.getElementById(
+            "downloadSection"
+          );
+
+
+        const downloadButton =
+          document.getElementById(
+            "downloadButton"
+          );
+
+
+        const downloadDetails =
+          document.getElementById(
+            "downloadDetails"
+          );
+
+
+        /* =================================================
+           4. UPDATE EDITION UI
+           ================================================= */
+
+        editionIcon.textContent =
+          selected.icon;
+
+
+        editionName.textContent =
+          selected.name;
+
+
+        editionPrice.textContent =
+          `₹${selected.price}`;
+
+
+        summaryEdition.textContent =
+          selected.name;
+
+
+        summaryLanguage.textContent =
+          selected.language;
+
+
+        summaryPrice.textContent =
+          `₹${selected.price}`;
+
+
+        paymentButton.textContent =
+          `Continue to Secure Payment — ₹${selected.price}`;
+
+
+        document.title =
+          `Purchase ${selected.name} | Habitat IAS`;
+
+
+        /* =================================================
+           5. ERROR HELPERS
+           ================================================= */
+
+        function showError(
+          message
+        ) {
+
+          errorMessage.textContent =
+            message;
+
+          errorMessage.classList.add(
+            "show"
+          );
+
+        }
+
+
+        function clearError() {
+
+          errorMessage.textContent =
+            "";
+
+          errorMessage.classList.remove(
+            "show"
+          );
+
+        }
+
+
+        /* =================================================
+           6. CUSTOMER VALIDATION
+           ================================================= */
+
+        function validateCustomer() {
+
+          clearError();
+
+
+          const name =
+            nameInput.value.trim();
+
+
+          const email =
+            emailInput.value.trim();
+
+
+          const mobile =
+            mobileInput.value
+              .replace(/\D/g, "");
+
+
+          if (
+            name.length < 2
+          ) {
+
+            showError(
+              "Please enter your full name."
+            );
+
+            nameInput.focus();
+
+            return null;
+
+          }
+
+
+          const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+          if (
+            !emailRegex.test(email)
+          ) {
+
+            showError(
+              "Please enter a valid email address."
+            );
+
+            emailInput.focus();
+
+            return null;
+
+          }
+
+
+          if (
+            !/^[6-9]\d{9}$/.test(mobile)
+          ) {
+
+            showError(
+              "Please enter a valid 10-digit Indian mobile number."
+            );
+
+            mobileInput.focus();
+
+            return null;
+
+          }
+
+
+          return {
+
+            name,
+            email,
+            mobile
+
+          };
+
+        }
+
+
+        /* =================================================
+           7. CREATE RAZORPAY ORDER
+           ================================================= */
+
+        async function createOrder(
+          customer
+        ) {
+
+          /*
+           * IMPORTANT:
+           *
+           * Only edition is trusted from this page.
+           *
+           * The server decides:
+           *
+           * Hindi   = ₹249
+           * English = ₹299
+           */
+
+          const response =
+            await fetch(
+              "/api/razorpay/create-order",
+              {
+
+                method:
+                  "POST",
+
+                headers: {
+
+                  "Content-Type":
+                    "application/json"
+
+                },
+
+                body:
+                  JSON.stringify({
+
+                    edition:
+                      edition,
+
+                    name:
+                      customer.name,
+
+                    email:
+                      customer.email,
+
+                    mobile:
+                      customer.mobile
+
+                  })
+
+              }
+            );
+
+
+          let data;
+
+
+          try {
+
+            data =
+              await response.json();
+
+          } catch {
+
+            throw new Error(
+              "The server returned an invalid response."
+            );
+
+          }
+
+
+          if (
+            !response.ok
+          ) {
+
+            throw new Error(
+              data?.error ||
+              "Unable to create Razorpay order."
+            );
+
+          }
+
+
+          if (
+            data?.success !== true
+          ) {
+
+            throw new Error(
+              data?.error ||
+              "Unable to create payment order."
+            );
+
+          }
+
+
+          if (
+            !data?.order?.id
+          ) {
+
+            throw new Error(
+              "Razorpay order ID was not returned by the server."
+            );
+
+          }
+
+
+          return data;
+
+        }
+
+
+        /* =================================================
+           8. OPEN RAZORPAY
+           ================================================= */
+
+        function openRazorpay(
+          orderData,
+          customer
+        ) {
+
+          if (
+            typeof window.Razorpay ===
+            "undefined"
+          ) {
+
+            throw new Error(
+              "Razorpay Checkout could not be loaded. Please refresh the page and try again."
+            );
+
+          }
+
+
+          const options = {
+
+            key:
+              orderData.keyId,
+
+
+            amount:
+              orderData.order.amount,
+
+
+            currency:
+              orderData.order.currency ||
+              "INR",
+
+
+            order_id:
+              orderData.order.id,
+
+
+            name:
+              "Habitat IAS",
+
+
+            description:
+              selected.razorpayDescription,
+
+
+            prefill: {
+
+              name:
+                customer.name,
+
+              email:
+                customer.email,
+
+              contact:
+                customer.mobile
+
+            },
+
+
+            notes: {
+
+              book:
+                "JPSC Prelims Decoded: Topic-Wise PYQs",
+
+              edition:
+                selected.name
+
+            },
+
+
+            theme: {
+
+              color:
+                "#1557d6"
+
+            },
+
+
+            /*
+            =================================================
+            SUCCESSFUL PAYMENT
+            =================================================
+            */
+
+            handler:
+              async function (
+                paymentResponse
+              ) {
+
+                await verifyPayment(
+                  paymentResponse,
+                  customer
+                );
+
+              },
+
+
+            /*
+            =================================================
+            CHECKOUT CLOSED
+            =================================================
+            */
+
+            modal: {
+
+              ondismiss:
+                function () {
+
+                  /*
+                   * Do not reset the button if payment has
+                   * already been successfully verified.
+                   */
+
+                  if (
+                    !downloadSection.classList.contains(
+                      "show"
+                    )
+                  ) {
+
+                    paymentButton.disabled =
+                      false;
+
+                    paymentButton.textContent =
+                      `Continue to Secure Payment — ₹${selected.price}`;
+
+                  }
+
+                }
+
+            }
+
+          };
+
+
+          const razorpay =
+            new window.Razorpay(
+              options
+            );
+
+
+          /* =================================================
+             PAYMENT FAILURE
+             ================================================= */
+
+          razorpay.on(
+            "payment.failed",
+            function (
+              response
+            ) {
+
+              console.error(
+                "Razorpay payment failed:",
+                response
+              );
+
+
+              showError(
+                response
+                  ?.error
+                  ?.description ||
+                "Payment failed. Please try again."
+              );
+
+
+              paymentButton.disabled =
+                false;
+
+
+              paymentButton.textContent =
+                `Continue to Secure Payment — ₹${selected.price}`;
+
+            }
+          );
+
+
+          /*
+           * OPEN CHECKOUT
+           */
+
+          razorpay.open();
+
+        }
+
+
+        /* =================================================
+           9. VERIFY PAYMENT
+           ================================================= */
+
+        async function verifyPayment(
+          paymentResponse,
+          customer
+        ) {
+
+          paymentButton.disabled =
+            true;
+
+
+          paymentButton.textContent =
+            "Verifying Payment...";
+
+
+          clearError();
+
+
+          try {
+
+
+            /* ===============================================
+               SEND PAYMENT DATA TO SERVER
+               =============================================== */
+
+            const response =
+              await fetch(
+                "/api/razorpay/verify-payment",
+                {
+
+                  method:
+                    "POST",
+
+                  headers: {
+
+                    "Content-Type":
+                      "application/json"
+
+                  },
+
+                  body:
+                    JSON.stringify({
+
+                      razorpay_payment_id:
+                        paymentResponse
+                          .razorpay_payment_id,
+
+
+                      razorpay_order_id:
+                        paymentResponse
+                          .razorpay_order_id,
+
+
+                      razorpay_signature:
+                        paymentResponse
+                          .razorpay_signature,
+
+
+                      edition:
+                        edition,
+
+
+                      name:
+                        customer.name,
+
+
+                      email:
+                        customer.email,
+
+
+                      mobile:
+                        customer.mobile
+
+                    })
+
+                }
+              );
+
+
+            /* ===============================================
+               READ RESPONSE
+               =============================================== */
+
+            let data;
+
+
+            try {
+
+              data =
+                await response.json();
+
+            } catch {
+
+              throw new Error(
+                "Payment verification returned an invalid response."
+              );
+
+            }
+
+
+            /* ===============================================
+               SERVER ERROR
+               =============================================== */
+
+            if (
+              !response.ok
+            ) {
+
+              throw new Error(
+                data?.error ||
+                "Payment verification failed."
+              );
+
+            }
+
+
+            /* ===============================================
+               SUCCESS CHECK
+               ===============================================
+
+               IMPORTANT:
+
+               We check:
+
+                 data.success === true
+
+               NOT:
+
+                 data.verified === true
+
+               The new verify-payment.ts returns:
+
+                 success: true
+
+                 download: {
+                   available: true,
+                   url: "..."
+                 }
+               =============================================== */
+
+            if (
+              data?.success !== true
+            ) {
+
+              throw new Error(
+                data?.error ||
+                "Payment could not be verified."
+              );
+
+            }
+
+
+            /* ===============================================
+               PAYMENT VERIFIED
+               =============================================== */
+
+            successMessage.classList.add(
+              "show"
+            );
+
+
+            const orderNumber =
+              data?.order?.orderNumber ||
+              data?.order?.id ||
+              paymentResponse
+                .razorpay_order_id;
+
+
+            const purchasedEdition =
+              data?.order?.edition ||
+              selected.name;
+
+
+            const purchasedAmount =
+              data?.order?.amount ??
+              selected.price;
+
+
+            successOrderText.innerHTML = `
+
+              Your payment of
+              <strong>
+                ₹${purchasedAmount}
+              </strong>
+
+              for
+
+              <strong>
+                ${purchasedEdition}
+              </strong>
+
+              has been successfully verified.
+
+              <br />
+
+              Order:
+              <strong>
+                ${orderNumber}
+              </strong>
+
+            `;
+
+
+            /* ===============================================
+               CHECK DOWNLOAD URL
+               =============================================== */
+
+            if (
+              data?.download?.available !== true ||
+              !data?.download?.url
+            ) {
+
+              throw new Error(
+                "Payment was successful, but the secure PDF download link could not be generated. Please contact Habitat IAS support."
+              );
+
+            }
+
+
+            /* ===============================================
+               SECURE DOWNLOAD URL
+               =============================================== */
+
+            const downloadUrl =
+              data.download.url;
+
+
+            /*
+             * The browser receives only the temporary signed
+             * URL generated by the server.
+             *
+             * The Supabase bucket remains PRIVATE.
+             */
+
+
+            downloadButton.href =
+              downloadUrl;
+
+
+            downloadButton.target =
+              "_blank";
+
+
+            downloadButton.rel =
+              "noopener noreferrer";
+
+
+            /* ===============================================
+               DOWNLOAD DETAILS
+               =============================================== */
+
+            const filename =
+              data?.download?.filename ||
+              "JPSC-Prelims-Decoded.pdf";
+
+
+            const language =
+              data?.download?.language ||
+              selected.language;
+
+
+            downloadDetails.innerHTML = `
+
+              <strong>
+                ${language} Edition
+              </strong>
+
+              <br />
+
+              File:
+              <strong>
+                ${filename}
+              </strong>
+
+              <br />
+
+              Your secure download link is ready.
+
+            `;
+
+
+            /* ===============================================
+               SHOW DOWNLOAD
+               =============================================== */
+
+            downloadSection.classList.add(
+              "show"
+            );
+
+
+            /* ===============================================
+               LOCK PAYMENT BUTTON
+               =============================================== */
+
+            paymentButton.textContent =
+              "Payment Verified ✓";
+
+
+            paymentButton.disabled =
+              true;
+
+
+            /* ===============================================
+               LOGGING
+               =============================================== */
+
+            console.log(
+              "Payment verified successfully:",
+              data
+            );
+
+
+            console.log(
+              "Secure PDF download URL:",
+              downloadUrl
+            );
+
+
+            console.log(
+              "Order:",
+              data.order
+            );
+
+
+          } catch (
+            error
+          ) {
+
+            console.error(
+              "Verification error:",
+              error
+            );
+
+
+            showError(
+              error?.message ||
+              "Payment verification failed. Please contact Habitat IAS support."
+            );
+
+
+            paymentButton.disabled =
+              false;
+
+
+            paymentButton.textContent =
+              `Continue to Secure Payment — ₹${selected.price}`;
+
+          }
+
+        }
+
+
+        /* =================================================
+           10. FORM SUBMISSION
+           ================================================= */
+
+        form.addEventListener(
+          "submit",
+          async function (
+            event
+          ) {
+
+            event.preventDefault();
+
+
+            /*
+             * Prevent double-click.
+             */
+
+            if (
+              paymentButton.disabled
+            ) {
+
+              return;
+
+            }
+
+
+            const customer =
+              validateCustomer();
+
+
+            if (
+              !customer
+            ) {
+
+              return;
+
+            }
+
+
+            /*
+             * Lock button.
+             */
+
+            paymentButton.disabled =
+              true;
+
+
+            paymentButton.textContent =
+              "Creating Secure Payment...";
+
+
+            try {
+
+
+              /* =========================================
+                 CREATE SERVER-SIDE ORDER
+                 ========================================= */
+
+              const orderData =
+                await createOrder(
+                  customer
+                );
+
+
+              console.log(
+                "Razorpay order created:",
+                orderData
+              );
+
+
+              /* =========================================
+                 OPEN RAZORPAY
+                 ========================================= */
+
+              openRazorpay(
+                orderData,
+                customer
+              );
+
+
+            } catch (
+              error
+            ) {
+
+              console.error(
+                "Payment initialization error:",
+                error
+              );
+
+
+              showError(
+                error?.message ||
+                "Unable to start payment. Please try again."
+              );
+
+
+              paymentButton.disabled =
+                false;
+
+
+              paymentButton.textContent =
+                `Continue to Secure Payment — ₹${selected.price}`;
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  </script>
+
+
+</body>
+
+</html>

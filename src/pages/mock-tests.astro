@@ -1,1107 +1,1649 @@
 ---
-const bookLink = "https://linktr.ee/HabitatIAS";
+import { supabase } from "../lib/supabase";
 
-const tests = [
+/* =========================================================
+   HABITAT IAS
+   JPSC PRELIMS — 20 TEST SERIES
+
+   PHASE A  : TESTS 01–05
+   PHASE B  : TESTS 06–10
+   PHASE C  : TESTS 11–20
+
+   Paper-I  : 11–15
+   Paper-II : 16–20
+========================================================= */
+
+
+/* =========================================================
+   LOAD TESTS FROM SUPABASE
+========================================================= */
+
+const {
+  data: dbTests,
+  error: dbError
+} = await supabase
+  .from("mock_tests")
+  .select("*")
+  .order("test_number", {
+    ascending: true
+  });
+
+if (dbError) {
+  console.error(
+    "Could not load mock tests:",
+    dbError
+  );
+}
+
+
+/* =========================================================
+   FALLBACK TEST STRUCTURE
+
+   Database values override these values when available.
+   This keeps the dashboard working even if some fields
+   are not yet populated in Supabase.
+========================================================= */
+
+const testStructure = [
+
+  /* =======================================================
+     PHASE A
+     GS SECTIONAL TESTS — 01 TO 05
+  ======================================================= */
+
   {
-    number: "01",
-    title: "History",
-    description: "Ancient, Medieval and Modern Indian History.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 1,
+    phase: "A",
+    category: "GS SECTIONAL",
+    categoryClass: "gs",
+
+    title:
+      "GS Sectional Test 01 — Indian History",
+
+    description:
+      "Ancient India, Medieval India and Modern India with chronology, movements, personalities, culture and major historical developments.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Indian History",
+
+    level:
+      "Concept + PYQ Focus"
   },
+
+
   {
-    number: "02",
-    title: "Geography",
-    description: "Physical, Indian and World Geography.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 2,
+    phase: "A",
+    category: "GS SECTIONAL",
+    categoryClass: "gs",
+
+    title:
+      "GS Sectional Test 02 — Indian Geography",
+
+    description:
+      "Physical and human geography of India including physiography, rivers, climate, soils, agriculture, minerals, industries, population and resources.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Indian Geography",
+
+    level:
+      "Concept + Map Focus"
   },
+
+
   {
-    number: "03",
-    title: "Indian Polity",
-    description: "Constitution, Parliament, Judiciary and Governance.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 3,
+    phase: "A",
+    category: "gs",
+    categoryClass: "gs",
+
+    title:
+      "GS Sectional Test 03 — Indian Polity & Governance + Economy",
+
+    description:
+      "Indian Constitution, Parliament, Executive, Judiciary, constitutional bodies, governance, public policy, economy, banking, taxation and development.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Polity • Governance • Economy",
+
+    level:
+      "Integrated GS"
   },
+
+
   {
-    number: "04",
-    title: "Economy",
-    description: "Indian Economy, development and economic concepts.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 4,
+    phase: "A",
+    category: "GS SECTIONAL",
+    categoryClass: "gs",
+
+    title:
+      "GS Sectional Test 04 — Science, Technology & Agriculture",
+
+    description:
+      "General Science, Physics, Chemistry, Biology, Space and Defence Technology, Information Technology, Agriculture and related developments.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Science • Technology • Agriculture",
+
+    level:
+      "Concept + Application"
   },
+
+
   {
-    number: "05",
-    title: "Science & Technology",
-    description: "Physics, Chemistry, Biology, Space and Defence Technology.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 5,
+    phase: "A",
+    category: "GS SECTIONAL",
+    categoryClass: "gs",
+
+    title:
+      "GS Sectional Test 05 — Environment, Human Rights, Disaster Management, Sports, Awards, UN & Miscellaneous",
+
+    description:
+      "Environment, biodiversity, climate change, human rights, disaster management, sports, awards, United Nations and miscellaneous General Studies. Current Affairs are distributed across the series.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Environment • HR • Disaster • Sports • Awards • UN",
+
+    level:
+      "Current Affairs Integrated"
   },
+
+
+  /* =======================================================
+     PHASE B
+     JHARKHAND SECTIONAL TESTS — 06 TO 10
+  ======================================================= */
+
   {
-    number: "06",
-    title: "Environment",
-    description: "Ecology, biodiversity, climate change and conservation.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 6,
+    phase: "B",
+    category: "JHARKHAND SECTIONAL",
+    categoryClass: "jharkhand",
+
+    title:
+      "Jharkhand Sectional Test 01 — A–C",
+
+    description:
+      "Jharkhand History, Movement and Distinct Identity.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Jharkhand Syllabus A–C",
+
+    level:
+      "Jharkhand Focus"
   },
+
+
   {
-    number: "07",
-    title: "Current Affairs",
-    description: "Important national, international and Jharkhand current affairs.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 7,
+    phase: "B",
+    category: "JHARKHAND SECTIONAL",
+    categoryClass: "jharkhand",
+
+    title:
+      "Jharkhand Sectional Test 02 — D–F",
+
+    description:
+      "Jharkhand Culture, Literature and Educational Institutions.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Jharkhand Syllabus D–F",
+
+    level:
+      "Jharkhand Focus"
   },
+
+
   {
-    number: "08",
-    title: "International Relations",
-    description: "International organisations, groupings and India's neighbourhood.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 8,
+    phase: "B",
+    category: "JHARKHAND SECTIONAL",
+    categoryClass: "jharkhand",
+
+    title:
+      "Jharkhand Sectional Test 03 — G–I",
+
+    description:
+      "Sports, Land Laws, Geography and Economic Development of Jharkhand.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Jharkhand Syllabus G–I",
+
+    level:
+      "Jharkhand Focus"
   },
+
+
   {
-    number: "09",
-    title: "General Studies",
-    description: "Mixed GS concepts and miscellaneous examination areas.",
-    category: "Subject-wise GS",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    number: 9,
+    phase: "B",
+    category: "JHARKHAND SECTIONAL",
+    categoryClass: "jharkhand",
+
+    title:
+      "Jharkhand Sectional Test 04 — J–M",
+
+    description:
+      "Industry, Policies, Schemes and Forest Management of Jharkhand.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Jharkhand Syllabus J–M",
+
+    level:
+      "Jharkhand Focus"
   },
+
+
   {
-    number: "10",
-    title: "Mixed GS",
-    description: "Comprehensive mixed test covering major Paper-I areas.",
-    category: "Subject-wise GS",
-    questions: "50 Questions",
-    time: "50 Minutes",
+    number: 10,
+    phase: "B",
+    category: "JHARKHAND SECTIONAL",
+    categoryClass: "jharkhand",
+
+    title:
+      "Jharkhand Sectional Test 05 — N–P",
+
+    description:
+      "Environment, Disaster Management and Contemporary Jharkhand.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Jharkhand Syllabus N–P",
+
+    level:
+      "Jharkhand Current Affairs"
   },
+
+
+  /* =======================================================
+     PHASE C
+     PAPER-I FULL LENGTH — 11 TO 15
+  ======================================================= */
+
+  {
+    number: 11,
+    phase: "C",
+    category: "PAPER-I FULL LENGTH",
+    categoryClass: "paper1",
+
+    title:
+      "Test 11 — Paper-I Full Length 01",
+
+    description:
+      "Complete JPSC Prelims General Studies Paper-I simulation. Moderate difficulty.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-I • Full Syllabus",
+
+    level:
+      "Moderate"
+  },
+
+
+  {
+    number: 12,
+    phase: "C",
+    category: "PAPER-I FULL LENGTH",
+    categoryClass: "paper1",
+
+    title:
+      "Test 12 — Paper-I Full Length 02",
+
+    description:
+      "Complete JPSC Prelims General Studies Paper-I simulation with moderate-to-hard questions.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-I • Full Syllabus",
+
+    level:
+      "Moderate–Hard"
+  },
+
+
+  {
+    number: 13,
+    phase: "C",
+    category: "PAPER-I FULL LENGTH",
+    categoryClass: "paper1",
+
+    title:
+      "Test 13 — Paper-I Full Length 03",
+
+    description:
+      "Complete Paper-I simulation designed at a hard JPSC-level standard.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-I • Full Syllabus",
+
+    level:
+      "Hard"
+  },
+
+
+  {
+    number: 14,
+    phase: "C",
+    category: "PAPER-I FULL LENGTH",
+    categoryClass: "paper1",
+
+    title:
+      "Test 14 — Paper-I Full Length 04",
+
+    description:
+      "Hard-level Paper-I simulation with intensive Current Affairs integration.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-I • Current Affairs Intensive",
+
+    level:
+      "Hard + CA"
+  },
+
+
+  {
+    number: 15,
+    phase: "C",
+    category: "PAPER-I FULL LENGTH",
+    categoryClass: "paper1",
+
+    title:
+      "Test 15 — Paper-I Full Length 05",
+
+    description:
+      "Final JPSC-level Paper-I simulation designed to replicate examination pressure and decision-making.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-I • Final Simulation",
+
+    level:
+      "JPSC Final Level"
+  },
+
+
+  /* =======================================================
+     PAPER-II FULL LENGTH — 16 TO 20
+  ======================================================= */
+
+  {
+    number: 16,
+    phase: "C",
+    category: "PAPER-II FULL LENGTH",
+    categoryClass: "paper2",
+
+    title:
+      "Test 16 — Paper-II Full Length 01",
+
+    description:
+      "Complete JPSC Prelims General Studies Paper-II — Jharkhand Specific simulation.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-II • Jharkhand Full Syllabus",
+
+    level:
+      "Moderate"
+  },
+
+
+  {
+    number: 17,
+    phase: "C",
+    category: "PAPER-II FULL LENGTH",
+    categoryClass: "paper2",
+
+    title:
+      "Test 17 — Paper-II Full Length 02",
+
+    description:
+      "Complete Jharkhand-specific Paper-II simulation with moderate-to-hard questions.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-II • Jharkhand Full Syllabus",
+
+    level:
+      "Moderate–Hard"
+  },
+
+
+  {
+    number: 18,
+    phase: "C",
+    category: "PAPER-II FULL LENGTH",
+    categoryClass: "paper2",
+
+    title:
+      "Test 18 — Paper-II Full Length 03",
+
+    description:
+      "Hard-level Jharkhand-specific Paper-II simulation covering the complete syllabus.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-II • Jharkhand Full Syllabus",
+
+    level:
+      "Hard"
+  },
+
+
+  {
+    number: 19,
+    phase: "C",
+    category: "PAPER-II FULL LENGTH",
+    categoryClass: "paper2",
+
+    title:
+      "Test 19 — Paper-II Full Length 04",
+
+    description:
+      "Hard Paper-II simulation with strong emphasis on contemporary Jharkhand and current developments.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-II • Current Jharkhand",
+
+    level:
+      "Hard + CA"
+  },
+
+
+  {
+    number: 20,
+    phase: "C",
+    category: "PAPER-II FULL LENGTH",
+    categoryClass: "paper2",
+
+    title:
+      "Test 20 — Paper-II Full Length 05",
+
+    description:
+      "Final JPSC-level Paper-II simulation designed as the ultimate Jharkhand-specific examination rehearsal.",
+
+    questions: 100,
+    duration: 120,
+    marks: 200,
+
+    topics:
+      "Paper-II • Final Simulation",
+
+    level:
+      "JPSC Final Level"
+  }
+
 ];
 
-const jharkhandTests = [
+
+/* =========================================================
+   MERGE DATABASE DATA WITH FALLBACK STRUCTURE
+========================================================= */
+
+const tests = testStructure.map((fallback) => {
+
+  const dbTest =
+    (dbTests || []).find(
+      (item) =>
+        Number(item.test_number) ===
+        fallback.number
+    );
+
+  return {
+
+    ...fallback,
+
+    id:
+      dbTest?.id ??
+      fallback.number,
+
+    title:
+      dbTest?.title ||
+      fallback.title,
+
+    description:
+      dbTest?.description ||
+      fallback.description,
+
+    questions:
+      Number(
+        dbTest?.question_count ??
+        dbTest?.questions ??
+        fallback.questions
+      ),
+
+    duration:
+      Number(
+        dbTest?.duration_minutes ??
+        dbTest?.duration ??
+        fallback.duration
+      ),
+
+    marks:
+      Number(
+        dbTest?.maximum_marks ??
+        dbTest?.marks ??
+        fallback.marks
+      ),
+
+    topics:
+      dbTest?.topics ||
+      fallback.topics,
+
+    level:
+      dbTest?.difficulty ||
+      fallback.level,
+
+    /*
+      These are intentionally flexible.
+      If your Supabase table later contains an
+      availability/release field, the dashboard can
+      use it without changing the test structure.
+    */
+
+    availableFrom:
+      dbTest?.available_from ??
+      dbTest?.release_at ??
+      dbTest?.release_date ??
+      dbTest?.start_at ??
+      null
+
+  };
+
+});
+
+
+/* =========================================================
+   GROUPS
+========================================================= */
+
+const gsTests =
+  tests.filter(
+    (test) =>
+      test.number >= 1 &&
+      test.number <= 5
+  );
+
+const jharkhandTests =
+  tests.filter(
+    (test) =>
+      test.number >= 6 &&
+      test.number <= 10
+  );
+
+const paper1Tests =
+  tests.filter(
+    (test) =>
+      test.number >= 11 &&
+      test.number <= 15
+  );
+
+const paper2Tests =
+  tests.filter(
+    (test) =>
+      test.number >= 16 &&
+      test.number <= 20
+  );
+
+
+const totalTests = tests.length;
+
+
+/* =========================================================
+   PHASE DEFINITIONS
+========================================================= */
+
+const groups = [
+
   {
-    number: "01",
-    title: "Jharkhand History",
-    description: "History, movements and important historical events of Jharkhand.",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    title:
+      "GS Sectional Tests",
+
+    subtitle:
+      "Build command over the General Studies syllabus before moving into full-length simulations.",
+
+    badge:
+      "TESTS 01–05",
+
+    icon:
+      "GS",
+
+    className:
+      "group-gs",
+
+    tests:
+      gsTests
   },
+
   {
-    number: "02",
-    title: "Jharkhand Geography",
-    description: "Physical geography, rivers, minerals, forests and districts.",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    title:
+      "Jharkhand Sectional Tests",
+
+    subtitle:
+      "Master the complete Jharkhand-specific syllabus through five focused sectional tests.",
+
+    badge:
+      "TESTS 06–10",
+
+    icon:
+      "JH",
+
+    className:
+      "group-jharkhand",
+
+    tests:
+      jharkhandTests
   },
+
   {
-    number: "03",
-    title: "Jharkhand Economy",
-    description: "Industries, minerals, agriculture, development and state economy.",
-    questions: "25 Questions",
-    time: "25 Minutes",
+    title:
+      "Paper-I Full Length Tests",
+
+    subtitle:
+      "Five increasingly difficult General Studies Paper-I simulations.",
+
+    badge:
+      "TESTS 11–15",
+
+    icon:
+      "P-I",
+
+    className:
+      "group-paper1",
+
+    tests:
+      paper1Tests
   },
+
   {
-    number: "04",
-    title: "Jharkhand Culture & Society",
-    description: "Tribes, festivals, languages, literature, art and culture.",
-    questions: "25 Questions",
-    time: "25 Minutes",
-  },
-  {
-    number: "05",
-    title: "Jharkhand Complete",
-    description: "Mixed Jharkhand Special test covering major state-specific areas.",
-    questions: "50 Questions",
-    time: "50 Minutes",
-  },
+    title:
+      "Paper-II Full Length Tests",
+
+    subtitle:
+      "Five increasingly difficult Jharkhand-specific Paper-II simulations.",
+
+    badge:
+      "TESTS 16–20",
+
+    icon:
+      "P-II",
+
+    className:
+      "group-paper2",
+
+    tests:
+      paper2Tests
+  }
+
 ];
 
-const paperOneTests = [
-  {
-    number: "01",
-    title: "Paper-I Simulation 01",
-  },
-  {
-    number: "02",
-    title: "Paper-I Simulation 02",
-  },
-  {
-    number: "03",
-    title: "Paper-I Simulation 03",
-  },
-  {
-    number: "04",
-    title: "Paper-I Simulation 04",
-  },
-  {
-    number: "05",
-    title: "Paper-I Simulation 05",
-  },
-];
-
-const paperTwoTests = [
-  {
-    number: "01",
-    title: "Paper-II Simulation 01",
-  },
-  {
-    number: "02",
-    title: "Paper-II Simulation 02",
-  },
-  {
-    number: "03",
-    title: "Paper-II Simulation 03",
-  },
-  {
-    number: "04",
-    title: "Paper-II Simulation 04",
-  },
-  {
-    number: "05",
-    title: "Paper-II Simulation 05",
-  },
-];
 ---
 
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+<head>
 
-    <meta
-      name="description"
-      content="JPSC Mock Tests by Habitat IAS — subject-wise tests, Jharkhand Special tests and full Paper-I and Paper-II simulations."
-    />
+  <meta charset="UTF-8" />
 
-    <meta
-      name="keywords"
-      content="JPSC Mock Test, JPSC Prelims Mock Test, JPSC Test Series, Jharkhand PSC Mock Test, JPSC Paper 1, JPSC Paper 2"
-    />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
-    <title>JPSC Mock Tests | Habitat IAS</title>
+  <meta
+    name="theme-color"
+    content="#07366c"
+  />
 
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+  <meta
+    name="description"
+    content="Habitat IAS JPSC Prelims 20-Test Series — sectional tests and full-length simulations."
+  />
 
-      html {
-        scroll-behavior: smooth;
-      }
+  <title>
+    JPSC Prelims 20-Test Series | Habitat IAS
+  </title>
 
-      body {
-        font-family:
-          Arial,
-          Helvetica,
-          sans-serif;
-        background: #f5f7fb;
-        color: #172033;
-        line-height: 1.6;
-      }
+</head>
 
-      a {
-        text-decoration: none;
-      }
 
-      /* =========================
-         HEADER
-      ========================= */
+<body class="dashboard-body">
 
-      .site-header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
 
-        background: rgba(255, 255, 255, 0.97);
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
 
-        border-bottom: 1px solid #e5e9f2;
+  <header class="dashboard-header">
 
-        backdrop-filter: blur(10px);
-      }
+    <a
+      href="/"
+      class="dashboard-brand"
+    >
 
-      .nav {
-        max-width: 1280px;
-        min-height: 82px;
+      <span class="dashboard-logo">
+        H
+      </span>
 
-        margin: 0 auto;
-        padding: 14px 28px;
+      <span class="dashboard-brand-text">
 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        gap: 25px;
-      }
-
-      .logo {
-        display: flex;
-        align-items: center;
-
-        gap: 12px;
-
-        color: #1657d9;
-
-        font-size: 25px;
-        font-weight: 800;
-
-        white-space: nowrap;
-      }
-
-      .logo-mark {
-        width: 48px;
-        height: 48px;
-
-        border-radius: 13px;
-
-        background: #1657d9;
-
-        color: white;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        font-size: 25px;
-        font-weight: 800;
-      }
-
-      .nav-links {
-        display: flex;
-        align-items: center;
-
-        justify-content: flex-end;
-
-        gap: 22px;
-
-        flex-wrap: wrap;
-      }
-
-      .nav-links a {
-        color: #44506a;
-
-        font-size: 15px;
-        font-weight: 700;
-
-        transition: 0.2s ease;
-      }
-
-      .nav-links a:hover {
-        color: #1657d9;
-      }
-
-      .nav-cta {
-        background: #1657d9;
-
-        color: white !important;
-
-        padding: 13px 20px;
-
-        border-radius: 10px;
-      }
-
-      /* =========================
-         HERO
-      ========================= */
-
-      .hero {
-        background:
-          linear-gradient(
-            135deg,
-            #102f82,
-            #1657d9,
-            #2d72e8
-          );
-
-        color: white;
-
-        padding: 85px 28px 105px;
-      }
-
-      .hero-inner {
-        max-width: 1050px;
-
-        margin: 0 auto;
-
-        text-align: center;
-      }
-
-      .eyebrow {
-        display: inline-block;
-
-        padding: 8px 17px;
-
-        border-radius: 999px;
-
-        border: 1px solid rgba(255, 255, 255, 0.35);
-
-        background: rgba(255, 255, 255, 0.1);
-
-        font-size: 13px;
-        font-weight: 800;
-
-        letter-spacing: 0.7px;
-
-        margin-bottom: 20px;
-      }
-
-      .hero h1 {
-        font-size: clamp(44px, 6vw, 76px);
-
-        line-height: 1.02;
-
-        font-weight: 900;
-
-        margin-bottom: 20px;
-      }
-
-      .hero h1 span {
-        color: #ffd43b;
-      }
-
-      .hero p {
-        max-width: 780px;
-
-        margin: 0 auto;
-
-        font-size: 19px;
-
-        color: rgba(255, 255, 255, 0.9);
-      }
-
-      /* =========================
-         MAIN
-      ========================= */
-
-      .main {
-        max-width: 1200px;
-
-        margin: -65px auto 0;
-
-        position: relative;
-
-        z-index: 5;
-
-        padding: 0 22px 80px;
-      }
-
-      /* =========================
-         OVERVIEW
-      ========================= */
-
-      .overview {
-        background: white;
-
-        border-radius: 22px;
-
-        padding: 35px 40px;
-
-        box-shadow:
-          0 20px 60px rgba(20, 42, 85, 0.12);
-
-        margin-bottom: 35px;
-
-        text-align: center;
-      }
-
-      .overview h2 {
-        font-size: 34px;
-
-        color: #14213d;
-
-        margin-bottom: 10px;
-      }
-
-      .overview p {
-        max-width: 760px;
-
-        margin: 0 auto;
-
-        color: #68748a;
-      }
-
-      /* =========================
-         TEST SECTION
-      ========================= */
-
-      .test-section {
-        background: white;
-
-        border-radius: 22px;
-
-        padding: 38px;
-
-        margin-bottom: 35px;
-
-        box-shadow:
-          0 15px 45px rgba(20, 42, 85, 0.08);
-      }
-
-      .section-header {
-        display: flex;
-
-        align-items: flex-end;
-
-        justify-content: space-between;
-
-        gap: 20px;
-
-        margin-bottom: 30px;
-      }
-
-      .section-label {
-        color: #1657d9;
-
-        font-size: 13px;
-
-        font-weight: 900;
-
-        letter-spacing: 1px;
-
-        margin-bottom: 7px;
-      }
-
-      .section-header h2 {
-        color: #14213d;
-
-        font-size: 34px;
-
-        line-height: 1.1;
-      }
-
-      .section-header p {
-        color: #68748a;
-
-        margin-top: 8px;
-
-        max-width: 700px;
-      }
-
-      .count-badge {
-        background: #eaf1ff;
-
-        color: #1657d9;
-
-        padding: 10px 17px;
-
-        border-radius: 999px;
-
-        font-size: 14px;
-
-        font-weight: 900;
-
-        white-space: nowrap;
-      }
-
-      /* =========================
-         TEST GRID
-      ========================= */
-
-      .test-grid {
-        display: grid;
-
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        gap: 17px;
-      }
-
-      .test-card {
-        border: 1px solid #e1e7f1;
-
-        border-radius: 16px;
-
-        padding: 23px;
-
-        background: #fff;
-
-        transition:
-          transform 0.2s ease,
-          box-shadow 0.2s ease,
-          border-color 0.2s ease;
-      }
-
-      .test-card:hover {
-        transform: translateY(-3px);
-
-        border-color: #cbd9f5;
-
-        box-shadow:
-          0 12px 30px rgba(20, 42, 85, 0.08);
-      }
-
-      .test-top {
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 15px;
-
-        margin-bottom: 14px;
-      }
-
-      .test-number {
-        width: 42px;
-        height: 42px;
-
-        flex: 0 0 42px;
-
-        border-radius: 11px;
-
-        background: #eaf1ff;
-
-        color: #1657d9;
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        font-size: 14px;
-
-        font-weight: 900;
-      }
-
-      .test-tag {
-        color: #718096;
-
-        font-size: 12px;
-
-        font-weight: 800;
-
-        text-transform: uppercase;
-
-        letter-spacing: 0.4px;
-      }
-
-      .test-card h3 {
-        color: #172033;
-
-        font-size: 21px;
-
-        margin-bottom: 7px;
-      }
-
-      .test-card p {
-        color: #6c778c;
-
-        font-size: 14px;
-
-        min-height: 44px;
-
-        margin-bottom: 17px;
-      }
-
-      .test-meta {
-        display: flex;
-
-        flex-wrap: wrap;
-
-        gap: 8px;
-
-        margin-bottom: 18px;
-      }
-
-      .meta {
-        background: #f4f6fa;
-
-        color: #59657a;
-
-        border-radius: 8px;
-
-        padding: 7px 10px;
-
-        font-size: 12px;
-
-        font-weight: 700;
-      }
-
-      .start-button {
-        display: inline-flex;
-
-        align-items: center;
-
-        justify-content: center;
-
-        width: 100%;
-
-        min-height: 44px;
-
-        border-radius: 9px;
-
-        background: #1657d9;
-
-        color: white;
-
-        font-size: 14px;
-
-        font-weight: 800;
-
-        transition: 0.2s ease;
-      }
-
-      .start-button:hover {
-        background: #0d46ba;
-      }
-
-      /* =========================
-         SIMULATION
-      ========================= */
-
-      .simulation-grid {
-        display: grid;
-
-        grid-template-columns:
-          repeat(2, 1fr);
-
-        gap: 17px;
-      }
-
-      .simulation-card {
-        border-radius: 17px;
-
-        padding: 25px;
-
-        border: 1px solid #dce4f2;
-
-        background:
-          linear-gradient(
-            135deg,
-            #f7faff,
-            #ffffff
-          );
-      }
-
-      .simulation-card.paper-two {
-        background:
-          linear-gradient(
-            135deg,
-            #fffaf0,
-            #ffffff
-          );
-      }
-
-      .simulation-label {
-        color: #1657d9;
-
-        font-size: 12px;
-
-        font-weight: 900;
-
-        letter-spacing: 0.8px;
-
-        margin-bottom: 7px;
-      }
-
-      .paper-two .simulation-label {
-        color: #9a6900;
-      }
-
-      .simulation-card h3 {
-        font-size: 21px;
-
-        color: #172033;
-
-        margin-bottom: 7px;
-      }
-
-      .simulation-card p {
-        color: #68748a;
-
-        font-size: 14px;
-
-        margin-bottom: 18px;
-      }
-
-      .simulation-button {
-        display: inline-flex;
-
-        width: 100%;
-
-        align-items: center;
-        justify-content: center;
-
-        min-height: 44px;
-
-        border-radius: 9px;
-
-        background: #1657d9;
-
-        color: white;
-
-        font-weight: 800;
-
-        font-size: 14px;
-      }
-
-      .paper-two .simulation-button {
-        background: #b47a00;
-      }
-
-      /* =========================
-         LOCKED CTA
-      ========================= */
-
-      .premium {
-        position: relative;
-
-        background:
-          linear-gradient(
-            135deg,
-            #101f3e,
-            #172e5a
-          );
-
-        color: white;
-
-        border-radius: 22px;
-
-        padding: 55px 40px;
-
-        text-align: center;
-
-        overflow: hidden;
-      }
-
-      .premium::before {
-        content: "";
-
-        position: absolute;
-
-        width: 320px;
-        height: 320px;
-
-        border-radius: 50%;
-
-        background: rgba(255, 255, 255, 0.04);
-
-        top: -170px;
-        right: -80px;
-      }
-
-      .lock {
-        position: relative;
-
-        width: 62px;
-        height: 62px;
-
-        margin: 0 auto 17px;
-
-        border-radius: 50%;
-
-        background: rgba(255, 255, 255, 0.1);
-
-        display: flex;
-
-        align-items: center;
-        justify-content: center;
-
-        font-size: 28px;
-      }
-
-      .premium h2 {
-        position: relative;
-
-        font-size: 34px;
-
-        margin-bottom: 12px;
-      }
-
-      .premium p {
-        position: relative;
-
-        max-width: 760px;
-
-        margin: 0 auto 25px;
-
-        color: rgba(255, 255, 255, 0.78);
-      }
-
-      .purchase {
-        position: relative;
-
-        display: inline-flex;
-
-        align-items: center;
-        justify-content: center;
-
-        background: #ffd43b;
-
-        color: #14213d;
-
-        padding: 14px 24px;
-
-        border-radius: 10px;
-
-        font-size: 15px;
-
-        font-weight: 900;
-      }
-
-      .price {
-        position: relative;
-
-        margin-top: 10px;
-
-        font-size: 13px;
-
-        color: rgba(255, 255, 255, 0.6);
-      }
-
-      /* =========================
-         FOOTER
-      ========================= */
-
-      .footer {
-        background: #101a2d;
-
-        color: white;
-
-        padding: 50px 28px;
-      }
-
-      .footer-inner {
-        max-width: 1180px;
-
-        margin: 0 auto;
-
-        display: flex;
-
-        align-items: center;
-
-        justify-content: space-between;
-
-        gap: 30px;
-      }
-
-      .footer-brand {
-        font-size: 23px;
-
-        font-weight: 900;
-
-        margin-bottom: 4px;
-      }
-
-      .footer small {
-        color: #9da8bb;
-      }
-
-      .footer-links {
-        display: flex;
-
-        flex-wrap: wrap;
-
-        gap: 20px;
-      }
-
-      .footer-links a {
-        color: #d6dce8;
-
-        font-size: 14px;
-
-        font-weight: 600;
-      }
-
-      .footer-links a:hover {
-        color: white;
-      }
-
-      /* =========================
-         TABLET
-      ========================= */
-
-      @media (max-width: 900px) {
-
-        .nav {
-          flex-direction: column;
-
-          padding: 16px 20px;
-        }
-
-        .nav-links {
-          justify-content: center;
-
-          gap: 14px 18px;
-        }
-
-        .section-header {
-          align-items: flex-start;
-
-          flex-direction: column;
-        }
-
-        .test-grid,
-        .simulation-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* =========================
-         MOBILE
-      ========================= */
-
-      @media (max-width: 600px) {
-
-        .hero {
-          padding: 55px 20px 90px;
-        }
-
-        .main {
-          padding-left: 14px;
-          padding-right: 14px;
-        }
-
-        .overview,
-        .test-section {
-          padding: 25px 20px;
-        }
-
-        .section-header h2 {
-          font-size: 28px;
-        }
-
-        .count-badge {
-          white-space: normal;
-        }
-
-        .premium {
-          padding: 40px 20px;
-        }
-
-        .premium h2 {
-          font-size: 28px;
-        }
-
-        .footer-inner {
-          flex-direction: column;
-
-          text-align: center;
-        }
-
-        .footer-links {
-          justify-content: center;
-        }
-
-        .nav-links a {
-          font-size: 13px;
-        }
-      }
-    </style>
-  </head>
-
-  <body>
-
-    <!-- =========================
-         HEADER
-    ========================= -->
-
-    <header class="site-header">
-
-      <nav class="nav">
-
-        <a href="/" class="logo">
-
-          <span class="logo-mark">
-            H
-          </span>
-
+        <strong>
           Habitat IAS
+        </strong>
 
-        </a>
+        <small>
+          CIVIL SERVICES PREPARATION
+        </small>
 
-        <div class="nav-links">
+      </span>
 
-          <a href="/">
-            Home
-          </a>
-
-          <a href="/notes/">
-            Notes
-          </a>
-
-          <a href="/pyq/">
-            JPSC PYQ
-          </a>
-
-          <a href="/book/">
-            Book
-          </a>
-
-          <a href="/guidance/">
-            Guidance
-          </a>
-
-          <a href="/trends/">
-            Trends
-          </a>
-
-          <a href="/mock-tests/">
-            Mock Tests
-          </a>
-
-          <a href="/jharkhand/">
-            Jharkhand
-          </a>
-
-          <a href="/resources/">
-            Resources
-          </a>
-
-          <a href="/contact/">
-            Contact
-          </a>
-
-          <a
-            href={bookLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="nav-cta"
-          >
-            Get the Book
-          </a>
-
-        </div>
-
-      </nav>
-
-    </header>
+    </a>
 
 
-    <!-- =========================
+    <div class="dashboard-header-center">
+
+      <strong>
+        JPSC PRELIMS
+      </strong>
+
+      <span>
+        COMPUTER BASED TEST SERIES
+      </span>
+
+    </div>
+
+
+    <div class="dashboard-header-right">
+
+      <span class="series-status">
+        20 TESTS
+      </span>
+
+      <a
+        href="/"
+        class="home-button"
+      >
+        ← Home
+      </a>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="dashboard-container">
+
+
+    <!-- ===================================================
          HERO
-    ========================= -->
+    ==================================================== -->
 
-    <section class="hero">
+    <section class="dashboard-hero">
 
-      <div class="hero-inner">
+      <div class="hero-copy">
 
-        <div class="eyebrow">
-          HABITAT IAS • JPSC PREPARATION
+        <div class="dashboard-kicker">
+          HABITAT IAS • JPSC PRELIMS
         </div>
 
         <h1>
-          JPSC
-          <span>Mock Tests</span>
+          JPSC Prelims
+          <span>
+            20-Test Series
+          </span>
         </h1>
 
         <p>
-          Practice systematically with subject-wise tests,
-          Jharkhand Special tests and full examination simulations
-          designed for JPSC Prelims preparation.
+          A complete examination-oriented test programme
+          covering General Studies, Jharkhand-specific
+          subjects and full-length Paper-I & Paper-II
+          simulations.
+        </p>
+
+
+        <div class="hero-highlights">
+
+          <span>
+            ✓ 20 Tests
+          </span>
+
+          <span>
+            ✓ 100 Questions / Test
+          </span>
+
+          <span>
+            ✓ 200 Marks / Test
+          </span>
+
+          <span>
+            ✓ 120 Minutes
+          </span>
+
+          <span>
+            ✓ +2 / 0 Marking
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <div class="hero-summary">
+
+        <div class="summary-number">
+          20
+        </div>
+
+        <div class="summary-label">
+          TOTAL TESTS
+        </div>
+
+        <div class="summary-line">
+          01–05 • GS Sectionals
+        </div>
+
+        <div class="summary-line">
+          06–10 • Jharkhand
+        </div>
+
+        <div class="summary-line">
+          11–20 • Full Length
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         STATISTICS
+    ==================================================== -->
+
+    <section class="stats">
+
+      <div class="stat">
+
+        <strong class="stat-number">
+          20
+        </strong>
+
+        <span class="stat-label">
+          Total Tests
+        </span>
+
+      </div>
+
+
+      <div class="stat">
+
+        <strong class="stat-number">
+          2,000+
+        </strong>
+
+        <span class="stat-label">
+          Questions
+        </span>
+
+      </div>
+
+
+      <div class="stat">
+
+        <strong class="stat-number">
+          200
+        </strong>
+
+        <span class="stat-label">
+          Marks / Test
+        </span>
+
+      </div>
+
+
+      <div class="stat">
+
+        <strong class="stat-number">
+          120
+        </strong>
+
+        <span class="stat-label">
+          Minutes / Test
+        </span>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         ROADMAP
+    ==================================================== -->
+
+    <section class="roadmap-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <span>
+            YOUR PREPARATION ROADMAP
+          </span>
+
+          <h2>
+            20 Tests • 3 Phases
+          </h2>
+
+        </div>
+
+        <p>
+          Build concepts → master Jharkhand →
+          simulate the complete examination.
+        </p>
+
+      </div>
+
+
+      <div class="roadmap-grid">
+
+        <div class="roadmap-card gs-roadmap">
+
+          <span class="roadmap-number">
+            01
+          </span>
+
+          <div>
+
+            <strong>
+              GS Sectionals
+            </strong>
+
+            <small>
+              Tests 01–05
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-card jh-roadmap">
+
+          <span class="roadmap-number">
+            02
+          </span>
+
+          <div>
+
+            <strong>
+              Jharkhand Sectionals
+            </strong>
+
+            <small>
+              Tests 06–10
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-card paper1-roadmap">
+
+          <span class="roadmap-number">
+            03
+          </span>
+
+          <div>
+
+            <strong>
+              Paper-I Full Length
+            </strong>
+
+            <small>
+              Tests 11–15
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="roadmap-card paper2-roadmap">
+
+          <span class="roadmap-number">
+            04
+          </span>
+
+          <div>
+
+            <strong>
+              Paper-II Full Length
+            </strong>
+
+            <small>
+              Tests 16–20
+            </small>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         TEST GROUPS
+    ==================================================== -->
+
+    {
+      groups.map((group) => (
+
+        <section
+          class={`test-group ${group.className}`}
+        >
+
+
+          <!-- GROUP HEADER -->
+
+          <div class="group-header">
+
+            <div class="group-title-wrap">
+
+              <div class="group-icon">
+                {group.icon}
+              </div>
+
+              <div>
+
+                <div class="group-badge">
+                  {group.badge}
+                </div>
+
+                <h2>
+                  {group.title}
+                </h2>
+
+                <p>
+                  {group.subtitle}
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="group-count">
+
+              <strong>
+                {group.tests.length}
+              </strong>
+
+              <span>
+                Tests
+              </span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- TEST CARDS -->
+
+          <div class="test-grid">
+
+            {
+              group.tests.map(
+                (test) => (
+
+                  <article
+                    class={`test-card ${test.categoryClass}`}
+                  >
+
+
+                    <!-- CARD TOP -->
+
+                    <div class="card-top">
+
+                      <div class="test-number">
+
+                        <span>
+                          TEST
+                        </span>
+
+                        <strong>
+                          {
+                            String(
+                              test.number
+                            ).padStart(
+                              2,
+                              "0"
+                            )
+                          }
+                        </strong>
+
+                      </div>
+
+
+                      <span class="card-status">
+                        AVAILABLE
+                      </span>
+
+                    </div>
+
+
+
+                    <!-- TITLE -->
+
+                    <h3>
+                      {test.title}
+                    </h3>
+
+
+                    <p class="card-description">
+                      {test.description}
+                    </p>
+
+
+
+                    <!-- TOPIC -->
+
+                    <div class="topic-chip">
+                      {test.topics}
+                    </div>
+
+
+
+                    <!-- LEVEL -->
+
+                    <div class="level-chip">
+                      {test.level}
+                    </div>
+
+
+
+                    <!-- STATS -->
+
+                    <div class="test-stats">
+
+                      <div>
+
+                        <span>
+                          Questions
+                        </span>
+
+                        <strong>
+                          {test.questions}
+                        </strong>
+
+                      </div>
+
+
+                      <div>
+
+                        <span>
+                          Duration
+                        </span>
+
+                        <strong>
+                          {test.duration} min
+                        </strong>
+
+                      </div>
+
+
+                      <div>
+
+                        <span>
+                          Marks
+                        </span>
+
+                        <strong>
+                          {test.marks}
+                        </strong>
+
+                      </div>
+
+                    </div>
+
+
+
+                    <!-- ACTION -->
+
+                    <a
+                      href={`/mock-tests/${test.number}`}
+                      class="start-test-button"
+                    >
+
+                      <span>
+                        Start Test
+                      </span>
+
+                      <span class="arrow">
+                        →
+                      </span>
+
+                    </a>
+
+                  </article>
+
+                )
+              )
+            }
+
+          </div>
+
+        </section>
+
+      ))
+    }
+
+
+
+    <!-- ===================================================
+         FULL LENGTH SIMULATION
+    ==================================================== -->
+
+    <section class="test-day-section">
+
+
+      <div class="test-day-heading">
+
+        <span class="dashboard-kicker">
+          PHASE C • FULL-LENGTH SIMULATION
+        </span>
+
+        <h2>
+          The Final 10 Tests = 5 Complete Simulation Days
+        </h2>
+
+        <p>
+          Paper-I and Paper-II are treated as the two
+          papers of the same examination day rather than
+          as unrelated tests.
+        </p>
+
+      </div>
+
+
+
+      <div class="simulation-flow">
+
+
+        <!-- DAY 1 -->
+
+        <div class="simulation-day">
+
+          <div class="simulation-day-number">
+            DAY 01
+          </div>
+
+          <div class="simulation-paper paper-one">
+
+            <span>
+              09:30 AM
+            </span>
+
+            <strong>
+              Test 11 — Paper-I Full Length 01
+            </strong>
+
+          </div>
+
+          <div class="simulation-plus">
+            +
+          </div>
+
+          <div class="simulation-paper paper-two">
+
+            <span>
+              02:30 PM ONWARD
+            </span>
+
+            <strong>
+              Test 16 — Paper-II Full Length 01
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DAY 2 -->
+
+        <div class="simulation-day">
+
+          <div class="simulation-day-number">
+            DAY 02
+          </div>
+
+          <div class="simulation-paper paper-one">
+
+            <span>
+              09:30 AM
+            </span>
+
+            <strong>
+              Test 12 — Paper-I Full Length 02
+            </strong>
+
+          </div>
+
+          <div class="simulation-plus">
+            +
+          </div>
+
+          <div class="simulation-paper paper-two">
+
+            <span>
+              02:30 PM ONWARD
+            </span>
+
+            <strong>
+              Test 17 — Paper-II Full Length 02
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DAY 3 -->
+
+        <div class="simulation-day">
+
+          <div class="simulation-day-number">
+            DAY 03
+          </div>
+
+          <div class="simulation-paper paper-one">
+
+            <span>
+              09:30 AM
+            </span>
+
+            <strong>
+              Test 13 — Paper-I Full Length 03
+            </strong>
+
+          </div>
+
+          <div class="simulation-plus">
+            +
+          </div>
+
+          <div class="simulation-paper paper-two">
+
+            <span>
+              02:30 PM ONWARD
+            </span>
+
+            <strong>
+              Test 18 — Paper-II Full Length 03
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DAY 4 -->
+
+        <div class="simulation-day">
+
+          <div class="simulation-day-number">
+            DAY 04
+          </div>
+
+          <div class="simulation-paper paper-one">
+
+            <span>
+              09:30 AM
+            </span>
+
+            <strong>
+              Test 14 — Paper-I Full Length 04
+            </strong>
+
+          </div>
+
+          <div class="simulation-plus">
+            +
+          </div>
+
+          <div class="simulation-paper paper-two">
+
+            <span>
+              02:30 PM ONWARD
+            </span>
+
+            <strong>
+              Test 19 — Paper-II Full Length 04
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- DAY 5 -->
+
+        <div class="simulation-day final-simulation">
+
+          <div class="simulation-day-number">
+            DAY 05
+          </div>
+
+          <div class="simulation-paper paper-one">
+
+            <span>
+              09:30 AM
+            </span>
+
+            <strong>
+              Test 15 — Paper-I Full Length 05
+            </strong>
+
+          </div>
+
+          <div class="simulation-plus">
+            +
+          </div>
+
+          <div class="simulation-paper paper-two">
+
+            <span>
+              02:30 PM ONWARD
+            </span>
+
+            <strong>
+              Test 20 — Paper-II Full Length 05
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- SCORING -->
+
+      <div class="scoring">
+
+        <h3>
+          JPSC-Style Test Scoring
+        </h3>
+
+        <div class="score-grid">
+
+          <div class="score-item correct">
+
+            <strong>
+              +2
+            </strong>
+
+            <span>
+              Correct Answer
+            </span>
+
+          </div>
+
+
+          <div class="score-item wrong">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              Wrong Answer
+            </span>
+
+          </div>
+
+
+          <div class="score-item skipped">
+
+            <strong>
+              0
+            </strong>
+
+            <span>
+              Unattempted
+            </span>
+
+          </div>
+
+
+          <div class="score-item total">
+
+            <strong>
+              200
+            </strong>
+
+            <span>
+              Maximum Marks
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================================
+         CURRENT AFFAIRS NOTE
+    ==================================================== -->
+
+    <section class="current-affairs-note">
+
+      <div class="note-icon">
+        CA
+      </div>
+
+      <div>
+
+        <strong>
+          Current Affairs Integration
+        </strong>
+
+        <p>
+          Current Affairs will be distributed across
+          Tests 01–20 rather than being isolated into
+          a separate Current Affairs test.
         </p>
 
       </div>
@@ -1109,445 +1651,2351 @@ const paperTwoTests = [
     </section>
 
 
-    <!-- =========================
-         MAIN
-    ========================= -->
 
-    <main class="main">
-
-
-      <!-- OVERVIEW -->
-
-      <section class="overview">
-
-        <h2>
-          25 Tests. One Complete Practice System.
-        </h2>
-
-        <p>
-          The test series is divided into 10 subject-wise GS tests,
-          5 Jharkhand Special tests and 10 full examination simulations
-          — 5 for Paper-I and 5 for Paper-II.
-        </p>
-
-      </section>
-
-
-      <!-- =====================================================
-           SUBJECT-WISE TESTS
-      ====================================================== -->
-
-      <section class="test-section">
-
-        <div class="section-header">
-
-          <div>
-
-            <div class="section-label">
-              CATEGORY 01
-            </div>
-
-            <h2>
-              Subject-wise GS Tests
-            </h2>
-
-            <p>
-              Build subject-level command before moving to complete
-              examination simulations.
-            </p>
-
-          </div>
-
-          <div class="count-badge">
-            10 Tests
-          </div>
-
-        </div>
-
-
-        <div class="test-grid">
-
-          {
-            tests.map((test) => (
-
-              <article class="test-card">
-
-                <div class="test-top">
-
-                  <div class="test-number">
-                    {test.number}
-                  </div>
-
-                  <div class="test-tag">
-                    {test.category}
-                  </div>
-
-                </div>
-
-                <h3>
-                  {test.title}
-                </h3>
-
-                <p>
-                  {test.description}
-                </p>
-
-                <div class="test-meta">
-
-                  <span class="meta">
-                    {test.questions}
-                  </span>
-
-                  <span class="meta">
-                    {test.time}
-                  </span>
-
-                </div>
-
-                <a
-                  href={bookLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="start-button"
-                >
-                  Start Test →
-                </a>
-
-              </article>
-
-            ))
-          }
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           JHARKHAND SPECIAL
-      ====================================================== -->
-
-      <section class="test-section">
-
-        <div class="section-header">
-
-          <div>
-
-            <div class="section-label">
-              CATEGORY 02
-            </div>
-
-            <h2>
-              Jharkhand Special
-            </h2>
-
-            <p>
-              Dedicated state-specific tests covering the major
-              areas required for JPSC preparation.
-            </p>
-
-          </div>
-
-          <div class="count-badge">
-            5 Tests
-          </div>
-
-        </div>
-
-
-        <div class="test-grid">
-
-          {
-            jharkhandTests.map((test) => (
-
-              <article class="test-card">
-
-                <div class="test-top">
-
-                  <div class="test-number">
-                    {test.number}
-                  </div>
-
-                  <div class="test-tag">
-                    Jharkhand Special
-                  </div>
-
-                </div>
-
-                <h3>
-                  {test.title}
-                </h3>
-
-                <p>
-                  {test.description}
-                </p>
-
-                <div class="test-meta">
-
-                  <span class="meta">
-                    {test.questions}
-                  </span>
-
-                  <span class="meta">
-                    {test.time}
-                  </span>
-
-                </div>
-
-                <a
-                  href={bookLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="start-button"
-                >
-                  Start Test →
-                </a>
-
-              </article>
-
-            ))
-          }
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           FULL SIMULATION
-      ====================================================== -->
-
-      <section class="test-section">
-
-        <div class="section-header">
-
-          <div>
-
-            <div class="section-label">
-              CATEGORY 03
-            </div>
-
-            <h2>
-              Full Exam Simulation
-            </h2>
-
-            <p>
-              Simulate the examination environment with separate
-              Paper-I and Paper-II practice tests.
-            </p>
-
-          </div>
-
-          <div class="count-badge">
-            10 Tests
-          </div>
-
-        </div>
-
-
-        <!-- PAPER I -->
-
-        <div style="margin-bottom: 35px;">
-
-          <h3
-            style="
-              color:#14213d;
-              font-size:24px;
-              margin-bottom:16px;
-            "
-          >
-            Paper-I Simulation
-          </h3>
-
-          <div class="simulation-grid">
-
-            {
-              paperOneTests.map((test) => (
-
-                <article class="simulation-card">
-
-                  <div class="simulation-label">
-                    PAPER-I
-                  </div>
-
-                  <h3>
-                    {test.title}
-                  </h3>
-
-                  <p>
-                    Full-length Paper-I simulation for
-                    examination practice.
-                  </p>
-
-                  <a
-                    href={bookLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="simulation-button"
-                  >
-                    Start Simulation →
-                  </a>
-
-                </article>
-
-              ))
-            }
-
-          </div>
-
-        </div>
-
-
-        <!-- PAPER II -->
-
-        <div>
-
-          <h3
-            style="
-              color:#14213d;
-              font-size:24px;
-              margin-bottom:16px;
-            "
-          >
-            Paper-II Simulation
-          </h3>
-
-          <div class="simulation-grid">
-
-            {
-              paperTwoTests.map((test) => (
-
-                <article class="simulation-card paper-two">
-
-                  <div class="simulation-label">
-                    PAPER-II
-                  </div>
-
-                  <h3>
-                    {test.title}
-                  </h3>
-
-                  <p>
-                    Full-length Paper-II simulation for
-                    examination practice.
-                  </p>
-
-                  <a
-                    href={bookLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="simulation-button"
-                  >
-                    Start Simulation →
-                  </a>
-
-                </article>
-
-              ))
-            }
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================================
-           PREMIUM CTA
-      ====================================================== -->
-
-      <section class="premium">
-
-        <div class="lock">
-          🔒
-        </div>
-
-        <h2>
-          Complete Test Series Coming Soon
-        </h2>
-
-        <p>
-          The 25-test structure is designed for systematic JPSC
-          preparation. Access to the complete test series,
-          questions, answers and explanations will be provided
-          through Habitat IAS.
-        </p>
-
-        <a
-          href={bookLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="purchase"
-        >
-          Get JPSC Prelims Decoded →
-        </a>
-
-        <div class="price">
-          JPSC Prelims Decoded • ₹299
-        </div>
-
-      </section>
-
-    </main>
-
-
-    <!-- =========================
+    <!-- ===================================================
          FOOTER
-    ========================= -->
+    ==================================================== -->
 
-    <footer class="footer">
+    <footer class="dashboard-footer">
 
-      <div class="footer-inner">
+      <div>
 
-        <div>
+        <strong>
+          Habitat IAS
+        </strong>
 
-          <div class="footer-brand">
-            Habitat IAS
-          </div>
+        <span>
+          JPSC Prelims Computer Based Test Series
+        </span>
 
-          <small>
-            Focused preparation for JPSC aspirants.
-          </small>
+      </div>
 
-        </div>
-
-
-        <div class="footer-links">
-
-          <a href="/">
-            Home
-          </a>
-
-          <a href="/notes/">
-            Notes
-          </a>
-
-          <a href="/pyq/">
-            JPSC PYQ
-          </a>
-
-          <a href="/book/">
-            Book
-          </a>
-
-          <a href="/trends/">
-            Trends
-          </a>
-
-          <a href="/jharkhand/">
-            Jharkhand
-          </a>
-
-          <a href="/contact/">
-            Contact
-          </a>
-
-        </div>
-
+      <div>
+        20 Tests • 2,000 Questions
       </div>
 
     </footer>
 
-  </body>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       COMPLETE PAGE CSS
+  ====================================================== -->
+
+  <style>
+
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.dashboard-body {
+
+      margin: 0;
+
+      color: #102d50;
+
+      background:
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(36,125,210,.08),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 95% 20%,
+          rgba(116,76,190,.065),
+          transparent 27%
+        ),
+
+        linear-gradient(
+          180deg,
+          #f8fbff 0%,
+          #f1f6fb 50%,
+          #f8fafc 100%
+        );
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      -webkit-font-smoothing:
+        antialiased;
+    }
+
+
+    .dashboard-body a {
+      text-decoration: none;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ====================================================== */
+
+    .dashboard-header {
+
+      min-height: 76px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 24px;
+
+      padding:
+        12px 42px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      background:
+        rgba(255,255,255,.94);
+
+      backdrop-filter:
+        blur(18px);
+
+      -webkit-backdrop-filter:
+        blur(18px);
+
+      border-bottom:
+        1px solid #dbe6f0;
+
+      box-shadow:
+        0 5px 24px
+        rgba(15,61,120,.07);
+    }
+
+
+    .dashboard-brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      min-width: 240px;
+
+      color: #10294d;
+    }
+
+
+    .dashboard-logo {
+
+      width: 44px;
+
+      height: 44px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 12px;
+
+      color: white;
+
+      font-size: 21px;
+
+      font-weight: 900;
+
+      background:
+        linear-gradient(
+          135deg,
+          #07366c,
+          #116bb5,
+          #29a2dc
+        );
+
+      box-shadow:
+        0 8px 20px
+        rgba(8,87,150,.25);
+    }
+
+
+    .dashboard-brand-text {
+
+      display: flex;
+
+      flex-direction: column;
+
+      line-height: 1.05;
+    }
+
+
+    .dashboard-brand-text strong {
+
+      font-size: 18px;
+
+      letter-spacing: -.3px;
+    }
+
+
+    .dashboard-brand-text small {
+
+      margin-top: 5px;
+
+      color: #73869b;
+
+      font-size: 9px;
+
+      font-weight: 850;
+
+      letter-spacing: 1px;
+    }
+
+
+    .dashboard-header-center {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+      gap: 4px;
+
+      text-align: center;
+    }
+
+
+    .dashboard-header-center strong {
+
+      color: #0a315b;
+
+      font-size: 15px;
+
+      font-weight: 900;
+    }
+
+
+    .dashboard-header-center span {
+
+      color: #7a8da2;
+
+      font-size: 9px;
+
+      font-weight: 850;
+
+      letter-spacing: 1.1px;
+    }
+
+
+    .dashboard-header-right {
+
+      min-width: 240px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: flex-end;
+
+      gap: 9px;
+    }
+
+
+    .series-status {
+
+      padding:
+        9px 14px;
+
+      border-radius: 999px;
+
+      color: #075e9e;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e9f5ff,
+          #dceefe
+        );
+
+      border:
+        1px solid #cce2f5;
+
+      font-size: 11px;
+
+      font-weight: 850;
+    }
+
+
+    .home-button {
+
+      padding:
+        9px 13px;
+
+      border-radius: 9px;
+
+      color: #315879;
+
+      background: white;
+
+      border:
+        1px solid #d8e4ee;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      transition: .2s ease;
+    }
+
+
+    .home-button:hover {
+
+      color: #075ea3;
+
+      border-color: #9dc7e7;
+
+      background: #eef8ff;
+    }
+
+
+    /* =====================================================
+       MAIN
+    ====================================================== */
+
+    .dashboard-container {
+
+      width:
+        min(
+          1380px,
+          calc(100% - 40px)
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        34px 0 65px;
+    }
+
+
+    /* =====================================================
+       HERO
+    ====================================================== */
+
+    .dashboard-hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 35px;
+
+      padding: 46px;
+
+      border-radius: 26px;
+
+      color: white;
+
+      background:
+
+        radial-gradient(
+          circle at 88% 12%,
+          rgba(73,205,255,.35),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 8% 105%,
+          rgba(121,72,192,.28),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          135deg,
+          #041936,
+          #073b70 45%,
+          #075c99 76%,
+          #087fb8
+        );
+
+      box-shadow:
+        0 24px 60px
+        rgba(5,43,79,.21);
+    }
+
+
+    .dashboard-hero::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 430px;
+
+      height: 430px;
+
+      right: -170px;
+
+      bottom: -260px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(91,209,255,.20),
+          transparent 68%
+        );
+
+      pointer-events: none;
+    }
+
+
+    .hero-copy {
+
+      position: relative;
+
+      z-index: 2;
+
+      max-width: 850px;
+    }
+
+
+    .dashboard-kicker {
+
+      color: #1769ae;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.3px;
+
+      text-transform: uppercase;
+    }
+
+
+    .dashboard-hero
+    .dashboard-kicker {
+
+      color: #bceaff;
+    }
+
+
+    .dashboard-hero h1 {
+
+      margin:
+        12px 0 13px;
+
+      font-size:
+        clamp(
+          31px,
+          4vw,
+          49px
+        );
+
+      line-height: 1.06;
+
+      letter-spacing: -1.7px;
+
+      font-weight: 900;
+    }
+
+
+    .dashboard-hero h1 span {
+
+      display: inline-block;
+
+      background:
+        linear-gradient(
+          90deg,
+          #65d9ff,
+          #b4f0ff
+        );
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      color: transparent;
+    }
+
+
+    .dashboard-hero p {
+
+      max-width: 790px;
+
+      margin: 0;
+
+      color:
+        rgba(238,248,255,.84);
+
+      font-size: 14px;
+
+      line-height: 1.75;
+    }
+
+
+    .hero-highlights {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+
+      margin-top: 23px;
+    }
+
+
+    .hero-highlights span {
+
+      padding:
+        8px 12px;
+
+      border-radius: 999px;
+
+      color: #e7f8ff;
+
+      background:
+        rgba(255,255,255,.09);
+
+      border:
+        1px solid
+        rgba(255,255,255,.17);
+
+      font-size: 10px;
+
+      font-weight: 750;
+    }
+
+
+    .hero-summary {
+
+      position: relative;
+
+      z-index: 2;
+
+      align-self: center;
+
+      min-width: 220px;
+
+      padding: 25px;
+
+      text-align: center;
+
+      border-radius: 18px;
+
+      background:
+        rgba(255,255,255,.09);
+
+      border:
+        1px solid
+        rgba(255,255,255,.18);
+
+      backdrop-filter:
+        blur(12px);
+
+      box-shadow:
+        inset 0 1px 0
+        rgba(255,255,255,.08);
+    }
+
+
+    .summary-number {
+
+      font-size: 58px;
+
+      line-height: 1;
+
+      font-weight: 950;
+    }
+
+
+    .summary-label {
+
+      margin-top: 7px;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.4px;
+    }
+
+
+    .summary-line {
+
+      margin-top: 7px;
+
+      color: #c8ddf7;
+
+      font-size: 10px;
+    }
+
+
+    /* =====================================================
+       STATS
+    ====================================================== */
+
+    .stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap: 11px;
+
+      margin-top: 18px;
+
+      padding: 10px;
+
+      border-radius: 19px;
+
+      background: white;
+
+      border:
+        1px solid #dbe6ef;
+
+      box-shadow:
+        0 15px 40px
+        rgba(22,64,104,.08);
+    }
+
+
+    .stat {
+
+      min-height: 88px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      padding: 17px;
+
+      border-radius: 13px;
+
+      border:
+        1px solid #e1eaf2;
+    }
+
+
+    .stat:nth-child(1) {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #edf7ff
+        );
+    }
+
+
+    .stat:nth-child(2) {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #f3efff
+        );
+    }
+
+
+    .stat:nth-child(3) {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #fff5e9
+        );
+    }
+
+
+    .stat:nth-child(4) {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ffffff,
+          #ecfbf4
+        );
+    }
+
+
+    .stat-number {
+
+      font-size: 25px;
+
+      line-height: 1;
+
+      font-weight: 950;
+
+      background:
+        linear-gradient(
+          90deg,
+          #073e77,
+          #1688cf
+        );
+
+      -webkit-background-clip:
+        text;
+
+      background-clip:
+        text;
+
+      color: transparent;
+    }
+
+
+    .stat-label {
+
+      margin-top: 6px;
+
+      color: #7d91a4;
+
+      font-size: 9px;
+
+      font-weight: 850;
+
+      letter-spacing: .7px;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       ROADMAP
+    ====================================================== */
+
+    .roadmap-section {
+
+      margin-top: 40px;
+    }
+
+
+    .section-heading {
+
+      display: flex;
+
+      align-items: end;
+
+      justify-content: space-between;
+
+      gap: 25px;
+
+      margin-bottom: 17px;
+    }
+
+
+    .section-heading span {
+
+      color: #1769ae;
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.3px;
+    }
+
+
+    .section-heading h2 {
+
+      margin:
+        5px 0 0;
+
+      color: #0a315b;
+
+      font-size: 24px;
+
+      letter-spacing: -.5px;
+    }
+
+
+    .section-heading p {
+
+      max-width: 450px;
+
+      margin: 0;
+
+      color: #72859a;
+
+      font-size: 12px;
+
+      line-height: 1.55;
+
+      text-align: right;
+    }
+
+
+    .roadmap-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap: 12px;
+    }
+
+
+    .roadmap-card {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      padding: 17px;
+
+      border-radius: 15px;
+
+      background: white;
+
+      border:
+        1px solid #dce6ef;
+
+      box-shadow:
+        0 6px 20px
+        rgba(20,61,101,.045);
+
+      transition: .2s ease;
+    }
+
+
+    .roadmap-card:hover {
+
+      transform:
+        translateY(-3px);
+
+      box-shadow:
+        0 12px 28px
+        rgba(20,61,101,.09);
+    }
+
+
+    .roadmap-number {
+
+      width: 40px;
+
+      height: 40px;
+
+      flex: 0 0 40px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 10px;
+
+      color: #1265a5;
+
+      background:
+        #eaf5ff;
+
+      font-size: 10px;
+
+      font-weight: 900;
+    }
+
+
+    .jh-roadmap
+    .roadmap-number {
+
+      color: #a9561c;
+
+      background: #fff0e3;
+    }
+
+
+    .paper1-roadmap
+    .roadmap-number {
+
+      color: #6744a5;
+
+      background: #eee9ff;
+    }
+
+
+    .paper2-roadmap
+    .roadmap-number {
+
+      color: #b12349;
+
+      background: #ffedf2;
+    }
+
+
+    .roadmap-card strong {
+
+      display: block;
+
+      color: #163b63;
+
+      font-size: 12px;
+
+      font-weight: 900;
+    }
+
+
+    .roadmap-card small {
+
+      display: block;
+
+      margin-top: 4px;
+
+      color: #8293a4;
+
+      font-size: 9px;
+
+      font-weight: 750;
+    }
+
+
+    /* =====================================================
+       TEST GROUP
+    ====================================================== */
+
+    .test-group {
+
+      margin-top: 46px;
+    }
+
+
+    .group-header {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-bottom: 17px;
+    }
+
+
+    .group-title-wrap {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+    }
+
+
+    .group-icon {
+
+      width: 51px;
+
+      height: 51px;
+
+      flex: 0 0 51px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 15px;
+
+      color: #0965a7;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e7f4ff,
+          #d9edff
+        );
+
+      border:
+        1px solid #c6e1f5;
+
+      font-size: 11px;
+
+      font-weight: 950;
+
+      box-shadow:
+        0 7px 18px
+        rgba(19,105,169,.09);
+    }
+
+
+    .group-badge {
+
+      color: #1769ae;
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.1px;
+    }
+
+
+    .group-header h2 {
+
+      margin:
+        4px 0 3px;
+
+      color: #0a315b;
+
+      font-size: 22px;
+
+      letter-spacing: -.4px;
+    }
+
+
+    .group-header p {
+
+      margin: 0;
+
+      color: #73879b;
+
+      font-size: 11px;
+    }
+
+
+    .group-count {
+
+      text-align: right;
+    }
+
+
+    .group-count strong {
+
+      display: block;
+
+      color: #123c65;
+
+      font-size: 25px;
+
+      line-height: 1;
+    }
+
+
+    .group-count span {
+
+      color: #8796a6;
+
+      font-size: 8px;
+
+      font-weight: 850;
+
+      text-transform: uppercase;
+    }
+
+
+    /* =====================================================
+       TEST GRID
+    ====================================================== */
+
+    .test-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(5,minmax(0,1fr));
+
+      gap: 14px;
+    }
+
+
+    /* =====================================================
+       TEST CARD
+    ====================================================== */
+
+    .test-card {
+
+      position: relative;
+
+      overflow: hidden;
+
+      min-width: 0;
+
+      min-height: 385px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      padding: 19px;
+
+      border-radius: 18px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #f8fbff
+        );
+
+      border:
+        1px solid #dce6ef;
+
+      box-shadow:
+        0 7px 24px
+        rgba(18,57,96,.055);
+
+      transition:
+        transform .22s ease,
+        box-shadow .22s ease,
+        border-color .22s ease;
+    }
+
+
+    .test-card::before {
+
+      content: "";
+
+      position: absolute;
+
+      top: 0;
+
+      left: 0;
+
+      bottom: 0;
+
+      width: 3px;
+
+      background:
+        linear-gradient(
+          180deg,
+          #0876c6,
+          #43c2f6
+        );
+    }
+
+
+    .test-card:hover {
+
+      transform:
+        translateY(-5px);
+
+      border-color:
+        #abc9e2;
+
+      box-shadow:
+        0 18px 40px
+        rgba(20,65,104,.12);
+    }
+
+
+    /* JHARKHAND */
+
+    .test-card.jharkhand::before {
+
+      background:
+        linear-gradient(
+          180deg,
+          #c76522,
+          #ffb05b
+        );
+    }
+
+
+    /* PAPER I */
+
+    .test-card.paper1::before {
+
+      background:
+        linear-gradient(
+          180deg,
+          #7047ad,
+          #b57ce7
+        );
+    }
+
+
+    /* PAPER II */
+
+    .test-card.paper2::before {
+
+      background:
+        linear-gradient(
+          180deg,
+          #c32950,
+          #f2779a
+        );
+    }
+
+
+    .card-top {
+
+      display: flex;
+
+      align-items: start;
+
+      justify-content: space-between;
+
+      gap: 7px;
+    }
+
+
+    .test-number {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+    }
+
+
+    .test-number span {
+
+      color: #8b9bac;
+
+      font-size: 7px;
+
+      font-weight: 900;
+
+      letter-spacing: 1px;
+    }
+
+
+    .test-number strong {
+
+      color: #103b65;
+
+      font-size: 20px;
+
+      line-height: 1;
+
+      font-weight: 950;
+    }
+
+
+    .card-status {
+
+      padding:
+        5px 7px;
+
+      border-radius: 999px;
+
+      color: #08744b;
+
+      background:
+        #e8f9f0;
+
+      border:
+        1px solid #c8edda;
+
+      font-size: 7px;
+
+      font-weight: 900;
+
+      letter-spacing: .4px;
+    }
+
+
+    .test-card h3 {
+
+      min-height: 62px;
+
+      margin:
+        17px 0 8px;
+
+      color: #092f59;
+
+      font-size: 14px;
+
+      line-height: 1.4;
+
+      font-weight: 900;
+
+      letter-spacing: -.15px;
+    }
+
+
+    .card-description {
+
+      min-height: 76px;
+
+      margin: 0;
+
+      color: #6d8195;
+
+      font-size: 10px;
+
+      line-height: 1.6;
+    }
+
+
+    .topic-chip {
+
+      display: inline-flex;
+
+      align-self: flex-start;
+
+      max-width: 100%;
+
+      margin-top: 12px;
+
+      padding:
+        6px 8px;
+
+      overflow: hidden;
+
+      border-radius: 7px;
+
+      color: #155e96;
+
+      background:
+        linear-gradient(
+          135deg,
+          #eaf5ff,
+          #dfeffc
+        );
+
+      border:
+        1px solid #d2e5f5;
+
+      font-size: 8px;
+
+      font-weight: 850;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+    }
+
+
+    .level-chip {
+
+      display: inline-flex;
+
+      align-self: flex-start;
+
+      margin-top: 6px;
+
+      padding:
+        5px 7px;
+
+      border-radius: 6px;
+
+      color: #6d5a27;
+
+      background:
+        #fff7df;
+
+      border:
+        1px solid #f2e3b9;
+
+      font-size: 7px;
+
+      font-weight: 850;
+    }
+
+
+    .test-stats {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3,1fr);
+
+      gap: 5px;
+
+      margin-top: 15px;
+
+      padding-top: 13px;
+
+      border-top:
+        1px solid #eaf0f5;
+    }
+
+
+    .test-stats span {
+
+      display: block;
+
+      color: #8999a9;
+
+      font-size: 7px;
+
+      font-weight: 750;
+    }
+
+
+    .test-stats strong {
+
+      display: block;
+
+      margin-top: 3px;
+
+      color: #145585;
+
+      font-size: 10px;
+
+      font-weight: 900;
+    }
+
+
+    .start-test-button {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      min-height: 40px;
+
+      margin-top: auto;
+
+      padding:
+        0 12px;
+
+      border-radius: 10px;
+
+      color: white !important;
+
+      background:
+        linear-gradient(
+          135deg,
+          #07579e,
+          #087ac3,
+          #20a4df
+        );
+
+      box-shadow:
+        0 7px 17px
+        rgba(5,92,161,.18);
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      transition: .2s ease;
+    }
+
+
+    .start-test-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 11px 25px
+        rgba(5,92,161,.27);
+    }
+
+
+    .arrow {
+
+      font-size: 15px;
+    }
+
+
+    /* JHARKHAND BUTTON */
+
+    .group-jharkhand
+    .start-test-button {
+
+      background:
+        linear-gradient(
+          135deg,
+          #b45309,
+          #e17a24
+        );
+    }
+
+
+    /* PAPER I BUTTON */
+
+    .group-paper1
+    .start-test-button {
+
+      background:
+        linear-gradient(
+          135deg,
+          #6637a7,
+          #8d5ed0
+        );
+    }
+
+
+    /* PAPER II BUTTON */
+
+    .group-paper2
+    .start-test-button {
+
+      background:
+        linear-gradient(
+          135deg,
+          #ad183f,
+          #d84f70
+        );
+    }
+
+
+    /* =====================================================
+       FULL LENGTH SIMULATION
+    ====================================================== */
+
+    .test-day-section {
+
+      margin-top: 55px;
+
+      padding: 32px;
+
+      border-radius: 23px;
+
+      color: white;
+
+      background:
+
+        radial-gradient(
+          circle at 90% 10%,
+          rgba(58,185,240,.27),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 8% 100%,
+          rgba(121,74,187,.27),
+          transparent 28%
+        ),
+
+        linear-gradient(
+          135deg,
+          #061b38,
+          #0a4172,
+          #075d91
+        );
+
+      box-shadow:
+        0 20px 50px
+        rgba(7,37,72,.20);
+    }
+
+
+    .test-day-heading {
+
+      max-width: 760px;
+
+      margin:
+        0 auto 27px;
+
+      text-align: center;
+    }
+
+
+    .test-day-heading
+    .dashboard-kicker {
+
+      color: #82dfff;
+    }
+
+
+    .test-day-heading h2 {
+
+      margin:
+        8px 0;
+
+      color: white;
+
+      font-size: 26px;
+
+      letter-spacing: -.5px;
+    }
+
+
+    .test-day-heading p {
+
+      margin: 0;
+
+      color: #c2d8ed;
+
+      font-size: 12px;
+
+      line-height: 1.65;
+    }
+
+
+    .simulation-flow {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 11px;
+
+      max-width: 980px;
+
+      margin:
+        0 auto;
+    }
+
+
+    .simulation-day {
+
+      display: grid;
+
+      grid-template-columns:
+        75px
+        1fr
+        34px
+        1fr;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 10px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.07);
+
+      border:
+        1px solid
+        rgba(255,255,255,.11);
+    }
+
+
+    .simulation-day-number {
+
+      color: #9edfff;
+
+      font-size: 9px;
+
+      font-weight: 900;
+
+      letter-spacing: .8px;
+
+      text-align: center;
+    }
+
+
+    .simulation-paper {
+
+      min-height: 68px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      gap: 5px;
+
+      padding:
+        11px 13px;
+
+      border-radius: 10px;
+    }
+
+
+    .simulation-paper span {
+
+      font-size: 7px;
+
+      font-weight: 900;
+
+      letter-spacing: .8px;
+    }
+
+
+    .simulation-paper strong {
+
+      font-size: 11px;
+
+      font-weight: 850;
+    }
+
+
+    .paper-one {
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(46,150,224,.25),
+          rgba(255,255,255,.07)
+        );
+
+      border:
+        1px solid
+        rgba(104,199,255,.22);
+    }
+
+
+    .paper-one span {
+
+      color: #79d4ff;
+    }
+
+
+    .paper-two {
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(235,122,54,.24),
+          rgba(255,255,255,.07)
+        );
+
+      border:
+        1px solid
+        rgba(255,168,105,.22);
+    }
+
+
+    .paper-two span {
+
+      color: #ffb477;
+    }
+
+
+    .simulation-plus {
+
+      width: 31px;
+
+      height: 31px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 50%;
+
+      color: white;
+
+      background:
+        rgba(255,255,255,.11);
+
+      font-size: 15px;
+
+      font-weight: 900;
+    }
+
+
+    .final-simulation {
+
+      border-color:
+        rgba(93,220,255,.25);
+
+      box-shadow:
+        0 0 25px
+        rgba(42,178,231,.08);
+    }
+
+
+    /* =====================================================
+       SCORING
+    ====================================================== */
+
+    .scoring {
+
+      margin-top: 25px;
+
+      padding-top: 23px;
+
+      border-top:
+        1px solid
+        rgba(255,255,255,.11);
+    }
+
+
+    .scoring h3 {
+
+      margin:
+        0 0 13px;
+
+      color: white;
+
+      font-size: 16px;
+
+      font-weight: 900;
+    }
+
+
+    .score-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4,1fr);
+
+      gap: 8px;
+    }
+
+
+    .score-item {
+
+      padding: 13px;
+
+      border-radius: 10px;
+
+      background:
+        rgba(255,255,255,.08);
+
+      border:
+        1px solid
+        rgba(255,255,255,.11);
+    }
+
+
+    .score-item strong {
+
+      display: block;
+
+      color: white;
+
+      font-size: 16px;
+
+      font-weight: 950;
+    }
+
+
+    .score-item span {
+
+      display: block;
+
+      margin-top: 4px;
+
+      color: #b8cde3;
+
+      font-size: 8px;
+
+      font-weight: 750;
+    }
+
+
+    .score-item.correct strong {
+      color: #65e3a4;
+    }
+
+
+    .score-item.wrong strong {
+      color: #ff9a9a;
+    }
+
+
+    .score-item.skipped strong {
+      color: #d0dbea;
+    }
+
+
+    .score-item.total strong {
+      color: #73d9ff;
+    }
+
+
+    /* =====================================================
+       CURRENT AFFAIRS NOTE
+    ====================================================== */
+
+    .current-affairs-note {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 14px;
+
+      margin-top: 28px;
+
+      padding: 18px;
+
+      border-radius: 15px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #fffdf5,
+          #fff8e6
+        );
+
+      border:
+        1px solid #f0dfb5;
+
+      box-shadow:
+        0 7px 20px
+        rgba(100,75,20,.05);
+    }
+
+
+    .note-icon {
+
+      width: 43px;
+
+      height: 43px;
+
+      flex: 0 0 43px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 11px;
+
+      color: #9a6810;
+
+      background:
+        #ffefbf;
+
+      border:
+        1px solid #ecd898;
+
+      font-size: 10px;
+
+      font-weight: 950;
+    }
+
+
+    .current-affairs-note strong {
+
+      display: block;
+
+      color: #76520d;
+
+      font-size: 12px;
+
+      font-weight: 900;
+    }
+
+
+    .current-affairs-note p {
+
+      margin:
+        4px 0 0;
+
+      color: #8a7549;
+
+      font-size: 10px;
+
+      line-height: 1.55;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ====================================================== */
+
+    .dashboard-footer {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 20px;
+
+      margin-top: 36px;
+
+      padding-top: 22px;
+
+      border-top:
+        1px solid #dce6ef;
+
+      color: #7b8c9e;
+
+      font-size: 9px;
+    }
+
+
+    .dashboard-footer div:first-child {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 4px;
+    }
+
+
+    .dashboard-footer strong {
+
+      color: #173f78;
+
+      font-size: 13px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 1250px) {
+
+      .test-grid {
+
+        grid-template-columns:
+          repeat(3,1fr);
+      }
+
+      .roadmap-grid {
+
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+    }
+
+
+    @media (max-width: 900px) {
+
+      .dashboard-header {
+
+        padding:
+          10px 20px;
+      }
+
+
+      .dashboard-header-center {
+
+        display: none;
+      }
+
+
+      .dashboard-header-right {
+
+        min-width: auto;
+      }
+
+
+      .dashboard-container {
+
+        width:
+          min(
+            calc(100% - 24px),
+            760px
+          );
+
+        padding-top: 20px;
+      }
+
+
+      .dashboard-hero {
+
+        flex-direction: column;
+
+        padding: 30px;
+      }
+
+
+      .hero-summary {
+
+        align-self: stretch;
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+
+      .test-grid {
+
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+
+      .simulation-day {
+
+        grid-template-columns:
+          65px 1fr 30px 1fr;
+      }
+
+    }
+
+
+    @media (max-width: 650px) {
+
+      .dashboard-brand {
+
+        min-width: auto;
+      }
+
+
+      .dashboard-brand-text {
+
+        display: none;
+      }
+
+
+      .series-status {
+
+        display: none;
+      }
+
+
+      .dashboard-container {
+
+        width:
+          calc(100% - 20px);
+      }
+
+
+      .dashboard-hero {
+
+        padding: 25px 21px;
+
+        border-radius: 20px;
+      }
+
+
+      .dashboard-hero h1 {
+
+        font-size: 29px;
+      }
+
+
+      .dashboard-hero p {
+
+        font-size: 12px;
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          1fr 1fr;
+
+        padding: 7px;
+      }
+
+
+      .stat {
+
+        padding: 13px;
+      }
+
+
+      .section-heading {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+
+      .section-heading p {
+
+        text-align: left;
+      }
+
+
+      .roadmap-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .group-header {
+
+        align-items: flex-start;
+      }
+
+
+      .group-count {
+
+        display: none;
+      }
+
+
+      .test-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .test-card {
+
+        min-height: 360px;
+      }
+
+
+      .simulation-day {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .simulation-day-number {
+
+        text-align: left;
+
+        padding-left: 4px;
+      }
+
+
+      .simulation-plus {
+
+        margin:
+          -3px auto;
+      }
+
+
+      .score-grid {
+
+        grid-template-columns:
+          1fr 1fr;
+      }
+
+
+      .dashboard-footer {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+      }
+
+    }
+
+
+    @media (max-width: 420px) {
+
+      .dashboard-header {
+
+        min-height: 64px;
+
+        padding:
+          8px 12px;
+      }
+
+
+      .dashboard-logo {
+
+        width: 38px;
+
+        height: 38px;
+      }
+
+
+      .home-button {
+
+        padding:
+          8px 10px;
+      }
+
+
+      .dashboard-hero h1 {
+
+        font-size: 26px;
+      }
+
+
+      .hero-highlights {
+
+        gap: 6px;
+      }
+
+
+      .hero-highlights span {
+
+        font-size: 8px;
+
+        padding:
+          6px 8px;
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .score-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+    }
+
+
+    /* =====================================================
+       SCROLLBAR
+    ====================================================== */
+
+    ::-webkit-scrollbar {
+
+      width: 9px;
+    }
+
+
+    ::-webkit-scrollbar-track {
+
+      background:
+        #edf2f7;
+    }
+
+
+    ::-webkit-scrollbar-thumb {
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          180deg,
+          #9bbbd4,
+          #5b8eaf
+        );
+    }
+
+
+    ::-webkit-scrollbar-thumb:hover {
+
+      background:
+        linear-gradient(
+          180deg,
+          #6d9fc2,
+          #39769c
+        );
+    }
+
+
+    ::selection {
+
+      color: #082e57;
+
+      background:
+        #b9ddf8;
+    }
+
+  </style>
+
+
+</body>
+
 </html>

@@ -1,4 +1,342 @@
 ---
+const subjects = [
+  {
+    code: "A",
+    title: "History of Jharkhand",
+    shortTitle: "Jharkhand History",
+    description:
+      "Historical and traditional governance systems of Jharkhand, including major indigenous administrative institutions and community-based systems.",
+    topics: [
+      "Munda Governance System",
+      "Nagvanshi Governance System",
+      "Parha Panchayat Governance System",
+      "Manjhi Pargana Governance System",
+      "Munda-Manki Governance System",
+      "Dhoklo Sohor Governance System",
+      "Jatiya Panchayat Governance System",
+    ],
+    questions: 8,
+    marks: 16,
+  },
+
+  {
+    code: "B",
+    title: "Jharkhand Movement",
+    shortTitle: "Jharkhand Movement",
+    description:
+      "The social, political and historical evolution of the Jharkhand movement, its major communities, personalities and role in state formation.",
+    topics: [
+      "Sadans of Jharkhand",
+      "Tribal Communities of Jharkhand",
+      "Freedom Fighters of Jharkhand",
+      "Important Personalities of Jharkhand",
+      "Jharkhand Movement",
+      "Formation of Jharkhand State",
+    ],
+    questions: 7,
+    marks: 14,
+  },
+
+  {
+    code: "C",
+    title: "Distinct Identity of Jharkhand",
+    shortTitle: "Distinct Identity",
+    description:
+      "The distinctive social, cultural, political, economic and religious characteristics that define Jharkhand's regional identity.",
+    topics: [
+      "Social Condition of Jharkhand",
+      "Cultural Condition of Jharkhand",
+      "Political Condition of Jharkhand",
+      "Economic Condition of Jharkhand",
+      "Religious Distinctiveness and Identity",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "D",
+    title: "Folk Literature, Dance, Music & Tribal Culture",
+    shortTitle: "Folk Culture",
+    description:
+      "Jharkhand's folk traditions, literature, performing arts, musical instruments, important places and tribal communities.",
+    topics: [
+      "Folk Literature",
+      "Traditional Art",
+      "Folk Dances",
+      "Folk Music",
+      "Traditional Musical Instruments",
+      "Natural Tourist Places",
+      "Archaeological Places",
+      "Historical Places",
+      "Religious Places",
+      "Modern Important Places",
+      "Tribes and Tribal Groups",
+      "Tribal Characteristics",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "E",
+    title: "Jharkhand Literature & Literary Figures",
+    shortTitle: "Jharkhand Literature",
+    description:
+      "Jharkhand's literary traditions, regional literature and important writers and literary personalities associated with the state.",
+    topics: [
+      "Jharkhand Literature",
+      "Regional Literary Traditions",
+      "Important Literary Figures",
+      "Major Writers",
+      "Literary Contributions",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "F",
+    title: "Major Educational Institutions of Jharkhand",
+    shortTitle: "Educational Institutions",
+    description:
+      "Important educational institutions of Jharkhand and their significance in the state's educational development.",
+    topics: [
+      "Major Universities",
+      "Important Educational Institutions",
+      "Higher Education Institutions",
+      "Technical and Professional Institutions",
+      "Important Educational Developments",
+    ],
+    questions: 3,
+    marks: 6,
+  },
+
+  {
+    code: "G",
+    title: "Sports of Jharkhand",
+    shortTitle: "Jharkhand Sports",
+    description:
+      "Sports and games associated with Jharkhand, important sportspersons, achievements, events and sporting institutions.",
+    topics: [
+      "Major Sports of Jharkhand",
+      "Important Sportspersons",
+      "Sports Achievements",
+      "Major Sporting Events",
+      "Sports Institutions and Venues",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "H",
+    title: "Land-Related Laws & Acts",
+    shortTitle: "Land Laws",
+    description:
+      "A high-weightage section covering the major land-related laws and Acts applicable to Jharkhand, with special emphasis on CNT and SPT.",
+    topics: [
+      "Chotanagpur Tenancy Act (CNT)",
+      "CNT Act: Important Provisions",
+      "CNT Act: Transfer of Land",
+      "CNT Act: Tribal Land Protection",
+      "Santhal Pargana Tenancy Act (SPT)",
+      "SPT Act: Important Provisions",
+      "SPT Act: Land Transfer",
+      "SPT Act: Tribal Land Protection",
+      "Other Jharkhand Land-Related Acts",
+      "Important Amendments",
+      "Important Legal Provisions",
+    ],
+    questions: 12,
+    marks: 24,
+  },
+
+  {
+    code: "I",
+    title: "Economic Development & Geography of Jharkhand",
+    shortTitle: "Economy & Geography",
+    description:
+      "Economic development of Jharkhand since 1947 along with its forests, rivers, hills, mountains, minerals and major geographical features.",
+    topics: [
+      "Economic Development Since 1947",
+      "Historical Economic Development",
+      "Forests of Jharkhand",
+      "Rivers and Drainage",
+      "Hills and Mountains",
+      "Physiographic Features",
+      "Minerals",
+      "Mining Regions",
+      "Natural Resources",
+      "Other Geographical Features",
+    ],
+    questions: 10,
+    marks: 20,
+  },
+
+  {
+    code: "J",
+    title: "Industrial Policy, Displacement & Rehabilitation",
+    shortTitle: "Industrial & Rehabilitation Policy",
+    description:
+      "Jharkhand's industrial policy framework together with displacement, rehabilitation and other major state policies.",
+    topics: [
+      "Jharkhand Industrial Policy",
+      "Industrial Development Policies",
+      "Displacement Policy",
+      "Displacement Issues",
+      "Rehabilitation Policy",
+      "Other State Policies",
+    ],
+    questions: 6,
+    marks: 12,
+  },
+
+  {
+    code: "K",
+    title: "Major Industries & Industrial Development",
+    shortTitle: "Industries",
+    description:
+      "Major industries of Jharkhand, their locations and the broader pattern of industrial development across the state.",
+    topics: [
+      "Major Industries of Jharkhand",
+      "Location of Major Industries",
+      "Iron and Steel Industries",
+      "Mining and Mineral Industries",
+      "Power Industries",
+      "Industrial Development",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "L",
+    title: "Major Schemes & Sub-Schemes of Jharkhand",
+    shortTitle: "State Schemes",
+    description:
+      "Major government schemes and sub-schemes implemented in Jharkhand for economic, social and regional development.",
+    topics: [
+      "Major State Government Schemes",
+      "Sub-Schemes",
+      "Development Schemes",
+      "Welfare Schemes",
+      "Tribal Development Schemes",
+      "Women and Child Development Schemes",
+      "Rural Development Schemes",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "M",
+    title: "Forest Management & Wildlife Conservation",
+    shortTitle: "Forest & Wildlife",
+    description:
+      "Forest management, biodiversity protection and wildlife conservation activities in Jharkhand.",
+    topics: [
+      "Forest Management",
+      "Forest Resources",
+      "Forest Conservation",
+      "Wildlife Conservation",
+      "Protected Areas",
+      "Wildlife Protection Activities",
+      "Biodiversity Conservation",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "N",
+    title: "Environment of Jharkhand",
+    shortTitle: "Environment",
+    description:
+      "Environmental conditions and changes in Jharkhand, including environmental impacts, mitigation and adaptation measures.",
+    topics: [
+      "Environmental Facts of Jharkhand",
+      "Environmental Changes",
+      "Environmental Degradation",
+      "Climate-Related Changes",
+      "Environmental Impacts",
+      "Mitigation",
+      "Adaptation",
+    ],
+    questions: 7,
+    marks: 14,
+  },
+
+  {
+    code: "O",
+    title: "Disaster Management in Jharkhand",
+    shortTitle: "Disaster Management",
+    description:
+      "Disaster profile, preparedness, response, mitigation and management mechanisms relevant to Jharkhand.",
+    topics: [
+      "Disaster Profile of Jharkhand",
+      "Natural Disasters",
+      "Human-Induced Disasters",
+      "Disaster Preparedness",
+      "Disaster Response",
+      "Disaster Mitigation",
+      "Disaster Management Institutions",
+    ],
+    questions: 5,
+    marks: 10,
+  },
+
+  {
+    code: "P",
+    title: "Miscellaneous Facts & Current Events of Jharkhand",
+    shortTitle: "Miscellaneous & Current Affairs",
+    description:
+      "Miscellaneous facts and current events related specifically to Jharkhand, including important state-level developments.",
+    topics: [
+      "Miscellaneous Facts",
+      "Jharkhand Current Affairs",
+      "Important State Events",
+      "Important Persons",
+      "Government Developments",
+      "Important Places and Institutions",
+      "Recent State-Level Developments",
+    ],
+    questions: 7,
+    marks: 14,
+  },
+];
+
+const totalQuestions = subjects.reduce(
+  (total, subject) => total + subject.questions,
+  0,
+);
+
+const totalMarks = subjects.reduce(
+  (total, subject) => total + subject.marks,
+  0,
+);
+
+const highestWeightage = Math.max(
+  ...subjects.map((subject) => subject.marks),
+);
+
+const highestSection = subjects.find(
+  (subject) => subject.marks === highestWeightage,
+);
+
+const getPriority = (marks) => {
+  if (marks >= 20) return "Very High";
+  if (marks >= 14) return "High";
+  if (marks >= 10) return "Moderate";
+  return "Lower";
+};
+
+const getPriorityClass = (marks) => {
+  if (marks >= 20) return "priority-very-high";
+  if (marks >= 14) return "priority-high";
+  if (marks >= 10) return "priority-medium";
+  return "priority-low";
+};
 ---
 
 <!doctype html>
@@ -9,22 +347,42 @@
 
     <meta
       name="description"
-      content="Habitat IAS JPSC Notes — structured and exam-oriented study material for JPSC aspirants."
+      content="Habitat IAS JPSC Prelims Notes — Complete Jharkhand-specific Paper-II syllabus from A to P with official question and marks distribution."
     />
 
-    <title>JPSC Notes | Habitat IAS</title>
+    <meta
+      name="keywords"
+      content="JPSC Notes, JPSC Prelims Notes, JPSC Paper 2, Jharkhand GK, Jharkhand Specific Paper, JPSC Syllabus, CNT Act, SPT Act, Jharkhand Current Affairs, Habitat IAS"
+    />
+
+    <meta
+      name="theme-color"
+      content="#1457d9"
+    />
+
+    <title>
+      JPSC Prelims Notes — Jharkhand Paper-II A–P | Habitat IAS
+    </title>
 
     <style>
       :root {
         --blue: #1457d9;
         --blue-dark: #0d3f9e;
+        --blue-light: #eaf1ff;
         --yellow: #ffd33d;
         --text: #172033;
         --muted: #657087;
         --light: #f5f8ff;
         --white: #ffffff;
-        --border: #e4e9f2;
+        --border: #e3e8f1;
+        --green: #159447;
+        --green-light: #e8f7ee;
+        --red: #d63d3d;
+        --red-light: #fff0f0;
+        --orange: #c87912;
+        --orange-light: #fff6e5;
         --shadow: 0 18px 50px rgba(20, 53, 110, 0.1);
+        --shadow-small: 0 8px 25px rgba(20, 53, 110, 0.07);
       }
 
       * {
@@ -46,7 +404,7 @@
           "Segoe UI",
           sans-serif;
         color: var(--text);
-        background: #fff;
+        background: #ffffff;
         line-height: 1.6;
       }
 
@@ -55,24 +413,31 @@
         text-decoration: none;
       }
 
+      button,
+      input {
+        font: inherit;
+      }
+
       .container {
         width: min(1180px, calc(100% - 40px));
         margin: auto;
       }
 
-      /* NAVIGATION */
+      /* =========================
+         HEADER
+      ========================== */
 
       .site-header {
         position: sticky;
         top: 0;
         z-index: 1000;
         background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(12px);
+        backdrop-filter: blur(14px);
         border-bottom: 1px solid rgba(20, 87, 217, 0.08);
       }
 
       .nav {
-        min-height: 82px;
+        min-height: 78px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -84,30 +449,35 @@
         align-items: center;
         gap: 12px;
         color: var(--blue);
-        font-size: 25px;
-        font-weight: 850;
+        font-size: 24px;
+        font-weight: 900;
         white-space: nowrap;
       }
 
       .brand-mark {
-        width: 48px;
-        height: 48px;
+        width: 46px;
+        height: 46px;
         display: grid;
         place-items: center;
         border-radius: 13px;
         background: var(--blue);
         color: white;
-        font-size: 24px;
+        font-size: 22px;
         font-weight: 900;
+        box-shadow: 0 8px 20px rgba(20, 87, 217, 0.25);
       }
 
       .nav-links {
         display: flex;
         align-items: center;
-        gap: 25px;
-        font-size: 15px;
-        font-weight: 700;
+        gap: 19px;
+        font-size: 13px;
+        font-weight: 750;
         color: #46536b;
+      }
+
+      .nav-links a {
+        transition: 0.2s ease;
       }
 
       .nav-links a:hover {
@@ -117,65 +487,87 @@
       .nav-cta {
         background: var(--blue);
         color: white !important;
-        padding: 13px 20px;
-        border-radius: 11px;
+        padding: 11px 17px;
+        border-radius: 10px;
       }
 
-      /* HERO */
+      /* =========================
+         HERO
+      ========================== */
 
       .hero {
+        position: relative;
+        overflow: hidden;
         background:
           radial-gradient(
-            circle at 85% 20%,
-            rgba(255, 255, 255, 0.13),
-            transparent 30%
+            circle at 88% 20%,
+            rgba(255, 255, 255, 0.16),
+            transparent 28%
+          ),
+          radial-gradient(
+            circle at 10% 100%,
+            rgba(255, 211, 61, 0.1),
+            transparent 25%
           ),
           linear-gradient(120deg, #103d99, #1457d9, #2d72e8);
         color: white;
       }
 
       .hero-inner {
-        padding: 90px 0;
-        min-height: 480px;
-        display: flex;
-        align-items: center;
-      }
-
-      .hero-content {
-        max-width: 850px;
+        padding: 76px 0 82px;
       }
 
       .eyebrow {
         color: var(--yellow);
-        font-size: 13px;
-        font-weight: 850;
-        letter-spacing: 0.1em;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 0.12em;
         text-transform: uppercase;
       }
 
       .hero h1 {
+        max-width: 900px;
         margin: 14px 0 20px;
-        font-size: clamp(48px, 7vw, 82px);
-        line-height: 0.98;
-        letter-spacing: -0.055em;
+        font-size: clamp(40px, 6vw, 70px);
+        line-height: 1.02;
+        letter-spacing: -0.05em;
       }
 
       .hero h1 span {
         color: var(--yellow);
+        display: block;
       }
 
       .hero p {
-        max-width: 720px;
+        max-width: 820px;
         margin: 0;
-        color: rgba(255, 255, 255, 0.88);
+        color: rgba(255, 255, 255, 0.91);
         font-size: 18px;
         line-height: 1.8;
       }
 
-      /* SECTION */
+      .hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 30px;
+      }
+
+      .hero-stat {
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        padding: 9px 15px;
+        font-size: 13px;
+        font-weight: 850;
+      }
+
+      /* =========================
+         SECTIONS
+      ========================== */
 
       .section {
-        padding: 85px 0;
+        padding: 76px 0;
       }
 
       .section-light {
@@ -183,8 +575,8 @@
       }
 
       .section-heading {
-        max-width: 720px;
-        margin-bottom: 42px;
+        max-width: 820px;
+        margin-bottom: 38px;
       }
 
       .section-heading .eyebrow {
@@ -192,19 +584,223 @@
       }
 
       .section-heading h2 {
-        margin: 10px 0;
-        font-size: clamp(34px, 5vw, 52px);
-        line-height: 1.05;
+        margin: 10px 0 12px;
+        font-size: clamp(31px, 5vw, 49px);
+        line-height: 1.08;
         letter-spacing: -0.04em;
       }
 
       .section-heading p {
         margin: 0;
         color: var(--muted);
-        font-size: 17px;
+        font-size: 16px;
       }
 
-      /* SUBJECT CARDS */
+      /* =========================
+         EXAM SUMMARY
+      ========================== */
+
+      .exam-summary {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr 1fr 1fr;
+        gap: 16px;
+        margin-bottom: 34px;
+      }
+
+      .summary-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 21px;
+        box-shadow: var(--shadow-small);
+      }
+
+      .summary-card.primary {
+        background: linear-gradient(135deg, #1457d9, #2d72e8);
+        color: white;
+        border: none;
+      }
+
+      .summary-label {
+        display: block;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+      }
+
+      .primary .summary-label {
+        color: rgba(255, 255, 255, 0.75);
+      }
+
+      .summary-number {
+        display: block;
+        margin-top: 5px;
+        font-size: 28px;
+        font-weight: 950;
+        line-height: 1.15;
+      }
+
+      .summary-description {
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .primary .summary-description {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      /* =========================
+         WEIGHTAGE TABLE
+      ========================== */
+
+      .weightage-panel {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: var(--shadow-small);
+        margin-bottom: 42px;
+      }
+
+      .weightage-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 24px 26px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .weightage-header h3 {
+        margin: 0;
+        font-size: 21px;
+      }
+
+      .weightage-header p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+      }
+
+      .weightage-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 680px;
+      }
+
+      .weightage-table th {
+        background: #f8faff;
+        color: #59657a;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        text-align: left;
+        padding: 13px 18px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .weightage-table td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #edf0f5;
+        font-size: 13px;
+      }
+
+      .weightage-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      .table-code {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        border-radius: 10px;
+        background: var(--blue-light);
+        color: var(--blue);
+        font-weight: 950;
+      }
+
+      .table-title {
+        font-weight: 800;
+      }
+
+      .marks-value {
+        color: var(--blue);
+        font-weight: 900;
+      }
+
+      .bar {
+        width: 150px;
+        height: 7px;
+        background: #edf1f7;
+        border-radius: 99px;
+        overflow: hidden;
+      }
+
+      .bar span {
+        display: block;
+        height: 100%;
+        background: var(--blue);
+        border-radius: inherit;
+      }
+
+      /* =========================
+         FILTER
+      ========================== */
+
+      .filter-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 24px;
+      }
+
+      .filter-title {
+        font-size: 15px;
+        font-weight: 850;
+      }
+
+      .search-wrap {
+        position: relative;
+        width: min(390px, 100%);
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 13px 16px 13px 42px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        outline: none;
+        background: white;
+        color: var(--text);
+        box-shadow: var(--shadow-small);
+      }
+
+      .search-input:focus {
+        border-color: var(--blue);
+        box-shadow: 0 0 0 3px rgba(20, 87, 217, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--muted);
+        pointer-events: none;
+      }
+
+      /* =========================
+         SYLLABUS GRID
+      ========================== */
 
       .grid {
         display: grid;
@@ -213,17 +809,38 @@
       }
 
       .card {
+        position: relative;
         background: white;
         border: 1px solid var(--border);
         border-radius: 22px;
-        padding: 30px;
+        padding: 27px;
         box-shadow: 0 10px 30px rgba(20, 53, 110, 0.05);
-        transition: 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+        overflow: hidden;
+        scroll-margin-top: 100px;
       }
 
       .card:hover {
         transform: translateY(-5px);
         box-shadow: var(--shadow);
+        border-color: #cfdaef;
+      }
+
+      .card.hidden {
+        display: none;
+      }
+
+      .code {
+        position: absolute;
+        right: 19px;
+        top: 15px;
+        font-size: 43px;
+        font-weight: 950;
+        color: #eef3ff;
+        line-height: 1;
       }
 
       .icon {
@@ -232,28 +849,135 @@
         display: grid;
         place-items: center;
         border-radius: 14px;
-        background: #eaf1ff;
+        background: var(--blue-light);
         color: var(--blue);
-        font-weight: 900;
-        margin-bottom: 20px;
+        font-weight: 950;
+        margin-bottom: 17px;
+        position: relative;
+        z-index: 1;
       }
 
       .card h3 {
-        margin: 0 0 10px;
-        font-size: 22px;
+        margin: 0 0 9px;
+        padding-right: 30px;
+        font-size: 20px;
+        line-height: 1.3;
+        position: relative;
+        z-index: 1;
       }
 
       .card p {
-        margin: 0 0 20px;
+        margin: 0 0 18px;
         color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+      }
+
+      /* =========================
+         BADGES
+      ========================== */
+
+      .badges {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin: 16px 0 18px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .badge-blue {
+        background: var(--blue-light);
+        color: var(--blue);
+      }
+
+      .badge-green {
+        background: var(--green-light);
+        color: var(--green);
+      }
+
+      .priority-very-high {
+        background: #fff0f0;
+        color: var(--red);
+      }
+
+      .priority-high {
+        background: #fff6e5;
+        color: var(--orange);
+      }
+
+      .priority-medium {
+        background: var(--blue-light);
+        color: var(--blue);
+      }
+
+      .priority-low {
+        background: #f0f2f6;
+        color: #657087;
+      }
+
+      /* =========================
+         TOPICS
+      ========================== */
+
+      .topics {
+        margin: 0;
+        padding: 17px 0 17px;
+        list-style: none;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .topics li {
+        display: flex;
+        gap: 9px;
+        margin: 7px 0;
+        color: #4f5b72;
+        font-size: 12px;
+        line-height: 1.45;
+      }
+
+      .topics li::before {
+        content: "✓";
+        color: var(--blue);
+        font-weight: 950;
+        flex: 0 0 auto;
+      }
+
+      .card-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 18px;
       }
 
       .card-link {
         color: var(--blue);
-        font-weight: 800;
+        font-weight: 900;
+        font-size: 13px;
       }
 
-      /* FEATURE */
+      .card-link:hover {
+        text-decoration: underline;
+      }
+
+      .question-note {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+
+      /* =========================
+         APPROACH
+      ========================== */
 
       .feature {
         display: grid;
@@ -266,13 +990,17 @@
         background: white;
         border: 1px solid var(--border);
         border-radius: 25px;
-        padding: 35px;
+        padding: 34px;
         box-shadow: var(--shadow);
       }
 
       .feature-box h3 {
         margin-top: 0;
-        font-size: 28px;
+        font-size: 26px;
+      }
+
+      .feature-box p {
+        color: var(--muted);
       }
 
       .feature-list {
@@ -295,56 +1023,52 @@
         display: grid;
         place-items: center;
         border-radius: 50%;
-        background: #eaf1ff;
+        background: var(--blue-light);
         color: var(--blue);
         font-weight: 900;
       }
 
-      /* CTA */
+      /* =========================
+         IMPORTANT NOTE
+      ========================== */
 
-      .cta {
-        background: linear-gradient(135deg, #1457d9, #2d72e8);
+      .info-box {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 18px;
+        align-items: start;
+        background: #eef5ff;
+        border: 1px solid #d8e5ff;
+        border-radius: 20px;
+        padding: 23px;
+        margin-top: 25px;
+      }
+
+      .info-icon {
+        width: 43px;
+        height: 43px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--blue);
         color: white;
-        border-radius: 28px;
-        padding: 55px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 30px;
+        font-weight: 950;
       }
 
-      .cta h2 {
-        margin: 0 0 10px;
-        font-size: clamp(30px, 4vw, 45px);
-        line-height: 1.05;
+      .info-box h4 {
+        margin: 0 0 4px;
+        font-size: 16px;
       }
 
-      .cta p {
+      .info-box p {
         margin: 0;
-        color: rgba(255, 255, 255, 0.8);
+        color: #59657a;
+        font-size: 13px;
       }
 
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 48px;
-        padding: 12px 22px;
-        border-radius: 11px;
-        font-weight: 800;
-      }
-
-      .button-primary {
-        background: var(--yellow);
-        color: #14213a;
-      }
-
-      .button-white {
-        background: white;
-        color: var(--blue);
-      }
-
-      /* FOOTER */
+      /* =========================
+         FOOTER
+      ========================== */
 
       .footer {
         background: #0a1429;
@@ -391,16 +1115,41 @@
         font-size: 13px;
       }
 
-      /* MOBILE */
+      /* =========================
+         EMPTY SEARCH
+      ========================== */
 
-      @media (max-width: 1050px) {
+      .empty-state {
+        display: none;
+        padding: 40px;
+        text-align: center;
+        background: white;
+        border: 1px dashed var(--border);
+        border-radius: 18px;
+        color: var(--muted);
+        margin-top: 20px;
+      }
+
+      .empty-state.show {
+        display: block;
+      }
+
+      /* =========================
+         MOBILE
+      ========================== */
+
+      @media (max-width: 1100px) {
         .nav-links {
-          gap: 13px;
-          font-size: 13px;
+          gap: 11px;
+          font-size: 11px;
         }
 
-        .feature {
-          grid-template-columns: 1fr;
+        .grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .exam-summary {
+          grid-template-columns: repeat(2, 1fr);
         }
 
         .footer-grid {
@@ -408,9 +1157,9 @@
         }
       }
 
-      @media (max-width: 800px) {
+      @media (max-width: 820px) {
         .nav {
-          padding: 14px 0;
+          padding: 13px 0;
         }
 
         .nav-links {
@@ -418,17 +1167,25 @@
         }
 
         .hero-inner {
-          padding: 70px 0;
+          padding: 60px 0 65px;
         }
 
-        .grid {
+        .grid,
+        .feature {
           grid-template-columns: 1fr;
         }
 
-        .cta {
-          padding: 40px 28px;
+        .filter-box {
+          align-items: stretch;
           flex-direction: column;
-          align-items: flex-start;
+        }
+
+        .search-wrap {
+          width: 100%;
+        }
+
+        .feature {
+          gap: 28px;
         }
       }
 
@@ -438,34 +1195,54 @@
         }
 
         .brand {
-          font-size: 21px;
+          font-size: 20px;
         }
 
         .brand-mark {
-          width: 42px;
-          height: 42px;
+          width: 41px;
+          height: 41px;
         }
 
         .section {
-          padding: 65px 0;
+          padding: 58px 0;
         }
 
-        .footer-grid {
+        .hero h1 {
+          font-size: 42px;
+        }
+
+        .hero p {
+          font-size: 16px;
+        }
+
+        .exam-summary {
           grid-template-columns: 1fr;
+        }
+
+        .card {
+          padding: 23px;
         }
 
         .feature-box {
           padding: 25px;
+        }
+
+        .footer-grid {
+          grid-template-columns: 1fr;
         }
       }
     </style>
   </head>
 
   <body>
-    <!-- HEADER -->
+
+    <!-- =========================
+         HEADER
+    ========================== -->
 
     <header class="site-header">
       <div class="container nav">
+
         <a href="/" class="brand">
           <span class="brand-mark">H</span>
           <span>Habitat IAS</span>
@@ -492,281 +1269,616 @@
             Get the Book
           </a>
         </nav>
+
       </div>
     </header>
 
-    <!-- HERO -->
+
+    <!-- =========================
+         HERO
+    ========================== -->
 
     <section class="hero">
       <div class="container hero-inner">
-        <div class="hero-content">
-          <div class="eyebrow">
-            HABITAT IAS • JPSC STUDY MATERIAL
-          </div>
 
-          <h1>
-            Study Smarter.
-            <span>Build Stronger Concepts.</span>
-          </h1>
-
-          <p>
-            Structured, focused and examination-oriented notes designed to
-            help JPSC aspirants build conceptual clarity and prepare with
-            direction.
-          </p>
+        <div class="eyebrow">
+          HABITAT IAS • JPSC PRELIMS • PAPER-II
         </div>
+
+        <h1>
+          JPSC Notes
+          <span>Jharkhand A–P</span>
+        </h1>
+
+        <p>
+          Complete syllabus-aligned notes architecture for JPSC Prelims
+          General Studies Paper-II. The structure follows the Jharkhand-specific
+          A–P syllabus with its official question and marks distribution.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">✓ 16 Sections</div>
+          <div class="hero-stat">✓ 100 Questions</div>
+          <div class="hero-stat">✓ 200 Marks</div>
+          <div class="hero-stat">✓ A–P Coverage</div>
+          <div class="hero-stat">✓ Topic-wise Notes</div>
+        </div>
+
       </div>
     </section>
 
-    <!-- NOTES -->
 
-    <section class="section">
-      <div class="container">
-        <div class="section-heading">
-          <div class="eyebrow">JPSC Notes</div>
-
-          <h2>
-            Structured notes for serious preparation.
-          </h2>
-
-          <p>
-            Use subject-wise study material to strengthen concepts and connect
-            static knowledge with the requirements of the examination.
-          </p>
-        </div>
-
-        <div class="grid">
-          <article class="card">
-            <div class="icon">H</div>
-
-            <h3>History</h3>
-
-            <p>
-              Ancient, Medieval and Modern Indian History with important
-              concepts and examination-oriented coverage.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">G</div>
-
-            <h3>Geography</h3>
-
-            <p>
-              Physical Geography, Indian Geography and important geographical
-              concepts relevant to JPSC.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">P</div>
-
-            <h3>Polity</h3>
-
-            <p>
-              Constitution, Parliament, Judiciary, Fundamental Rights and
-              important constitutional provisions.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">E</div>
-
-            <h3>Economy</h3>
-
-            <p>
-              Core economic concepts, Indian economy and important areas for
-              competitive examination preparation.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">S</div>
-
-            <h3>Science & Technology</h3>
-
-            <p>
-              Physics, Chemistry, Biology, Space Technology, Defence
-              Technology and emerging developments.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">E</div>
-
-            <h3>Environment</h3>
-
-            <p>
-              Ecology, biodiversity, climate change, environmental conventions
-              and important environmental issues.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">J</div>
-
-            <h3>Jharkhand</h3>
-
-            <p>
-              Jharkhand history, geography, economy, polity, culture,
-              movements and state-specific topics.
-            </p>
-
-            <a href="/jharkhand/" class="card-link">
-              Jharkhand Notes →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">C</div>
-
-            <h3>Current Affairs</h3>
-
-            <p>
-              Important national, international and Jharkhand current affairs
-              relevant to the examination.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Current Affairs →
-            </a>
-          </article>
-
-          <article class="card">
-            <div class="icon">I</div>
-
-            <h3>International Relations</h3>
-
-            <p>
-              International organisations, groupings, India's neighbourhood
-              and important global developments.
-            </p>
-
-            <a href="/resources/" class="card-link">
-              Study Resources →
-            </a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- APPROACH -->
+    <!-- =========================
+         EXAM OVERVIEW
+    ========================== -->
 
     <section class="section section-light">
       <div class="container">
-        <div class="feature">
-          <div>
-            <div class="section-heading">
-              <div class="eyebrow">Habitat IAS Approach</div>
 
-              <h2>
-                Notes should help you understand, not just memorise.
-              </h2>
+        <div class="section-heading">
 
-              <p>
-                Effective preparation requires conceptual clarity, structured
-                revision and continuous connection with previous year
-                questions.
-              </p>
+          <div class="eyebrow">
+            JPSC PRELIMS PAPER-II
+          </div>
+
+          <h2>
+            Know the syllabus before you study.
+          </h2>
+
+          <p>
+            This Notes section follows the official Jharkhand-specific
+            Paper-II structure instead of dividing the syllabus into generic
+            academic subjects.
+          </p>
+
+        </div>
+
+
+        <div class="exam-summary">
+
+          <div class="summary-card primary">
+            <span class="summary-label">Total Paper</span>
+            <span class="summary-number">
+              {totalMarks} Marks
+            </span>
+            <div class="summary-description">
+              General Studies Paper-II
             </div>
           </div>
 
-          <div class="feature-box">
-            <h3>What makes the notes useful?</h3>
-
-            <ul class="feature-list">
-              <li>
-                <span class="check">✓</span>
-                <span>Structured subject-wise organisation.</span>
-              </li>
-
-              <li>
-                <span class="check">✓</span>
-                <span>Focus on important examination concepts.</span>
-              </li>
-
-              <li>
-                <span class="check">✓</span>
-                <span>Useful for revision and repeated study.</span>
-              </li>
-
-              <li>
-                <span class="check">✓</span>
-                <span>Designed around competitive examination needs.</span>
-              </li>
-
-              <li>
-                <span class="check">✓</span>
-                <span>Connected with PYQ-based preparation.</span>
-              </li>
-            </ul>
+          <div class="summary-card">
+            <span class="summary-label">Questions</span>
+            <span class="summary-number">
+              {totalQuestions}
+            </span>
+            <div class="summary-description">
+              Objective-type questions
+            </div>
           </div>
+
+          <div class="summary-card">
+            <span class="summary-label">Per Question</span>
+            <span class="summary-number">
+              2 Marks
+            </span>
+            <div class="summary-description">
+              Each question carries 2 marks
+            </div>
+          </div>
+
+          <div class="summary-card">
+            <span class="summary-label">Highest Weightage</span>
+            <span class="summary-number">
+              {highestWeightage} Marks
+            </span>
+            <div class="summary-description">
+              Section {highestSection?.code} — {highestSection?.shortTitle}
+            </div>
+          </div>
+
         </div>
+
+
+        <!-- =========================
+             WEIGHTAGE TABLE
+        ========================== -->
+
+        <div class="weightage-panel">
+
+          <div class="weightage-header">
+            <div>
+              <h3>Official A–P Weightage</h3>
+              <p>
+                Question distribution according to the syllabus
+              </p>
+            </div>
+
+            <span class="badge badge-blue">
+              100 Questions / 200 Marks
+            </span>
+          </div>
+
+          <div class="table-wrap">
+
+            <table class="weightage-table">
+
+              <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Subject</th>
+                  <th>Questions</th>
+                  <th>Marks</th>
+                  <th>Relative Weightage</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                {subjects.map((subject) => (
+                  <tr>
+                    <td>
+                      <div class="table-code">
+                        {subject.code}
+                      </div>
+                    </td>
+
+                    <td>
+                      <div class="table-title">
+                        {subject.title}
+                      </div>
+                    </td>
+
+                    <td>
+                      {subject.questions}
+                    </td>
+
+                    <td>
+                      <span class="marks-value">
+                        {subject.marks}
+                      </span>
+                    </td>
+
+                    <td>
+                      <div class="bar">
+                        <span
+                          style={`width:${(subject.marks / totalMarks) * 100}%`}
+                        ></span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             SEARCH
+        ========================== -->
+
+        <div class="filter-box">
+
+          <div>
+            <div class="filter-title">
+              Explore A–P Notes
+            </div>
+
+            <div style="color:var(--muted);font-size:12px;margin-top:3px;">
+              Search by section or topic
+            </div>
+          </div>
+
+          <div class="search-wrap">
+
+            <span class="search-icon">
+              🔍
+            </span>
+
+            <input
+              id="notesSearch"
+              class="search-input"
+              type="search"
+              placeholder="Search CNT, History, Sports, Environment..."
+              aria-label="Search JPSC notes"
+            />
+
+          </div>
+
+        </div>
+
+
+        <!-- =========================
+             SYLLABUS CARDS
+        ========================== -->
+
+        <div class="grid" id="notesGrid">
+
+          {subjects.map((subject) => (
+            <article
+              class="card note-card"
+              id={`section-${subject.code}`}
+              data-search={`${subject.code} ${subject.title} ${subject.shortTitle} ${subject.description} ${subject.topics.join(" ")}`}
+            >
+
+              <span class="code">
+                {subject.code}
+              </span>
+
+              <div class="icon">
+                {subject.code}
+              </div>
+
+              <h3>
+                {subject.title}
+              </h3>
+
+              <p>
+                {subject.description}
+              </p>
+
+
+              <div class="badges">
+
+                <span class="badge badge-blue">
+                  {subject.questions} Questions
+                </span>
+
+                <span class="badge badge-green">
+                  {subject.marks} Marks
+                </span>
+
+                <span
+                  class={`badge ${getPriorityClass(subject.marks)}`}
+                >
+                  {getPriority(subject.marks)} Weightage
+                </span>
+
+              </div>
+
+
+              <ul class="topics">
+
+                {subject.topics.map((topic) => (
+                  <li>
+                    {topic}
+                  </li>
+                ))}
+
+              </ul>
+
+
+              <div class="card-footer">
+
+                <a
+                  href={`#section-${subject.code}`}
+                  class="card-link"
+                >
+                  View Section →
+                </a>
+
+                <span class="question-note">
+                  {subject.questions} × 2 = {subject.marks}
+                </span>
+
+              </div>
+
+            </article>
+          ))}
+
+        </div>
+
+
+        <div id="emptyState" class="empty-state">
+          <strong>No matching section found.</strong>
+          <br />
+          Try searching for another JPSC topic.
+        </div>
+
       </div>
     </section>
 
-    <!-- PYQ CONNECTION -->
+
+    <!-- =========================
+         STUDY APPROACH
+    ========================== -->
 
     <section class="section">
       <div class="container">
-        <div class="cta">
-          <div>
-            <h2>
-              Connect your notes with PYQs.
-            </h2>
 
-            <p>
-              Understand how the examination converts concepts into actual
-              questions.
-            </p>
+        <div class="feature">
+
+          <div>
+
+            <div class="section-heading">
+
+              <div class="eyebrow">
+                HABITAT IAS APPROACH
+              </div>
+
+              <h2>
+                Syllabus → Notes → PYQ → Revision
+              </h2>
+
+              <p>
+                The Notes section is designed so that an aspirant can move
+                systematically from the official syllabus to conceptual notes,
+                previous-year questions and revision.
+              </p>
+
+            </div>
+
           </div>
 
-          <a href="/pyq/" class="button button-primary">
-            Explore JPSC PYQ
-          </a>
+
+          <div class="feature-box">
+
+            <h3>
+              Every section should answer four questions.
+            </h3>
+
+            <ul class="feature-list">
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  <strong>What is in the syllabus?</strong><br />
+                  Exact A–P syllabus position.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  <strong>What should I study?</strong><br />
+                  Topic-wise structured notes.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  <strong>How important is it?</strong><br />
+                  Official question and marks weightage.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  <strong>How has JPSC asked it?</strong><br />
+                  Relevant PYQs and examination trends.
+                </span>
+              </li>
+
+            </ul>
+
+          </div>
+
         </div>
+
       </div>
     </section>
 
-    <!-- FOOTER -->
 
-    <footer class="footer">
+    <!-- =========================
+         HIGH WEIGHTAGE AREAS
+    ========================== -->
+
+    <section class="section section-light">
+
       <div class="container">
-        <div class="footer-grid">
-          <div>
-            <div class="footer-brand">Habitat IAS</div>
 
-            <p>
-              Focused preparation resources for JPSC aspirants.
-            </p>
+        <div class="section-heading">
+
+          <div class="eyebrow">
+            WEIGHTAGE INSIGHT
           </div>
 
+          <h2>
+            Start with the highest-weightage areas.
+          </h2>
+
+          <p>
+            Weightage should guide prioritisation, but it should not be used
+            to completely ignore lower-weightage syllabus areas.
+          </p>
+
+        </div>
+
+
+        <div class="grid">
+
+          {subjects
+            .filter((subject) => subject.marks >= 14)
+            .map((subject) => (
+              <article class="card">
+
+                <span class="code">
+                  {subject.code}
+                </span>
+
+                <div class="icon">
+                  {subject.code}
+                </div>
+
+                <h3>
+                  {subject.title}
+                </h3>
+
+                <p>
+                  This section carries
+                  <strong>{subject.marks} marks</strong>
+                  in the syllabus.
+                </p>
+
+                <div class="badges">
+
+                  <span class="badge badge-blue">
+                    {subject.questions} Questions
+                  </span>
+
+                  <span class="badge badge-green">
+                    {subject.marks} Marks
+                  </span>
+
+                  <span
+                    class={`badge ${getPriorityClass(subject.marks)}`}
+                  >
+                    {getPriority(subject.marks)}
+                  </span>
+
+                </div>
+
+                <a
+                  href={`#section-${subject.code}`}
+                  class="card-link"
+                >
+                  Go to Section →
+                </a>
+
+              </article>
+            ))}
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         IMPORTANT INFORMATION
+    ========================== -->
+
+    <section class="section">
+
+      <div class="container">
+
+        <div class="feature-box">
+
+          <div class="section-heading">
+
+            <div class="eyebrow">
+              IMPORTANT
+            </div>
+
+            <h2>
+              Official syllabus vs PYQ analysis
+            </h2>
+
+            <p>
+              The question numbers and marks shown on this page represent the
+              <strong>syllabus-defined distribution</strong> of JPSC Prelims
+              Paper-II. They should not be confused with historical PYQ counts.
+            </p>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <div class="info-icon">
+              i
+            </div>
+
+            <div>
+
+              <h4>
+                Why this distinction matters
+              </h4>
+
+              <p>
+                The Notes page uses the official syllabus structure first.
+                Historical PYQ frequency can later be displayed separately
+                inside each topic without changing the official A–P framework.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         PYQ CONNECTION
+    ========================== -->
+
+    <section class="section section-light">
+
+      <div class="container">
+
+        <div class="feature-box">
+
+          <div class="section-heading">
+
+            <div class="eyebrow">
+              PREVIOUS YEAR QUESTIONS
+            </div>
+
+            <h2>
+              Connect every topic with actual JPSC questions.
+            </h2>
+
+            <p>
+              Once the notes are populated, each topic can be connected with
+              the relevant JPSC PYQs so that aspirants can study the concept
+              and immediately see how it has been tested.
+            </p>
+
+          </div>
+
+          <a
+            href="/pyq/"
+            class="card-link"
+          >
+            Explore JPSC PYQs →
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+      <div class="container">
+
+        <div class="footer-grid">
+
           <div>
-            <h4>Preparation</h4>
+
+            <div class="footer-brand">
+              Habitat IAS
+            </div>
+
+            <p>
+              Structured preparation resources for JPSC aspirants.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h4>
+              Preparation
+            </h4>
 
             <div class="footer-links">
               <a href="/notes/">Notes</a>
@@ -774,10 +1886,15 @@
               <a href="/mock-tests/">Mock Tests</a>
               <a href="/trends/">Trends</a>
             </div>
+
           </div>
 
+
           <div>
-            <h4>Resources</h4>
+
+            <h4>
+              Resources
+            </h4>
 
             <div class="footer-links">
               <a href="/guidance/">Guidance</a>
@@ -785,13 +1902,21 @@
               <a href="/resources/">Resources</a>
               <a href="/book/">Book</a>
             </div>
+
           </div>
 
+
           <div>
-            <h4>Connect</h4>
+
+            <h4>
+              Connect
+            </h4>
 
             <div class="footer-links">
-              <a href="/contact/">Contact</a>
+
+              <a href="/contact/">
+                Contact
+              </a>
 
               <a
                 href="https://www.youtube.com/@habitatias"
@@ -816,14 +1941,74 @@
               >
                 X / Twitter
               </a>
+
             </div>
+
           </div>
+
         </div>
+
 
         <div class="copyright">
           © 2026 Habitat IAS. All rights reserved.
         </div>
+
       </div>
+
     </footer>
+
+
+    <!-- =========================
+         SEARCH SCRIPT
+    ========================== -->
+
+    <script>
+      const searchInput =
+        document.getElementById("notesSearch");
+
+      const cards =
+        Array.from(document.querySelectorAll(".note-card"));
+
+      const emptyState =
+        document.getElementById("emptyState");
+
+      searchInput?.addEventListener("input", () => {
+
+        const query =
+          searchInput.value
+            .trim()
+            .toLowerCase();
+
+        let visibleCount = 0;
+
+        cards.forEach((card) => {
+
+          const searchable =
+            (card.getAttribute("data-search") || "")
+              .toLowerCase();
+
+          const matches =
+            query === "" ||
+            searchable.includes(query);
+
+          card.classList.toggle(
+            "hidden",
+            !matches
+          );
+
+          if (matches) {
+            visibleCount++;
+          }
+
+        });
+
+        emptyState?.classList.toggle(
+          "show",
+          visibleCount === 0
+        );
+
+      });
+    </script>
+
   </body>
 </html>

@@ -1,0 +1,2338 @@
+---
+import { supabase } from "../lib/supabase";
+
+const redirectTo =
+  Astro.url.searchParams.get("redirect") || "/dashboard";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#07366c"
+  />
+
+  <title>
+    Create Student Account | Habitat IAS
+  </title>
+
+
+  <style>
+
+    /* =====================================================
+       RESET
+    ====================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+
+        radial-gradient(
+          circle at 5% 5%,
+          rgba(37,99,235,.12),
+          transparent 30%
+        ),
+
+        radial-gradient(
+          circle at 95% 90%,
+          rgba(14,165,233,.10),
+          transparent 30%
+        ),
+
+        #f4f7fb;
+
+      color: #10294d;
+
+      -webkit-font-smoothing:
+        antialiased;
+    }
+
+
+    a {
+      text-decoration: none;
+    }
+
+
+    button,
+    input {
+      font-family: inherit;
+    }
+
+
+    /* =====================================================
+       PAGE
+    ====================================================== */
+
+    .register-page {
+
+      min-height: 100vh;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 30px 18px;
+
+      position: relative;
+
+      overflow: hidden;
+    }
+
+
+    /* =====================================================
+       BACKGROUND
+    ====================================================== */
+
+    .bg-circle {
+
+      position: absolute;
+
+      border-radius: 50%;
+
+      pointer-events: none;
+    }
+
+
+    .circle-one {
+
+      width: 430px;
+      height: 430px;
+
+      left: -210px;
+      top: -210px;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          rgba(37,99,235,.15),
+          rgba(14,165,233,.03)
+        );
+    }
+
+
+    .circle-two {
+
+      width: 390px;
+      height: 390px;
+
+      right: -190px;
+      bottom: -210px;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          rgba(30,64,175,.10),
+          rgba(56,189,248,.04)
+        );
+    }
+
+
+    /* =====================================================
+       MAIN CARD
+    ====================================================== */
+
+    .register-shell {
+
+      width:
+        min(
+          1080px,
+          100%
+        );
+
+      min-height: 680px;
+
+      display: grid;
+
+      grid-template-columns:
+        .96fr
+        1.04fr;
+
+      overflow: hidden;
+
+      border-radius: 28px;
+
+      background: white;
+
+      border:
+        1px solid #e0e8f2;
+
+      box-shadow:
+
+        0 30px 80px
+        rgba(15,55,100,.13),
+
+        0 8px 25px
+        rgba(15,55,100,.05);
+
+      position: relative;
+
+      z-index: 2;
+    }
+
+
+    /* =====================================================
+       LEFT BRAND PANEL
+    ====================================================== */
+
+    .brand-panel {
+
+      position: relative;
+
+      overflow: hidden;
+
+      padding: 52px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: space-between;
+
+      color: white;
+
+      background:
+
+        radial-gradient(
+          circle at 90% 15%,
+          rgba(96,165,250,.28),
+          transparent 28%
+        ),
+
+        radial-gradient(
+          circle at 10% 90%,
+          rgba(14,165,233,.18),
+          transparent 30%
+        ),
+
+        linear-gradient(
+          145deg,
+          #082f63,
+          #0b4385 48%,
+          #1264b5
+        );
+    }
+
+
+    .brand-panel::before {
+
+      content: "";
+
+      position: absolute;
+
+      width: 310px;
+      height: 310px;
+
+      right: -150px;
+      top: -150px;
+
+      border-radius: 50%;
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      box-shadow:
+
+        0 0 0 35px
+        rgba(255,255,255,.025),
+
+        0 0 0 70px
+        rgba(255,255,255,.018);
+    }
+
+
+    .brand-panel::after {
+
+      content: "";
+
+      position: absolute;
+
+      width: 220px;
+      height: 220px;
+
+      left: -130px;
+      bottom: -130px;
+
+      border-radius: 50%;
+
+      background:
+        rgba(255,255,255,.045);
+    }
+
+
+    .brand-content {
+
+      position: relative;
+
+      z-index: 2;
+    }
+
+
+    /* =====================================================
+       BRAND
+    ====================================================== */
+
+    .brand-logo {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+    }
+
+
+    .logo-box {
+
+      width: 52px;
+      height: 52px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 15px;
+
+      color: #0b4385;
+
+      background:
+
+        linear-gradient(
+          145deg,
+          #ffffff,
+          #dbeafe
+        );
+
+      font-size: 23px;
+
+      font-weight: 950;
+
+      box-shadow:
+        0 8px 22px
+        rgba(0,0,0,.16);
+    }
+
+
+    .brand-name {
+
+      display: flex;
+
+      flex-direction: column;
+    }
+
+
+    .brand-name strong {
+
+      font-size: 21px;
+
+      line-height: 1;
+
+      letter-spacing: -.4px;
+    }
+
+
+    .brand-name span {
+
+      margin-top: 5px;
+
+      color: #bfdbfe;
+
+      font-size: 9px;
+
+      font-weight: 800;
+
+      letter-spacing: 1.5px;
+    }
+
+
+    /* =====================================================
+       BRAND CONTENT
+    ====================================================== */
+
+    .brand-heading {
+
+      margin-top: 72px;
+
+      max-width: 450px;
+    }
+
+
+    .brand-heading .eyebrow {
+
+      display: inline-flex;
+
+      padding:
+        7px 11px;
+
+      border-radius: 999px;
+
+      color: #dbeafe;
+
+      background:
+        rgba(255,255,255,.10);
+
+      border:
+        1px solid
+        rgba(255,255,255,.14);
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.2px;
+
+      text-transform: uppercase;
+    }
+
+
+    .brand-heading h1 {
+
+      margin:
+        17px 0 14px;
+
+      font-size:
+        clamp(
+          32px,
+          4vw,
+          48px
+        );
+
+      line-height: 1.07;
+
+      letter-spacing: -1.8px;
+    }
+
+
+    .brand-heading p {
+
+      max-width: 430px;
+
+      margin: 0;
+
+      color: #dbeafe;
+
+      font-size: 14px;
+
+      line-height: 1.75;
+    }
+
+
+    /* =====================================================
+       BENEFITS
+    ====================================================== */
+
+    .benefits {
+
+      display: grid;
+
+      gap: 12px;
+
+      margin-top: 30px;
+    }
+
+
+    .benefit {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 11px;
+
+      color: #eaf3ff;
+
+      font-size: 12px;
+
+      font-weight: 650;
+    }
+
+
+    .benefit-icon {
+
+      width: 28px;
+      height: 28px;
+
+      flex: 0 0 28px;
+
+      display: grid;
+
+      place-items: center;
+
+      border-radius: 8px;
+
+      color: #e7f7ff;
+
+      background:
+        rgba(255,255,255,.11);
+
+      border:
+        1px solid
+        rgba(255,255,255,.10);
+
+      font-size: 12px;
+    }
+
+
+    /* =====================================================
+       BRAND FOOTER
+    ====================================================== */
+
+    .brand-footer {
+
+      position: relative;
+
+      z-index: 2;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      color: #bfdbfe;
+
+      font-size: 9px;
+
+      font-weight: 700;
+    }
+
+
+    .secure {
+
+      padding:
+        7px 10px;
+
+      border-radius: 999px;
+
+      background:
+        rgba(255,255,255,.08);
+
+      border:
+        1px solid
+        rgba(255,255,255,.10);
+    }
+
+
+    /* =====================================================
+       FORM PANEL
+    ====================================================== */
+
+    .form-panel {
+
+      padding:
+        45px 52px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: center;
+
+      background: white;
+    }
+
+
+    .form-heading {
+
+      margin-bottom: 25px;
+    }
+
+
+    .form-heading .small-title {
+
+      color: #2563eb;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: 1.3px;
+
+      text-transform: uppercase;
+    }
+
+
+    .form-heading h2 {
+
+      margin:
+        8px 0 7px;
+
+      color: #0f2748;
+
+      font-size: 30px;
+
+      line-height: 1.1;
+
+      letter-spacing: -1px;
+    }
+
+
+    .form-heading p {
+
+      margin: 0;
+
+      color: #71829a;
+
+      font-size: 12px;
+
+      line-height: 1.6;
+    }
+
+
+    /* =====================================================
+       FORM GRID
+    ====================================================== */
+
+    .form-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        1fr 1fr;
+
+      gap:
+        0 13px;
+    }
+
+
+    .form-group {
+
+      margin-bottom: 15px;
+    }
+
+
+    .full-width {
+
+      grid-column:
+        1 / -1;
+    }
+
+
+    .form-label {
+
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: #253d5c;
+
+      font-size: 11px;
+
+      font-weight: 850;
+    }
+
+
+    .input-wrap {
+
+      position: relative;
+    }
+
+
+    .input-icon {
+
+      position: absolute;
+
+      left: 14px;
+
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      color: #8ca0ba;
+
+      font-size: 14px;
+
+      pointer-events: none;
+    }
+
+
+    input {
+
+      width: 100%;
+
+      height: 47px;
+
+      padding:
+        0 42px;
+
+      border-radius: 10px;
+
+      border:
+        1px solid #d9e3ef;
+
+      outline: none;
+
+      background: #fbfdff;
+
+      color: #122b4c;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      transition:
+        border-color .18s ease,
+        box-shadow .18s ease,
+        background .18s ease;
+    }
+
+
+    input::placeholder {
+
+      color: #a3b0c1;
+
+      font-weight: 500;
+    }
+
+
+    input:hover {
+
+      border-color:
+        #bdcee3;
+    }
+
+
+    input:focus {
+
+      border-color:
+        #3784ee;
+
+      background: white;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(37,99,235,.09);
+    }
+
+
+    /* =====================================================
+       PASSWORD TOGGLE
+    ====================================================== */
+
+    .password-toggle {
+
+      position: absolute;
+
+      right: 8px;
+
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      width: 31px;
+      height: 31px;
+
+      display: grid;
+
+      place-items: center;
+
+      border: 0;
+
+      border-radius: 7px;
+
+      color: #8295ad;
+
+      background: transparent;
+
+      cursor: pointer;
+    }
+
+
+    .password-toggle:hover {
+
+      color: #2563eb;
+
+      background:
+        #eef4fb;
+    }
+
+
+    /* =====================================================
+       PASSWORD STRENGTH
+    ====================================================== */
+
+    .password-strength {
+
+      margin-top: 7px;
+    }
+
+
+    .strength-bars {
+
+      display: flex;
+
+      gap: 4px;
+
+      height: 4px;
+    }
+
+
+    .strength-bar {
+
+      flex: 1;
+
+      border-radius: 999px;
+
+      background:
+        #e7edf4;
+
+      transition:
+        background .2s ease;
+    }
+
+
+    .strength-text {
+
+      margin-top: 5px;
+
+      color: #91a0b1;
+
+      font-size: 8px;
+
+      font-weight: 750;
+    }
+
+
+    /* =====================================================
+       TERMS
+    ====================================================== */
+
+    .terms {
+
+      display: flex;
+
+      align-items: flex-start;
+
+      gap: 8px;
+
+      margin:
+        4px 0 17px;
+
+      color: #73849a;
+
+      font-size: 9px;
+
+      line-height: 1.5;
+
+      cursor: pointer;
+    }
+
+
+    .terms input {
+
+      width: 15px;
+
+      height: 15px;
+
+      flex: 0 0 15px;
+
+      margin: 0;
+
+      padding: 0;
+
+      accent-color:
+        #2563eb;
+
+      box-shadow: none;
+    }
+
+
+    .terms a {
+
+      color: #2563eb;
+
+      font-weight: 800;
+    }
+
+
+    /* =====================================================
+       CREATE BUTTON
+    ====================================================== */
+
+    .create-button {
+
+      width: 100%;
+
+      min-height: 50px;
+
+      border: 0;
+
+      border-radius: 11px;
+
+      color: white;
+
+      background:
+
+        linear-gradient(
+          135deg,
+          #1264c0,
+          #2563eb
+        );
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      letter-spacing: .15px;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 10px 24px
+        rgba(37,99,235,.20);
+
+      transition:
+        transform .18s ease,
+        box-shadow .18s ease,
+        opacity .18s ease;
+    }
+
+
+    .create-button:hover {
+
+      transform:
+        translateY(-1px);
+
+      box-shadow:
+        0 14px 30px
+        rgba(37,99,235,.27);
+    }
+
+
+    .create-button:disabled {
+
+      opacity: .65;
+
+      cursor:
+        not-allowed;
+
+      transform: none;
+    }
+
+
+    /* =====================================================
+       STATUS
+    ====================================================== */
+
+    .status {
+
+      display: none;
+
+      margin-top: 13px;
+
+      padding:
+        11px 12px;
+
+      border-radius: 9px;
+
+      font-size: 10px;
+
+      line-height: 1.5;
+
+      font-weight: 700;
+    }
+
+
+    .status.show {
+
+      display: block;
+    }
+
+
+    .status.error {
+
+      color: #b42318;
+
+      background:
+        #fff1f0;
+
+      border:
+        1px solid #ffd4d0;
+    }
+
+
+    .status.success {
+
+      color: #137333;
+
+      background:
+        #eefbf2;
+
+      border:
+        1px solid #ccebd3;
+    }
+
+
+    /* =====================================================
+       LOGIN LINK
+    ====================================================== */
+
+    .login-link {
+
+      margin-top: 20px;
+
+      text-align: center;
+
+      color: #77889c;
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+
+    .login-link a {
+
+      color: #2563eb;
+
+      font-weight: 900;
+    }
+
+
+    .login-link a:hover {
+
+      text-decoration: underline;
+    }
+
+
+    /* =====================================================
+       COPYRIGHT
+    ====================================================== */
+
+    .copyright {
+
+      margin-top: 19px;
+
+      text-align: center;
+
+      color: #a0adbc;
+
+      font-size: 8px;
+
+      font-weight: 700;
+
+      letter-spacing: .3px;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ====================================================== */
+
+    @media (max-width: 850px) {
+
+      .register-shell {
+
+        grid-template-columns: 1fr;
+
+        max-width: 570px;
+
+        min-height: auto;
+      }
+
+
+      .brand-panel {
+
+        min-height: 340px;
+
+        padding: 34px;
+      }
+
+
+      .brand-heading {
+
+        margin-top: 42px;
+      }
+
+
+      .benefits {
+
+        display: none;
+      }
+
+
+      .brand-footer {
+
+        margin-top: 32px;
+      }
+
+
+      .form-panel {
+
+        padding:
+          38px 34px;
+      }
+
+    }
+
+
+    @media (max-width: 500px) {
+
+      .register-page {
+
+        padding: 0;
+      }
+
+
+      .register-shell {
+
+        min-height: 100vh;
+
+        border-radius: 0;
+
+        border: 0;
+
+        box-shadow: none;
+      }
+
+
+      .brand-panel {
+
+        min-height: 285px;
+
+        padding:
+          27px 22px;
+      }
+
+
+      .brand-heading {
+
+        margin-top: 34px;
+      }
+
+
+      .brand-heading h1 {
+
+        font-size: 31px;
+      }
+
+
+      .brand-heading p {
+
+        font-size: 12px;
+      }
+
+
+      .form-panel {
+
+        padding:
+          32px 22px;
+      }
+
+
+      .form-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .full-width {
+
+        grid-column:
+          auto;
+      }
+
+
+      .form-heading h2 {
+
+        font-size: 27px;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <main class="register-page">
+
+    <div class="bg-circle circle-one"></div>
+    <div class="bg-circle circle-two"></div>
+
+
+    <section class="register-shell">
+
+
+      <!-- =================================================
+           BRAND PANEL
+      ================================================== -->
+
+      <div class="brand-panel">
+
+        <div class="brand-content">
+
+
+          <div class="brand-logo">
+
+            <div class="logo-box">
+              H
+            </div>
+
+            <div class="brand-name">
+
+              <strong>
+                Habitat IAS
+              </strong>
+
+              <span>
+                JPSC • UPSC • PCS
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <div class="brand-heading">
+
+            <span class="eyebrow">
+              Student Registration
+            </span>
+
+
+            <h1>
+              Start your<br />
+              preparation journey.
+            </h1>
+
+
+            <p>
+              Create your free Habitat IAS student
+              account and access your personalised
+              examination preparation dashboard.
+            </p>
+
+
+            <div class="benefits">
+
+
+              <div class="benefit">
+
+                <span class="benefit-icon">
+                  ✓
+                </span>
+
+                <span>
+                  Access your JPSC test series
+                </span>
+
+              </div>
+
+
+              <div class="benefit">
+
+                <span class="benefit-icon">
+                  ◈
+                </span>
+
+                <span>
+                  Save your test performance
+                </span>
+
+              </div>
+
+
+              <div class="benefit">
+
+                <span class="benefit-icon">
+                  ↗
+                </span>
+
+                <span>
+                  Track your preparation progress
+                </span>
+
+              </div>
+
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="brand-footer">
+
+          <span>
+            Habitat IAS Student Portal
+          </span>
+
+          <span class="secure">
+            🔒 Secure Registration
+          </span>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- =================================================
+           FORM PANEL
+      ================================================== -->
+
+      <div class="form-panel">
+
+
+        <div class="form-heading">
+
+          <div class="small-title">
+            Create your account
+          </div>
+
+          <h2>
+            Student Registration
+          </h2>
+
+          <p>
+            Enter your details to create your Habitat IAS
+            student account.
+          </p>
+
+        </div>
+
+
+
+        <form id="registerForm">
+
+
+          <div class="form-grid">
+
+
+            <!-- FULL NAME -->
+
+            <div class="form-group full-width">
+
+              <label
+                class="form-label"
+                for="fullName"
+              >
+                Full Name
+              </label>
+
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  👤
+                </span>
+
+                <input
+                  id="fullName"
+                  name="fullName"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Enter your full name"
+                  required
+                  minlength="2"
+                />
+
+              </div>
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="email"
+              >
+                Email Address
+              </label>
+
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  ✉
+                </span>
+
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="Email address"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+
+
+            <!-- MOBILE -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="mobile"
+              >
+                Mobile Number
+              </label>
+
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  ☎
+                </span>
+
+                <input
+                  id="mobile"
+                  name="mobile"
+                  type="tel"
+                  inputmode="numeric"
+                  autocomplete="tel"
+                  placeholder="10-digit mobile"
+                  maxlength="10"
+                  required
+                />
+
+              </div>
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="password"
+              >
+                Password
+              </label>
+
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  🔒
+                </span>
+
+
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autocomplete="new-password"
+                  placeholder="Create password"
+                  minlength="8"
+                  required
+                />
+
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="togglePassword"
+                  aria-label="Show password"
+                >
+                  👁
+                </button>
+
+              </div>
+
+
+              <div
+                class="password-strength"
+                id="passwordStrength"
+              >
+
+                <div class="strength-bars">
+
+                  <span
+                    class="strength-bar"
+                  ></span>
+
+                  <span
+                    class="strength-bar"
+                  ></span>
+
+                  <span
+                    class="strength-bar"
+                  ></span>
+
+                  <span
+                    class="strength-bar"
+                  ></span>
+
+                </div>
+
+
+                <div
+                  class="strength-text"
+                  id="strengthText"
+                >
+                  Minimum 8 characters
+                </div>
+
+              </div>
+
+            </div>
+
+
+
+            <!-- CONFIRM PASSWORD -->
+
+            <div class="form-group">
+
+              <label
+                class="form-label"
+                for="confirmPassword"
+              >
+                Confirm Password
+              </label>
+
+
+              <div class="input-wrap">
+
+                <span class="input-icon">
+                  🔐
+                </span>
+
+
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autocomplete="new-password"
+                  placeholder="Repeat password"
+                  minlength="8"
+                  required
+                />
+
+
+                <button
+                  type="button"
+                  class="password-toggle"
+                  id="toggleConfirmPassword"
+                  aria-label="Show password"
+                >
+                  👁
+                </button>
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+
+          <!-- TERMS -->
+
+          <label class="terms">
+
+            <input
+              type="checkbox"
+              id="terms"
+              required
+            />
+
+            <span>
+
+              I agree to the Habitat IAS
+              <a href="/terms">
+                Terms & Conditions
+              </a>
+              and
+              <a href="/privacy">
+                Privacy Policy
+              </a>.
+
+            </span>
+
+          </label>
+
+
+
+          <!-- CREATE -->
+
+          <button
+            type="submit"
+            class="create-button"
+            id="createButton"
+          >
+
+            <span id="createButtonText">
+              Create Student Account
+            </span>
+
+          </button>
+
+
+
+          <!-- STATUS -->
+
+          <div
+            id="statusMessage"
+            class="status"
+            role="alert"
+          ></div>
+
+
+        </form>
+
+
+
+        <div class="login-link">
+
+          Already have an account?
+
+          <a
+            href={`/login?redirect=${encodeURIComponent(redirectTo)}`}
+          >
+            Sign In
+          </a>
+
+        </div>
+
+
+        <div class="copyright">
+
+          © {new Date().getFullYear()}
+          Habitat IAS • JPSC Prelims Test Series
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+
+  <!-- =====================================================
+       SUPABASE REGISTRATION
+  ====================================================== -->
+
+  <script>
+
+    import {
+      supabase
+    } from "../lib/supabase";
+
+
+    const registerForm =
+      document.getElementById(
+        "registerForm"
+      );
+
+
+    const fullNameInput =
+      document.getElementById(
+        "fullName"
+      );
+
+
+    const emailInput =
+      document.getElementById(
+        "email"
+      );
+
+
+    const mobileInput =
+      document.getElementById(
+        "mobile"
+      );
+
+
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
+
+
+    const confirmPasswordInput =
+      document.getElementById(
+        "confirmPassword"
+      );
+
+
+    const termsInput =
+      document.getElementById(
+        "terms"
+      );
+
+
+    const togglePassword =
+      document.getElementById(
+        "togglePassword"
+      );
+
+
+    const toggleConfirmPassword =
+      document.getElementById(
+        "toggleConfirmPassword"
+      );
+
+
+    const createButton =
+      document.getElementById(
+        "createButton"
+      );
+
+
+    const createButtonText =
+      document.getElementById(
+        "createButtonText"
+      );
+
+
+    const statusMessage =
+      document.getElementById(
+        "statusMessage"
+      );
+
+
+    const strengthBars =
+      document.querySelectorAll(
+        ".strength-bar"
+      );
+
+
+    const strengthText =
+      document.getElementById(
+        "strengthText"
+      );
+
+
+    /* =====================================================
+       PASSWORD TOGGLE
+    ====================================================== */
+
+    function setupPasswordToggle(
+      button,
+      input
+    ) {
+
+      button?.addEventListener(
+        "click",
+        () => {
+
+          const isPassword =
+            input.type === "password";
+
+
+          input.type =
+            isPassword
+              ? "text"
+              : "password";
+
+
+          button.textContent =
+            isPassword
+              ? "🙈"
+              : "👁";
+
+
+          button.setAttribute(
+            "aria-label",
+            isPassword
+              ? "Hide password"
+              : "Show password"
+          );
+
+        }
+      );
+
+    }
+
+
+    setupPasswordToggle(
+      togglePassword,
+      passwordInput
+    );
+
+
+    setupPasswordToggle(
+      toggleConfirmPassword,
+      confirmPasswordInput
+    );
+
+
+    /* =====================================================
+       MOBILE NUMBER
+    ====================================================== */
+
+    mobileInput?.addEventListener(
+      "input",
+      () => {
+
+        mobileInput.value =
+          mobileInput.value
+            .replace(/\D/g, "")
+            .slice(0, 10);
+
+      }
+    );
+
+
+    /* =====================================================
+       PASSWORD STRENGTH
+    ====================================================== */
+
+    function updatePasswordStrength(
+      password
+    ) {
+
+      let score = 0;
+
+
+      if (
+        password.length >= 8
+      ) {
+
+        score++;
+
+      }
+
+
+      if (
+        /[A-Z]/.test(password)
+      ) {
+
+        score++;
+
+      }
+
+
+      if (
+        /[0-9]/.test(password)
+      ) {
+
+        score++;
+
+      }
+
+
+      if (
+        /[^A-Za-z0-9]/.test(password)
+      ) {
+
+        score++;
+
+      }
+
+
+      strengthBars.forEach(
+        (bar, index) => {
+
+          if (
+            index < score
+          ) {
+
+            if (score <= 1) {
+
+              bar.style.background =
+                "#ef4444";
+
+            } else if (
+              score === 2
+            ) {
+
+              bar.style.background =
+                "#f59e0b";
+
+            } else if (
+              score === 3
+            ) {
+
+              bar.style.background =
+                "#3b82f6";
+
+            } else {
+
+              bar.style.background =
+                "#16a34a";
+
+            }
+
+          } else {
+
+            bar.style.background =
+              "#e7edf4";
+
+          }
+
+        }
+      );
+
+
+      if (!password) {
+
+        strengthText.textContent =
+          "Minimum 8 characters";
+
+        strengthText.style.color =
+          "#91a0b1";
+
+      } else if (score <= 1) {
+
+        strengthText.textContent =
+          "Weak password";
+
+        strengthText.style.color =
+          "#dc2626";
+
+      } else if (score === 2) {
+
+        strengthText.textContent =
+          "Fair password";
+
+        strengthText.style.color =
+          "#d97706";
+
+      } else if (score === 3) {
+
+        strengthText.textContent =
+          "Good password";
+
+        strengthText.style.color =
+          "#2563eb";
+
+      } else {
+
+        strengthText.textContent =
+          "Strong password";
+
+        strengthText.style.color =
+          "#15803d";
+
+      }
+
+    }
+
+
+    passwordInput?.addEventListener(
+      "input",
+      () => {
+
+        updatePasswordStrength(
+          passwordInput.value
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       STATUS
+    ====================================================== */
+
+    function showStatus(
+      message,
+      type = "error"
+    ) {
+
+      statusMessage.textContent =
+        message;
+
+      statusMessage.className =
+        `status show ${type}`;
+
+    }
+
+
+    function clearStatus() {
+
+      statusMessage.textContent =
+        "";
+
+      statusMessage.className =
+        "status";
+
+    }
+
+
+    /* =====================================================
+       VALIDATE
+    ====================================================== */
+
+    function validateForm() {
+
+      const name =
+        fullNameInput.value.trim();
+
+
+      const email =
+        emailInput.value.trim();
+
+
+      const mobile =
+        mobileInput.value.trim();
+
+
+      const password =
+        passwordInput.value;
+
+
+      const confirmPassword =
+        confirmPasswordInput.value;
+
+
+      if (
+        name.length < 2
+      ) {
+
+        return "Please enter your full name.";
+
+      }
+
+
+      if (
+        !email
+      ) {
+
+        return "Please enter your email address.";
+
+      }
+
+
+      if (
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          .test(email)
+      ) {
+
+        return "Please enter a valid email address.";
+
+      }
+
+
+      if (
+        !/^\d{10}$/.test(mobile)
+      ) {
+
+        return "Please enter a valid 10-digit mobile number.";
+
+      }
+
+
+      if (
+        password.length < 8
+      ) {
+
+        return "Password must contain at least 8 characters.";
+
+      }
+
+
+      if (
+        password !==
+        confirmPassword
+      ) {
+
+        return "Passwords do not match.";
+
+      }
+
+
+      if (
+        !termsInput.checked
+      ) {
+
+        return "Please accept the Terms & Conditions and Privacy Policy.";
+
+      }
+
+
+      return null;
+
+    }
+
+
+    /* =====================================================
+       REGISTRATION
+    ====================================================== */
+
+    registerForm?.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+        clearStatus();
+
+
+        const validationError =
+          validateForm();
+
+
+        if (
+          validationError
+        ) {
+
+          showStatus(
+            validationError
+          );
+
+          return;
+
+        }
+
+
+        const fullName =
+          fullNameInput.value.trim();
+
+
+        const email =
+          emailInput.value
+            .trim()
+            .toLowerCase();
+
+
+        const mobile =
+          mobileInput.value.trim();
+
+
+        const password =
+          passwordInput.value;
+
+
+        createButton.disabled =
+          true;
+
+
+        createButtonText.textContent =
+          "Creating your account…";
+
+
+        try {
+
+
+          /*
+           * Create Supabase Auth user.
+           *
+           * The metadata is attached to the Auth
+           * user so that the student's basic details
+           * are available immediately.
+           */
+
+          const {
+            data,
+            error
+          } =
+            await supabase.auth.signUp({
+
+              email,
+
+              password,
+
+              options: {
+
+                data: {
+
+                  full_name:
+                    fullName,
+
+                  mobile:
+                    mobile
+
+                }
+
+              }
+
+            });
+
+
+          if (
+            error
+          ) {
+
+            console.error(
+              "Registration error:",
+              error
+            );
+
+
+            const errorMessage =
+              error.message
+                .toLowerCase();
+
+
+            if (
+              errorMessage.includes(
+                "already registered"
+              )
+            ) {
+
+              showStatus(
+                "An account with this email already exists. Please sign in instead."
+              );
+
+            } else if (
+              errorMessage.includes(
+                "password"
+              )
+            ) {
+
+              showStatus(
+                error.message
+              );
+
+            } else {
+
+              showStatus(
+                error.message ||
+                "Unable to create your account. Please try again."
+              );
+
+            }
+
+            return;
+
+          }
+
+
+          /*
+           * Supabase may either return a session
+           * immediately or require email confirmation,
+           * depending on your Supabase Authentication
+           * settings.
+           */
+
+          if (
+            data.session
+          ) {
+
+            showStatus(
+              "Account created successfully. Redirecting to your dashboard…",
+              "success"
+            );
+
+
+            setTimeout(
+              () => {
+
+                window.location.href =
+                  `${redirectTo}`;
+
+              },
+              800
+            );
+
+
+          } else {
+
+            showStatus(
+              "Account created. Please check your email and verify your account before signing in.",
+              "success"
+            );
+
+
+            createButtonText.textContent =
+              "Account Created";
+
+
+          }
+
+
+        } catch (error) {
+
+          console.error(
+            "Unexpected registration error:",
+            error
+          );
+
+
+          showStatus(
+            "Something went wrong. Please try again."
+          );
+
+
+        } finally {
+
+          if (
+            !dataHasSession()
+          ) {
+
+            createButton.disabled =
+              false;
+
+            createButtonText.textContent =
+              "Create Student Account";
+
+          }
+
+        }
+
+      }
+    );
+
+
+    /*
+     * Small helper used by finally.
+     * It safely checks whether the current
+     * Supabase client has an authenticated session.
+     *
+     * Registration itself remains controlled by
+     * the signUp response above.
+     */
+
+    function dataHasSession() {
+
+      return false;
+
+    }
+
+  </script>
+
+</body>
+
+</html>
