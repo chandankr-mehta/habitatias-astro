@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Cloudflare Wrangler local state
 .wrangler/
+
+# Cloudflare Wrangler local state
+.wrangler/
