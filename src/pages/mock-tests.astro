@@ -832,6 +832,41 @@ const groups = [
         20 TESTS
       </span>
 
+      <div
+        class="dashboard-user-area"
+        data-dashboard-user-area
+      >
+        <a
+          href="/login?redirect=%2Fmock-tests"
+          class="dashboard-login-button"
+          data-dashboard-login
+        >
+          <span class="dashboard-user-icon">♙</span>
+          <span>Login</span>
+        </a>
+
+        <div
+          class="dashboard-user-box"
+          data-dashboard-user
+          hidden
+        >
+          <span class="dashboard-user-icon">♙</span>
+
+          <span class="dashboard-user-name">
+            <small>ACCOUNT</small>
+            <strong data-dashboard-user-name>USER</strong>
+          </span>
+
+          <button
+            type="button"
+            class="dashboard-logout-button"
+            data-dashboard-logout
+          >
+            Logout
+          </button>
+        </div>
+      </div>
+
       <a
         href="/"
         class="home-button"
@@ -1208,8 +1243,11 @@ const groups = [
                       </div>
 
 
-                      <span class="card-status">
-                        AVAILABLE
+                      <span
+                        class="card-status checking"
+                        data-status-for={test.number}
+                      >
+                        CHECKING
                       </span>
 
                     </div>
@@ -1295,11 +1333,14 @@ const groups = [
 
                     <a
                       href={`/mock-tests/${test.number}`}
-                      class="start-test-button"
+                      class="start-test-button access-action checking"
+                      data-test-number={test.number}
+                      data-release-at={test.availableFrom || ""}
+                      aria-disabled="true"
                     >
 
                       <span>
-                        Start Test
+                        Checking Access...
                       </span>
 
                       <span class="arrow">
@@ -1969,6 +2010,135 @@ const groups = [
       border-color: #9dc7e7;
 
       background: #eef8ff;
+    }
+
+    /* =====================================================
+       AUTH / ACCOUNT AREA
+    ====================================================== */
+
+    .dashboard-user-area {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dashboard-login-button,
+    .dashboard-user-box {
+      min-height: 38px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 11px;
+      border: 1px solid #d8e4ee;
+      background: #ffffff;
+      color: #123d68;
+      font-size: 10px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .dashboard-login-button:hover {
+      color: #075ea3;
+      border-color: #9dc7e7;
+      background: #eef8ff;
+    }
+
+    .dashboard-user-box {
+      padding-right: 7px;
+      background: #f8fbff;
+      border-color: #cfe1ef;
+    }
+
+    .dashboard-user-icon {
+      width: 26px;
+      height: 26px;
+      flex: 0 0 26px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #ffffff;
+      background: linear-gradient(135deg, #07366c, #1688cf);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .dashboard-user-name {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.05;
+    }
+
+    .dashboard-user-name small {
+      color: #8194a8;
+      font-size: 7px;
+      font-weight: 900;
+      letter-spacing: .7px;
+    }
+
+    .dashboard-user-name strong {
+      max-width: 135px;
+      margin-top: 3px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #123b63;
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .dashboard-logout-button {
+      border: 0;
+      border-left: 1px solid #dbe7f0;
+      padding: 7px 6px 7px 9px;
+      background: transparent;
+      color: #8b3b49;
+      cursor: pointer;
+      font: inherit;
+      font-size: 9px;
+      font-weight: 850;
+    }
+
+    .dashboard-logout-button:hover {
+      color: #c12642;
+    }
+
+    @media (max-width: 980px) {
+      .dashboard-user-name {
+        display: none;
+      }
+
+      .dashboard-user-box {
+        padding: 5px 7px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .dashboard-header {
+        padding: 10px 16px;
+        gap: 10px;
+      }
+
+      .dashboard-brand {
+        min-width: auto;
+      }
+
+      .dashboard-header-center {
+        display: none;
+      }
+
+      .series-status {
+        display: none;
+      }
+
+      .dashboard-user-area {
+        gap: 4px;
+      }
+
+      .dashboard-login-button,
+      .dashboard-user-box {
+        min-height: 34px;
+      }
     }
 
 
@@ -3158,6 +3328,56 @@ const groups = [
 
 
     /* =====================================================
+       ACCESS CONTROL STATES
+    ====================================================== */
+
+    .card-status.checking {
+      color: #64748b;
+      background: #f1f5f9;
+      border-color: #e2e8f0;
+    }
+
+    .card-status.login {
+      color: #1d4ed8;
+      background: #eff6ff;
+      border-color: #bfdbfe;
+    }
+
+    .card-status.locked {
+      color: #9a3412;
+      background: #fff7ed;
+      border-color: #fed7aa;
+    }
+
+    .card-status.unlocked {
+      color: #08744b;
+      background: #e8f9f0;
+      border-color: #c8edda;
+    }
+
+    .start-test-button.checking {
+      opacity: .65;
+      pointer-events: none;
+      cursor: wait;
+    }
+
+    .start-test-button.locked {
+      color: #9a3412 !important;
+      background: #fff7ed !important;
+      border: 1px solid #fed7aa;
+      box-shadow: none;
+    }
+
+    .start-test-button.locked:hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .start-test-button.unlocked {
+      cursor: pointer;
+    }
+
+    /* =====================================================
        FULL LENGTH SIMULATION
     ====================================================== */
 
@@ -3994,6 +4214,688 @@ const groups = [
     }
 
   </style>
+
+
+  <!-- =====================================================
+       MOCK TEST ACCESS CONTROL
+       Login + Paid Buyer Verification
+  ====================================================== -->
+
+  <script>
+    import { supabase } from "../lib/supabase";
+
+    let accessCheckRunning = false;
+
+    /* =====================================================
+       ACCOUNT / LOGIN CORNER
+    ====================================================== */
+
+    function getUserDisplayName(user) {
+      if (!user) return "";
+
+      const metadata = user.user_metadata || {};
+
+      const name =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.display_name ||
+        metadata.username ||
+        "";
+
+      if (name && String(name).trim()) {
+        return String(name).trim();
+      }
+
+      if (user.email) {
+        return String(user.email).split("@")[0];
+      }
+
+      return "ACCOUNT";
+    }
+
+    function updateDashboardUser(user) {
+      const loginButton =
+        document.querySelector("[data-dashboard-login]");
+
+      const userBox =
+        document.querySelector("[data-dashboard-user]");
+
+      const userName =
+        document.querySelector("[data-dashboard-user-name]");
+
+      if (!loginButton || !userBox) return;
+
+      if (user) {
+        const displayName =
+          getUserDisplayName(user);
+
+        if (userName) {
+          userName.textContent =
+            displayName.toUpperCase();
+        }
+
+        loginButton.hidden = true;
+        userBox.hidden = false;
+
+      } else {
+        loginButton.hidden = false;
+        userBox.hidden = true;
+      }
+    }
+
+    async function loadDashboardUser() {
+      try {
+        const {
+          data,
+          error
+        } = await supabase.auth.getSession();
+
+        if (error) {
+          console.error(
+            "Could not load login session:",
+            error
+          );
+
+          updateDashboardUser(null);
+          return;
+        }
+
+        updateDashboardUser(
+          data?.session?.user || null
+        );
+
+      } catch (error) {
+        console.error(
+          "Dashboard session error:",
+          error
+        );
+
+        updateDashboardUser(null);
+      }
+    }
+
+    async function logoutDashboardUser() {
+      try {
+        const {
+          error
+        } = await supabase.auth.signOut();
+
+        if (error) {
+          console.error(
+            "Logout failed:",
+            error
+          );
+
+          return;
+        }
+
+        window.location.href = "/";
+      } catch (error) {
+        console.error(
+          "Unexpected logout error:",
+          error
+        );
+      }
+    }
+
+    const logoutButton =
+      document.querySelector(
+        "[data-dashboard-logout]"
+      );
+
+    if (logoutButton) {
+      logoutButton.addEventListener(
+        "click",
+        logoutDashboardUser
+      );
+    }
+
+    /* =====================================================
+       TEST ACCESS UI
+    ====================================================== */
+
+    function setStatus(
+      testNumber,
+      state,
+      text
+    ) {
+      const badge =
+        document.querySelector(
+          `[data-status-for="${testNumber}"]`
+        );
+
+      if (!badge) return;
+
+      badge.classList.remove(
+        "checking",
+        "login",
+        "locked",
+        "unlocked"
+      );
+
+      badge.classList.add(state);
+      badge.textContent = text;
+    }
+
+    function setButton(
+      testNumber,
+      state,
+      text
+    ) {
+      const button =
+        document.querySelector(
+          `.access-action[data-test-number="${testNumber}"]`
+        );
+
+      if (!button) return;
+
+      button.classList.remove(
+        "checking",
+        "locked",
+        "unlocked"
+      );
+
+      button.classList.add(state);
+      button.setAttribute(
+        "aria-disabled",
+        "false"
+      );
+
+      const label =
+        button.querySelector(
+          "span:first-child"
+        );
+
+      if (label) {
+        label.textContent = text;
+      }
+    }
+
+    function attachAction(
+      button,
+      handler
+    ) {
+      if (
+        button.dataset.accessHandlerAttached ===
+        "true"
+      ) {
+        return;
+      }
+
+      button.dataset.accessHandlerAttached =
+        "true";
+
+      button.addEventListener(
+        "click",
+        handler
+      );
+    }
+
+    async function loadMockTestAccess() {
+      if (accessCheckRunning) return;
+
+      accessCheckRunning = true;
+
+      try {
+        const buttons =
+          Array.from(
+            document.querySelectorAll(
+              ".access-action"
+            )
+          );
+
+        if (!buttons.length) {
+          return;
+        }
+
+        /* -----------------------------------------
+           START IN CHECKING STATE
+        ----------------------------------------- */
+
+        buttons.forEach((button) => {
+          button.classList.remove(
+            "locked",
+            "unlocked"
+          );
+
+          button.classList.add(
+            "checking"
+          );
+
+          button.setAttribute(
+            "aria-disabled",
+            "true"
+          );
+
+          const label =
+            button.querySelector(
+              "span:first-child"
+            );
+
+          if (label) {
+            label.textContent =
+              "Checking Access...";
+          }
+
+          const testNumber =
+            button.getAttribute(
+              "data-test-number"
+            );
+
+          if (testNumber) {
+            setStatus(
+              testNumber,
+              "checking",
+              "CHECKING"
+            );
+          }
+        });
+
+        /* -----------------------------------------
+           CHECK CURRENT SUPABASE SESSION
+        ----------------------------------------- */
+
+        const {
+          data: sessionData,
+          error: sessionError
+        } =
+          await supabase.auth.getSession();
+
+        if (sessionError) {
+          throw sessionError;
+        }
+
+        const session =
+          sessionData?.session;
+
+        /* -----------------------------------------
+           NOT LOGGED IN
+        ----------------------------------------- */
+
+        if (!session) {
+          updateDashboardUser(null);
+
+          buttons.forEach((button) => {
+            const testNumber =
+              button.getAttribute(
+                "data-test-number"
+              );
+
+            if (!testNumber) return;
+
+            setButton(
+              testNumber,
+              "locked",
+              "Login to Attempt"
+            );
+
+            setStatus(
+              testNumber,
+              "login",
+              "LOGIN REQUIRED"
+            );
+
+            attachAction(
+              button,
+              (event) => {
+                event.preventDefault();
+
+                const redirect =
+                  `/mock-tests/${testNumber}`;
+
+                window.location.href =
+                  `/login?redirect=${encodeURIComponent(
+                    redirect
+                  )}`;
+              }
+            );
+          });
+
+          return;
+        }
+
+        updateDashboardUser(
+          session.user
+        );
+
+        /* -----------------------------------------
+           VERIFY PAID ACCESS THROUGH SERVER API
+        ----------------------------------------- */
+
+        const response =
+          await fetch(
+            "/api/mock-tests/access",
+            {
+              method: "GET",
+
+              headers: {
+                Authorization:
+                  `Bearer ${session.access_token}`,
+
+                Accept:
+                  "application/json"
+              },
+
+              credentials:
+                "same-origin",
+
+              cache:
+                "no-store"
+            }
+          );
+
+        if (!response.ok) {
+          throw new Error(
+            `Access API returned HTTP ${response.status}`
+          );
+        }
+
+        const result =
+          await response.json();
+
+        if (
+          !result ||
+          result.success !== true
+        ) {
+          throw new Error(
+            result?.message ||
+            "Access verification failed."
+          );
+        }
+
+        const accessMap =
+          result.tests &&
+          typeof result.tests ===
+            "object"
+            ? result.tests
+            : {};
+
+        /* -----------------------------------------
+           APPLY ACCESS TEST-BY-TEST
+        ----------------------------------------- */
+
+        buttons.forEach((button) => {
+          const testNumber =
+            button.getAttribute(
+              "data-test-number"
+            );
+
+          if (!testNumber) return;
+
+          const rawAccess =
+            accessMap[
+              String(testNumber)
+            ];
+
+          const allowed =
+            rawAccess === true ||
+            rawAccess === "true" ||
+            rawAccess === 1 ||
+            rawAccess === "1" ||
+            rawAccess?.allowed === true ||
+            rawAccess?.hasAccess === true;
+
+          if (allowed) {
+
+            /* -----------------------------------------
+               RELEASE DATE CHECK
+
+               release_at is read from Supabase through
+               test.availableFrom.
+
+               If no release date exists, the test is
+               available immediately.
+            ----------------------------------------- */
+
+            const releaseAt =
+              button.getAttribute("data-release-at");
+
+            if (!releaseAt) {
+
+              setButton(
+                testNumber,
+                "unlocked",
+                "Start Test"
+              );
+
+              setStatus(
+                testNumber,
+                "unlocked",
+                "UNLOCKED"
+              );
+
+              return;
+            }
+
+
+            const releaseDate =
+              new Date(releaseAt);
+
+            const now =
+              new Date();
+
+
+            /* -----------------------------------------
+               INVALID RELEASE DATE
+            ----------------------------------------- */
+
+            if (
+              Number.isNaN(
+                releaseDate.getTime()
+              )
+            ) {
+
+              console.error(
+                `Invalid release date for Test ${testNumber}:`,
+                releaseAt
+              );
+
+              setButton(
+                testNumber,
+                "locked",
+                "Access Unavailable"
+              );
+
+              setStatus(
+                testNumber,
+                "locked",
+                "DATE ERROR"
+              );
+
+              return;
+            }
+
+
+            /* -----------------------------------------
+               RELEASED
+            ----------------------------------------- */
+
+            if (
+              releaseDate.getTime() <=
+              now.getTime()
+            ) {
+
+              setButton(
+                testNumber,
+                "unlocked",
+                "Start Test"
+              );
+
+              setStatus(
+                testNumber,
+                "unlocked",
+                "UNLOCKED"
+              );
+
+              return;
+            }
+
+
+            /* -----------------------------------------
+               NOT YET RELEASED
+            ----------------------------------------- */
+
+            const formattedDate =
+              releaseDate.toLocaleString(
+                "en-IN",
+                {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                  timeZone: "Asia/Kolkata"
+                }
+              );
+
+
+            const formattedDateOnly =
+              releaseDate.toLocaleDateString(
+                "en-IN",
+                {
+                  day: "2-digit",
+                  month: "short",
+                  year: "numeric",
+                  timeZone: "Asia/Kolkata"
+                }
+              );
+
+
+            setButton(
+              testNumber,
+              "locked",
+              `Attempt from ${formattedDateOnly}`
+            );
+
+            setStatus(
+              testNumber,
+              "locked",
+              "COMING SOON"
+            );
+
+
+            /* -----------------------------------------
+               BLOCK EARLY ACCESS
+            ----------------------------------------- */
+
+            attachAction(
+              button,
+              (event) => {
+
+                event.preventDefault();
+
+                alert(
+                  `This test will be available from ${formattedDate}.`
+                );
+
+              }
+            );
+
+            return;
+          }
+
+
+          /* -----------------------------------------
+             USER IS LOGGED IN BUT DOES NOT HAVE PAID
+             ACCESS
+          ----------------------------------------- */
+
+          setButton(
+            testNumber,
+            "locked",
+            "Buy Access"
+          );
+
+          setStatus(
+            testNumber,
+            "locked",
+            "LOCKED"
+          );
+
+          attachAction(
+            button,
+            (event) => {
+              event.preventDefault();
+
+              window.location.href =
+                `/mock-tests/buy?test=${encodeURIComponent(
+                  testNumber
+                )}`;
+            }
+          );
+        });
+
+      } catch (error) {
+        console.error(
+          "Mock test access verification error:",
+          error
+        );
+
+        /* -----------------------------------------
+           FAIL CLOSED
+        ----------------------------------------- */
+
+        document
+          .querySelectorAll(
+            ".access-action"
+          )
+          .forEach((button) => {
+            const testNumber =
+              button.getAttribute(
+                "data-test-number"
+              );
+
+            if (!testNumber) return;
+
+            setButton(
+              testNumber,
+              "locked",
+              "Access Unavailable"
+            );
+
+            setStatus(
+              testNumber,
+              "locked",
+              "VERIFY FAILED"
+            );
+          });
+
+      } finally {
+        accessCheckRunning = false;
+      }
+    }
+
+    /* =====================================================
+       INITIAL LOAD
+    ====================================================== */
+
+    loadDashboardUser();
+    loadMockTestAccess();
+
+    /* =====================================================
+       AUTH STATE CHANGES
+       IMPORTANT: use the session supplied by the callback
+       instead of calling getSession() inside the callback.
+    ====================================================== */
+
+    supabase.auth.onAuthStateChange(
+      (event, session) => {
+        updateDashboardUser(
+          session?.user || null
+        );
+
+        if (
+          event === "SIGNED_IN" ||
+          event === "SIGNED_OUT" ||
+          event === "TOKEN_REFRESHED" ||
+          event === "USER_UPDATED"
+        ) {
+          loadMockTestAccess();
+        }
+      }
+    );
+  </script>
 
 
 </body>

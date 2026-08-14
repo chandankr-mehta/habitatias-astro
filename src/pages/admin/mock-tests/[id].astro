@@ -1,0 +1,2790 @@
+---
+import { supabase } from "../../../lib/supabase";
+
+export const prerender = false;
+
+/* =========================================================
+   ADMIN AUTHORIZATION
+   Uses the existing /api/admin/check endpoint so the
+   same Supabase session + ADMIN_USER_ID rules protect
+   this page as the admin dashboard.
+   ========================================================= */
+
+const adminCheckResponse = await fetch(
+  new URL("/api/admin/check", Astro.url),
+  {
+    method: "GET",
+    headers: {
+      cookie: Astro.request.headers.get("cookie") || "",
+    },
+  }
+);
+
+if (!adminCheckResponse.ok) {
+  return Astro.redirect(`/login?redirect=${encodeURIComponent(Astro.url.pathname)}`);
+}
+
+const adminCheck = await adminCheckResponse.json();
+
+if (!adminCheck?.isAuthenticated || !adminCheck?.isAdmin) {
+  return Astro.redirect(`/login?redirect=${encodeURIComponent(Astro.url.pathname)}`);
+}
+
+
+/* =========================================================
+   HABITAT IAS — ADMIN MOCK TEST MANAGER
+   Route:
+   /admin/mock-tests/[id]
+
+   Example:
+   /admin/mock-tests/1
+   /admin/mock-tests/2
+   /admin/mock-tests/3
+
+   IMPORTANT PROJECT RULES
+   -----------------------
+   • 20 JPSC Prelims mock tests
+   • 100 questions per test
+   • 120 minutes
+   • 2 marks per correct answer
+   • NO NEGATIVE MARKING
+   • Test 01 currently contains 100 questions
+   • Tests 02–20 will be populated later
+   ========================================================= */
+
+
+/* =========================================================
+   1. ADMIN AUTHORIZATION
+   ========================================================= */
+
+/* Authentication is performed above before any test data is loaded. */
+
+
+/* =========================================================
+   2. GET TEST NUMBER
+
+   IMPORTANT:
+   The admin URL uses the stable JPSC test_number (01-20).
+   The database primary key is resolved after loading the test
+   and is used for mock_questions.test_id.
+   ========================================================= */
+
+const { id } = Astro.params;
+
+if (!id) {
+  return Astro.redirect("/admin/mock-tests");
+}
+
+const numericId = Number(id);
+
+let test: any = null;
+let testError = "";
+
+/* =========================================================
+   3. LOAD MOCK TEST BY TEST NUMBER
+   ========================================================= */
+
+if (!Number.isInteger(numericId) || numericId < 1) {
+  testError = "Invalid mock test number.";
+} else {
+  let lookup = await supabase
+    .from("mock_tests")
+    .select("*")
+    .eq("test_number", numericId)
+    .maybeSingle();
+
+  /* Compatibility fallback for older schemas that used test_no. */
+  if (lookup.error) {
+    const fallbackLookup = await supabase
+      .from("mock_tests")
+      .select("*")
+      .eq("test_no", numericId)
+      .maybeSingle();
+
+    if (!fallbackLookup.error) {
+      lookup = fallbackLookup;
+    }
+  }
+
+  if (lookup.error) {
+    console.error(
+      "Mock test loading error:",
+      lookup.error
+    );
+
+    testError =
+      lookup.error.message ||
+      "Unable to load this mock test.";
+  } else if (!lookup.data) {
+    testError =
+      `Mock Test ${String(numericId).padStart(2, "0")} was not found.`;
+  } else {
+    test = lookup.data;
+  }
+}
+
+/* REAL DATABASE PRIMARY KEY.
+   Use this for mock_questions.test_id. */
+const databaseTestId = test?.id ?? null;
+
+/* =========================================================
+   4. SAFE FIELD HELPER
+   ========================================================= */
+
+function firstValue(
+  object: any,
+  keys: string[],
+  fallback: any = null
+) {
+
+  if (!object) return fallback;
+
+  for (const key of keys) {
+
+    if (
+      object[key] !== undefined &&
+      object[key] !== null &&
+      object[key] !== ""
+    ) {
+
+      return object[key];
+
+    }
+
+  }
+
+  return fallback;
+}
+
+
+/* =========================================================
+   5. TEST INFORMATION
+   ========================================================= */
+
+const testNumber = firstValue(
+  test,
+  [
+    "test_number",
+    "test_no",
+    "number"
+  ],
+  numericId
+);
+
+const title = firstValue(
+  test,
+  [
+    "title",
+    "name"
+  ],
+  `JPSC Prelims Mock Test ${testNumber}`
+);
+
+const description = firstValue(
+  test,
+  [
+    "description",
+    "short_description"
+  ],
+  "JPSC Prelims mock test."
+);
+
+const testType = firstValue(
+  test,
+  [
+    "test_type",
+    "type"
+  ],
+  "Sectional"
+);
+
+const duration = Number(
+  firstValue(
+    test,
+    [
+      "duration_minutes",
+      "duration",
+      "time_limit"
+    ],
+    120
+  )
+);
+
+const questionCount = Number(
+  firstValue(
+    test,
+    [
+      "question_count",
+      "total_questions",
+      "questions_count"
+    ],
+    100
+  )
+);
+
+
+/* =========================================================
+   6. SCORING
+   ========================================================= */
+
+const marksPerQuestion = Number(
+  firstValue(
+    test,
+    [
+      "marks_per_question",
+      "positive_marks"
+    ],
+    2
+  )
+);
+
+
+/*
+ * IMPORTANT:
+ * JPSC MOCK TEST HAS NO NEGATIVE MARKING.
+ */
+
+const negativeMarking = 0;
+
+const totalMarks = Number(
+  firstValue(
+    test,
+    [
+      "total_marks"
+    ],
+    questionCount * marksPerQuestion
+  )
+);
+
+
+/* =========================================================
+   7. STATUS
+   ========================================================= */
+
+const rawStatus = firstValue(
+  test,
+  [
+    "status"
+  ],
+  "Published"
+);
+
+const statusText =
+  String(rawStatus)
+    .toLowerCase() === "published"
+    ? "Published"
+    : "Unpublished";
+
+
+const isPublished =
+  statusText === "Published" ||
+  test?.is_published === true;
+
+
+/* =========================================================
+   8. DATES
+   ========================================================= */
+
+const createdAt = firstValue(
+  test,
+  [
+    "created_at"
+  ]
+);
+
+const updatedAt = firstValue(
+  test,
+  [
+    "updated_at"
+  ]
+);
+
+const publishedAt = firstValue(
+  test,
+  [
+    "published_at",
+    "release_date"
+  ]
+);
+
+
+/* =========================================================
+   9. DATE FORMATTER
+   ========================================================= */
+
+function formatDate(
+  value: any
+) {
+
+  if (!value) {
+    return "—";
+  }
+
+  try {
+
+    return new Date(value).toLocaleString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }
+    );
+
+  } catch {
+
+    return String(value);
+
+  }
+}
+
+
+/* =========================================================
+   10. QUESTION COUNT
+   =========================================================
+
+   We attempt to count questions belonging to this test.
+
+   Different existing database structures can be used, so
+   this is intentionally defensive.
+
+   If the query is not compatible with the existing schema,
+   the page still loads and displays the planned count.
+   ========================================================= */
+
+let actualQuestionCount = 0;
+let questionCountError = false;
+
+
+/*
+ * First try mock_questions.
+ */
+
+try {
+
+  const {
+    count,
+    error
+  } = await supabase
+    .from("mock_questions")
+    .select("*", {
+      count: "exact",
+      head: true
+    })
+    .eq("test_id", databaseTestId);
+
+  if (!error && count !== null) {
+
+    actualQuestionCount = count;
+
+  } else {
+
+    questionCountError = true;
+
+  }
+
+} catch {
+
+  questionCountError = true;
+
+}
+
+
+/*
+ * If the existing database does not expose the
+ * question relationship in that form, don't break
+ * the admin page.
+ */
+
+const displayQuestionCount =
+  actualQuestionCount > 0
+    ? actualQuestionCount
+    : 0;
+
+const questionProgress =
+  questionCount > 0
+    ? Math.min(
+        100,
+        Math.round(
+          (displayQuestionCount / questionCount) * 100
+        )
+      )
+    : 0;
+
+
+/* =========================================================
+   11. TEST STATUS LABEL
+   ========================================================= */
+
+let preparationStatus = "Ready";
+
+if (displayQuestionCount === 0) {
+
+  preparationStatus =
+    "Questions pending";
+
+} else if (
+  displayQuestionCount < questionCount
+) {
+
+  preparationStatus =
+    "Partially prepared";
+
+} else {
+
+  preparationStatus =
+    "Complete";
+
+}
+---
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    {title} — Habitat IAS Admin
+  </title>
+
+  <meta
+    name="robots"
+    content="noindex,nofollow"
+  />
+
+  <style>
+
+    :root {
+
+      --blue: #1557d6;
+      --blue-dark: #0f3f9e;
+      --blue-light: #edf4ff;
+
+      --green: #087f5b;
+      --green-light: #eaf8f2;
+
+      --orange: #b45309;
+      --orange-light: #fff7ed;
+
+      --red: #b42318;
+      --red-light: #fff1f0;
+
+      --text: #12264a;
+      --muted: #60708f;
+
+      --border: #dbe3ef;
+
+      --background: #f5f7fb;
+
+      --white: #ffffff;
+
+      --shadow:
+        0 8px 30px rgba(22, 55, 110, 0.07);
+
+    }
+
+
+    * {
+      box-sizing: border-box;
+    }
+
+
+    html,
+    body {
+
+      margin: 0;
+
+      padding: 0;
+
+      min-height: 100%;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        var(--background);
+
+      color:
+        var(--text);
+
+    }
+
+
+    body {
+      overflow-x: hidden;
+    }
+
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+
+    button {
+      font: inherit;
+    }
+
+
+    /* =====================================================
+       LAYOUT
+       ===================================================== */
+
+    .page {
+
+      min-height: 100vh;
+
+      display: flex;
+
+      flex-direction: column;
+
+    }
+
+
+    .topbar {
+
+      height: 76px;
+
+      background: var(--white);
+
+      border-bottom:
+        1px solid var(--border);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      padding:
+        0 32px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 20;
+
+    }
+
+
+    .brand {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+    }
+
+
+    .brand-logo {
+
+      width: 42px;
+
+      height: 42px;
+
+      border-radius: 12px;
+
+      background:
+        var(--blue);
+
+      color:
+        white;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 22px;
+
+      font-weight: 800;
+
+    }
+
+
+    .brand-title {
+
+      font-size: 20px;
+
+      font-weight: 800;
+
+      letter-spacing: -0.3px;
+
+    }
+
+
+    .brand-subtitle {
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      color:
+        var(--muted);
+
+      letter-spacing: 1px;
+
+      margin-top: 2px;
+
+    }
+
+
+    .top-actions {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+
+    .button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      min-height: 42px;
+
+      padding:
+        0 16px;
+
+      border-radius: 10px;
+
+      border:
+        1px solid var(--border);
+
+      background:
+        var(--white);
+
+      color:
+        var(--text);
+
+      font-weight: 700;
+
+      font-size: 13px;
+
+      cursor: pointer;
+
+      transition:
+        0.15s ease;
+
+    }
+
+
+    .button:hover {
+
+      transform:
+        translateY(-1px);
+
+      box-shadow:
+        0 5px 16px rgba(22, 55, 110, 0.08);
+
+    }
+
+
+    .button-primary {
+
+      background:
+        var(--blue);
+
+      border-color:
+        var(--blue);
+
+      color:
+        white;
+
+    }
+
+
+    .button-primary:hover {
+
+      background:
+        var(--blue-dark);
+
+    }
+
+
+    .button-danger {
+
+      color:
+        var(--red);
+
+    }
+
+
+    /* =====================================================
+       MAIN
+       ===================================================== */
+
+    .main {
+
+      width:
+        min(1240px, calc(100% - 48px));
+
+      margin:
+        0 auto;
+
+      padding:
+        30px 0 60px;
+
+    }
+
+
+    .breadcrumb {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 8px;
+
+      color:
+        var(--muted);
+
+      font-size: 13px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .breadcrumb a:hover {
+
+      color:
+        var(--blue);
+
+    }
+
+
+    .breadcrumb-current {
+
+      color:
+        var(--text);
+
+      font-weight: 700;
+
+    }
+
+
+    /* =====================================================
+       ERROR
+       ===================================================== */
+
+    .error-card {
+
+      background:
+        var(--white);
+
+      border:
+        1px solid #ffd1ce;
+
+      border-left:
+        5px solid var(--red);
+
+      border-radius: 14px;
+
+      padding:
+        24px;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
+    .error-card h1 {
+
+      margin:
+        0 0 8px;
+
+      font-size: 22px;
+
+    }
+
+
+    .error-card p {
+
+      margin:
+        0 0 18px;
+
+      color:
+        var(--muted);
+
+    }
+
+
+    /* =====================================================
+       HERO
+       ===================================================== */
+
+    .hero {
+
+      background:
+        var(--white);
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 18px;
+
+      box-shadow:
+        var(--shadow);
+
+      padding:
+        28px;
+
+      display: flex;
+
+      align-items: flex-start;
+
+      justify-content: space-between;
+
+      gap: 24px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .hero-left {
+
+      min-width: 0;
+
+    }
+
+
+    .test-number {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-width: 48px;
+
+      height: 30px;
+
+      padding:
+        0 10px;
+
+      border-radius: 8px;
+
+      background:
+        var(--blue-light);
+
+      color:
+        var(--blue);
+
+      font-weight: 800;
+
+      font-size: 13px;
+
+      margin-bottom:
+        12px;
+
+    }
+
+
+    .hero h1 {
+
+      margin:
+        0;
+
+      font-size:
+        clamp(25px, 3vw, 36px);
+
+      line-height:
+        1.12;
+
+      letter-spacing:
+        -1px;
+
+    }
+
+
+    .hero-description {
+
+      margin:
+        12px 0 0;
+
+      max-width:
+        760px;
+
+      color:
+        var(--muted);
+
+      line-height:
+        1.65;
+
+      font-size:
+        14px;
+
+    }
+
+
+    .hero-actions {
+
+      display: flex;
+
+      gap: 9px;
+
+      flex-wrap: wrap;
+
+      justify-content: flex-end;
+
+      flex-shrink: 0;
+
+    }
+
+
+    .status-badge {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      padding:
+        7px 11px;
+
+      border-radius: 999px;
+
+      font-size: 12px;
+
+      font-weight: 800;
+
+      margin-top:
+        14px;
+
+    }
+
+
+    .status-badge::before {
+
+      content: "";
+
+      width: 7px;
+
+      height: 7px;
+
+      border-radius: 50%;
+
+      background:
+        currentColor;
+
+    }
+
+
+    .status-published {
+
+      color:
+        var(--green);
+
+      background:
+        var(--green-light);
+
+    }
+
+
+    .status-unpublished {
+
+      color:
+        var(--orange);
+
+      background:
+        var(--orange-light);
+
+    }
+
+
+    /* =====================================================
+       STAT CARDS
+       ===================================================== */
+
+    .stats {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap:
+        16px;
+
+      margin-bottom:
+        20px;
+
+    }
+
+
+    .stat {
+
+      background:
+        var(--white);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        15px;
+
+      padding:
+        20px;
+
+      box-shadow:
+        var(--shadow);
+
+    }
+
+
+    .stat-label {
+
+      font-size:
+        12px;
+
+      color:
+        var(--muted);
+
+      font-weight:
+        700;
+
+      margin-bottom:
+        8px;
+
+    }
+
+
+    .stat-value {
+
+      font-size:
+        28px;
+
+      line-height:
+        1;
+
+      font-weight:
+        850;
+
+      letter-spacing:
+        -0.8px;
+
+    }
+
+
+    .stat-note {
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+      margin-top:
+        8px;
+
+    }
+
+
+    /* =====================================================
+       CONTENT GRID
+       ===================================================== */
+
+    .content-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(320px, 0.85fr);
+
+      gap:
+        20px;
+
+      align-items:
+        start;
+
+    }
+
+
+    .card {
+
+      background:
+        var(--white);
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        16px;
+
+      box-shadow:
+        var(--shadow);
+
+      overflow:
+        hidden;
+
+    }
+
+
+    .card-header {
+
+      padding:
+        20px 22px;
+
+      border-bottom:
+        1px solid var(--border);
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+    }
+
+
+    .card-title {
+
+      margin:
+        0;
+
+      font-size:
+        17px;
+
+      font-weight:
+        800;
+
+    }
+
+
+    .card-subtitle {
+
+      margin:
+        4px 0 0;
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+    }
+
+
+    .card-body {
+
+      padding:
+        22px;
+
+    }
+
+
+    /* =====================================================
+       TEST CONFIGURATION
+       ===================================================== */
+
+    .config-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        12px;
+
+      overflow:
+        hidden;
+
+    }
+
+
+    .config-item {
+
+      padding:
+        16px;
+
+      border-right:
+        1px solid var(--border);
+
+      border-bottom:
+        1px solid var(--border);
+
+    }
+
+
+    .config-item:nth-child(2n) {
+
+      border-right:
+        none;
+
+    }
+
+
+    .config-item:nth-last-child(-n + 2) {
+
+      border-bottom:
+        none;
+
+    }
+
+
+    .config-label {
+
+      color:
+        var(--muted);
+
+      font-size:
+        11px;
+
+      font-weight:
+        700;
+
+      text-transform:
+        uppercase;
+
+      letter-spacing:
+        .5px;
+
+      margin-bottom:
+        6px;
+
+    }
+
+
+    .config-value {
+
+      font-weight:
+        800;
+
+      font-size:
+        15px;
+
+    }
+
+
+    /* =====================================================
+       QUESTION PROGRESS
+       ===================================================== */
+
+    .question-progress {
+
+      margin-top:
+        22px;
+
+    }
+
+
+    .progress-head {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      margin-bottom:
+        9px;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .progress-head strong {
+
+      font-weight:
+        800;
+
+    }
+
+
+    .progress-track {
+
+      height:
+        10px;
+
+      background:
+        #e8edf5;
+
+      border-radius:
+        999px;
+
+      overflow:
+        hidden;
+
+    }
+
+
+    .progress-bar {
+
+      height:
+        100%;
+
+      background:
+        var(--blue);
+
+      border-radius:
+        inherit;
+
+      transition:
+        width .3s ease;
+
+    }
+
+
+    .progress-note {
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+      margin-top:
+        8px;
+
+    }
+
+
+    /* =====================================================
+       ACTIONS
+       ===================================================== */
+
+    .management-actions {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+      gap:
+        10px;
+
+    }
+
+
+    .action {
+
+      min-height:
+        86px;
+
+      border:
+        1px solid var(--border);
+
+      border-radius:
+        12px;
+
+      padding:
+        15px;
+
+      display:
+        flex;
+
+      flex-direction:
+        column;
+
+      justify-content:
+        center;
+
+      transition:
+        .15s ease;
+
+    }
+
+
+    .action:hover {
+
+      border-color:
+        #a9c2f7;
+
+      background:
+        #f8fbff;
+
+      transform:
+        translateY(-1px);
+
+    }
+
+
+    .action-icon {
+
+      font-size:
+        18px;
+
+      margin-bottom:
+        7px;
+
+    }
+
+
+    .action-title {
+
+      font-weight:
+        800;
+
+      font-size:
+        13px;
+
+    }
+
+
+    .action-description {
+
+      color:
+        var(--muted);
+
+      font-size:
+        11px;
+
+      margin-top:
+        3px;
+
+      line-height:
+        1.4;
+
+    }
+
+
+    .primary-action {
+
+      border-color:
+        #b9cef7;
+
+      background:
+        var(--blue-light);
+
+    }
+
+
+    /* =====================================================
+       PREPARATION
+       ===================================================== */
+
+    .preparation {
+
+      margin-top:
+        20px;
+
+    }
+
+
+    .preparation-row {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      padding:
+        13px 0;
+
+      border-bottom:
+        1px solid var(--border);
+
+    }
+
+
+    .preparation-row:last-child {
+
+      border-bottom:
+        none;
+
+    }
+
+
+    .preparation-name {
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+
+    }
+
+
+    .preparation-value {
+
+      font-size:
+        13px;
+
+      font-weight:
+        800;
+
+    }
+
+
+    .pill {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      padding:
+        5px 9px;
+
+      border-radius:
+        999px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        800;
+
+    }
+
+
+    .pill-green {
+
+      color:
+        var(--green);
+
+      background:
+        var(--green-light);
+
+    }
+
+
+    .pill-orange {
+
+      color:
+        var(--orange);
+
+      background:
+        var(--orange-light);
+
+    }
+
+
+    .pill-blue {
+
+      color:
+        var(--blue);
+
+      background:
+        var(--blue-light);
+
+    }
+
+
+    /* =====================================================
+       DANGER / IMPORTANT RULE
+       ===================================================== */
+
+    .info-box {
+
+      margin-top:
+        18px;
+
+      border:
+        1px solid #cbdcfb;
+
+      background:
+        #f5f9ff;
+
+      border-radius:
+        12px;
+
+      padding:
+        15px;
+
+    }
+
+
+    .info-title {
+
+      color:
+        var(--blue);
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+
+      margin-bottom:
+        5px;
+
+    }
+
+
+    .info-text {
+
+      color:
+        #536887;
+
+      font-size:
+        12px;
+
+      line-height:
+        1.55;
+
+    }
+
+
+    /* =====================================================
+       META
+       ===================================================== */
+
+    .meta-list {
+
+      display:
+        grid;
+
+      gap:
+        13px;
+
+    }
+
+
+    .meta-row {
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      font-size:
+        12px;
+
+    }
+
+
+    .meta-label {
+
+      color:
+        var(--muted);
+
+    }
+
+
+    .meta-value {
+
+      text-align:
+        right;
+
+      font-weight:
+        700;
+
+    }
+
+
+    /* =====================================================
+       FOOTER
+       ===================================================== */
+
+    .footer {
+
+      margin-top:
+        20px;
+
+      text-align:
+        center;
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 900px) {
+
+      .stats {
+
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+
+      }
+
+
+      .content-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .hero {
+
+        flex-direction:
+          column;
+
+      }
+
+
+      .hero-actions {
+
+        justify-content:
+          flex-start;
+
+      }
+
+    }
+
+
+    @media (max-width: 620px) {
+
+      .topbar {
+
+        padding:
+          0 16px;
+
+      }
+
+
+      .top-actions .button-secondary {
+
+        display:
+          none;
+
+      }
+
+
+      .main {
+
+        width:
+          min(100% - 24px, 1240px);
+
+        padding-top:
+          18px;
+
+      }
+
+
+      .stats {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .config-grid {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .config-item {
+
+        border-right:
+          none;
+
+      }
+
+
+      .config-item:nth-last-child(-n + 2) {
+
+        border-bottom:
+          1px solid var(--border);
+
+      }
+
+
+      .config-item:last-child {
+
+        border-bottom:
+          none;
+
+      }
+
+
+      .management-actions {
+
+        grid-template-columns:
+          1fr;
+
+      }
+
+
+      .hero {
+
+        padding:
+          20px;
+
+      }
+
+
+      .hero h1 {
+
+        font-size:
+          25px;
+
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="page">
+
+
+    <!-- ===================================================
+         TOP BAR
+         =================================================== -->
+
+    <header class="topbar">
+
+      <a
+        href="/admin"
+        class="brand"
+      >
+
+        <div class="brand-logo">
+          H
+        </div>
+
+        <div>
+
+          <div class="brand-title">
+            Habitat IAS
+          </div>
+
+          <div class="brand-subtitle">
+            ADMIN CONTROL PANEL
+          </div>
+
+        </div>
+
+      </a>
+
+
+      <div class="top-actions">
+
+        <a
+          href="/admin"
+          class="button button-secondary"
+        >
+          ← Dashboard
+        </a>
+
+        <a
+          href="/admin/mock-tests"
+          class="button"
+        >
+          Mock Tests
+        </a>
+
+      </div>
+
+    </header>
+
+
+
+    <!-- ===================================================
+         MAIN
+         =================================================== -->
+
+    <main class="main">
+
+
+      <!-- Breadcrumb -->
+
+      <nav class="breadcrumb">
+
+        <a href="/admin">
+          Admin
+        </a>
+
+        <span>
+          /
+        </span>
+
+        <a href="/admin/mock-tests">
+          Mock Tests
+        </a>
+
+        <span>
+          /
+        </span>
+
+        <span class="breadcrumb-current">
+          Test {testNumber}
+        </span>
+
+      </nav>
+
+
+
+      <!-- =================================================
+           ERROR STATE
+           ================================================= -->
+
+      {testError && (
+
+        <section class="error-card">
+
+          <h1>
+            Unable to load mock test
+          </h1>
+
+          <p>
+            {testError}
+          </p>
+
+          <a
+            href="/admin/mock-tests"
+            class="button button-primary"
+          >
+            ← Back to Mock Tests
+          </a>
+
+        </section>
+
+      )}
+
+
+
+      {test && !testError && (
+
+        <>
+
+
+          <!-- =============================================
+               HERO
+               ============================================= -->
+
+          <section class="hero">
+
+            <div class="hero-left">
+
+              <div class="test-number">
+
+                TEST {String(testNumber).padStart(2, "0")}
+
+              </div>
+
+
+              <h1>
+                {title}
+              </h1>
+
+
+              <p class="hero-description">
+                {description}
+              </p>
+
+
+              <div
+                class:list={[
+                  "status-badge",
+                  isPublished
+                    ? "status-published"
+                    : "status-unpublished"
+                ]}
+              >
+
+                {statusText}
+
+              </div>
+
+            </div>
+
+
+            <div class="hero-actions">
+
+              <a
+                href="/admin/mock-tests"
+                class="button"
+              >
+                ← All Tests
+              </a>
+
+
+              <a
+                href={`/admin/mock-tests/${numericId}/questions`}
+                class="button button-primary"
+              >
+                Manage Questions →
+              </a>
+
+            </div>
+
+          </section>
+
+
+
+          <!-- =============================================
+               STATISTICS
+               ============================================= -->
+
+          <section class="stats">
+
+
+            <div class="stat">
+
+              <div class="stat-label">
+                QUESTIONS
+              </div>
+
+              <div class="stat-value">
+                {displayQuestionCount}
+              </div>
+
+              <div class="stat-note">
+                of {questionCount} planned
+              </div>
+
+            </div>
+
+
+            <div class="stat">
+
+              <div class="stat-label">
+                DURATION
+              </div>
+
+              <div class="stat-value">
+                {duration}
+              </div>
+
+              <div class="stat-note">
+                minutes
+              </div>
+
+            </div>
+
+
+            <div class="stat">
+
+              <div class="stat-label">
+                TOTAL MARKS
+              </div>
+
+              <div class="stat-value">
+                {totalMarks}
+              </div>
+
+              <div class="stat-note">
+                {marksPerQuestion} marks per correct answer
+              </div>
+
+            </div>
+
+
+            <div class="stat">
+
+              <div class="stat-label">
+                PREPARATION
+              </div>
+
+              <div class="stat-value">
+                {questionProgress}%
+              </div>
+
+              <div class="stat-note">
+                {preparationStatus}
+              </div>
+
+            </div>
+
+
+          </section>
+
+
+
+          <!-- =============================================
+               MAIN CONTENT
+               ============================================= -->
+
+          <div class="content-grid">
+
+
+            <!-- =========================================
+                 LEFT
+                 ========================================= -->
+
+            <div>
+
+
+              <!-- TEST CONFIGURATION -->
+
+              <section class="card">
+
+                <div class="card-header">
+
+                  <div>
+
+                    <h2 class="card-title">
+                      Test Configuration
+                    </h2>
+
+                    <p class="card-subtitle">
+                      Core settings for this mock test.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                  <div class="config-grid">
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Test Number
+                      </div>
+
+                      <div class="config-value">
+                        {testNumber}
+                      </div>
+
+                    </div>
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Test Type
+                      </div>
+
+                      <div class="config-value">
+                        {testType}
+                      </div>
+
+                    </div>
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Questions
+                      </div>
+
+                      <div class="config-value">
+                        {questionCount}
+                      </div>
+
+                    </div>
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Duration
+                      </div>
+
+                      <div class="config-value">
+                        {duration} minutes
+                      </div>
+
+                    </div>
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Marks / Correct
+                      </div>
+
+                      <div class="config-value">
+                        {marksPerQuestion}
+                      </div>
+
+                    </div>
+
+
+                    <div class="config-item">
+
+                      <div class="config-label">
+                        Negative Marking
+                      </div>
+
+                      <div class="config-value">
+                        None
+                      </div>
+
+                    </div>
+
+
+                  </div>
+
+
+
+                  <!-- QUESTION PROGRESS -->
+
+                  <div class="question-progress">
+
+                    <div class="progress-head">
+
+                      <strong>
+                        Question Preparation
+                      </strong>
+
+                      <span>
+                        {displayQuestionCount} / {questionCount}
+                      </span>
+
+                    </div>
+
+
+                    <div class="progress-track">
+
+                      <div
+                        class="progress-bar"
+                        style={`width:${questionProgress}%`}
+                      ></div>
+
+                    </div>
+
+
+                    <div class="progress-note">
+
+                      {displayQuestionCount === questionCount
+                        ? "All planned questions are available for this test."
+                        : `${questionCount - displayQuestionCount} questions still need to be added.`}
+
+                    </div>
+
+                  </div>
+
+
+
+                  <!-- IMPORTANT RULE -->
+
+                  <div class="info-box">
+
+                    <div class="info-title">
+                      Scoring Rule
+                    </div>
+
+                    <div class="info-text">
+
+                      This JPSC mock-test series uses
+                      <strong>no negative marking</strong>.
+                      Students receive {marksPerQuestion}
+                      marks for every correct answer.
+                      Incorrect and unanswered questions
+                      receive zero marks.
+
+                    </div>
+
+                  </div>
+
+
+                </div>
+
+              </section>
+
+
+
+              <!-- MANAGEMENT ACTIONS -->
+
+              <section
+                class="card"
+                style="margin-top:20px;"
+              >
+
+                <div class="card-header">
+
+                  <div>
+
+                    <h2 class="card-title">
+                      Test Management
+                    </h2>
+
+                    <p class="card-subtitle">
+                      Manage the contents and availability of this test.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                  <div class="management-actions">
+
+
+                    <a
+                      href={`/admin/mock-tests/${numericId}/questions`}
+                      class="action primary-action"
+                    >
+
+                      <div class="action-icon">
+                        📝
+                      </div>
+
+                      <div class="action-title">
+                        Manage Questions
+                      </div>
+
+                      <div class="action-description">
+                        Add, edit, remove and arrange questions.
+                      </div>
+
+                    </a>
+
+
+                    <a
+                      href="/admin/student-attempts"
+                      class="action"
+                    >
+
+                      <div class="action-icon">
+                        📊
+                      </div>
+
+                      <div class="action-title">
+                        Student Attempts
+                      </div>
+
+                      <div class="action-description">
+                        Review attempts and submitted tests.
+                      </div>
+
+                    </a>
+
+
+                    <a
+                      href="/admin/results"
+                      class="action"
+                    >
+
+                      <div class="action-icon">
+                        📈
+                      </div>
+
+                      <div class="action-title">
+                        Results & Analytics
+                      </div>
+
+                      <div class="action-description">
+                        Analyse performance and scores.
+                      </div>
+
+                    </a>
+
+
+                    <a
+                      href="/admin/mock-tests"
+                      class="action"
+                    >
+
+                      <div class="action-icon">
+                        ⚙️
+                      </div>
+
+                      <div class="action-title">
+                        Test Settings
+                      </div>
+
+                      <div class="action-description">
+                        Return to the complete mock-test manager.
+                      </div>
+
+                    </a>
+
+
+                  </div>
+
+                </div>
+
+              </section>
+
+
+            </div>
+
+
+
+            <!-- =========================================
+                 RIGHT
+                 ========================================= -->
+
+            <aside>
+
+
+              <!-- PREPARATION -->
+
+              <section class="card">
+
+                <div class="card-header">
+
+                  <div>
+
+                    <h2 class="card-title">
+                      Preparation
+                    </h2>
+
+                    <p class="card-subtitle">
+                      Current readiness of this test.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+
+                  <div class="preparation">
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Test status
+                      </span>
+
+                      <span
+                        class:list={[
+                          "pill",
+                          isPublished
+                            ? "pill-green"
+                            : "pill-orange"
+                        ]}
+                      >
+                        {statusText}
+                      </span>
+
+                    </div>
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Questions
+                      </span>
+
+                      <span class="preparation-value">
+                        {displayQuestionCount}/{questionCount}
+                      </span>
+
+                    </div>
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Duration
+                      </span>
+
+                      <span class="preparation-value">
+                        {duration} min
+                      </span>
+
+                    </div>
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Total marks
+                      </span>
+
+                      <span class="preparation-value">
+                        {totalMarks}
+                      </span>
+
+                    </div>
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Negative marking
+                      </span>
+
+                      <span class="pill pill-green">
+                        None
+                      </span>
+
+                    </div>
+
+
+                    <div class="preparation-row">
+
+                      <span class="preparation-name">
+                        Readiness
+                      </span>
+
+                      <span
+                        class:list={[
+                          "pill",
+                          questionProgress === 100
+                            ? "pill-green"
+                            : "pill-orange"
+                        ]}
+                      >
+                        {preparationStatus}
+                      </span>
+
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+
+              </section>
+
+
+
+              <!-- DATES -->
+
+              <section
+                class="card"
+                style="margin-top:20px;"
+              >
+
+                <div class="card-header">
+
+                  <div>
+
+                    <h2 class="card-title">
+                      Test Information
+                    </h2>
+
+                    <p class="card-subtitle">
+                      Database information.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                  <div class="meta-list">
+
+
+                    <div class="meta-row">
+
+                      <span class="meta-label">
+                        Database ID
+                      </span>
+
+                      <span class="meta-value">
+                        {databaseTestId}
+                      </span>
+
+                    </div>
+
+
+                    <div class="meta-row">
+
+                      <span class="meta-label">
+                        Created
+                      </span>
+
+                      <span class="meta-value">
+                        {formatDate(createdAt)}
+                      </span>
+
+                    </div>
+
+
+                    <div class="meta-row">
+
+                      <span class="meta-label">
+                        Published
+                      </span>
+
+                      <span class="meta-value">
+                        {formatDate(publishedAt)}
+                      </span>
+
+                    </div>
+
+
+                    <div class="meta-row">
+
+                      <span class="meta-label">
+                        Updated
+                      </span>
+
+                      <span class="meta-value">
+                        {formatDate(updatedAt)}
+                      </span>
+
+                    </div>
+
+
+                  </div>
+
+
+                </div>
+
+              </section>
+
+
+
+              <!-- QUICK NAVIGATION -->
+
+              <section
+                class="card"
+                style="margin-top:20px;"
+              >
+
+                <div class="card-header">
+
+                  <div>
+
+                    <h2 class="card-title">
+                      Quick Navigation
+                    </h2>
+
+                  </div>
+
+                </div>
+
+
+                <div class="card-body">
+
+                  <div
+                    style="
+                      display:grid;
+                      gap:9px;
+                    "
+                  >
+
+                    <a
+                      href="/admin"
+                      class="button"
+                    >
+                      🏠 Dashboard
+                    </a>
+
+
+                    <a
+                      href="/admin/mock-tests"
+                      class="button"
+                    >
+                      📚 All Mock Tests
+                    </a>
+
+
+                    <a
+                      href={`/admin/mock-tests/${numericId}/questions`}
+                      class="button button-primary"
+                    >
+                      📝 Question Manager
+                    </a>
+
+                  </div>
+
+                </div>
+
+              </section>
+
+
+            </aside>
+
+
+          </div>
+
+
+
+          <!-- =============================================
+               FOOTER
+               ============================================= -->
+
+          <div class="footer">
+
+            Habitat IAS • JPSC Prelims Mock Test Management
+
+          </div>
+
+
+        </>
+
+      )}
+
+    </main>
+
+  </div>
+
+
+</body>
+
+</html>

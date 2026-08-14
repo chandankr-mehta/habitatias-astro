@@ -1,0 +1,1801 @@
+---
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test Result | Habitat IAS</title>
+
+  <style is:global>
+    :root {
+      --navy:#082b61;
+      --blue:#2563eb;
+      --blue-dark:#1d4ed8;
+      --green:#15803d;
+      --green-bg:#f0fdf4;
+      --red:#dc2626;
+      --red-bg:#fef2f2;
+      --gray:#64748b;
+      --gray-dark:#334155;
+      --border:#e2e8f0;
+      --bg:#f1f5f9;
+      --white:#fff;
+    }
+
+    * { box-sizing:border-box; }
+
+    html { scroll-behavior:smooth; }
+
+    body {
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,
+        "Segoe UI",sans-serif;
+      background:var(--bg);
+      color:#0f172a;
+    }
+
+    button,a { font-family:inherit; }
+    button { cursor:pointer; }
+
+    .page {
+      min-height:100vh;
+      padding:28px 18px 60px;
+    }
+
+    .container {
+      width:100%;
+      max-width:1150px;
+      margin:0 auto;
+    }
+
+    .header {
+      background:var(--navy);
+      color:#fff;
+      border-radius:18px;
+      padding:28px 30px;
+      margin-bottom:20px;
+      box-shadow:0 10px 30px rgba(15,23,42,.10);
+    }
+
+    .header-top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brand {
+      font-size:13px;
+      font-weight:900;
+      letter-spacing:1.2px;
+      text-transform:uppercase;
+      opacity:.85;
+    }
+
+    .header h1 {
+      margin:8px 0 5px;
+      font-size:32px;
+      line-height:1.15;
+    }
+
+    .header p {
+      margin:0;
+      color:#dbeafe;
+      font-size:14px;
+    }
+
+    .header-actions {
+      display:flex;
+      gap:9px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .header-btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:9px;
+      text-decoration:none;
+      font-size:12px;
+      font-weight:900;
+      background:#fff;
+      color:var(--navy);
+    }
+
+    .loading,
+    .error {
+      background:#fff;
+      border-radius:16px;
+      padding:45px 20px;
+      text-align:center;
+      font-weight:800;
+      box-shadow:0 8px 25px rgba(15,23,42,.06);
+    }
+
+    .loading { color:var(--gray); }
+    .error { color:var(--red); }
+
+    .content { display:none; }
+
+    .summary-grid {
+      display:grid;
+      grid-template-columns:1.25fr repeat(3,1fr);
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .card {
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:0 8px 25px rgba(15,23,42,.05);
+    }
+
+    .score-card { padding:25px; }
+
+    .label {
+      color:var(--gray);
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.7px;
+      text-transform:uppercase;
+    }
+
+    .score {
+      margin-top:7px;
+      color:var(--navy);
+      font-size:46px;
+      font-weight:900;
+      line-height:1;
+    }
+
+    .percentage {
+      margin-top:8px;
+      color:var(--blue);
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .rule {
+      margin-top:14px;
+      padding:10px 12px;
+      border-radius:9px;
+      background:#eff6ff;
+      color:#1e40af;
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .stat-card { padding:20px; }
+
+    .stat-number {
+      margin-top:7px;
+      font-size:30px;
+      font-weight:900;
+    }
+
+    .stat-number.correct { color:var(--green); }
+    .stat-number.incorrect { color:var(--red); }
+    .stat-number.unanswered { color:var(--gray); }
+
+    .info-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .info-card { padding:21px; }
+
+    .info-title {
+      margin:0 0 12px;
+      color:var(--navy);
+      font-size:17px;
+      font-weight:900;
+    }
+
+    .info-row {
+      display:flex;
+      justify-content:space-between;
+      gap:15px;
+      padding:10px 0;
+      border-bottom:1px solid var(--border);
+      font-size:13px;
+    }
+
+    .info-row:last-child { border-bottom:none; }
+    .info-row span:first-child { color:var(--gray); }
+    .info-row span:last-child {
+      text-align:right;
+      font-weight:800;
+    }
+
+    .analysis-card {
+      padding:22px;
+      margin-bottom:18px;
+    }
+
+    .section-title {
+      margin:0;
+      color:var(--navy);
+      font-size:20px;
+      font-weight:900;
+    }
+
+    .section-subtitle {
+      margin:6px 0 17px;
+      color:var(--gray);
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .metrics {
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:11px;
+      margin-bottom:17px;
+    }
+
+    .metric {
+      padding:15px;
+      background:#f8fafc;
+      border:1px solid var(--border);
+      border-radius:12px;
+    }
+
+    .metric-label {
+      color:var(--gray);
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.5px;
+    }
+
+    .metric-value {
+      margin-top:6px;
+      color:var(--navy);
+      font-size:23px;
+      font-weight:900;
+    }
+
+    .bars {
+      display:grid;
+      gap:12px;
+      margin-bottom:17px;
+    }
+
+    .bar-label {
+      display:flex;
+      justify-content:space-between;
+      margin-bottom:5px;
+      color:var(--gray-dark);
+      font-size:12px;
+      font-weight:800;
+    }
+
+    .bar-track {
+      height:9px;
+      overflow:hidden;
+      background:#e8edf3;
+      border-radius:999px;
+    }
+
+    .bar-fill {
+      height:100%;
+      border-radius:inherit;
+      transition:width .3s ease;
+    }
+
+    .bar-fill.correct { background:var(--green); }
+    .bar-fill.incorrect { background:var(--red); }
+    .bar-fill.unanswered { background:#94a3b8; }
+
+    .analysis-note {
+      padding:12px 14px;
+      border:1px solid #bfdbfe;
+      border-left:4px solid var(--blue);
+      border-radius:9px;
+      background:#eff6ff;
+      color:#334155;
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .review-card {
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+
+    .review-header {
+      padding:22px 23px 16px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .filters {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      padding:13px 20px;
+      background:#f8fafc;
+      border-bottom:1px solid var(--border);
+    }
+
+    .filter-btn {
+      border:1px solid #d7e0ea;
+      background:#fff;
+      color:var(--gray-dark);
+      border-radius:999px;
+      padding:8px 13px;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .filter-btn.active {
+      background:var(--blue);
+      border-color:var(--blue);
+      color:#fff;
+    }
+
+    .review-list {
+      padding:18px;
+      background:#f6f8fb;
+    }
+
+    .question-card {
+      margin-bottom:16px;
+      overflow:hidden;
+      background:#fff;
+      border:1px solid #dfe6ef;
+      border-radius:15px;
+      box-shadow:0 5px 18px rgba(15,23,42,.04);
+    }
+
+    .question-card:last-child { margin-bottom:0; }
+
+    .question-top {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 17px;
+      background:#f8fafc;
+      border-bottom:1px solid #e5eaf0;
+    }
+
+    .question-number {
+      color:var(--navy);
+      font-size:13px;
+      font-weight:900;
+    }
+
+    .status-badge {
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .status-badge.correct {
+      color:var(--green);
+      background:var(--green-bg);
+      border:1px solid #bbf7d0;
+    }
+
+    .status-badge.incorrect {
+      color:var(--red);
+      background:var(--red-bg);
+      border:1px solid #fecaca;
+    }
+
+    .status-badge.unanswered {
+      color:var(--gray);
+      background:#f1f5f9;
+      border:1px solid var(--border);
+    }
+
+    .question-body { padding:20px; }
+
+    .question-text {
+      margin-bottom:15px;
+      font-size:15px;
+      line-height:1.65;
+      font-weight:800;
+    }
+
+    .section-label {
+      margin:0 0 8px;
+      color:var(--gray);
+      font-size:10px;
+      font-weight:900;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+    }
+
+    .options {
+      display:grid;
+      gap:8px;
+      margin-bottom:17px;
+    }
+
+    .option {
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 12px;
+      border:1px solid #dfe6ef;
+      border-radius:9px;
+      background:#fff;
+      color:#334155;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .option-key {
+      flex:0 0 27px;
+      display:grid;
+      place-items:center;
+      width:27px;
+      height:27px;
+      border-radius:7px;
+      background:#f1f5f9;
+      color:#475569;
+      font-size:11px;
+      font-weight:900;
+    }
+
+    .option.correct-option {
+      background:var(--green-bg);
+      border-color:#86efac;
+    }
+
+    .option.correct-option .option-key {
+      background:var(--green);
+      color:#fff;
+    }
+
+    .option.selected-wrong-option {
+      background:var(--red-bg);
+      border-color:#fca5a5;
+    }
+
+    .option.selected-wrong-option .option-key {
+      background:var(--red);
+      color:#fff;
+    }
+
+    .answer-grid {
+      display:grid;
+      grid-template-columns:1fr 1fr 1fr;
+      gap:9px;
+      margin-bottom:15px;
+    }
+
+    .answer-box {
+      padding:11px 12px;
+      border:1px solid var(--border);
+      border-radius:9px;
+      background:#f8fafc;
+    }
+
+    .answer-box.selected-correct {
+      background:var(--green-bg);
+      border-color:#bbf7d0;
+    }
+
+    .answer-box.selected-wrong {
+      background:var(--red-bg);
+      border-color:#fecaca;
+    }
+
+    .answer-label {
+      margin-bottom:4px;
+      color:var(--gray);
+      font-size:9px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .answer-value {
+      color:#0f172a;
+      font-size:12px;
+      line-height:1.45;
+      font-weight:800;
+    }
+
+    .explanation {
+      padding:14px 15px;
+      border:1px solid #bfdbfe;
+      border-left:4px solid var(--blue);
+      border-radius:10px;
+      background:#eff6ff;
+    }
+
+    .explanation-title {
+      margin-bottom:5px;
+      color:#1e40af;
+      font-size:10px;
+      font-weight:900;
+      text-transform:uppercase;
+    }
+
+    .explanation-text {
+      color:#334155;
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .meta {
+      display:flex;
+      flex-wrap:wrap;
+      gap:6px;
+      margin-top:14px;
+      padding-top:12px;
+      border-top:1px solid #eef2f7;
+    }
+
+    .chip {
+      padding:5px 8px;
+      border-radius:7px;
+      background:#f1f5f9;
+      color:var(--gray);
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .empty-review {
+      padding:40px 15px;
+      text-align:center;
+      color:var(--gray);
+      background:#fff;
+      border-radius:10px;
+      font-weight:800;
+    }
+
+    .actions {
+      display:flex;
+      justify-content:flex-end;
+      gap:10px;
+      padding:20px;
+    }
+
+    .action-btn {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:11px 17px;
+      border-radius:9px;
+      text-decoration:none;
+      font-size:12px;
+      font-weight:900;
+    }
+
+    .action-primary {
+      background:var(--blue);
+      color:#fff;
+    }
+
+    .action-secondary {
+      background:#fff;
+      color:var(--navy);
+      border:1px solid var(--border);
+    }
+
+    @media (max-width:900px) {
+      .summary-grid { grid-template-columns:1fr 1fr; }
+      .metrics { grid-template-columns:1fr 1fr; }
+    }
+
+    @media (max-width:700px) {
+      .page { padding:18px 12px 40px; }
+      .header { padding:22px; }
+
+      .header-top {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .header-actions { justify-content:flex-start; }
+
+      .summary-grid,
+      .info-grid,
+      .metrics {
+        grid-template-columns:1fr;
+      }
+
+      .answer-grid { grid-template-columns:1fr; }
+
+      .question-top {
+        align-items:flex-start;
+        flex-direction:column;
+      }
+
+      .actions { flex-direction:column; }
+      .action-btn { width:100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="container">
+
+      <header class="header">
+        <div class="header-top">
+          <div>
+            <div class="brand">Habitat IAS • JPSC Mock Test</div>
+            <h1 id="resultTitle">Test Result</h1>
+            <p>Detailed performance and question-wise analysis.</p>
+          </div>
+
+          <div class="header-actions">
+            <a href="/results" class="header-btn">← All Results</a>
+            <a href="/dashboard" class="header-btn">Dashboard</a>
+          </div>
+        </div>
+      </header>
+
+      <div id="loading" class="loading">
+        Loading your test result…
+      </div>
+
+      <div id="errorBox" class="error" style="display:none;"></div>
+
+      <div id="resultContent" class="content">
+
+        <section class="summary-grid">
+
+          <div class="card score-card">
+            <div class="label">Score</div>
+            <div class="score" id="scoreEl">0</div>
+            <div class="percentage" id="percentageEl">0%</div>
+            <div class="rule">
+              No negative marking • 2 marks for every correct answer
+            </div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="label">Correct</div>
+            <div class="stat-number correct" id="correctEl">0</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="label">Incorrect</div>
+            <div class="stat-number incorrect" id="incorrectEl">0</div>
+          </div>
+
+          <div class="card stat-card">
+            <div class="label">Unanswered</div>
+            <div class="stat-number unanswered" id="unansweredEl">0</div>
+          </div>
+
+        </section>
+
+        <section class="info-grid">
+
+          <div class="card info-card">
+            <h2 class="info-title">Attempt Information</h2>
+
+            <div class="info-row">
+              <span>Status</span>
+              <span id="statusEl">Submitted</span>
+            </div>
+
+            <div class="info-row">
+              <span>Time Taken</span>
+              <span id="timeUsedEl">00:00</span>
+            </div>
+
+            <div class="info-row">
+              <span>Submitted At</span>
+              <span id="submittedAtEl">—</span>
+            </div>
+
+            <div class="info-row">
+              <span>Attempt ID</span>
+              <span id="attemptIdEl">—</span>
+            </div>
+          </div>
+
+          <div class="card info-card">
+            <h2 class="info-title">Test Information</h2>
+
+            <div class="info-row">
+              <span>Test</span>
+              <span id="testTitleEl">—</span>
+            </div>
+
+            <div class="info-row">
+              <span>Total Questions</span>
+              <span id="totalQuestionsEl">—</span>
+            </div>
+
+            <div class="info-row">
+              <span>Maximum Marks</span>
+              <span id="totalMarksEl">—</span>
+            </div>
+
+            <div class="info-row">
+              <span>Marks Per Question</span>
+              <span>2</span>
+            </div>
+          </div>
+
+        </section>
+
+        <section class="card analysis-card">
+          <h2 class="section-title">Performance Analysis</h2>
+          <p class="section-subtitle">
+            Understand your accuracy, attempt rate, time usage and score efficiency.
+          </p>
+
+          <div class="metrics">
+            <div class="metric">
+              <div class="metric-label">Accuracy</div>
+              <div class="metric-value" id="analysisAccuracyEl">0%</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Attempt Rate</div>
+              <div class="metric-value" id="analysisAttemptRateEl">0%</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Avg. Time / Question</div>
+              <div class="metric-value" id="analysisAvgTimeEl">00:00</div>
+            </div>
+
+            <div class="metric">
+              <div class="metric-label">Score Efficiency</div>
+              <div class="metric-value" id="analysisScoreEfficiencyEl">0%</div>
+            </div>
+          </div>
+
+          <div class="bars">
+            <div>
+              <div class="bar-label">
+                <span>Correct</span>
+                <span id="analysisCorrectLabelEl">0 (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div id="analysisCorrectBarEl" class="bar-fill correct" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="bar-label">
+                <span>Incorrect</span>
+                <span id="analysisIncorrectLabelEl">0 (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div id="analysisIncorrectBarEl" class="bar-fill incorrect" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="bar-label">
+                <span>Unanswered</span>
+                <span id="analysisUnansweredLabelEl">0 (0%)</span>
+              </div>
+              <div class="bar-track">
+                <div id="analysisUnansweredBarEl" class="bar-fill unanswered" style="width:0%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="analysis-note" id="analysisNoteEl">
+            Analysis will appear here.
+          </div>
+        </section>
+
+        <section class="card review-card">
+          <div class="review-header">
+            <h2 class="section-title">Question-wise Review</h2>
+            <p class="section-subtitle">
+              Every question from the test is shown. Unanswered questions are also retained.
+            </p>
+          </div>
+
+          <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+              All
+            </button>
+            <button class="filter-btn" data-filter="correct">
+              ✓ Correct
+            </button>
+            <button class="filter-btn" data-filter="incorrect">
+              ✕ Incorrect
+            </button>
+            <button class="filter-btn" data-filter="unanswered">
+              ○ Unanswered
+            </button>
+          </div>
+
+          <div id="reviewList" class="review-list">
+            <div class="empty-review">
+              Loading questions…
+            </div>
+          </div>
+        </section>
+
+        <section class="card actions">
+          <a href="/results" class="action-btn action-secondary">
+            ← Back to Results
+          </a>
+
+          <a href="/mock-tests" class="action-btn action-primary">
+            ← Back to Mock Tests
+          </a>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    import { supabase } from "../lib/supabase";
+
+    const loading =
+      document.getElementById("loading");
+
+    const errorBox =
+      document.getElementById("errorBox");
+
+    const resultContent =
+      document.getElementById("resultContent");
+
+    const resultTitleEl =
+      document.getElementById("resultTitle");
+
+    const scoreEl =
+      document.getElementById("scoreEl");
+
+    const percentageEl =
+      document.getElementById("percentageEl");
+
+    const correctEl =
+      document.getElementById("correctEl");
+
+    const incorrectEl =
+      document.getElementById("incorrectEl");
+
+    const unansweredEl =
+      document.getElementById("unansweredEl");
+
+    const statusEl =
+      document.getElementById("statusEl");
+
+    const timeUsedEl =
+      document.getElementById("timeUsedEl");
+
+    const submittedAtEl =
+      document.getElementById("submittedAtEl");
+
+    const attemptIdEl =
+      document.getElementById("attemptIdEl");
+
+    const testTitleEl =
+      document.getElementById("testTitleEl");
+
+    const totalQuestionsEl =
+      document.getElementById("totalQuestionsEl");
+
+    const totalMarksEl =
+      document.getElementById("totalMarksEl");
+
+    const analysisAccuracyEl =
+      document.getElementById("analysisAccuracyEl");
+
+    const analysisAttemptRateEl =
+      document.getElementById("analysisAttemptRateEl");
+
+    const analysisAvgTimeEl =
+      document.getElementById("analysisAvgTimeEl");
+
+    const analysisScoreEfficiencyEl =
+      document.getElementById("analysisScoreEfficiencyEl");
+
+    const analysisCorrectLabelEl =
+      document.getElementById("analysisCorrectLabelEl");
+
+    const analysisIncorrectLabelEl =
+      document.getElementById("analysisIncorrectLabelEl");
+
+    const analysisUnansweredLabelEl =
+      document.getElementById("analysisUnansweredLabelEl");
+
+    const analysisCorrectBarEl =
+      document.getElementById("analysisCorrectBarEl");
+
+    const analysisIncorrectBarEl =
+      document.getElementById("analysisIncorrectBarEl");
+
+    const analysisUnansweredBarEl =
+      document.getElementById("analysisUnansweredBarEl");
+
+    const analysisNoteEl =
+      document.getElementById("analysisNoteEl");
+
+    const reviewList =
+      document.getElementById("reviewList");
+
+    let reviewAnswers = [];
+    let currentFilter = "all";
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(value) {
+      if (!value) return "—";
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return "—";
+      }
+
+      return date.toLocaleString("en-IN", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    function formatTime(seconds) {
+      const total =
+        Math.max(0, Number(seconds || 0));
+
+      const hours =
+        Math.floor(total / 3600);
+
+      const minutes =
+        Math.floor((total % 3600) / 60);
+
+      const secs =
+        total % 60;
+
+      if (hours > 0) {
+        return (
+          String(hours).padStart(2, "0") +
+          ":" +
+          String(minutes).padStart(2, "0") +
+          ":" +
+          String(secs).padStart(2, "0")
+        );
+      }
+
+      return (
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(secs).padStart(2, "0")
+      );
+    }
+
+    function formatPercent(value) {
+      return (
+        Number(value || 0).toFixed(1) +
+        "%"
+      );
+    }
+
+    function getAnswerStatus(answer) {
+      if (!answer.selected_option) {
+        return "unanswered";
+      }
+
+      return answer.is_correct
+        ? "correct"
+        : "incorrect";
+    }
+
+    function getOptionText(question, option) {
+      if (!option) {
+        return "Not Answered";
+      }
+
+      const key =
+        String(option).toLowerCase();
+
+      if (key === "a") {
+        return "A. " + (question.option_a || "");
+      }
+
+      if (key === "b") {
+        return "B. " + (question.option_b || "");
+      }
+
+      if (key === "c") {
+        return "C. " + (question.option_c || "");
+      }
+
+      if (key === "d") {
+        return "D. " + (question.option_d || "");
+      }
+
+      return String(option).toUpperCase();
+    }
+
+    function showError(message) {
+      loading.style.display = "none";
+      resultContent.style.display = "none";
+      errorBox.textContent = message;
+      errorBox.style.display = "block";
+    }
+
+    function renderPerformance(attempt, answers) {
+      const correct =
+        Number(attempt.correct_count || 0);
+
+      const incorrect =
+        Number(attempt.incorrect_count || 0);
+
+      const unanswered =
+        Number(attempt.unanswered_count || 0);
+
+      const totalQuestions =
+        correct + incorrect + unanswered;
+
+      const attempted =
+        correct + incorrect;
+
+      const timeUsed =
+        Number(attempt.time_taken_seconds || 0);
+
+      /*
+       * NO NEGATIVE MARKING.
+       * Score is always 2 marks per correct answer.
+       */
+      const score =
+        correct * 2;
+
+      const maximumMarks =
+        totalQuestions * 2;
+
+      const accuracy =
+        attempted > 0
+          ? (correct / attempted) * 100
+          : 0;
+
+      const attemptRate =
+        totalQuestions > 0
+          ? (attempted / totalQuestions) * 100
+          : 0;
+
+      const scoreEfficiency =
+        maximumMarks > 0
+          ? (score / maximumMarks) * 100
+          : 0;
+
+      const averageTime =
+        totalQuestions > 0
+          ? Math.round(
+              timeUsed / totalQuestions
+            )
+          : 0;
+
+      scoreEl.textContent = score;
+      totalMarksEl.textContent = maximumMarks;
+      percentageEl.textContent =
+        formatPercent(scoreEfficiency);
+
+      correctEl.textContent = correct;
+      incorrectEl.textContent = incorrect;
+      unansweredEl.textContent = unanswered;
+
+      analysisAccuracyEl.textContent =
+        formatPercent(accuracy);
+
+      analysisAttemptRateEl.textContent =
+        formatPercent(attemptRate);
+
+      analysisAvgTimeEl.textContent =
+        formatTime(averageTime);
+
+      analysisScoreEfficiencyEl.textContent =
+        formatPercent(scoreEfficiency);
+
+      analysisCorrectLabelEl.textContent =
+        correct +
+        " (" +
+        formatPercent(
+          totalQuestions > 0
+            ? (correct / totalQuestions) * 100
+            : 0
+        ) +
+        ")";
+
+      analysisIncorrectLabelEl.textContent =
+        incorrect +
+        " (" +
+        formatPercent(
+          totalQuestions > 0
+            ? (incorrect / totalQuestions) * 100
+            : 0
+        ) +
+        ")";
+
+      analysisUnansweredLabelEl.textContent =
+        unanswered +
+        " (" +
+        formatPercent(
+          totalQuestions > 0
+            ? (unanswered / totalQuestions) * 100
+            : 0
+        ) +
+        ")";
+
+      analysisCorrectBarEl.style.width =
+        totalQuestions > 0
+          ? (correct / totalQuestions) * 100 + "%"
+          : "0%";
+
+      analysisIncorrectBarEl.style.width =
+        totalQuestions > 0
+          ? (incorrect / totalQuestions) * 100 + "%"
+          : "0%";
+
+      analysisUnansweredBarEl.style.width =
+        totalQuestions > 0
+          ? (unanswered / totalQuestions) * 100 + "%"
+          : "0%";
+
+      if (accuracy >= 80) {
+        analysisNoteEl.textContent =
+          "Excellent accuracy. Focus on maintaining speed and continue reviewing difficult questions.";
+      } else if (accuracy >= 60) {
+        analysisNoteEl.textContent =
+          "Good foundation. Review incorrect answers carefully and revise the topics where mistakes are concentrated.";
+      } else if (accuracy > 0) {
+        analysisNoteEl.textContent =
+          "Accuracy needs improvement. Prioritize concept revision and analyze every incorrect answer before your next attempt.";
+      } else {
+        analysisNoteEl.textContent =
+          "No questions were answered. Review the syllabus and attempt the test again when ready.";
+      }
+    }
+
+    function renderReview() {
+      const filtered =
+        reviewAnswers.filter(answer => {
+          const status =
+            getAnswerStatus(answer);
+
+          return (
+            currentFilter === "all" ||
+            status === currentFilter
+          );
+        });
+
+      if (filtered.length === 0) {
+        reviewList.innerHTML = `
+          <div class="empty-review">
+            No questions found in this category.
+          </div>
+        `;
+        return;
+      }
+
+      reviewList.innerHTML =
+        filtered.map(answer => {
+          const status =
+            getAnswerStatus(answer);
+
+          const selectedOption =
+            answer.selected_option
+              ? String(
+                  answer.selected_option
+                ).toLowerCase()
+              : "";
+
+          const correctOption =
+            answer.correct_option
+              ? String(
+                  answer.correct_option
+                ).toLowerCase()
+              : "";
+
+          const selectedText =
+            selectedOption
+              ? getOptionText(
+                  answer,
+                  selectedOption
+                )
+              : "Not Answered";
+
+          const correctText =
+            getOptionText(
+              answer,
+              correctOption
+            );
+
+          const selectedBoxClass =
+            status === "correct"
+              ? "selected-correct"
+              : status === "incorrect"
+                ? "selected-wrong"
+                : "";
+
+          function optionClass(key) {
+            const isCorrect =
+              correctOption === key;
+
+            const isSelected =
+              selectedOption === key;
+
+            if (isSelected && isCorrect) {
+              return "correct-option";
+            }
+
+            if (isSelected && !isCorrect) {
+              return "selected-wrong-option";
+            }
+
+            if (isCorrect) {
+              return "correct-option";
+            }
+
+            return "";
+          }
+
+          const resultText =
+            status === "correct"
+              ? "✓ Correct — 2 marks"
+              : status === "incorrect"
+                ? "✕ Incorrect — 0 marks"
+                : "○ Not answered — 0 marks";
+
+          return `
+            <article class="question-card">
+
+              <div class="question-top">
+                <div class="question-number">
+                  Question ${escapeHtml(
+                    answer.question_number
+                  )}
+                </div>
+
+                <div class="status-badge ${status}">
+                  ${
+                    status === "correct"
+                      ? "✓ Correct"
+                      : status === "incorrect"
+                        ? "✕ Incorrect"
+                        : "○ Unanswered"
+                  }
+                </div>
+              </div>
+
+              <div class="question-body">
+
+                <div class="section-label">
+                  Question
+                </div>
+
+                <div class="question-text">
+                  ${escapeHtml(
+                    answer.question_text
+                  )}
+                </div>
+
+                <div class="section-label">
+                  Options
+                </div>
+
+                <div class="options">
+
+                  <div class="option ${optionClass("a")}">
+                    <span class="option-key">A</span>
+                    <span>${escapeHtml(answer.option_a)}</span>
+                  </div>
+
+                  <div class="option ${optionClass("b")}">
+                    <span class="option-key">B</span>
+                    <span>${escapeHtml(answer.option_b)}</span>
+                  </div>
+
+                  <div class="option ${optionClass("c")}">
+                    <span class="option-key">C</span>
+                    <span>${escapeHtml(answer.option_c)}</span>
+                  </div>
+
+                  <div class="option ${optionClass("d")}">
+                    <span class="option-key">D</span>
+                    <span>${escapeHtml(answer.option_d)}</span>
+                  </div>
+
+                </div>
+
+                <div class="answer-grid">
+
+                  <div class="answer-box ${selectedBoxClass}">
+                    <div class="answer-label">
+                      Your Answer
+                    </div>
+                    <div class="answer-value">
+                      ${escapeHtml(selectedText)}
+                    </div>
+                  </div>
+
+                  <div class="answer-box">
+                    <div class="answer-label">
+                      Correct Answer
+                    </div>
+                    <div class="answer-value">
+                      ${escapeHtml(correctText)}
+                    </div>
+                  </div>
+
+                  <div class="answer-box">
+                    <div class="answer-label">
+                      Result
+                    </div>
+                    <div class="answer-value">
+                      ${escapeHtml(resultText)}
+                    </div>
+                  </div>
+
+                </div>
+
+                ${
+                  answer.explanation
+                    ? `
+                      <div class="explanation">
+                        <div class="explanation-title">
+                          Explanation
+                        </div>
+
+                        <div class="explanation-text">
+                          ${escapeHtml(
+                            answer.explanation
+                          )}
+                        </div>
+                      </div>
+                    `
+                    : ""
+                }
+
+                <div class="meta">
+
+                  ${
+                    answer.subject
+                      ? `
+                        <span class="chip">
+                          Subject: ${escapeHtml(answer.subject)}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                  ${
+                    answer.topic
+                      ? `
+                        <span class="chip">
+                          Topic: ${escapeHtml(answer.topic)}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                  ${
+                    answer.difficulty
+                      ? `
+                        <span class="chip">
+                          Difficulty: ${escapeHtml(answer.difficulty)}
+                        </span>
+                      `
+                      : ""
+                  }
+
+                  <span class="chip">
+                    Question ID: ${escapeHtml(answer.question_id)}
+                  </span>
+
+                </div>
+
+              </div>
+            </article>
+          `;
+        }).join("");
+    }
+
+    document
+      .querySelectorAll(".filter-btn")
+      .forEach(button => {
+        button.addEventListener("click", () => {
+
+          currentFilter =
+            button.dataset.filter || "all";
+
+          document
+            .querySelectorAll(".filter-btn")
+            .forEach(btn =>
+              btn.classList.remove("active")
+            );
+
+          button.classList.add("active");
+
+          renderReview();
+        });
+      });
+
+    async function loadResult() {
+      try {
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+        const attemptId =
+          params.get("attempt_id");
+
+        if (!attemptId) {
+          showError(
+            "No test attempt was specified. Please open the result from the Results page."
+          );
+          return;
+        }
+
+        const {
+          data: userData,
+          error: userError,
+        } = await supabase.auth.getUser();
+
+        if (
+          userError ||
+          !userData?.user
+        ) {
+          window.location.href =
+            "/login?redirect=/test-result?attempt_id=" +
+            encodeURIComponent(attemptId);
+
+          return;
+        }
+
+        const userId =
+          userData.user.id;
+
+        const {
+          data: attempt,
+          error: attemptError,
+        } = await supabase
+          .from("mock_attempts")
+          .select(`
+            id,
+            user_id,
+            test_id,
+            started_at,
+            submitted_at,
+            score,
+            correct_count,
+            incorrect_count,
+            unanswered_count,
+            time_taken_seconds,
+            status
+          `)
+          .eq("id", attemptId)
+          .eq("user_id", userId)
+          .maybeSingle();
+
+        if (attemptError) {
+          console.error(
+            "[Habitat IAS] ATTEMPT ERROR:",
+            attemptError
+          );
+
+          showError(
+            "Unable to load your test result."
+          );
+
+          return;
+        }
+
+        if (!attempt) {
+          showError(
+            "Test result not found or you do not have permission to view it."
+          );
+
+          return;
+        }
+
+        const {
+          data: test,
+        } = await supabase
+          .from("mock_tests")
+          .select(`
+            id,
+            test_number,
+            title,
+            question_count
+          `)
+          .eq("id", attempt.test_id)
+          .maybeSingle();
+
+        const {
+          data: questions,
+          error: questionsError,
+        } = await supabase
+          .from("mock_questions")
+          .select(`
+            id,
+            test_id,
+            question_number,
+            question_text,
+            option_a,
+            option_b,
+            option_c,
+            option_d,
+            correct_option,
+            explanation,
+            subject,
+            topic,
+            difficulty,
+            marks,
+            negative_marks
+          `)
+          .eq("test_id", attempt.test_id)
+          .order("question_number", {
+            ascending:true
+          });
+
+        if (questionsError) {
+          console.error(
+            "[Habitat IAS] QUESTIONS ERROR:",
+            questionsError
+          );
+
+          showError(
+            "Unable to load the questions for this test."
+          );
+
+          return;
+        }
+
+        const {
+          data: answers,
+          error: answersError,
+        } = await supabase
+          .from("mock_answers")
+          .select(`
+            id,
+            attempt_id,
+            question_id,
+            selected_option,
+            is_correct,
+            answered_at
+          `)
+          .eq("attempt_id", attempt.id);
+
+        if (answersError) {
+          console.error(
+            "[Habitat IAS] ANSWERS ERROR:",
+            answersError
+          );
+
+          showError(
+            "Unable to load your submitted answers."
+          );
+
+          return;
+        }
+
+        const answerMap =
+          new Map();
+
+        (answers || []).forEach(answer => {
+          answerMap.set(
+            String(answer.question_id),
+            answer
+          );
+        });
+
+        reviewAnswers =
+          (questions || []).map(
+            (question, index) => {
+
+              const savedAnswer =
+                answerMap.get(
+                  String(question.id)
+                );
+
+              return {
+                question_id:
+                  question.id,
+
+                question_number:
+                  question.question_number ||
+                  index + 1,
+
+                question_text:
+                  question.question_text,
+
+                option_a:
+                  question.option_a,
+
+                option_b:
+                  question.option_b,
+
+                option_c:
+                  question.option_c,
+
+                option_d:
+                  question.option_d,
+
+                correct_option:
+                  question.correct_option,
+
+                explanation:
+                  question.explanation,
+
+                subject:
+                  question.subject,
+
+                topic:
+                  question.topic,
+
+                difficulty:
+                  question.difficulty,
+
+                marks:
+                  question.marks,
+
+                negative_marks:
+                  question.negative_marks,
+
+                selected_option:
+                  savedAnswer
+                    ? savedAnswer.selected_option
+                    : null,
+
+                is_correct:
+                  savedAnswer
+                    ? Boolean(
+                        savedAnswer.is_correct
+                      )
+                    : false,
+
+                answered_at:
+                  savedAnswer
+                    ? savedAnswer.answered_at
+                    : null,
+              };
+            }
+          );
+
+        const correct =
+          Number(
+            attempt.correct_count || 0
+          );
+
+        const incorrect =
+          Number(
+            attempt.incorrect_count || 0
+          );
+
+        const unanswered =
+          Number(
+            attempt.unanswered_count || 0
+          );
+
+        const totalQuestions =
+          reviewAnswers.length ||
+          correct +
+          incorrect +
+          unanswered;
+
+        const maximumMarks =
+          totalQuestions * 2;
+
+        const score =
+          correct * 2;
+
+        const percentage =
+          maximumMarks > 0
+            ? (score / maximumMarks) * 100
+            : 0;
+
+        resultTitleEl.textContent =
+          test?.title ||
+          "Test Result";
+
+        testTitleEl.textContent =
+          test?.title ||
+          "Mock Test";
+
+        scoreEl.textContent =
+          score;
+
+        totalMarksEl.textContent =
+          maximumMarks;
+
+        percentageEl.textContent =
+          percentage.toFixed(2) + "%";
+
+        correctEl.textContent =
+          correct;
+
+        incorrectEl.textContent =
+          incorrect;
+
+        unansweredEl.textContent =
+          unanswered;
+
+        statusEl.textContent =
+          attempt.status ||
+          "submitted";
+
+        timeUsedEl.textContent =
+          formatTime(
+            attempt.time_taken_seconds
+          );
+
+        submittedAtEl.textContent =
+          formatDate(
+            attempt.submitted_at
+          );
+
+        attemptIdEl.textContent =
+          attempt.id;
+
+        totalQuestionsEl.textContent =
+          totalQuestions;
+
+        renderPerformance(
+          attempt,
+          reviewAnswers
+        );
+
+        renderReview();
+
+        loading.style.display =
+          "none";
+
+        errorBox.style.display =
+          "none";
+
+        resultContent.style.display =
+          "block";
+
+        console.log(
+          "[Habitat IAS] TEST RESULT LOADED",
+          {
+            attemptId:attempt.id,
+            testId:attempt.test_id,
+            correct,
+            incorrect,
+            unanswered,
+            score,
+            totalQuestions,
+            maximumMarks,
+            questionRecords:
+              reviewAnswers.length
+          }
+        );
+
+      } catch (error) {
+        console.error(
+          "[Habitat IAS] RESULT EXCEPTION:",
+          error
+        );
+
+        showError(
+          "Unexpected error while loading the result."
+        );
+      }
+    }
+
+    loadResult();
+  </script>
+</body>
+</html>

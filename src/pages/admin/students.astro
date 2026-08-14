@@ -1,0 +1,1587 @@
+---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+const adminUserId = import.meta.env.ADMIN_USER_ID;
+
+if (!supabaseUrl) {
+  throw new Error("PUBLIC_SUPABASE_URL is missing.");
+}
+
+if (!serviceRoleKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY is missing.");
+}
+
+if (!adminUserId) {
+  throw new Error("ADMIN_USER_ID is missing.");
+}
+
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const PRODUCT_ID = "jpsc_prelims_20_test_series";
+const TOTAL_TESTS = 20;
+
+/* =========================================================
+   SUPABASE ADMIN CLIENT
+========================================================= */
+
+const supabaseAdmin = createClient(
+  supabaseUrl,
+  serviceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
+
+/* =========================================================
+   AUTHENTICATE ADMIN
+========================================================= */
+
+const accessToken =
+  Astro.cookies.get("habitat-access-token")?.value;
+
+let isAuthenticated = false;
+let isAdmin = false;
+let pageError = "";
+
+/* =========================================================
+   VERIFY SESSION
+========================================================= */
+
+if (accessToken) {
+  const {
+    data: userData,
+    error: userError,
+  } = await supabaseAdmin.auth.getUser(accessToken);
+
+  if (!userError && userData?.user) {
+    isAuthenticated = true;
+    isAdmin = userData.user.id === adminUserId;
+  }
+}
+
+/* =========================================================
+   DATA TYPES
+========================================================= */
+
+type Student = {
+  id: string;
+  name: string;
+  email: string;
+  registeredAt: string | null;
+  accessType: "paid" | "manual" | "none";
+  accessLabel: string;
+  testsUnlocked: number;
+  purchaseStatus: string;
+  manualAccess: boolean;
+};
+
+/* =========================================================
+   STUDENT DATA
+========================================================= */
+
+let students: Student[] = [];
+
+if (!isAuthenticated) {
+  pageError = "Authentication required.";
+} else if (!isAdmin) {
+  pageError = "Admin access denied.";
+} else {
+  try {
+    /* =======================================================
+       1. LOAD AUTH USERS
+    ======================================================= */
+
+    const allUsers: any[] = [];
+
+    let page = 1;
+    const perPage = 1000;
+
+    while (true) {
+      const {
+        data: usersData,
+        error: usersError,
+      } = await supabaseAdmin.auth.admin.listUsers({
+        page,
+        perPage,
+      });
+
+      if (usersError) {
+        throw usersError;
+      }
+
+      const users = usersData?.users ?? [];
+
+      allUsers.push(...users);
+
+      if (users.length < perPage) {
+        break;
+      }
+
+      page++;
+    }
+
+    /* =======================================================
+       2. LOAD PAID PURCHASES
+    ======================================================= */
+
+    const {
+      data: purchases,
+      error: purchasesError,
+    } = await supabaseAdmin
+      .from("purchases")
+      .select(
+        "id, user_id, product_id, payment_status, created_at"
+      )
+      .eq("product_id", PRODUCT_ID)
+      .eq("payment_status", "paid");
+
+    if (purchasesError) {
+      throw purchasesError;
+    }
+
+    /* =======================================================
+       3. BUILD PAID USER MAP
+    ======================================================= */
+
+    const paidUsers = new Map<
+      string,
+      {
+        status: string;
+        createdAt: string | null;
+      }
+    >();
+
+    for (const purchase of purchases ?? []) {
+      if (!purchase.user_id) continue;
+
+      if (!paidUsers.has(purchase.user_id)) {
+        paidUsers.set(
+          purchase.user_id,
+          {
+            status: "paid",
+            createdAt:
+              purchase.created_at ?? null,
+          }
+        );
+      }
+    }
+
+    /* =======================================================
+       4. LOAD MANUAL ACCESS
+    ======================================================= */
+
+    const {
+      data: manualAccessRows,
+      error: manualAccessError,
+    } = await supabaseAdmin
+      .from("manual_series_access")
+      .select(
+        "id, user_id, product_id, granted_by, granted_at, updated_at"
+      )
+      .eq("product_id", PRODUCT_ID);
+
+    if (manualAccessError) {
+      throw manualAccessError;
+    }
+
+    /* =======================================================
+       5. BUILD MANUAL ACCESS MAP
+    ======================================================= */
+
+    const manualUsers = new Set<string>();
+
+    for (const row of manualAccessRows ?? []) {
+      if (row.user_id) {
+        manualUsers.add(row.user_id);
+      }
+    }
+
+    /* =======================================================
+       6. BUILD STUDENT LIST
+    ======================================================= */
+
+    students = allUsers.map((user) => {
+      const paid = paidUsers.has(user.id);
+      const manual = manualUsers.has(user.id);
+
+      let accessType: "paid" | "manual" | "none" =
+        "none";
+
+      let accessLabel = "No Access";
+      let testsUnlocked = 0;
+      let purchaseStatus = "No purchase";
+
+      /*
+       * Paid access has priority.
+       * If a student has both paid and manual access,
+       * we display Paid Access.
+       */
+
+      if (paid) {
+        accessType = "paid";
+        accessLabel = "Paid Access";
+        testsUnlocked = TOTAL_TESTS;
+        purchaseStatus = "Paid";
+      } else if (manual) {
+        accessType = "manual";
+        accessLabel = "Manual Access";
+        testsUnlocked = TOTAL_TESTS;
+        purchaseStatus = "Manual";
+      }
+
+      const metadata =
+        user.user_metadata ?? {};
+
+      const name =
+        metadata.full_name ||
+        metadata.name ||
+        metadata.display_name ||
+        user.email?.split("@")[0] ||
+        "Student";
+
+      return {
+        id: user.id,
+        name,
+        email: user.email ?? "No email",
+        registeredAt:
+          user.created_at ?? null,
+        accessType,
+        accessLabel,
+        testsUnlocked,
+        purchaseStatus,
+        manualAccess: manual,
+      };
+    });
+
+    /* =======================================================
+       7. SORT NEWEST FIRST
+    ======================================================= */
+
+    students.sort((a, b) => {
+      const dateA = a.registeredAt
+        ? new Date(a.registeredAt).getTime()
+        : 0;
+
+      const dateB = b.registeredAt
+        ? new Date(b.registeredAt).getTime()
+        : 0;
+
+      return dateB - dateA;
+    });
+  } catch (error) {
+    console.error(
+      "Student management error:",
+      error
+    );
+
+    pageError =
+      "Unable to load student information.";
+  }
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+const totalStudents = students.length;
+
+const paidStudents = students.filter(
+  (student) =>
+    student.accessType === "paid"
+).length;
+
+const manualStudents = students.filter(
+  (student) =>
+    student.accessType === "manual"
+).length;
+
+const noAccessStudents = students.filter(
+  (student) =>
+    student.accessType === "none"
+).length;
+
+const totalAccess =
+  paidStudents + manualStudents;
+
+const accessRate =
+  totalStudents > 0
+    ? Math.round(
+        (totalAccess / totalStudents) * 100
+      )
+    : 0;
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(
+  value: string | null
+) {
+  if (!value) return "—";
+
+  try {
+    return new Date(value).toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
+  } catch {
+    return "—";
+  }
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Students | Habitat IAS Admin
+  </title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: #f4f7fb;
+      color: #0b2d59;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .layout {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    .sidebar {
+      width: 285px;
+      background: #ffffff;
+      border-right: 1px solid #d9e3f0;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .brand {
+      height: 132px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 24px 22px;
+      border-bottom: 1px solid #d9e3f0;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #1760d4;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 900;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      color: #6b7f9c;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .sidebar-section {
+      padding: 26px 14px 4px;
+    }
+
+    .sidebar-heading {
+      padding: 0 12px 12px;
+      color: #7b8ca7;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 1px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 13px 16px;
+      margin: 3px 0;
+      border-radius: 12px;
+      color: #143761;
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .nav-item:hover {
+      background: #f0f5ff;
+    }
+
+    .nav-item.active {
+      background: #e9f0ff;
+      color: #1458cf;
+    }
+
+    .nav-icon {
+      width: 20px;
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .nav-count {
+      margin-left: auto;
+      background: #edf2f8;
+      color: #5b6e89;
+      padding: 4px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 28px;
+      border-top: 1px solid #d9e3f0;
+      background: #fff;
+      color: #617794;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .main {
+      margin-left: 285px;
+      width: calc(100% - 285px);
+      min-height: 100vh;
+    }
+
+    /* =====================================================
+       TOPBAR
+    ===================================================== */
+
+    .topbar {
+      height: 84px;
+      background: white;
+      border-bottom: 1px solid #d9e3f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 34px;
+    }
+
+    .topbar-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #102f58;
+    }
+
+    .topbar-subtitle {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #7185a1;
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .top-button {
+      border: 1px solid #d4dfef;
+      background: white;
+      color: #12355f;
+      padding: 11px 17px;
+      border-radius: 10px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .top-button:hover {
+      background: #f5f8fd;
+    }
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+      padding: 34px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .page-heading {
+      margin-bottom: 25px;
+    }
+
+    .page-heading h1 {
+      margin: 0;
+      font-size: 32px;
+      letter-spacing: -1px;
+      color: #092f61;
+    }
+
+    .page-heading p {
+      margin: 8px 0 0;
+      color: #6d819d;
+      font-size: 15px;
+    }
+
+    /* =====================================================
+       ERROR
+    ===================================================== */
+
+    .error-box {
+      padding: 18px 20px;
+      background: #fff0f0;
+      border: 1px solid #ffc5c5;
+      border-left: 5px solid #d52929;
+      border-radius: 12px;
+      color: #b71c1c;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    /* =====================================================
+       STAT CARDS
+    ===================================================== */
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 25px;
+    }
+
+    .stat-card {
+      background: white;
+      border: 1px solid #d9e3f0;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow:
+        0 2px 8px rgba(20, 50, 90, 0.03);
+    }
+
+    .stat-label {
+      color: #71839d;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      margin-top: 12px;
+      font-size: 34px;
+      line-height: 1;
+      font-weight: 950;
+      color: #0b3264;
+    }
+
+    .stat-description {
+      margin-top: 9px;
+      color: #7285a0;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       MAIN CARD
+    ===================================================== */
+
+    .card {
+      background: white;
+      border: 1px solid #d9e3f0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow:
+        0 2px 8px rgba(20, 50, 90, 0.03);
+    }
+
+    .card-header {
+      padding: 24px;
+      border-bottom: 1px solid #dce5f0;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 20px;
+      color: #0a315f;
+    }
+
+    .card-header p {
+      margin: 7px 0 0;
+      color: #71839c;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       FILTERS
+    ===================================================== */
+
+    .filters {
+      display: flex;
+      gap: 12px;
+      padding: 18px 24px;
+      background: #fbfcfe;
+      border-bottom: 1px solid #dce5f0;
+    }
+
+    .search-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7b8da7;
+    }
+
+    .search-input,
+    .filter-select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid #cedbea;
+      border-radius: 10px;
+      background: white;
+      color: #173b65;
+      outline: none;
+    }
+
+    .search-input {
+      padding: 0 15px 0 42px;
+    }
+
+    .filter-select {
+      width: 180px;
+      padding: 0 13px;
+    }
+
+    .search-input:focus,
+    .filter-select:focus {
+      border-color: #2364d7;
+      box-shadow:
+        0 0 0 3px rgba(35, 100, 215, 0.1);
+    }
+
+    /* =====================================================
+       TABLE
+    ===================================================== */
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1050px;
+    }
+
+    thead th {
+      padding: 16px 18px;
+      text-align: left;
+      background: #fbfcfe;
+      color: #687c98;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      border-bottom: 1px solid #dce5f0;
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 18px;
+      border-bottom: 1px solid #edf1f6;
+      vertical-align: middle;
+      font-size: 14px;
+    }
+
+    tbody tr:hover {
+      background: #fafcff;
+    }
+
+    .student-name {
+      font-weight: 900;
+      color: #0b3263;
+      font-size: 14px;
+    }
+
+    .student-email {
+      margin-top: 4px;
+      color: #71839d;
+      font-size: 12px;
+    }
+
+    .access-badge,
+    .purchase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 11px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .access-badge::before,
+    .purchase-badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .paid {
+      background: #e8f8ef;
+      color: #087d50;
+    }
+
+    .manual {
+      background: #eee9ff;
+      color: #6d42c7;
+    }
+
+    .none {
+      background: #fff0f0;
+      color: #c52929;
+    }
+
+    .tests-count {
+      font-weight: 900;
+      color: #123b6d;
+    }
+
+    .date {
+      color: #607692;
+      white-space: nowrap;
+      font-size: 13px;
+    }
+
+    .action-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 13px;
+      border-radius: 9px;
+      border: 1px solid #ccd9e9;
+      background: white;
+      color: #145bd0;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .action-button:hover {
+      background: #edf4ff;
+      border-color: #9fbee9;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 60px 20px;
+      color: #7486a0;
+    }
+
+    .empty-state-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .empty-state-title {
+      font-size: 18px;
+      font-weight: 900;
+      color: #173b65;
+    }
+
+    .empty-state-text {
+      margin-top: 6px;
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 1100px) {
+      .stats-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        width: 230px;
+      }
+
+      .main {
+        margin-left: 230px;
+        width: calc(100% - 230px);
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+
+      .filter-select {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .topbar-subtitle {
+        display: none;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-heading h1 {
+        font-size: 27px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="layout">
+
+    <!-- ===================================================
+         SIDEBAR
+    ==================================================== -->
+
+    <aside class="sidebar">
+
+      <div class="brand">
+
+        <div class="brand-logo">
+          H
+        </div>
+
+        <div>
+          <div class="brand-title">
+            Habitat IAS
+          </div>
+
+          <div class="brand-subtitle">
+            ADMIN CONTROL PANEL
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          OVERVIEW
+        </div>
+
+        <a
+          href="/admin"
+          class="nav-item"
+        >
+          <span class="nav-icon">⌂</span>
+          <span>Dashboard</span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          MOCK TEST
+        </div>
+
+        <a
+          href="/admin/mock-tests"
+          class="nav-item"
+        >
+          <span class="nav-icon">↗</span>
+          <span>Mock Tests</span>
+
+          <span class="nav-count">
+            20
+          </span>
+        </a>
+
+        <a
+          href="/admin/questions"
+          class="nav-item"
+        >
+          <span class="nav-icon">?</span>
+          <span>Questions</span>
+
+          <span class="nav-count">
+            2,000
+          </span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          STUDENTS
+        </div>
+
+        <a
+          href="/admin/students"
+          class="nav-item active"
+        >
+          <span class="nav-icon">•</span>
+          <span>Students</span>
+
+          <span
+            class="nav-count"
+            id="sidebarStudentCount"
+          >
+            {totalStudents}
+          </span>
+        </a>
+
+        <a
+          href="/admin/attempts"
+          class="nav-item"
+        >
+          <span class="nav-icon">↗</span>
+          <span>Student Attempts</span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          ANALYTICS
+        </div>
+
+        <a
+          href="/admin/results"
+          class="nav-item"
+        >
+          <span class="nav-icon">▥</span>
+          <span>Results & Analytics</span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          ACCESS
+        </div>
+
+        <a
+          href="/admin/access"
+          class="nav-item"
+        >
+          <span class="nav-icon">◇</span>
+          <span>Series Access</span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-section">
+
+        <div class="sidebar-heading">
+          SYSTEM
+        </div>
+
+        <a
+          href="/admin/settings"
+          class="nav-item"
+        >
+          <span class="nav-icon">⚙</span>
+          <span>Settings</span>
+        </a>
+
+      </div>
+
+      <div class="sidebar-footer">
+        ← Back to Habitat IAS website
+      </div>
+
+    </aside>
+
+    <!-- ===================================================
+         MAIN
+    ==================================================== -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <header class="topbar">
+
+        <div>
+          <div class="topbar-title">
+            Student Management
+          </div>
+
+          <div class="topbar-subtitle">
+            Manage registered Habitat IAS students
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+
+          <a
+            href="/admin"
+            class="top-button"
+          >
+            ← Dashboard
+          </a>
+
+          <a
+            href="/admin/access"
+            class="top-button"
+          >
+            Series Access
+          </a>
+
+        </div>
+
+      </header>
+
+      <!-- CONTENT -->
+
+      <section class="content">
+
+        <div class="page-heading">
+
+          <h1>
+            Students
+          </h1>
+
+          <p>
+            View registered students, account status and
+            JPSC Prelims 20-Test Series access.
+          </p>
+
+        </div>
+
+        {
+          pageError && (
+            <div class="error-box">
+              {pageError}
+            </div>
+          )
+        }
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <div class="stats-grid">
+
+          <div class="stat-card">
+
+            <div class="stat-label">
+              Total Students
+            </div>
+
+            <div class="stat-value">
+              {totalStudents}
+            </div>
+
+            <div class="stat-description">
+              Registered accounts
+            </div>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-label">
+              Paid Access
+            </div>
+
+            <div class="stat-value">
+              {paidStudents}
+            </div>
+
+            <div class="stat-description">
+              Students with genuine purchase
+            </div>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-label">
+              Manual Access
+            </div>
+
+            <div class="stat-value">
+              {manualStudents}
+            </div>
+
+            <div class="stat-description">
+              Complimentary/admin access
+            </div>
+
+          </div>
+
+          <div class="stat-card">
+
+            <div class="stat-label">
+              No Access
+            </div>
+
+            <div class="stat-value">
+              {noAccessStudents}
+            </div>
+
+            <div class="stat-description">
+              Access rate: {accessRate}%
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- =================================================
+             STUDENT TABLE
+        ================================================== -->
+
+        <div class="card">
+
+          <div class="card-header">
+
+            <h2>
+              Registered Students
+            </h2>
+
+            <p>
+              {totalStudents} registered account{totalStudents === 1 ? "" : "s"}
+              in the system.
+            </p>
+
+          </div>
+
+          <!-- FILTERS -->
+
+          <div class="filters">
+
+            <div class="search-wrapper">
+
+              <span class="search-icon">
+                ⌕
+              </span>
+
+              <input
+                id="studentSearch"
+                class="search-input"
+                type="text"
+                placeholder="Search student name or email..."
+                autocomplete="off"
+              />
+
+            </div>
+
+            <select
+              id="accessFilter"
+              class="filter-select"
+            >
+              <option value="all">
+                All Access
+              </option>
+
+              <option value="paid">
+                Paid Access
+              </option>
+
+              <option value="manual">
+                Manual Access
+              </option>
+
+              <option value="none">
+                No Access
+              </option>
+            </select>
+
+          </div>
+
+          <!-- TABLE -->
+
+          <div class="table-wrapper">
+
+            <table>
+
+              <thead>
+
+                <tr>
+
+                  <th>
+                    STUDENT
+                  </th>
+
+                  <th>
+                    SERIES
+                  </th>
+
+                  <th>
+                    ACCESS
+                  </th>
+
+                  <th>
+                    TESTS
+                  </th>
+
+                  <th>
+                    PURCHASE
+                  </th>
+
+                  <th>
+                    REGISTERED
+                  </th>
+
+                  <th>
+                    ACTION
+                  </th>
+
+                </tr>
+
+              </thead>
+
+              <tbody id="studentsTableBody">
+
+                {
+                  students.map((student) => (
+                    <tr
+                      class="student-row"
+                      data-name={student.name.toLowerCase()}
+                      data-email={student.email.toLowerCase()}
+                      data-access={student.accessType}
+                    >
+
+                      <td>
+
+                        <div class="student-name">
+                          {student.name}
+                        </div>
+
+                        <div class="student-email">
+                          {student.email}
+                        </div>
+
+                      </td>
+
+                      <td>
+
+                        <div
+                          style="
+                            font-weight: 800;
+                            color: #173b65;
+                          "
+                        >
+                          JPSC Prelims
+                        </div>
+
+                        <div
+                          style="
+                            margin-top: 3px;
+                            font-size: 12px;
+                            color: #7386a0;
+                          "
+                        >
+                          20-Test Series
+                        </div>
+
+                      </td>
+
+                      <td>
+
+                        <span
+                          class={`access-badge ${student.accessType}`}
+                        >
+                          {student.accessLabel}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        <span class="tests-count">
+                          {student.testsUnlocked} / {TOTAL_TESTS}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        {
+                          student.accessType === "paid" ? (
+                            <span class="purchase-badge paid">
+                              Paid
+                            </span>
+                          ) : student.accessType === "manual" ? (
+                            <span class="purchase-badge manual">
+                              Manual
+                            </span>
+                          ) : (
+                            <span
+                              style="
+                                color:#71839d;
+                                font-size:13px;
+                              "
+                            >
+                              No purchase
+                            </span>
+                          )
+                        }
+
+                      </td>
+
+                      <td>
+
+                        <span class="date">
+                          {formatDate(
+                            student.registeredAt
+                          )}
+                        </span>
+
+                      </td>
+
+                      <td>
+
+                        <a
+                          href={`/admin/access?user_id=${encodeURIComponent(student.id)}`}
+                          class="action-button"
+                        >
+                          Manage Access
+                        </a>
+
+                      </td>
+
+                    </tr>
+                  ))
+                }
+
+                <tr
+                  id="noResultsRow"
+                  style="display:none;"
+                >
+
+                  <td
+                    colspan="7"
+                    class="empty-state"
+                  >
+
+                    <div class="empty-state-icon">
+                      🔎
+                    </div>
+
+                    <div class="empty-state-title">
+                      No students found
+                    </div>
+
+                    <div class="empty-state-text">
+                      Try changing your search or access filter.
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- =====================================================
+       CLIENT-SIDE SEARCH / FILTER
+  ====================================================== -->
+
+  <script>
+    const searchInput =
+      document.getElementById(
+        "studentSearch"
+      );
+
+    const accessFilter =
+      document.getElementById(
+        "accessFilter"
+      );
+
+    const rows = Array.from(
+      document.querySelectorAll(
+        ".student-row"
+      )
+    );
+
+    const noResultsRow =
+      document.getElementById(
+        "noResultsRow"
+      );
+
+    function applyStudentFilters() {
+
+      const search =
+        (
+          searchInput?.value || ""
+        )
+          .trim()
+          .toLowerCase();
+
+      const access =
+        accessFilter?.value || "all";
+
+      let visibleCount = 0;
+
+      rows.forEach((row) => {
+
+        const name =
+          row.dataset.name || "";
+
+        const email =
+          row.dataset.email || "";
+
+        const rowAccess =
+          row.dataset.access || "";
+
+        const matchesSearch =
+          !search ||
+          name.includes(search) ||
+          email.includes(search);
+
+        const matchesAccess =
+          access === "all" ||
+          rowAccess === access;
+
+        const visible =
+          matchesSearch &&
+          matchesAccess;
+
+        row.style.display =
+          visible ? "" : "none";
+
+        if (visible) {
+          visibleCount++;
+        }
+      });
+
+      if (noResultsRow) {
+        noResultsRow.style.display =
+          visibleCount === 0
+            ? ""
+            : "none";
+      }
+    }
+
+    searchInput?.addEventListener(
+      "input",
+      applyStudentFilters
+    );
+
+    accessFilter?.addEventListener(
+      "change",
+      applyStudentFilters
+    );
+  </script>
+
+</body>
+</html>

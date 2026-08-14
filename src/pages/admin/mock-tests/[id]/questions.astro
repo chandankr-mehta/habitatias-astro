@@ -1,0 +1,2509 @@
+---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   ADMIN AUTHENTICATION
+   This page is server-protected. It is not publicly accessible.
+========================================================= */
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+const adminUserId = import.meta.env.ADMIN_USER_ID;
+
+if (!supabaseUrl) {
+  throw new Error("PUBLIC_SUPABASE_URL is missing.");
+}
+
+if (!serviceRoleKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY is missing.");
+}
+
+if (!adminUserId) {
+  throw new Error("ADMIN_USER_ID is missing.");
+}
+
+const supabaseAdmin = createClient(
+  supabaseUrl,
+  serviceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
+
+const accessToken =
+  Astro.cookies.get("habitat-access-token")?.value;
+
+if (!accessToken) {
+  return Astro.redirect("/login?redirect=" + encodeURIComponent(Astro.url.pathname));
+}
+
+const { data: authData, error: authError } =
+  await supabaseAdmin.auth.getUser(accessToken);
+
+if (authError || !authData?.user) {
+  return Astro.redirect("/login?redirect=" + encodeURIComponent(Astro.url.pathname));
+}
+
+if (authData.user.id !== adminUserId) {
+  return new Response("Admin access denied.", { status: 403 });
+}
+
+const supabase = supabaseAdmin;
+
+console.log(
+  "[ADMIN DEBUG] service key exists:",
+  Boolean(serviceRoleKey)
+);
+
+console.log(
+  "[ADMIN DEBUG] service key prefix:",
+  serviceRoleKey?.slice(0, 8)
+);
+
+/* =========================================================
+   ROUTE KEY
+
+   The URL uses the stable JPSC test_number (01-20).
+   Resolve it to the real mock_tests.id before reading or
+   writing mock_questions, because mock_questions.test_id
+   references the database primary key.
+   ========================================================= */
+
+const testId = Astro.params.id;
+
+if (!testId) {
+  return new Response("Test number is required", { status: 400 });
+}
+
+const numericTestNumber = Number(testId);
+
+if (!Number.isInteger(numericTestNumber) || numericTestNumber < 1) {
+  return new Response("Invalid test number", { status: 400 });
+}
+
+let routeLookup = await supabase
+  .from("mock_tests")
+  .select("*")
+  .eq("test_number", numericTestNumber)
+  .maybeSingle();
+
+/* Compatibility fallback for older schemas that used test_no. */
+if (routeLookup.error) {
+  const fallbackLookup = await supabase
+    .from("mock_tests")
+    .select("*")
+    .eq("test_no", numericTestNumber)
+    .maybeSingle();
+
+  if (!fallbackLookup.error) {
+    routeLookup = fallbackLookup;
+  }
+}
+
+const routeTest = routeLookup.data;
+const routeTestError = routeLookup.error;
+
+if (routeTestError) {
+  console.error("TEST LOOKUP ERROR:", routeTestError);
+  return new Response("Unable to load mock test.", { status: 500 });
+}
+
+if (!routeTest) {
+  return new Response("Mock test not found.", { status: 404 });
+}
+
+const numericTestId = Number(routeTest.id);
+
+if (!Number.isFinite(numericTestId)) {
+  return new Response("Invalid database test ID", { status: 500 });
+}
+
+/* =========================================================
+   HANDLE FORM ACTIONS
+========================================================= */
+
+if (Astro.request.method === "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    const action = String(formData.get("action") || "");
+
+    /* =====================================================
+       ADD QUESTION
+    ===================================================== */
+
+    if (action === "add") {
+      const questionNumber = Number(
+        formData.get("question_number")
+      );
+
+      const questionText = String(
+        formData.get("question_text") || ""
+      ).trim();
+
+      const optionA = String(
+        formData.get("option_a") || ""
+      ).trim();
+
+      const optionB = String(
+        formData.get("option_b") || ""
+      ).trim();
+
+      const optionC = String(
+        formData.get("option_c") || ""
+      ).trim();
+
+      const optionD = String(
+        formData.get("option_d") || ""
+      ).trim();
+
+      const correctOption = String(
+        formData.get("correct_option") || ""
+      ).trim().toUpperCase();
+
+      const explanation = String(
+        formData.get("explanation") || ""
+      ).trim();
+
+      const subject = String(
+        formData.get("subject") || ""
+      ).trim();
+
+      const topic = String(
+        formData.get("topic") || ""
+      ).trim();
+
+      const difficulty = String(
+        formData.get("difficulty") || "medium"
+      ).trim();
+
+      const marks = 2;
+
+      const negativeMarks = 0;
+
+      const imageUrl = String(
+        formData.get("image_url") || ""
+      ).trim();
+
+      if (
+        !questionNumber ||
+        !questionText ||
+        !optionA ||
+        !optionB ||
+        !optionC ||
+        !optionD ||
+        !["A", "B", "C", "D"].includes(correctOption)
+      ) {
+        return new Response(
+          "Please fill all required fields.",
+          { status: 400 }
+        );
+      }
+
+      const { error } = await supabase
+        .from("mock_questions")
+        .insert({
+          test_id: numericTestId,
+          question_number: questionNumber,
+          question_text: questionText,
+          option_a: optionA,
+          option_b: optionB,
+          option_c: optionC,
+          option_d: optionD,
+          correct_option: correctOption,
+          explanation: explanation || null,
+          subject: subject || null,
+          topic: topic || null,
+          difficulty: difficulty || "medium",
+          marks: Number.isFinite(marks) ? marks : 1,
+          negative_marks: Number.isFinite(negativeMarks)
+            ? negativeMarks
+            : 0,
+          image_url: imageUrl || null
+        });
+
+      if (error) {
+        console.error("ADD QUESTION ERROR:", error);
+
+        return new Response(
+          "Error adding question: " + error.message,
+          { status: 500 }
+        );
+      }
+
+      return Astro.redirect(
+        `/admin/mock-tests/${testId}/questions?message=added`
+      );
+    }
+
+    /* =====================================================
+       UPDATE QUESTION
+    ===================================================== */
+
+    if (action === "update") {
+      const questionId = Number(
+        formData.get("question_id")
+      );
+
+      if (!questionId) {
+        return new Response(
+          "Invalid question ID.",
+          { status: 400 }
+        );
+      }
+
+      const questionNumber = Number(
+        formData.get("question_number")
+      );
+
+      const questionText = String(
+        formData.get("question_text") || ""
+      ).trim();
+
+      const optionA = String(
+        formData.get("option_a") || ""
+      ).trim();
+
+      const optionB = String(
+        formData.get("option_b") || ""
+      ).trim();
+
+      const optionC = String(
+        formData.get("option_c") || ""
+      ).trim();
+
+      const optionD = String(
+        formData.get("option_d") || ""
+      ).trim();
+
+      const correctOption = String(
+        formData.get("correct_option") || ""
+      ).trim().toUpperCase();
+
+      const explanation = String(
+        formData.get("explanation") || ""
+      ).trim();
+
+      const subject = String(
+        formData.get("subject") || ""
+      ).trim();
+
+      const topic = String(
+        formData.get("topic") || ""
+      ).trim();
+
+      const difficulty = String(
+        formData.get("difficulty") || "medium"
+      ).trim();
+
+      const marks = 2;
+
+      const negativeMarks = 0;
+
+      const imageUrl = String(
+        formData.get("image_url") || ""
+      ).trim();
+
+      if (
+        !questionNumber ||
+        !questionText ||
+        !optionA ||
+        !optionB ||
+        !optionC ||
+        !optionD ||
+        !["A", "B", "C", "D"].includes(correctOption)
+      ) {
+        return new Response(
+          "Please fill all required fields.",
+          { status: 400 }
+        );
+      }
+
+      const { error } = await supabase
+        .from("mock_questions")
+        .update({
+          question_number: questionNumber,
+          question_text: questionText,
+          option_a: optionA,
+          option_b: optionB,
+          option_c: optionC,
+          option_d: optionD,
+          correct_option: correctOption,
+          explanation: explanation || null,
+          subject: subject || null,
+          topic: topic || null,
+          difficulty: difficulty || "medium",
+          marks: Number.isFinite(marks) ? marks : 1,
+          negative_marks: Number.isFinite(negativeMarks)
+            ? negativeMarks
+            : 0,
+          image_url: imageUrl || null,
+          updated_at: new Date().toISOString()
+        })
+        .eq("id", questionId)
+        .eq("test_id", numericTestId);
+
+      if (error) {
+        console.error("UPDATE QUESTION ERROR:", error);
+
+        return new Response(
+          "Error updating question: " + error.message,
+          { status: 500 }
+        );
+      }
+
+      return Astro.redirect(
+        `/admin/mock-tests/${testId}/questions?message=updated`
+      );
+    }
+
+    /* =====================================================
+       DELETE QUESTION
+    ===================================================== */
+
+    if (action === "delete") {
+      const questionId = Number(
+        formData.get("question_id")
+      );
+
+      if (!questionId) {
+        return new Response(
+          "Invalid question ID.",
+          { status: 400 }
+        );
+      }
+
+      const { error } = await supabase
+        .from("mock_questions")
+        .delete()
+        .eq("id", questionId)
+        .eq("test_id", numericTestId);
+
+      if (error) {
+        console.error("DELETE QUESTION ERROR:", error);
+
+        return new Response(
+          "Error deleting question: " + error.message,
+          { status: 500 }
+        );
+      }
+
+      return Astro.redirect(
+        `/admin/mock-tests/${testId}/questions?message=deleted`
+      );
+    }
+
+  } catch (error) {
+    console.error("FORM ERROR:", error);
+
+    return new Response(
+      "Something went wrong.",
+      { status: 500 }
+    );
+  }
+}
+
+/* =========================================================
+   LOAD MOCK TEST
+========================================================= */
+
+const test = routeTest;
+const testError = routeTestError;
+
+/* =========================================================
+   LOAD QUESTIONS
+========================================================= */
+
+const { data: questions, error: questionsError } =
+  await supabase
+    .from("mock_questions")
+    .select("*")
+    .eq("test_id", numericTestId)
+    .order("question_number", {
+      ascending: true
+    });
+
+const questionList = questions || [];
+
+const totalQuestions = questionList.length;
+
+/* JPSC mock-test rule: every question carries 2 marks.
+   Negative marking is always 0. */
+const totalMarks = totalQuestions * 2;
+
+const message =
+  Astro.url.searchParams.get("message");
+
+const messageText =
+  message === "added"
+    ? "Question added successfully."
+    : message === "updated"
+      ? "Question updated successfully."
+      : message === "deleted"
+        ? "Question deleted successfully."
+        : "";
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Question Manager — Habitat IAS
+  </title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --blue: #1557d6;
+      --blue-dark: #0c3e9c;
+      --text: #102a56;
+      --muted: #64748b;
+      --border: #dce5f1;
+      --background: #f5f8fc;
+      --white: #ffffff;
+      --green: #059669;
+      --red: #dc2626;
+      --orange: #d97706;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        Inter,
+        Arial,
+        Helvetica,
+        sans-serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .header {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      padding: 17px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+
+    .logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: var(--blue);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 27px;
+      font-weight: 800;
+    }
+
+    .brand-name {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 700;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    /* =====================================================
+       BUTTONS
+    ===================================================== */
+
+    .btn {
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      border-radius: 9px;
+      padding: 10px 15px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      box-shadow:
+        0 4px 12px rgba(15, 50, 100, .08);
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    .btn-danger {
+      color: var(--red);
+      border-color: #fecaca;
+    }
+
+    /* =====================================================
+       CONTAINER
+    ===================================================== */
+
+    .container {
+      width: min(
+        1400px,
+        calc(100% - 40px)
+      );
+
+      margin:
+        30px auto
+        70px;
+    }
+
+    /* =====================================================
+       PAGE HEADER
+    ===================================================== */
+
+    .page-header {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 17px;
+      padding: 27px;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumbs {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .breadcrumbs a {
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 31px;
+    }
+
+    .subtitle {
+      margin: 9px 0 0;
+      color: var(--muted);
+    }
+
+    .scoring-note {
+      margin-top: 14px;
+      padding: 11px 13px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1e40af;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    /* =====================================================
+       MESSAGE
+    ===================================================== */
+
+    .success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #047857;
+      padding: 13px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* =====================================================
+       STATS
+    ===================================================== */
+
+    .stats {
+      display: grid;
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .stat-number {
+      margin-top: 5px;
+      font-size: 29px;
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       MAIN GRID
+    ===================================================== */
+
+    .main-grid {
+      display: grid;
+      grid-template-columns:
+        390px
+        minmax(0, 1fr);
+
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 19px;
+    }
+
+    .card-header p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #334155;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border:
+        1px solid #cbd5e1;
+
+      border-radius: 8px;
+
+      padding:
+        10px
+        11px;
+
+      background: white;
+
+      color: var(--text);
+
+      font:
+        inherit;
+
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      border-color: var(--blue);
+
+      box-shadow:
+        0 0 0 3px
+        rgba(21,87,214,.10);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns:
+        1fr 1fr;
+      gap: 11px;
+    }
+
+    .form-buttons {
+      display: flex;
+      gap: 9px;
+      margin-top: 17px;
+    }
+
+    .form-buttons .btn {
+      flex: 1;
+    }
+
+    /* =====================================================
+       QUESTION LIST
+    ===================================================== */
+
+    .toolbar {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .search {
+      max-width: 350px;
+    }
+
+    .question {
+      padding: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .question:last-child {
+      border-bottom: 0;
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .question-left {
+      display: flex;
+      gap: 11px;
+      flex: 1;
+    }
+
+    .number {
+      min-width: 40px;
+      height: 32px;
+      border-radius: 8px;
+      background: #eaf1ff;
+      color: var(--blue);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .question-text {
+      line-height: 1.55;
+      font-weight: 700;
+      white-space: pre-wrap;
+    }
+
+    .question-actions {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mini {
+      border: 1px solid var(--border);
+      background: white;
+      padding: 7px 10px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .edit-button {
+      color: var(--blue);
+    }
+
+    .delete-button {
+      color: var(--red);
+    }
+
+    /* =====================================================
+       OPTIONS
+    ===================================================== */
+
+    .options {
+      display: grid;
+      grid-template-columns:
+        1fr 1fr;
+
+      gap: 9px;
+
+      margin:
+        16px
+        0;
+    }
+
+    .option {
+      padding: 11px;
+      border:
+        1px solid var(--border);
+
+      border-radius: 8px;
+
+      background: #fafcff;
+
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .option.correct {
+      background: #ecfdf5;
+      border-color: #86efac;
+      color: #047857;
+      font-weight: 700;
+    }
+
+    .option-letter {
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       BADGES
+    ===================================================== */
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .badge {
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .badge-green {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    /* =====================================================
+       EXPLANATION
+    ===================================================== */
+
+    .explanation {
+      margin-top: 14px;
+      padding: 13px;
+      background: #f8fafc;
+      border-left:
+        3px solid var(--blue);
+
+      border-radius: 5px;
+
+      font-size: 13px;
+      line-height: 1.55;
+
+      white-space: pre-wrap;
+    }
+
+    /* =====================================================
+       EDIT FORM
+    ===================================================== */
+
+    .edit-area {
+      display: none;
+
+      margin-top: 18px;
+
+      padding: 18px;
+
+      background: #f8fafc;
+
+      border:
+        1px solid var(--border);
+
+      border-radius: 10px;
+    }
+
+    .edit-area.open {
+      display: block;
+    }
+
+    .edit-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    /* =====================================================
+       EMPTY
+    ===================================================== */
+
+    .empty {
+      padding: 60px 20px;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .empty-icon {
+      font-size: 42px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media (max-width: 1050px) {
+
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+    }
+
+    @media (max-width: 700px) {
+
+      .header {
+        padding: 14px;
+      }
+
+      .header-actions {
+        display: none;
+      }
+
+      .container {
+        width:
+          calc(100% - 20px);
+
+        margin-top: 15px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .grid-2,
+      .options {
+        grid-template-columns: 1fr;
+      }
+
+      .question-header {
+        flex-direction: column;
+      }
+
+      .question-actions {
+        width: 100%;
+      }
+
+      .mini {
+        flex: 1;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .search {
+        max-width: none;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="header">
+
+  <div class="brand">
+
+    <div class="logo">
+      H
+    </div>
+
+    <div>
+
+      <div class="brand-name">
+        Habitat IAS
+      </div>
+
+      <div class="brand-subtitle">
+        Admin Control Panel
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="header-actions">
+
+    <a
+      href="/admin"
+      class="btn"
+    >
+      ← Dashboard
+    </a>
+
+    <a
+      href="/admin/mock-tests"
+      class="btn"
+    >
+      Mock Tests
+    </a>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="container">
+
+
+  <section class="page-header">
+
+    <div class="breadcrumbs">
+
+      <a href="/admin">
+        Admin
+      </a>
+
+      &nbsp; / &nbsp;
+
+      <a href="/admin/mock-tests">
+        Mock Tests
+      </a>
+
+      &nbsp; / &nbsp;
+
+      Questions
+
+    </div>
+
+
+    <h1>
+      Question Manager
+    </h1>
+
+
+    <p class="subtitle">
+
+      {
+        test?.title
+          ? `${test.title} — Question Management`
+          : `Manage questions for Mock Test #${testId}`
+      }
+
+    </p>
+
+    <div class="scoring-note">
+      Scoring rule: <strong>+2 marks for every correct answer</strong> ·
+      <strong>0 negative marking</strong>
+    </div>
+
+  </section>
+
+
+  <!-- =======================================================
+       MESSAGES
+  ======================================================== -->
+
+  {
+    messageText && (
+
+      <div class="success">
+        ✓ {messageText}
+      </div>
+
+    )
+  }
+
+
+  {
+    testError && (
+
+      <div class="error">
+
+        <strong>
+          Test loading error:
+        </strong>
+
+        {testError.message}
+
+      </div>
+
+    )
+  }
+
+
+  {
+    questionsError && (
+
+      <div class="error">
+
+        <strong>
+          Question loading error:
+        </strong>
+
+        {questionsError.message}
+
+      </div>
+
+    )
+  }
+
+
+  <!-- =======================================================
+       STATS
+  ======================================================== -->
+
+  <section class="stats">
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Test
+      </div>
+
+      <div class="stat-number">
+        #{testId}
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Questions Added
+      </div>
+
+      <div class="stat-number">
+        {totalQuestions}
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Planned Questions
+      </div>
+
+      <div class="stat-number">
+        100
+      </div>
+
+    </div>
+
+
+    <div class="stat">
+
+      <div class="stat-label">
+        Total Marks
+      </div>
+
+      <div class="stat-number">
+        {totalMarks}
+      </div>
+
+    </div>
+
+
+  </section>
+
+
+  <!-- =======================================================
+       MAIN GRID
+  ======================================================== -->
+
+  <div class="main-grid">
+
+
+    <!-- =====================================================
+         ADD QUESTION
+    ====================================================== -->
+
+    <section class="card">
+
+
+      <div class="card-header">
+
+        <h2>
+          + Add Question
+        </h2>
+
+        <p>
+          Add a new question to this test.
+        </p>
+
+      </div>
+
+
+      <div class="card-body">
+
+
+        <form
+          method="POST"
+          id="addForm"
+        >
+
+
+          <input
+            type="hidden"
+            name="action"
+            value="add"
+          />
+
+
+          <div class="grid-2">
+
+
+            <div class="form-group">
+
+              <label>
+                Question Number *
+              </label>
+
+              <input
+                type="number"
+                name="question_number"
+                min="1"
+                value={totalQuestions + 1}
+                required
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Difficulty
+              </label>
+
+              <select name="difficulty">
+
+                <option value="easy">
+                  Easy
+                </option>
+
+                <option
+                  value="medium"
+                  selected
+                >
+                  Medium
+                </option>
+
+                <option value="hard">
+                  Hard
+                </option>
+
+              </select>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Question *
+            </label>
+
+            <textarea
+              name="question_text"
+              placeholder="Enter the complete question..."
+              required
+            ></textarea>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Option A *
+            </label>
+
+            <input
+              name="option_a"
+              placeholder="Option A"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Option B *
+            </label>
+
+            <input
+              name="option_b"
+              placeholder="Option B"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Option C *
+            </label>
+
+            <input
+              name="option_c"
+              placeholder="Option C"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Option D *
+            </label>
+
+            <input
+              name="option_d"
+              placeholder="Option D"
+              required
+            />
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Correct Answer *
+            </label>
+
+            <select
+              name="correct_option"
+              required
+            >
+
+              <option value="">
+                Select answer
+              </option>
+
+              <option value="A">
+                A
+              </option>
+
+              <option value="B">
+                B
+              </option>
+
+              <option value="C">
+                C
+              </option>
+
+              <option value="D">
+                D
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Explanation
+            </label>
+
+            <textarea
+              name="explanation"
+              placeholder="Enter detailed explanation..."
+            ></textarea>
+
+          </div>
+
+
+          <div class="grid-2">
+
+
+            <div class="form-group">
+
+              <label>
+                Subject
+              </label>
+
+              <input
+                name="subject"
+                placeholder="e.g. History"
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Topic
+              </label>
+
+              <input
+                name="topic"
+                placeholder="e.g. Mauryan Empire"
+              />
+
+            </div>
+
+
+          </div>
+
+
+          <div class="grid-2">
+
+
+            <div class="form-group">
+
+              <label>
+                Marks
+              </label>
+
+              <input
+                type="number"
+                name="marks"
+                value="2"
+                readonly
+              />
+
+            </div>
+
+
+            <div class="form-group">
+
+              <label>
+                Negative Marks
+              </label>
+
+              <input
+                type="number"
+                name="negative_marks"
+                value="0"
+                readonly
+              />
+
+            </div>
+
+
+          </div>
+
+
+          <div class="form-group">
+
+            <label>
+              Image URL
+            </label>
+
+            <input
+              type="url"
+              name="image_url"
+              placeholder="Optional"
+            />
+
+          </div>
+
+
+          <div class="form-buttons">
+
+            <button
+              type="submit"
+              class="btn btn-primary"
+            >
+              + Add Question
+            </button>
+
+            <button
+              type="reset"
+              class="btn"
+            >
+              Clear
+            </button>
+
+          </div>
+
+
+        </form>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         QUESTION LIST
+    ====================================================== -->
+
+    <section class="card">
+
+
+      <div class="card-header">
+
+        <h2>
+          Questions
+        </h2>
+
+        <p>
+          {totalQuestions} question{totalQuestions === 1 ? "" : "s"} currently added.
+        </p>
+
+      </div>
+
+
+      <div class="toolbar">
+
+        <strong>
+          Question Bank
+        </strong>
+
+        <input
+          id="search"
+          class="search"
+          type="search"
+          placeholder="Search question..."
+        />
+
+      </div>
+
+
+      {
+        totalQuestions === 0 ? (
+
+          <div class="empty">
+
+            <div class="empty-icon">
+              📝
+            </div>
+
+            <h3>
+              No questions added yet
+            </h3>
+
+            <p>
+              Use the form on the left to add your first question.
+            </p>
+
+          </div>
+
+        ) : (
+
+          <div id="questionList">
+
+
+            {
+              questionList.map((question) => (
+
+                <article
+                  class="question"
+                  data-search={
+                    `${question.question_number}
+                     ${question.question_text}
+                     ${question.subject || ""}
+                     ${question.topic || ""}`
+                  }
+                >
+
+
+                  <div class="question-header">
+
+
+                    <div class="question-left">
+
+                      <div class="number">
+                        Q{question.question_number}
+                      </div>
+
+                      <div class="question-text">
+                        {question.question_text}
+                      </div>
+
+                    </div>
+
+
+                    <div class="question-actions">
+
+
+                      <button
+                        type="button"
+                        class="mini edit-button"
+                        data-edit={question.id}
+                      >
+                        Edit
+                      </button>
+
+
+                      <form
+                        method="POST"
+                        onsubmit="return confirm('Are you sure you want to delete this question?');"
+                      >
+
+                        <input
+                          type="hidden"
+                          name="action"
+                          value="delete"
+                        />
+
+                        <input
+                          type="hidden"
+                          name="question_id"
+                          value={question.id}
+                        />
+
+                        <button
+                          type="submit"
+                          class="mini delete-button"
+                        >
+                          Delete
+                        </button>
+
+                      </form>
+
+
+                    </div>
+
+
+                  </div>
+
+
+                  <!-- OPTIONS -->
+
+                  <div class="options">
+
+
+                    <div
+                      class:list={[
+                        "option",
+                        {
+                          correct:
+                            String(
+                              question.correct_option
+                            ).toUpperCase() === "A"
+                        }
+                      ]}
+                    >
+
+                      <span class="option-letter">
+                        A.
+                      </span>
+
+                      {question.option_a}
+
+                    </div>
+
+
+                    <div
+                      class:list={[
+                        "option",
+                        {
+                          correct:
+                            String(
+                              question.correct_option
+                            ).toUpperCase() === "B"
+                        }
+                      ]}
+                    >
+
+                      <span class="option-letter">
+                        B.
+                      </span>
+
+                      {question.option_b}
+
+                    </div>
+
+
+                    <div
+                      class:list={[
+                        "option",
+                        {
+                          correct:
+                            String(
+                              question.correct_option
+                            ).toUpperCase() === "C"
+                        }
+                      ]}
+                    >
+
+                      <span class="option-letter">
+                        C.
+                      </span>
+
+                      {question.option_c}
+
+                    </div>
+
+
+                    <div
+                      class:list={[
+                        "option",
+                        {
+                          correct:
+                            String(
+                              question.correct_option
+                            ).toUpperCase() === "D"
+                        }
+                      ]}
+                    >
+
+                      <span class="option-letter">
+                        D.
+                      </span>
+
+                      {question.option_d}
+
+                    </div>
+
+
+                  </div>
+
+
+                  <!-- BADGES -->
+
+                  <div class="badges">
+
+
+                    {
+                      question.subject && (
+
+                        <span class="badge">
+                          Subject: {question.subject}
+                        </span>
+
+                      )
+                    }
+
+
+                    {
+                      question.topic && (
+
+                        <span class="badge">
+                          Topic: {question.topic}
+                        </span>
+
+                      )
+                    }
+
+
+                    <span class="badge">
+                      Difficulty:
+                      {question.difficulty || "medium"}
+                    </span>
+
+
+                    <span class="badge badge-green">
+                      Correct:
+                      {String(
+                        question.correct_option
+                      ).toUpperCase()}
+                    </span>
+
+
+                    <span class="badge">
+                      Marks:
+                      2
+                    </span>
+
+
+                    {
+                      false && (
+
+                        <span class="badge">
+                          Negative:
+                          {question.negative_marks}
+                        </span>
+
+                      )
+                    }
+
+
+                  </div>
+
+
+                  <!-- EXPLANATION -->
+
+                  {
+                    question.explanation && (
+
+                      <div class="explanation">
+
+                        <strong>
+                          Explanation:
+                        </strong>
+
+                        <br />
+
+                        {question.explanation}
+
+                      </div>
+
+                    )
+                  }
+
+
+                  <!-- =================================================
+                       EDIT FORM
+                  ================================================== -->
+
+                  <div
+                    class="edit-area"
+                    id={`edit-${question.id}`}
+                  >
+
+
+                    <div class="edit-title">
+                      Edit Question #{question.question_number}
+                    </div>
+
+
+                    <form method="POST">
+
+
+                      <input
+                        type="hidden"
+                        name="action"
+                        value="update"
+                      />
+
+                      <input
+                        type="hidden"
+                        name="question_id"
+                        value={question.id}
+                      />
+
+
+                      <div class="grid-2">
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Question Number
+                          </label>
+
+                          <input
+                            type="number"
+                            name="question_number"
+                            value={question.question_number}
+                            required
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Difficulty
+                          </label>
+
+                          <select name="difficulty">
+
+                            <option
+                              value="easy"
+                              selected={
+                                question.difficulty === "easy"
+                              }
+                            >
+                              Easy
+                            </option>
+
+                            <option
+                              value="medium"
+                              selected={
+                                !question.difficulty ||
+                                question.difficulty === "medium"
+                              }
+                            >
+                              Medium
+                            </option>
+
+                            <option
+                              value="hard"
+                              selected={
+                                question.difficulty === "hard"
+                              }
+                            >
+                              Hard
+                            </option>
+
+                          </select>
+
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Question
+                        </label>
+
+                        <textarea
+                          name="question_text"
+                          required
+                        >{question.question_text}</textarea>
+
+                      </div>
+
+
+                      <div class="grid-2">
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Option A
+                          </label>
+
+                          <input
+                            name="option_a"
+                            value={question.option_a}
+                            required
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Option B
+                          </label>
+
+                          <input
+                            name="option_b"
+                            value={question.option_b}
+                            required
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Option C
+                          </label>
+
+                          <input
+                            name="option_c"
+                            value={question.option_c}
+                            required
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Option D
+                          </label>
+
+                          <input
+                            name="option_d"
+                            value={question.option_d}
+                            required
+                          />
+
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="grid-2">
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Correct Answer
+                          </label>
+
+                          <select
+                            name="correct_option"
+                            required
+                          >
+
+                            <option
+                              value="A"
+                              selected={
+                                String(
+                                  question.correct_option
+                                ).toUpperCase() === "A"
+                              }
+                            >
+                              A
+                            </option>
+
+                            <option
+                              value="B"
+                              selected={
+                                String(
+                                  question.correct_option
+                                ).toUpperCase() === "B"
+                              }
+                            >
+                              B
+                            </option>
+
+                            <option
+                              value="C"
+                              selected={
+                                String(
+                                  question.correct_option
+                                ).toUpperCase() === "C"
+                              }
+                            >
+                              C
+                            </option>
+
+                            <option
+                              value="D"
+                              selected={
+                                String(
+                                  question.correct_option
+                                ).toUpperCase() === "D"
+                              }
+                            >
+                              D
+                            </option>
+
+                          </select>
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Subject
+                          </label>
+
+                          <input
+                            name="subject"
+                            value={question.subject || ""}
+                          />
+
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="grid-2">
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Topic
+                          </label>
+
+                          <input
+                            name="topic"
+                            value={question.topic || ""}
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Image URL
+                          </label>
+
+                          <input
+                            name="image_url"
+                            value={
+                              question.image_url || ""
+                            }
+                          />
+
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="form-group">
+
+                        <label>
+                          Explanation
+                        </label>
+
+                        <textarea
+                          name="explanation"
+                        >{question.explanation || ""}</textarea>
+
+                      </div>
+
+
+                      <div class="grid-2">
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Marks
+                          </label>
+
+                          <input
+                            type="number"
+                            name="marks"
+                            value="2"
+                            readonly
+                          />
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                          <label>
+                            Negative Marks
+                          </label>
+
+                          <input
+                            type="number"
+                            name="negative_marks"
+                            value="0"
+                            readonly
+                          />
+
+                        </div>
+
+
+                      </div>
+
+
+                      <div class="form-buttons">
+
+
+                        <button
+                          type="submit"
+                          class="btn btn-primary"
+                        >
+                          Save Changes
+                        </button>
+
+
+                        <button
+                          type="button"
+                          class="btn"
+                          data-close={question.id}
+                        >
+                          Cancel
+                        </button>
+
+
+                      </div>
+
+
+                    </form>
+
+
+                  </div>
+
+
+                </article>
+
+              ))
+            }
+
+
+          </div>
+
+        )
+      }
+
+
+    </section>
+
+
+  </div>
+
+
+</main>
+
+
+<script>
+
+  /* =========================================================
+     EDIT BUTTON
+  ========================================================= */
+
+  document
+    .querySelectorAll("[data-edit]")
+    .forEach((button) => {
+
+      button.addEventListener("click", () => {
+
+        const id =
+          button.getAttribute("data-edit");
+
+        if (!id) return;
+
+        const area =
+          document.getElementById(
+            `edit-${id}`
+          );
+
+        if (!area) return;
+
+        area.classList.toggle("open");
+
+        if (
+          area.classList.contains("open")
+        ) {
+
+          area.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+          });
+
+        }
+
+      });
+
+    });
+
+
+  /* =========================================================
+     CLOSE EDIT
+  ========================================================= */
+
+  document
+    .querySelectorAll("[data-close]")
+    .forEach((button) => {
+
+      button.addEventListener("click", () => {
+
+        const id =
+          button.getAttribute("data-close");
+
+        if (!id) return;
+
+        const area =
+          document.getElementById(
+            `edit-${id}`
+          );
+
+        if (!area) return;
+
+        area.classList.remove("open");
+
+      });
+
+    });
+
+
+  /* =========================================================
+     SEARCH QUESTIONS
+  ========================================================= */
+
+  const search =
+    document.getElementById("search");
+
+  const questionItems =
+    document.querySelectorAll(
+      "[data-search]"
+    );
+
+  if (search) {
+
+    search.addEventListener(
+      "input",
+      () => {
+
+        const value =
+          search.value
+            .trim()
+            .toLowerCase();
+
+        questionItems.forEach(
+          (item) => {
+
+            const text =
+              (
+                item.getAttribute(
+                  "data-search"
+                ) || ""
+              ).toLowerCase();
+
+            if (
+              !value ||
+              text.includes(value)
+            ) {
+
+              item.classList.remove(
+                "hidden"
+              );
+
+            } else {
+
+              item.classList.add(
+                "hidden"
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+
+  /* =========================================================
+     ADD FORM
+  ========================================================= */
+
+  const addForm =
+    document.getElementById("addForm");
+
+  if (addForm) {
+
+    addForm.addEventListener(
+      "submit",
+      () => {
+
+        const button =
+          addForm.querySelector(
+            "button[type='submit']"
+          );
+
+        if (button) {
+
+          button.textContent =
+            "Adding...";
+
+          button.disabled = true;
+
+        }
+
+      }
+    );
+
+  }
+
+</script>
+
+</body>
+</html>

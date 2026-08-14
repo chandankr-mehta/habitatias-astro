@@ -1,0 +1,3731 @@
+---
+export const prerender = false;
+
+const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error("Supabase environment variables are missing.");
+}
+
+/*
+=========================================================
+HABITAT IAS
+JPSC PRELIMS — 20 TEST MOCK TEST SERIES
+PURCHASE / CHECKOUT PAGE
+=========================================================
+
+PRODUCT:
+JPSC Prelims 20-Test Mock Test Series
+
+PRICE:
+₹499
+
+INCLUDES:
+• 20 Mock Tests
+• 5 General Studies Tests
+• 5 Jharkhand Tests
+• 5 Paper-I Full Length Tests
+• 5 Paper-II Full Length Tests
+• 100 Questions / Test
+• 200 Marks / Test
+• CBT Interface
+• Performance Analysis
+
+IMPORTANT:
+The browser NEVER decides the actual payment amount.
+
+The server-side API decides:
+₹499 = 49900 paise
+
+PRODUCT ID:
+jpsc_prelims_20_test_series
+=========================================================
+*/
+
+
+/* =========================================================
+   URL
+========================================================= */
+
+const requestedTest =
+  Number(
+    Astro.url.searchParams.get("test") || "1"
+  );
+
+const testNumber =
+  Number.isInteger(requestedTest) &&
+  requestedTest >= 1 &&
+  requestedTest <= 20
+    ? requestedTest
+    : 1;
+
+
+/* =========================================================
+   PRODUCT
+========================================================= */
+
+const productName =
+  "Habitat IAS — JPSC Prelims 20-Test Mock Test Series";
+
+const productId =
+  "jpsc_prelims_20_test_series";
+
+const price =
+  499;
+
+const currency =
+  "INR";
+
+const totalTests =
+  20;
+
+
+/* =========================================================
+   TEST GROUP
+========================================================= */
+
+let testGroup =
+  "General Studies";
+
+if (
+  testNumber >= 6 &&
+  testNumber <= 10
+) {
+  testGroup =
+    "Jharkhand Specific";
+}
+
+if (
+  testNumber >= 11 &&
+  testNumber <= 15
+) {
+  testGroup =
+    "Paper-I Full Length";
+}
+
+if (
+  testNumber >= 16 &&
+  testNumber <= 20
+) {
+  testGroup =
+    "Paper-II Full Length";
+}
+
+
+/* =========================================================
+   TEST NUMBER DISPLAY
+========================================================= */
+
+const testDisplay =
+  String(testNumber).padStart(2, "0");
+
+---
+
+<!doctype html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#1557d6"
+  />
+
+  <title>
+    Purchase JPSC Mock Test Series | Habitat IAS
+  </title>
+
+  <meta
+    name="description"
+    content="Purchase Habitat IAS JPSC Prelims 20-Test Mock Test Series."
+  />
+
+
+  <!-- =====================================================
+       RAZORPAY CHECKOUT
+  ====================================================== -->
+
+  <script
+    src="https://checkout.razorpay.com/v1/checkout.js"
+  ></script>
+
+
+
+  <style>
+
+    /* =====================================================
+       ROOT
+    ===================================================== */
+
+    :root {
+
+      --blue:
+        #1557d6;
+
+      --blue-dark:
+        #0d3f9f;
+
+      --blue-light:
+        #eef4ff;
+
+      --yellow:
+        #ffd43b;
+
+      --text:
+        #13213c;
+
+      --muted:
+        #667085;
+
+      --border:
+        #e5eaf2;
+
+      --white:
+        #ffffff;
+
+      --bg:
+        #f7f9fc;
+
+      --green:
+        #159447;
+
+      --green-light:
+        #eaf8ef;
+
+      --red:
+        #c62828;
+
+      --red-light:
+        #fff1f1;
+
+      --shadow:
+        0 18px 50px
+        rgba(
+          15,
+          39,
+          83,
+          0.10
+        );
+
+      --radius:
+        20px;
+    }
+
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
+    * {
+      box-sizing:
+        border-box;
+    }
+
+
+    html {
+      scroll-behavior:
+        smooth;
+    }
+
+
+    body {
+
+      margin:
+        0;
+
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      color:
+        var(--text);
+
+      background:
+        var(--bg);
+
+      line-height:
+        1.6;
+    }
+
+
+    a {
+
+      color:
+        inherit;
+
+      text-decoration:
+        none;
+    }
+
+
+    button,
+    input {
+
+      font:
+        inherit;
+    }
+
+
+    button {
+
+      cursor:
+        pointer;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .site-header {
+
+      position:
+        sticky;
+
+      top:
+        0;
+
+      z-index:
+        1000;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.97
+        );
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      backdrop-filter:
+        blur(12px);
+    }
+
+
+    .nav {
+
+      width:
+        min(
+          1200px,
+          calc(100% - 40px)
+        );
+
+      min-height:
+        76px;
+
+      margin:
+        0 auto;
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        25px;
+    }
+
+
+    .brand {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      gap:
+        12px;
+
+      color:
+        var(--blue);
+
+      font-size:
+        24px;
+
+      font-weight:
+        900;
+
+      white-space:
+        nowrap;
+    }
+
+
+    .brand-mark {
+
+      width:
+        44px;
+
+      height:
+        44px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      border-radius:
+        13px;
+
+      color:
+        white;
+
+      background:
+        var(--blue);
+
+      font-weight:
+        900;
+
+      box-shadow:
+        0 8px 20px
+        rgba(
+          21,
+          87,
+          214,
+          0.22
+        );
+    }
+
+
+    .nav-links {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        20px;
+
+      color:
+        #3f4d68;
+
+      font-size:
+        14px;
+
+      font-weight:
+        700;
+    }
+
+
+    .nav-links a:hover {
+
+      color:
+        var(--blue);
+    }
+
+
+    .nav-cta {
+
+      padding:
+        11px 18px;
+
+      border:
+        0;
+
+      border-radius:
+        11px;
+
+      color:
+        white;
+
+      background:
+        var(--blue);
+
+      font-weight:
+        800;
+    }
+
+
+    /* =====================================================
+       HERO
+    ===================================================== */
+
+    .hero {
+
+      padding:
+        60px 20px 55px;
+
+      color:
+        white;
+
+      background:
+        linear-gradient(
+          135deg,
+          #1145ad,
+          #2164e2
+        );
+    }
+
+
+    .hero-inner {
+
+      width:
+        min(
+          1100px,
+          calc(100% - 20px)
+        );
+
+      margin:
+        0 auto;
+
+      text-align:
+        center;
+    }
+
+
+    .eyebrow {
+
+      display:
+        inline-flex;
+
+      padding:
+        7px 14px;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.4
+        );
+
+      border-radius:
+        999px;
+
+      font-size:
+        11px;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        1.2px;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .hero h1 {
+
+      margin:
+        20px 0 12px;
+
+      font-size:
+        clamp(
+          34px,
+          5vw,
+          55px
+        );
+
+      line-height:
+        1.05;
+
+      letter-spacing:
+        -2px;
+    }
+
+
+    .hero h1 span {
+
+      color:
+        var(--yellow);
+    }
+
+
+    .hero p {
+
+      max-width:
+        760px;
+
+      margin:
+        0 auto;
+
+      color:
+        rgba(
+          255,
+          255,
+          255,
+          0.90
+        );
+
+      font-size:
+        17px;
+    }
+
+
+    /* =====================================================
+       HERO HIGHLIGHTS
+    ===================================================== */
+
+    .hero-highlights {
+
+      display:
+        flex;
+
+      justify-content:
+        center;
+
+      flex-wrap:
+        wrap;
+
+      gap:
+        10px;
+
+      margin-top:
+        24px;
+    }
+
+
+    .hero-highlights span {
+
+      padding:
+        8px 13px;
+
+      border:
+        1px solid
+        rgba(
+          255,
+          255,
+          255,
+          0.25
+        );
+
+      border-radius:
+        999px;
+
+      background:
+        rgba(
+          255,
+          255,
+          255,
+          0.10
+        );
+
+      font-size:
+        12px;
+
+      font-weight:
+        800;
+    }
+
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .checkout-section {
+
+      width:
+        min(
+          1100px,
+          calc(100% - 40px)
+        );
+
+      margin:
+        0 auto;
+
+      padding:
+        60px 0 90px;
+    }
+
+
+    .checkout-grid {
+
+      display:
+        grid;
+
+      grid-template-columns:
+        minmax(
+          0,
+          1.1fr
+        )
+        minmax(
+          320px,
+          0.9fr
+        );
+
+      gap:
+        30px;
+
+      align-items:
+        start;
+    }
+
+
+    /* =====================================================
+       CARD
+    ===================================================== */
+
+    .card {
+
+      padding:
+        30px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        22px;
+
+      background:
+        white;
+
+      box-shadow:
+        var(--shadow);
+    }
+
+
+    .card-label {
+
+      margin-bottom:
+        7px;
+
+      color:
+        var(--blue);
+
+      font-size:
+        11px;
+
+      font-weight:
+        900;
+
+      letter-spacing:
+        1.4px;
+
+      text-transform:
+        uppercase;
+    }
+
+
+    .card h2 {
+
+      margin:
+        0 0 8px;
+
+      font-size:
+        28px;
+
+      line-height:
+        1.2;
+    }
+
+
+    .card-description {
+
+      margin:
+        0 0 25px;
+
+      color:
+        var(--muted);
+
+      font-size:
+        14px;
+    }
+
+
+    /* =====================================================
+       PRODUCT BANNER
+    ===================================================== */
+
+    .product-banner {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      padding:
+        18px;
+
+      margin-bottom:
+        25px;
+
+      border:
+        1px solid
+        #dce8ff;
+
+      border-radius:
+        16px;
+
+      background:
+        var(--blue-light);
+    }
+
+
+    .product-left {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      gap:
+        13px;
+    }
+
+
+    .product-icon {
+
+      width:
+        48px;
+
+      height:
+        48px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      flex:
+        0 0 auto;
+
+      border-radius:
+        13px;
+
+      background:
+        white;
+
+      font-size:
+        25px;
+    }
+
+
+    .product-name {
+
+      font-size:
+        16px;
+
+      font-weight:
+        900;
+    }
+
+
+    .product-description {
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+    }
+
+
+    .product-price {
+
+      color:
+        var(--blue);
+
+      font-size:
+        28px;
+
+      font-weight:
+        950;
+
+      white-space:
+        nowrap;
+    }
+
+
+    /* =====================================================
+       TEST CONTEXT
+    ===================================================== */
+
+    .test-context {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        15px;
+
+      margin-bottom:
+        25px;
+
+      padding:
+        15px 17px;
+
+      border:
+        1px solid
+        var(--border);
+
+      border-radius:
+        14px;
+
+      background:
+        #fafbfe;
+    }
+
+
+    .test-context-label {
+
+      color:
+        var(--muted);
+
+      font-size:
+        12px;
+
+      font-weight:
+        700;
+    }
+
+
+    .test-context-value {
+
+      color:
+        var(--blue);
+
+      font-size:
+        13px;
+
+      font-weight:
+        900;
+
+      text-align:
+        right;
+    }
+
+
+    /* =====================================================
+       FORM
+    ===================================================== */
+
+    .form-group {
+
+      margin-bottom:
+        18px;
+    }
+
+
+    .form-group label {
+
+      display:
+        block;
+
+      margin-bottom:
+        7px;
+
+      color:
+        #344054;
+
+      font-size:
+        13px;
+
+      font-weight:
+        800;
+    }
+
+
+    .form-group input {
+
+      width:
+        100%;
+
+      min-height:
+        50px;
+
+      padding:
+        12px 14px;
+
+      border:
+        1px solid
+        #d8dee9;
+
+      border-radius:
+        12px;
+
+      outline:
+        none;
+
+      color:
+        var(--text);
+
+      background:
+        white;
+
+      transition:
+        border-color
+        0.2s ease,
+        box-shadow
+        0.2s ease;
+    }
+
+
+    .form-group input:focus {
+
+      border-color:
+        var(--blue);
+
+      box-shadow:
+        0 0 0 4px
+        rgba(
+          21,
+          87,
+          214,
+          0.10
+        );
+    }
+
+
+    .form-help {
+
+      margin-top:
+        5px;
+
+      color:
+        #8a94a8;
+
+      font-size:
+        11px;
+    }
+
+
+    /* =====================================================
+       LOGIN NOTICE
+    ===================================================== */
+
+    .login-notice {
+
+      display:
+        none;
+
+      margin-bottom:
+        20px;
+
+      padding:
+        16px;
+
+      border:
+        1px solid
+        #dce8ff;
+
+      border-radius:
+        14px;
+
+      color:
+        #23406f;
+
+      background:
+        var(--blue-light);
+
+      font-size:
+        13px;
+
+      line-height:
+        1.5;
+    }
+
+
+    .login-notice.show {
+
+      display:
+        block;
+    }
+
+
+    .login-notice strong {
+
+      display:
+        block;
+
+      margin-bottom:
+        4px;
+
+      font-size:
+        15px;
+    }
+
+
+    .login-button {
+
+      display:
+        inline-flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        center;
+
+      margin-top:
+        12px;
+
+      padding:
+        10px 15px;
+
+      border-radius:
+        10px;
+
+      color:
+        white;
+
+      background:
+        var(--blue);
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+    }
+
+
+    /* =====================================================
+       PAYMENT BUTTON
+    ===================================================== */
+
+    .payment-button {
+
+      width:
+        100%;
+
+      min-height:
+        55px;
+
+      margin-top:
+        8px;
+
+      padding:
+        13px 20px;
+
+      border:
+        0;
+
+      border-radius:
+        13px;
+
+      color:
+        #17233a;
+
+      background:
+        var(--yellow);
+
+      box-shadow:
+        0 10px 25px
+        rgba(
+          0,
+          0,
+          0,
+          0.13
+        );
+
+      font-size:
+        15px;
+
+      font-weight:
+        900;
+
+      transition:
+        transform
+        0.2s ease,
+        opacity
+        0.2s ease;
+    }
+
+
+    .payment-button:hover:not(:disabled) {
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    .payment-button:disabled {
+
+      cursor:
+        not-allowed;
+
+      opacity:
+        0.65;
+    }
+
+
+    /* =====================================================
+       SECURITY NOTICE
+    ===================================================== */
+
+    .security-notice {
+
+      display:
+        flex;
+
+      gap:
+        10px;
+
+      margin-top:
+        17px;
+
+      padding:
+        14px;
+
+      border-radius:
+        13px;
+
+      background:
+        #f5f7fb;
+
+      color:
+        #667085;
+
+      font-size:
+        11px;
+
+      line-height:
+        1.5;
+    }
+
+
+    .security-icon {
+
+      flex:
+        0 0 auto;
+
+      font-size:
+        16px;
+    }
+
+
+    /* =====================================================
+       ERROR
+    ===================================================== */
+
+    .error-message {
+
+      display:
+        none;
+
+      margin-bottom:
+        18px;
+
+      padding:
+        13px 15px;
+
+      border:
+        1px solid
+        #ffd2d2;
+
+      border-radius:
+        12px;
+
+      color:
+        var(--red);
+
+      background:
+        var(--red-light);
+
+      font-size:
+        13px;
+
+      font-weight:
+        700;
+    }
+
+
+    .error-message.show {
+
+      display:
+        block;
+    }
+
+
+    /* =====================================================
+       SUCCESS
+    ===================================================== */
+
+    .success-message {
+
+      display:
+        none;
+
+      margin-top:
+        20px;
+
+      padding:
+        18px;
+
+      border:
+        1px solid
+        #b9e8c8;
+
+      border-radius:
+        14px;
+
+      color:
+        #126b34;
+
+      background:
+        var(--green-light);
+
+      font-size:
+        13px;
+
+      line-height:
+        1.6;
+    }
+
+
+    .success-message.show {
+
+      display:
+        block;
+    }
+
+
+    .success-message strong {
+
+      display:
+        block;
+
+      margin-bottom:
+        5px;
+
+      font-size:
+        16px;
+    }
+
+
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+    .summary-card {
+
+      position:
+        sticky;
+
+      top:
+        105px;
+    }
+
+
+    .summary-title {
+
+      margin-bottom:
+        20px;
+
+      font-size:
+        19px;
+
+      font-weight:
+        900;
+    }
+
+
+    .summary-row {
+
+      display:
+        flex;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      padding:
+        13px 0;
+
+      border-bottom:
+        1px solid
+        var(--border);
+
+      font-size:
+        14px;
+    }
+
+
+    .summary-row span:first-child {
+
+      color:
+        var(--muted);
+    }
+
+
+    .summary-row span:last-child {
+
+      text-align:
+        right;
+
+      font-weight:
+        800;
+    }
+
+
+    .summary-total {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        20px;
+
+      padding-top:
+        20px;
+    }
+
+
+    .summary-total-label {
+
+      font-size:
+        18px;
+
+      font-weight:
+        900;
+    }
+
+
+    .summary-total-price {
+
+      color:
+        var(--blue);
+
+      font-size:
+        30px;
+
+      font-weight:
+        950;
+    }
+
+
+    /* =====================================================
+       BENEFITS
+    ===================================================== */
+
+    .benefits {
+
+      display:
+        grid;
+
+      gap:
+        12px;
+
+      margin-top:
+        25px;
+    }
+
+
+    .benefit {
+
+      display:
+        flex;
+
+      align-items:
+        flex-start;
+
+      gap:
+        10px;
+
+      color:
+        #526079;
+
+      font-size:
+        13px;
+    }
+
+
+    .benefit-icon {
+
+      width:
+        22px;
+
+      height:
+        22px;
+
+      display:
+        grid;
+
+      place-items:
+        center;
+
+      flex:
+        0 0 auto;
+
+      border-radius:
+        50%;
+
+      color:
+        var(--green);
+
+      background:
+        var(--green-light);
+
+      font-size:
+        12px;
+
+      font-weight:
+        900;
+    }
+
+
+    /* =====================================================
+       SERIES BREAKDOWN
+    ===================================================== */
+
+    .series-breakdown {
+
+      margin-top:
+        25px;
+
+      padding-top:
+        22px;
+
+      border-top:
+        1px solid
+        var(--border);
+    }
+
+
+    .series-breakdown h3 {
+
+      margin:
+        0 0 12px;
+
+      font-size:
+        15px;
+    }
+
+
+    .series-item {
+
+      display:
+        flex;
+
+      align-items:
+        center;
+
+      justify-content:
+        space-between;
+
+      gap:
+        12px;
+
+      padding:
+        9px 0;
+
+      color:
+        #526079;
+
+      font-size:
+        12px;
+    }
+
+
+    .series-item strong {
+
+      color:
+        var(--text);
+
+      font-size:
+        12px;
+    }
+
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+
+      padding:
+        35px 20px;
+
+      color:
+        #aab6cc;
+
+      background:
+        #091a3b;
+
+      text-align:
+        center;
+
+      font-size:
+        13px;
+    }
+
+
+    .footer strong {
+
+      color:
+        white;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (
+      max-width: 850px
+    ) {
+
+      .nav {
+
+        width:
+          calc(100% - 28px);
+      }
+
+
+      .nav-links {
+
+        display:
+          none;
+      }
+
+
+      .checkout-grid {
+
+        grid-template-columns:
+          1fr;
+      }
+
+
+      .summary-card {
+
+        position:
+          static;
+      }
+    }
+
+
+    @media (
+      max-width: 600px
+    ) {
+
+      .hero {
+
+        padding:
+          45px 15px;
+      }
+
+
+      .checkout-section {
+
+        width:
+          calc(100% - 28px);
+
+        padding:
+          40px 0 60px;
+      }
+
+
+      .card {
+
+        padding:
+          22px;
+
+        border-radius:
+          18px;
+      }
+
+
+      .product-banner {
+
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+      }
+
+
+      .product-price {
+
+        margin-left:
+          61px;
+      }
+
+
+      .test-context {
+
+        align-items:
+          flex-start;
+
+        flex-direction:
+          column;
+      }
+
+
+      .test-context-value {
+
+        text-align:
+          left;
+      }
+
+
+      .brand {
+
+        font-size:
+          20px;
+      }
+
+
+      .brand-mark {
+
+        width:
+          38px;
+
+        height:
+          38px;
+      }
+    }
+
+
+    .student-account {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid #dbe5f5;
+      border-radius: 999px;
+      background: #f7faff;
+      color: #12305f;
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .student-account::before {
+      content: "👤";
+      font-size: 15px;
+    }
+  </style>
+
+</head>
+
+
+<body>
+
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <header class="site-header">
+
+    <nav class="nav">
+
+      <a
+        href="/"
+        class="brand"
+      >
+
+        <span class="brand-mark">
+          H
+        </span>
+
+        <span>
+          Habitat IAS
+        </span>
+
+      </a>
+
+
+      <div class="nav-links">
+
+        <a href="/">
+          Home
+        </a>
+
+        <a href="/pyq/">
+          JPSC PYQs
+        </a>
+
+        <a href="/notes/">
+          Notes
+        </a>
+
+        <a href="/mock-tests/">
+          Mock Tests
+        </a>
+
+        <a href="/results">
+          Results
+        </a>
+
+        <a href="/contact/">
+          Contact
+        </a>
+
+      </div>
+
+
+      <span
+        id="studentAccount"
+        class="student-account"
+        style="display:none"
+      ></span>
+
+      <a
+        href="/mock-tests/"
+        class="nav-cta"
+      >
+        Back to Mock Tests
+      </a>
+
+    </nav>
+
+  </header>
+
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero">
+
+    <div class="hero-inner">
+
+      <span class="eyebrow">
+        Habitat IAS • JPSC Prelims
+      </span>
+
+
+      <h1>
+        Unlock the
+        <span>20-Test Series</span>
+      </h1>
+
+
+      <p>
+        Complete JPSC Prelims computer-based test
+        practice covering General Studies,
+        Jharkhand-specific topics, Paper-I and
+        Paper-II full-length simulations.
+      </p>
+
+
+      <div class="hero-highlights">
+
+        <span>
+          ✓ 20 Tests
+        </span>
+
+        <span>
+          ✓ 100 Questions / Test
+        </span>
+
+        <span>
+          ✓ 200 Marks / Test
+        </span>
+
+        <span>
+          ✓ +2 Marking
+        </span>
+
+        <span>
+          ✓ No Negative Marking
+        </span>
+
+        <span>
+          ✓ CBT Interface
+        </span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       CHECKOUT
+  ====================================================== -->
+
+  <main class="checkout-section">
+
+    <div class="checkout-grid">
+
+
+      <!-- =================================================
+           CUSTOMER INFORMATION
+      ================================================= -->
+
+      <section class="card">
+
+        <div class="card-label">
+          Secure Checkout
+        </div>
+
+
+        <h2>
+          Purchase Mock Test Series
+        </h2>
+
+
+        <p class="card-description">
+          Purchase once and unlock all 20 JPSC
+          Prelims mock tests on your Habitat IAS
+          student account.
+        </p>
+
+
+        <!-- PRODUCT -->
+
+        <div class="product-banner">
+
+          <div class="product-left">
+
+            <div class="product-icon">
+              🎯
+            </div>
+
+
+            <div>
+
+              <div class="product-name">
+                JPSC Prelims 20-Test Series
+              </div>
+
+              <div class="product-description">
+                Complete online mock-test access
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="product-price">
+            ₹499
+          </div>
+
+        </div>
+
+
+        <!-- TEST CONTEXT -->
+
+        <div class="test-context">
+
+          <div>
+
+            <div class="test-context-label">
+              You selected
+            </div>
+
+            <strong>
+              Test {testDisplay}
+            </strong>
+
+          </div>
+
+
+          <div class="test-context-value">
+            {testGroup}
+            <br />
+            <small>
+              Purchase unlocks all 20 tests
+            </small>
+          </div>
+
+        </div>
+
+
+        <!-- LOGIN NOTICE -->
+
+        <div
+          id="loginNotice"
+          class="login-notice"
+        >
+
+          <strong>
+            Login required
+          </strong>
+
+          You must be logged into your Habitat IAS
+          student account before purchasing the
+          mock-test series.
+
+          <br />
+
+          <a
+            id="loginButton"
+            href="/login?redirect=/mock-tests/buy"
+            class="login-button"
+          >
+            Login to Student Portal
+          </a>
+
+        </div>
+
+
+        <!-- ERROR -->
+
+        <div
+          id="errorMessage"
+          class="error-message"
+          role="alert"
+        ></div>
+
+
+        <!-- FORM -->
+
+        <form
+          id="checkoutForm"
+          novalidate
+        >
+
+
+          <!-- NAME -->
+
+          <div class="form-group">
+
+            <label for="name">
+              Full Name *
+            </label>
+
+            <input
+              id="name"
+              name="name"
+              type="text"
+              placeholder="Enter your full name"
+              autocomplete="name"
+              maxlength="100"
+              required
+            />
+
+          </div>
+
+
+          <!-- EMAIL -->
+
+          <div class="form-group">
+
+            <label for="email">
+              Email Address *
+            </label>
+
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              maxlength="150"
+              required
+            />
+
+            <div class="form-help">
+              This should match your student account
+              email where possible.
+            </div>
+
+          </div>
+
+
+          <!-- MOBILE -->
+
+          <div class="form-group">
+
+            <label for="mobile">
+              Mobile Number *
+            </label>
+
+            <input
+              id="mobile"
+              name="mobile"
+              type="tel"
+              inputmode="numeric"
+              placeholder="10-digit mobile number"
+              autocomplete="tel"
+              maxlength="10"
+              required
+            />
+
+            <div class="form-help">
+              Enter a valid 10-digit Indian mobile number.
+            </div>
+
+          </div>
+
+
+          <!-- PAYMENT BUTTON -->
+
+          <button
+            id="paymentButton"
+            class="payment-button"
+            type="submit"
+            disabled
+          >
+            Checking Login...
+          </button>
+
+        </form>
+
+
+        <!-- SECURITY -->
+
+        <div class="security-notice">
+
+          <div class="security-icon">
+            🔒
+          </div>
+
+          <div>
+
+            <strong>
+              Secure Razorpay payment
+            </strong>
+
+            <br />
+
+            Your payment is processed through the
+            official Razorpay Checkout.
+
+            Do not enter your card PIN, UPI PIN or
+            banking password anywhere except the
+            official payment window.
+
+          </div>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+          id="successMessage"
+          class="success-message"
+        >
+
+          <strong>
+            Payment verified successfully ✓
+          </strong>
+
+          Your JPSC Mock Test Series purchase
+          has been verified.
+
+          <br /><br />
+
+          You can now access the complete
+          20-test series.
+
+          <br /><br />
+
+          <a
+            href="/mock-tests/"
+            style="
+              display:inline-flex;
+              padding:10px 15px;
+              border-radius:10px;
+              color:#fff;
+              background:#1557d6;
+              font-size:12px;
+              font-weight:900;
+            "
+          >
+            Go to Mock Tests →
+          </a>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           ORDER SUMMARY
+      ================================================= -->
+
+      <aside class="card summary-card">
+
+        <div class="card-label">
+          Order Summary
+        </div>
+
+
+        <div class="summary-title">
+          JPSC Prelims 20-Test Series
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Product
+          </span>
+
+          <span>
+            JPSC Mock Tests
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Tests
+          </span>
+
+          <span>
+            20
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Questions
+          </span>
+
+          <span>
+            100 / Test
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Marks
+          </span>
+
+          <span>
+            200 / Test
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Marking
+          </span>
+
+          <span>
+            +2 / Correct
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Negative Marking
+          </span>
+
+          <span>
+            None
+          </span>
+
+        </div>
+
+
+        <div class="summary-row">
+
+          <span>
+            Access
+          </span>
+
+          <span>
+            Complete Series
+          </span>
+
+        </div>
+
+
+        <div class="summary-total">
+
+          <span class="summary-total-label">
+            Total
+          </span>
+
+          <span class="summary-total-price">
+            ₹499
+          </span>
+
+        </div>
+
+
+        <!-- BENEFITS -->
+
+        <div class="benefits">
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              5 General Studies sectional tests
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              5 Jharkhand-specific tests
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              5 Paper-I full-length tests
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              5 Paper-II full-length tests
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Realistic CBT interface
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Performance analysis
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Personal test history
+            </span>
+
+          </div>
+
+
+          <div class="benefit">
+
+            <span class="benefit-icon">
+              ✓
+            </span>
+
+            <span>
+              Secure student account access
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- SERIES BREAKDOWN -->
+
+        <div class="series-breakdown">
+
+          <h3>
+            Series Structure
+          </h3>
+
+
+          <div class="series-item">
+
+            <span>
+              Tests 01–05
+            </span>
+
+            <strong>
+              General Studies
+            </strong>
+
+          </div>
+
+
+          <div class="series-item">
+
+            <span>
+              Tests 06–10
+            </span>
+
+            <strong>
+              Jharkhand
+            </strong>
+
+          </div>
+
+
+          <div class="series-item">
+
+            <span>
+              Tests 11–15
+            </span>
+
+            <strong>
+              Paper-I
+            </strong>
+
+          </div>
+
+
+          <div class="series-item">
+
+            <span>
+              Tests 16–20
+            </span>
+
+            <strong>
+              Paper-II
+            </strong>
+
+          </div>
+
+        </div>
+
+      </aside>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="footer">
+
+    <strong>
+      Habitat IAS
+    </strong>
+
+    <br />
+
+    JPSC & UPSC Preparation Resources
+
+    <br />
+
+    © {new Date().getFullYear()}
+    Habitat IAS. All rights reserved.
+
+  </footer>
+
+
+  <!-- =====================================================
+       PAYMENT JAVASCRIPT
+  ====================================================== -->
+
+  <script>
+
+    /* =====================================================
+       SUPABASE BROWSER CLIENT
+       Use the project's existing client so the browser and
+       the rest of Habitat IAS share the same Supabase session.
+    ====================================================== */
+
+    import { supabase } from "../../lib/supabase";
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      async () => {
+
+
+        /* =================================================
+           CONFIGURATION
+        ================================================= */
+
+        const TEST_NUMBER =
+          Number(
+            new URLSearchParams(window.location.search).get("test") || "1"
+          );
+
+        const PRODUCT_ID =
+          "jpsc_prelims_20_test_series";
+
+        const PRODUCT_NAME =
+          "Habitat IAS — JPSC Prelims 20-Test Mock Test Series";
+
+        const PRICE =
+          499;
+
+
+        /* =================================================
+           ELEMENTS
+        ================================================= */
+
+        const form =
+          document.getElementById(
+            "checkoutForm"
+          );
+
+        const nameInput =
+          document.getElementById(
+            "name"
+          );
+
+        const emailInput =
+          document.getElementById(
+            "email"
+          );
+
+        const mobileInput =
+          document.getElementById(
+            "mobile"
+          );
+
+        const paymentButton =
+          document.getElementById(
+            "paymentButton"
+          );
+
+        const errorMessage =
+          document.getElementById(
+            "errorMessage"
+          );
+
+        const successMessage =
+          document.getElementById(
+            "successMessage"
+          );
+
+        const loginNotice =
+          document.getElementById(
+            "loginNotice"
+          );
+
+        const loginButton =
+          document.getElementById(
+            "loginButton"
+          );
+
+
+        /* =================================================
+           ERROR DISPLAY
+        ================================================= */
+
+        function showError(
+          message
+        ) {
+
+          if (!errorMessage) {
+            return;
+          }
+
+          errorMessage.textContent =
+            message;
+
+          errorMessage.classList.add(
+            "show"
+          );
+        }
+
+
+        function clearError() {
+
+          if (!errorMessage) {
+            return;
+          }
+
+          errorMessage.textContent =
+            "";
+
+          errorMessage.classList.remove(
+            "show"
+          );
+        }
+
+
+        /* =================================================
+           BUTTON STATE
+        ================================================= */
+
+        function setLoginRequired() {
+
+          if (loginNotice) {
+
+            loginNotice.classList.add(
+              "show"
+            );
+
+          }
+
+          if (paymentButton) {
+
+            paymentButton.disabled =
+              true;
+
+            paymentButton.textContent =
+              "Login Required";
+
+          }
+
+        }
+
+
+        function setReady() {
+
+          if (loginNotice) {
+
+            loginNotice.classList.remove(
+              "show"
+            );
+
+          }
+
+          if (paymentButton) {
+
+            paymentButton.disabled =
+              false;
+
+            paymentButton.textContent =
+              `Continue to Secure Payment — ₹${PRICE}`;
+
+          }
+
+        }
+
+
+        /* =================================================
+           GET SUPABASE SESSION
+        ================================================= */
+
+        let accessToken =
+          null;
+
+        let currentUser =
+          null;
+
+
+        try {
+
+          const {
+            data:
+              sessionData,
+            error:
+              sessionError
+          } =
+            await supabase.auth.getSession();
+
+
+          if (sessionError) {
+
+            console.error(
+              "Session error:",
+              sessionError
+            );
+
+            setLoginRequired();
+
+          } else {
+
+            const session =
+              sessionData?.session;
+
+            accessToken =
+              session?.access_token ||
+              null;
+
+            currentUser =
+              session?.user ||
+              null;
+
+
+            if (
+              !accessToken ||
+              !currentUser
+            ) {
+
+              setLoginRequired();
+
+            } else {
+
+              /*
+               * Prefill the email from
+               * the authenticated account.
+               */
+
+              if (
+                currentUser.email &&
+                emailInput
+              ) {
+
+                emailInput.value =
+                  currentUser.email;
+
+              }
+
+
+              /*
+               * Redirect back to this exact
+               * purchase page after login.
+               */
+
+              if (loginButton) {
+
+                loginButton.href =
+                  `/login?redirect=${encodeURIComponent(
+                    window.location.pathname +
+                    window.location.search
+                  )}`;
+
+              }
+
+
+              setReady();
+
+            }
+
+          }
+
+        } catch (
+          error
+        ) {
+
+          console.error(
+            "Authentication check failed:",
+            error
+          );
+
+          setLoginRequired();
+
+        }
+
+
+        /* =================================================
+           AUTH STATE CHANGE
+        ================================================= */
+
+        supabase.auth.onAuthStateChange(
+          async (
+            event,
+            session
+          ) => {
+
+            if (
+              event === "SIGNED_IN" ||
+              event === "TOKEN_REFRESHED"
+            ) {
+
+              accessToken =
+                session?.access_token ||
+                null;
+
+              currentUser =
+                session?.user ||
+                null;
+
+
+              if (
+                currentUser?.email &&
+                emailInput
+              ) {
+
+                emailInput.value =
+                  currentUser.email;
+
+              }
+
+
+              if (
+                accessToken &&
+                currentUser
+              ) {
+
+                setReady();
+
+              } else {
+
+                setLoginRequired();
+
+              }
+
+            }
+
+
+            if (
+              event === "SIGNED_OUT"
+            ) {
+
+              accessToken =
+                null;
+
+              currentUser =
+                null;
+
+              setLoginRequired();
+
+            }
+
+          }
+        );
+
+
+        /* =================================================
+           VALIDATE CUSTOMER
+        ================================================= */
+
+        function validateCustomer() {
+
+          clearError();
+
+
+          const name =
+            nameInput.value.trim();
+
+
+          const email =
+            emailInput.value.trim();
+
+
+          const mobile =
+            mobileInput.value
+              .replace(
+                /\D/g,
+                ""
+              );
+
+
+          if (
+            name.length < 2
+          ) {
+
+            showError(
+              "Please enter your full name."
+            );
+
+            nameInput.focus();
+
+            return null;
+          }
+
+
+          const emailRegex =
+            /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+          if (
+            !emailRegex.test(
+              email
+            )
+          ) {
+
+            showError(
+              "Please enter a valid email address."
+            );
+
+            emailInput.focus();
+
+            return null;
+          }
+
+
+          if (
+            !/^[6-9]\d{9}$/.test(
+              mobile
+            )
+          ) {
+
+            showError(
+              "Please enter a valid 10-digit Indian mobile number."
+            );
+
+            mobileInput.focus();
+
+            return null;
+          }
+
+
+          return {
+
+            name,
+
+            email,
+
+            mobile
+
+          };
+
+        }
+
+
+        /* =================================================
+           CREATE SERVER-SIDE ORDER
+        ================================================= */
+
+        async function createOrder(
+          customer
+        ) {
+
+          /*
+           * Refresh the session before payment.
+           */
+
+          const {
+            data:
+              freshSessionData,
+            error:
+              freshSessionError
+          } =
+            await supabase.auth.getSession();
+
+
+          if (
+            freshSessionError
+          ) {
+
+            throw new Error(
+              freshSessionError.message ||
+              "Unable to verify your login session."
+            );
+
+          }
+
+
+          const freshSession =
+            freshSessionData?.session;
+
+
+          const token =
+            freshSession?.access_token;
+
+
+          if (!token) {
+
+            throw new Error(
+              "Your login session has expired. Please login again."
+            );
+
+          }
+
+
+          accessToken =
+            token;
+
+
+          currentUser =
+            freshSession?.user ||
+            currentUser;
+
+          /* =================================================
+             GLOBAL STUDENT NAME ON THIS PAGE
+          ================================================= */
+
+          const studentAccount =
+            document.getElementById(
+              "studentAccount"
+            );
+
+          if (
+            studentAccount &&
+            currentUser
+          ) {
+            const metadata =
+              currentUser.user_metadata || {};
+
+            const studentName =
+              metadata.full_name ||
+              metadata.name ||
+              metadata.display_name ||
+              currentUser.email?.split("@")[0] ||
+              "Student";
+
+            studentAccount.textContent =
+              studentName;
+
+            studentAccount.style.display =
+              "inline-flex";
+          }
+
+
+          /*
+           * Send only the information required
+           * by the server.
+           *
+           * PRICE IS NOT SENT.
+           *
+           * The server decides ₹499.
+           */
+
+          const response =
+            await fetch(
+              "/api/mock-tests/create-order",
+              {
+
+                method:
+                  "POST",
+
+                credentials:
+                  "same-origin",
+
+                headers: {
+
+                  "Content-Type":
+                    "application/json",
+
+                  "Accept":
+                    "application/json",
+
+                  "Authorization":
+                    `Bearer ${token}`
+
+                },
+
+                body:
+                  JSON.stringify({
+
+                    testNumber:
+                      TEST_NUMBER
+
+                  })
+
+              }
+            );
+
+
+          const responseText =
+            await response.text();
+
+
+          let data =
+            null;
+
+
+          try {
+
+            data =
+              JSON.parse(
+                responseText
+              );
+
+          } catch {
+
+            console.error(
+              "Invalid create-order response:",
+              responseText
+            );
+
+            throw new Error(
+              `The server returned an invalid response (HTTP ${response.status}).`
+            );
+
+          }
+
+
+          if (
+            !response.ok
+          ) {
+
+            if (
+              data?.code ===
+              "LOGIN_REQUIRED"
+            ) {
+
+              throw new Error(
+                "Please login before purchasing the mock test series."
+              );
+
+            }
+
+
+            if (
+              data?.code ===
+              "ALREADY_PURCHASED"
+            ) {
+
+              throw new Error(
+                "You already have access to the JPSC Mock Test Series."
+              );
+
+            }
+
+
+            throw new Error(
+              data?.error ||
+              "Unable to create Razorpay order."
+            );
+
+          }
+
+
+          if (
+            !data?.success
+          ) {
+
+            throw new Error(
+              data?.error ||
+              "Unable to create payment order."
+            );
+
+          }
+
+
+          if (
+            !data?.order?.id
+          ) {
+
+            throw new Error(
+              "Razorpay order ID was not returned by the server."
+            );
+
+          }
+
+
+          return data;
+
+        }
+
+
+        /* =================================================
+           OPEN RAZORPAY
+        ================================================= */
+
+        function openRazorpay(
+          orderData,
+          customer
+        ) {
+
+
+          if (
+            typeof window.Razorpay ===
+            "undefined"
+          ) {
+
+            throw new Error(
+              "Razorpay Checkout could not be loaded. Please refresh the page and try again."
+            );
+
+          }
+
+
+          const options = {
+
+            key:
+              orderData.keyId,
+
+            amount:
+              orderData.order.amount,
+
+            currency:
+              orderData.order.currency ||
+              "INR",
+
+            order_id:
+              orderData.order.id,
+
+            name:
+              "Habitat IAS",
+
+            description:
+              PRODUCT_NAME,
+
+            prefill: {
+
+              name:
+                customer.name,
+
+              email:
+                customer.email,
+
+              contact:
+                customer.mobile
+
+            },
+
+            notes: {
+
+              product:
+                PRODUCT_ID,
+
+              product_name:
+                PRODUCT_NAME,
+
+              test_number:
+                String(
+                  TEST_NUMBER
+                )
+
+            },
+
+            theme: {
+
+              color:
+                "#1557d6"
+
+            },
+
+
+            handler:
+              async function (
+                paymentResponse
+              ) {
+
+                await verifyPayment(
+                  paymentResponse,
+                  customer
+                );
+
+              },
+
+
+            modal: {
+
+              ondismiss:
+                function () {
+
+                  if (
+                    paymentButton
+                  ) {
+
+                    paymentButton.disabled =
+                      false;
+
+                    paymentButton.textContent =
+                      `Continue to Secure Payment — ₹${PRICE}`;
+
+                  }
+
+                }
+
+            }
+
+          };
+
+
+          const razorpay =
+            new window.Razorpay(
+              options
+            );
+
+
+          /* =================================================
+             PAYMENT FAILURE
+          ================================================= */
+
+          razorpay.on(
+            "payment.failed",
+            function (
+              response
+            ) {
+
+              console.error(
+                "Razorpay payment failed:",
+                response
+              );
+
+
+              showError(
+                response
+                  ?.error
+                  ?.description ||
+                "Payment failed. Please try again."
+              );
+
+
+              if (
+                paymentButton
+              ) {
+
+                paymentButton.disabled =
+                  false;
+
+                paymentButton.textContent =
+                  `Continue to Secure Payment — ₹${PRICE}`;
+
+              }
+
+            }
+          );
+
+
+          /* =================================================
+             OPEN CHECKOUT
+          ================================================= */
+
+          razorpay.open();
+
+        }
+
+
+        /* =================================================
+           VERIFY PAYMENT
+        ================================================= */
+
+        async function verifyPayment(
+          paymentResponse,
+          customer
+        ) {
+
+
+          if (
+            paymentButton
+          ) {
+
+            paymentButton.disabled =
+              true;
+
+            paymentButton.textContent =
+              "Verifying Payment...";
+
+          }
+
+
+          clearError();
+
+
+          try {
+
+
+            /*
+             * Get a fresh access token.
+             */
+
+            const {
+              data:
+                sessionData,
+              error:
+                sessionError
+            } =
+              await supabase.auth.getSession();
+
+
+            if (
+              sessionError
+            ) {
+
+              throw new Error(
+                sessionError.message ||
+                "Unable to verify your login session."
+              );
+
+            }
+
+
+            const token =
+              sessionData
+                ?.session
+                ?.access_token;
+
+
+            if (!token) {
+
+              throw new Error(
+                "Your login session has expired. Please login again."
+              );
+
+            }
+
+
+            /*
+             * Send payment information
+             * to server.
+             *
+             * The server MUST verify:
+             *
+             * 1. Razorpay signature
+             * 2. Order ID
+             * 3. Payment ID
+             * 4. Payment amount
+             * 5. Currency
+             * 6. Payment status
+             * 7. Authenticated user
+             */
+
+            const response =
+              await fetch(
+                "/api/mock-tests/verify-payment",
+                {
+
+                  method:
+                    "POST",
+
+                  credentials:
+                    "same-origin",
+
+                  headers: {
+
+                    "Content-Type":
+                      "application/json",
+
+                    "Accept":
+                      "application/json",
+
+                    "Authorization":
+                      `Bearer ${token}`
+
+                  },
+
+                  body:
+                    JSON.stringify({
+
+                      razorpay_payment_id:
+                        paymentResponse
+                          .razorpay_payment_id,
+
+                      razorpay_order_id:
+                        paymentResponse
+                          .razorpay_order_id,
+
+                      razorpay_signature:
+                        paymentResponse
+                          .razorpay_signature
+
+                    })
+
+                }
+              );
+
+
+            const responseText =
+              await response.text();
+
+
+            let data =
+              null;
+
+
+            try {
+
+              data =
+                JSON.parse(
+                  responseText
+                );
+
+            } catch {
+
+              throw new Error(
+                "Payment verification returned an invalid server response."
+              );
+
+            }
+
+
+            if (
+              !response.ok
+            ) {
+
+              throw new Error(
+                data?.error ||
+                "Payment verification failed."
+              );
+
+            }
+
+
+            if (
+              !data?.success ||
+              data?.verified !== true
+            ) {
+
+              throw new Error(
+                data?.error ||
+                "Payment could not be verified."
+              );
+
+            }
+
+
+            /* =================================================
+               SUCCESS
+            ================================================= */
+
+            if (
+              successMessage
+            ) {
+
+              successMessage.classList.add(
+                "show"
+              );
+
+            }
+
+
+            if (
+              paymentButton
+            ) {
+
+              paymentButton.textContent =
+                "Payment Verified ✓";
+
+              paymentButton.disabled =
+                true;
+
+            }
+
+
+            /*
+             * Redirect after a short delay.
+             *
+             * This gives the user time to see
+             * the successful payment message.
+             */
+
+            window.setTimeout(
+              () => {
+
+                window.location.href =
+                  "/mock-tests/";
+
+              },
+              1800
+            );
+
+
+          } catch (
+            error
+          ) {
+
+            console.error(
+              "Payment verification error:",
+              error
+            );
+
+
+            showError(
+              error instanceof Error
+                ? error.message
+                : "Payment verification failed. Please contact Habitat IAS support."
+            );
+
+
+            if (
+              paymentButton
+            ) {
+
+              paymentButton.disabled =
+                false;
+
+              paymentButton.textContent =
+                `Continue to Secure Payment — ₹${PRICE}`;
+
+            }
+
+          }
+
+        }
+
+
+        /* =================================================
+           FORM SUBMISSION
+        ================================================= */
+
+        if (
+          form
+        ) {
+
+          form.addEventListener(
+            "submit",
+            async function (
+              event
+            ) {
+
+              event.preventDefault();
+
+
+              /*
+               * Prevent double-click.
+               */
+
+              if (
+                paymentButton.disabled
+              ) {
+
+                return;
+
+              }
+
+
+              /*
+               * Make sure user is authenticated.
+               */
+
+              if (
+                !accessToken ||
+                !currentUser
+              ) {
+
+                setLoginRequired();
+
+                showError(
+                  "Please login before purchasing the mock test series."
+                );
+
+                return;
+
+              }
+
+
+              const customer =
+                validateCustomer();
+
+
+              if (
+                !customer
+              ) {
+
+                return;
+
+              }
+
+
+              /*
+               * Lock button.
+               */
+
+              paymentButton.disabled =
+                true;
+
+              paymentButton.textContent =
+                "Creating Secure Payment...";
+
+
+              try {
+
+
+                /* =========================================
+                   STEP 1
+                   CREATE SERVER-SIDE ORDER
+                ========================================= */
+
+                const orderData =
+                  await createOrder(
+                    customer
+                  );
+
+
+                console.log(
+                  "Mock-test Razorpay order created:",
+                  orderData
+                );
+
+
+                /* =========================================
+                   STEP 2
+                   OPEN RAZORPAY
+                ========================================= */
+
+                openRazorpay(
+                  orderData,
+                  customer
+                );
+
+
+              } catch (
+                error
+              ) {
+
+                console.error(
+                  "Payment initialization error:",
+                  error
+                );
+
+
+                showError(
+                  error instanceof Error
+                    ? error.message
+                    : "Unable to start payment. Please try again."
+                );
+
+
+                paymentButton.disabled =
+                  false;
+
+                paymentButton.textContent =
+                  `Continue to Secure Payment — ₹${PRICE}`;
+
+              }
+
+            }
+          );
+
+        }
+
+      }
+
+    );
+
+  </script>
+
+
+</body>
+
+</html>

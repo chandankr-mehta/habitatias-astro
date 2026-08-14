@@ -1669,6 +1669,12 @@ const redirectTo =
     } from "../lib/supabase";
 
 
+    /* Browser-side redirect destination. */
+    const redirectTo =
+      new URLSearchParams(
+        window.location.search
+      ).get("redirect") || "/dashboard";
+
     const registerForm =
       document.getElementById(
         "registerForm"
@@ -2153,6 +2159,9 @@ const redirectTo =
           "Creating your account…";
 
 
+        let registrationSucceeded =
+          false;
+
         try {
 
 
@@ -2299,7 +2308,7 @@ const redirectTo =
         } finally {
 
           if (
-            !dataHasSession()
+            !registrationSucceeded
           ) {
 
             createButton.disabled =
@@ -2315,21 +2324,6 @@ const redirectTo =
       }
     );
 
-
-    /*
-     * Small helper used by finally.
-     * It safely checks whether the current
-     * Supabase client has an authenticated session.
-     *
-     * Registration itself remains controlled by
-     * the signUp response above.
-     */
-
-    function dataHasSession() {
-
-      return false;
-
-    }
 
   </script>
 

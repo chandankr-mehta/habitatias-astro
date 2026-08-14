@@ -1,0 +1,2074 @@
+---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const adminUserId =
+  import.meta.env.ADMIN_USER_ID;
+
+if (!supabaseUrl) {
+  throw new Error("PUBLIC_SUPABASE_URL is missing.");
+}
+
+if (!serviceRoleKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY is missing.");
+}
+
+if (!adminUserId) {
+  throw new Error("ADMIN_USER_ID is missing.");
+}
+
+/* =========================================================
+   CONSTANTS
+========================================================= */
+
+const PRODUCT_ID =
+  "jpsc_prelims_20_test_series";
+
+const TOTAL_TESTS = 20;
+
+/* =========================================================
+   SUPABASE ADMIN CLIENT
+========================================================= */
+
+const supabaseAdmin = createClient(
+  supabaseUrl,
+  serviceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
+
+/* =========================================================
+   TYPES
+========================================================= */
+
+type StudentRow = {
+  id: string;
+  email: string;
+  name: string;
+
+  paid: boolean;
+
+  manualAccess: boolean;
+
+  hasAccess: boolean;
+
+  purchaseId: string | null;
+
+  manualAccessId: string | null;
+
+  paymentStatus: string;
+
+  createdAt: string;
+};
+
+/* =========================================================
+   LOAD STUDENTS
+========================================================= */
+
+let students: StudentRow[] = [];
+
+let loadError = "";
+
+try {
+  /* =======================================================
+     LOAD USERS
+  ======================================================= */
+
+  const {
+    data: usersData,
+    error: usersError,
+  } =
+    await supabaseAdmin.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000,
+    });
+
+  if (usersError) {
+    throw usersError;
+  }
+
+  const users =
+    usersData?.users ?? [];
+
+
+  /* =======================================================
+     LOAD PURCHASES
+  ======================================================= */
+
+  const {
+    data: purchases,
+    error: purchasesError,
+  } =
+    await supabaseAdmin
+      .from("purchases")
+      .select(
+        "id, user_id, product_id, payment_status, created_at"
+      )
+      .eq(
+        "product_id",
+        PRODUCT_ID
+      );
+
+  if (purchasesError) {
+    throw purchasesError;
+  }
+
+
+  /* =======================================================
+     BUILD PURCHASE MAP
+
+     Latest purchase per student.
+  ======================================================= */
+
+  const purchaseMap =
+    new Map<
+      string,
+      {
+        id: string;
+        payment_status: string;
+        created_at: string;
+      }
+    >();
+
+  for (
+    const purchase of purchases ?? []
+  ) {
+
+    if (!purchase.user_id) {
+      continue;
+    }
+
+    const existing =
+      purchaseMap.get(
+        purchase.user_id
+      );
+
+    if (
+      !existing ||
+      new Date(
+        purchase.created_at
+      ).getTime() >
+        new Date(
+          existing.created_at
+        ).getTime()
+    ) {
+
+      purchaseMap.set(
+        purchase.user_id,
+        {
+          id: purchase.id,
+
+          payment_status:
+            purchase.payment_status,
+
+          created_at:
+            purchase.created_at,
+        }
+      );
+    }
+  }
+
+
+  /* =======================================================
+     LOAD MANUAL ACCESS
+  ======================================================= */
+
+  const {
+    data: manualAccessRows,
+    error: manualAccessError,
+  } =
+    await supabaseAdmin
+      .from("manual_series_access")
+      .select(
+        "id, user_id, product_id, granted_by, granted_at, updated_at"
+      )
+      .eq(
+        "product_id",
+        PRODUCT_ID
+      );
+
+  if (manualAccessError) {
+    throw manualAccessError;
+  }
+
+
+  /* =======================================================
+     BUILD MANUAL ACCESS MAP
+  ======================================================= */
+
+  const manualAccessMap =
+    new Map<
+      string,
+      {
+        id: string;
+      }
+    >();
+
+  for (
+    const access of manualAccessRows ?? []
+  ) {
+
+    if (!access.user_id) {
+      continue;
+    }
+
+    manualAccessMap.set(
+      access.user_id,
+      {
+        id: access.id,
+      }
+    );
+  }
+
+
+  /* =======================================================
+     BUILD STUDENT LIST
+  ======================================================= */
+
+  students =
+    users
+      .map((user) => {
+
+        const purchase =
+          purchaseMap.get(
+            user.id
+          );
+
+        const manualAccess =
+          manualAccessMap.get(
+            user.id
+          );
+
+        const paid =
+          purchase?.payment_status ===
+          "paid";
+
+        const manuallyGranted =
+          Boolean(
+            manualAccess
+          );
+
+        const hasAccess =
+          paid ||
+          manuallyGranted;
+
+        const metadata =
+          user.user_metadata ?? {};
+
+        const name =
+          metadata.full_name ||
+          metadata.name ||
+          metadata.display_name ||
+          user.email?.split("@")[0] ||
+          "Student";
+
+        return {
+          id: user.id,
+
+          email:
+            user.email ??
+            "No email",
+
+          name,
+
+          paid,
+
+          manualAccess:
+            manuallyGranted,
+
+          hasAccess,
+
+          purchaseId:
+            purchase?.id ??
+            null,
+
+          manualAccessId:
+            manualAccess?.id ??
+            null,
+
+          paymentStatus:
+            purchase?.payment_status ??
+            "not purchased",
+
+          createdAt:
+            user.created_at,
+        };
+      })
+      .sort(
+        (a, b) =>
+          a.name.localeCompare(
+            b.name
+          )
+      );
+
+} catch (error) {
+
+  console.error(
+    "Series access page error:",
+    error
+  );
+
+  loadError =
+    error instanceof Error
+      ? error.message
+      : "Unable to load series access data.";
+}
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+const totalStudents =
+  students.length;
+
+const paidStudents =
+  students.filter(
+    (student) =>
+      student.paid
+  ).length;
+
+const manualStudents =
+  students.filter(
+    (student) =>
+      !student.paid &&
+      student.manualAccess
+  ).length;
+
+const studentsWithAccess =
+  students.filter(
+    (student) =>
+      student.hasAccess
+  ).length;
+
+const studentsWithoutAccess =
+  students.filter(
+    (student) =>
+      !student.hasAccess
+  ).length;
+
+const accessPercentage =
+  totalStudents > 0
+    ? Math.round(
+        (studentsWithAccess /
+          totalStudents) *
+          100
+      )
+    : 0;
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Series Access | Habitat IAS Admin
+  </title>
+
+  <style>
+
+    :root {
+      --blue:#1557d6;
+      --blue-dark:#0b347f;
+      --blue-light:#eef4ff;
+
+      --green:#087f5b;
+      --green-bg:#e9f8f1;
+
+      --red:#c62828;
+      --red-bg:#fff0f0;
+
+      --orange:#b54708;
+      --orange-bg:#fff4e5;
+
+      --text:#082b62;
+      --muted:#5c78a4;
+
+      --border:#d8e2f0;
+      --bg:#f4f7fc;
+      --white:#fff;
+    }
+
+    * {
+      box-sizing:border-box;
+    }
+
+    body {
+      margin:0;
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+
+    button,
+    input {
+      font:inherit;
+    }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .layout {
+      min-height:100vh;
+      display:flex;
+    }
+
+    .sidebar {
+      width:285px;
+      background:var(--white);
+      border-right:1px solid var(--border);
+      position:fixed;
+      inset:0 auto 0 0;
+      overflow-y:auto;
+      z-index:20;
+    }
+
+    .brand {
+      min-height:110px;
+      padding:25px 24px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand-row {
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand-logo {
+      width:50px;
+      height:50px;
+      border-radius:14px;
+      background:var(--blue);
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:25px;
+      font-weight:800;
+    }
+
+    .brand-name {
+      font-size:23px;
+      font-weight:800;
+    }
+
+    .brand-subtitle {
+      margin-top:4px;
+      font-size:11px;
+      letter-spacing:1px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .nav {
+      padding:22px 14px;
+    }
+
+    .nav-section {
+      margin:0 12px 10px;
+      font-size:11px;
+      letter-spacing:1px;
+      color:#7890b5;
+      font-weight:800;
+    }
+
+    .nav-link {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 18px;
+      margin-bottom:5px;
+      border-radius:12px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .nav-link:hover {
+      background:var(--blue-light);
+    }
+
+    .nav-link.active {
+      background:#eaf1ff;
+      color:var(--blue);
+    }
+
+    .nav-icon {
+      width:18px;
+      text-align:center;
+    }
+
+    .sidebar-bottom {
+      position:absolute;
+      bottom:0;
+      left:0;
+      right:0;
+      padding:18px 26px;
+      border-top:1px solid var(--border);
+      background:white;
+      font-size:13px;
+      color:var(--muted);
+    }
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .main {
+      margin-left:285px;
+      width:calc(100% - 285px);
+      min-height:100vh;
+    }
+
+    .topbar {
+      min-height:82px;
+      background:white;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 32px;
+    }
+
+    .top-title {
+      font-size:15px;
+      color:var(--muted);
+      font-weight:700;
+    }
+
+    .top-actions {
+      display:flex;
+      gap:10px;
+    }
+
+    .button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:42px;
+      padding:0 17px;
+      border:1px solid var(--border);
+      border-radius:10px;
+      background:white;
+      color:var(--text);
+      font-weight:700;
+      font-size:13px;
+      cursor:pointer;
+    }
+
+    .button:hover {
+      background:#f7faff;
+    }
+
+    .content {
+      padding:34px;
+      max-width:1600px;
+    }
+
+    .page-heading {
+      margin-bottom:28px;
+    }
+
+    .page-heading h1 {
+      margin:0;
+      font-size:32px;
+      letter-spacing:-.5px;
+    }
+
+    .page-heading p {
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* =====================================================
+       STATISTICS
+    ===================================================== */
+
+    .stats {
+      display:grid;
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+      gap:18px;
+      margin-bottom:24px;
+    }
+
+    .stat {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:23px;
+    }
+
+    .stat-label {
+      color:#617ca5;
+      font-size:11px;
+      font-weight:800;
+      letter-spacing:.5px;
+      text-transform:uppercase;
+    }
+
+    .stat-number {
+      margin-top:11px;
+      font-size:32px;
+      font-weight:800;
+    }
+
+    .stat-description {
+      margin-top:5px;
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+
+    .card {
+      background:white;
+      border:1px solid var(--border);
+      border-radius:16px;
+      margin-bottom:24px;
+      overflow:hidden;
+    }
+
+    .card-header {
+      padding:22px 24px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .card-header h2 {
+      margin:0;
+      font-size:20px;
+    }
+
+    .card-header p {
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    .card-body {
+      padding:24px;
+    }
+
+    /* =====================================================
+       NOTE
+    ===================================================== */
+
+    .note {
+      background:var(--blue-light);
+      border:1px solid #cbdcff;
+      border-radius:12px;
+      padding:17px;
+      color:var(--text);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .error {
+      background:var(--red-bg);
+      color:var(--red);
+      border:1px solid #ffcaca;
+      border-radius:12px;
+      padding:18px;
+      margin-bottom:24px;
+      font-size:13px;
+    }
+
+    /* =====================================================
+       SERIES GRID
+    ===================================================== */
+
+    .series-grid {
+      display:grid;
+      grid-template-columns:
+        repeat(5,minmax(0,1fr));
+      gap:12px;
+    }
+
+    .test-box {
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:16px;
+      background:#fbfcff;
+    }
+
+    .test-number {
+      color:var(--blue);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .test-title {
+      margin-top:7px;
+      font-weight:800;
+      font-size:13px;
+    }
+
+    .test-status {
+      margin-top:11px;
+      display:inline-block;
+      border-radius:20px;
+      padding:5px 9px;
+      font-size:10px;
+      font-weight:800;
+      background:var(--green-bg);
+      color:var(--green);
+    }
+
+    /* =====================================================
+       TABLE
+    ===================================================== */
+
+    .table-wrap {
+      overflow-x:auto;
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      min-width:1050px;
+    }
+
+    th {
+      text-align:left;
+      padding:14px 18px;
+      background:#f8faff;
+      color:#607ba4;
+      border-bottom:1px solid var(--border);
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      white-space:nowrap;
+    }
+
+    td {
+      padding:16px 18px;
+      border-bottom:1px solid #edf1f7;
+      font-size:13px;
+      vertical-align:middle;
+    }
+
+    tbody tr:hover {
+      background:#fbfcff;
+    }
+
+    .student-name {
+      font-weight:800;
+    }
+
+    .student-email {
+      margin-top:4px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* =====================================================
+       BADGES
+    ===================================================== */
+
+    .badge {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:20px;
+      font-size:10px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .badge.paid {
+      color:var(--green);
+      background:var(--green-bg);
+    }
+
+    .badge.manual {
+      color:var(--orange);
+      background:var(--orange-bg);
+    }
+
+    .badge.unpaid {
+      color:var(--red);
+      background:var(--red-bg);
+    }
+
+    .badge-dot {
+      width:6px;
+      height:6px;
+      border-radius:50%;
+      background:currentColor;
+    }
+
+    .access-count {
+      font-weight:800;
+    }
+
+    /* =====================================================
+       ACTION BUTTONS
+    ===================================================== */
+
+    .action-cell {
+      min-width:170px;
+    }
+
+    .action-button {
+      border:0;
+      border-radius:9px;
+      min-height:36px;
+      padding:0 13px;
+      font-size:11px;
+      font-weight:800;
+      cursor:pointer;
+      transition:.15s ease;
+    }
+
+    .grant-button {
+      background:var(--blue);
+      color:white;
+    }
+
+    .grant-button:hover {
+      background:var(--blue-dark);
+    }
+
+    .revoke-button {
+      background:var(--red-bg);
+      color:var(--red);
+      border:1px solid #ffcaca;
+    }
+
+    .revoke-button:hover {
+      background:#ffe1e1;
+    }
+
+    .protected-button {
+      background:#f2f5f9;
+      color:#6c7e9a;
+      border:1px solid var(--border);
+      cursor:not-allowed;
+    }
+
+    .action-note {
+      margin-top:6px;
+      font-size:9px;
+      color:#8493a9;
+    }
+
+    /* =====================================================
+       STATUS MESSAGE
+    ===================================================== */
+
+    #actionMessage {
+      display:none;
+      position:fixed;
+      right:25px;
+      bottom:25px;
+      z-index:1000;
+      max-width:390px;
+      padding:14px 17px;
+      border-radius:12px;
+      box-shadow:
+        0 12px 35px
+        rgba(16,38,75,.15);
+      font-size:12px;
+      font-weight:700;
+    }
+
+    #actionMessage.success {
+      display:block;
+      background:var(--green-bg);
+      color:var(--green);
+      border:1px solid #b7e5d0;
+    }
+
+    #actionMessage.error {
+      display:block;
+      background:var(--red-bg);
+      color:var(--red);
+      border:1px solid #ffcaca;
+    }
+
+    /* =====================================================
+       EMPTY
+    ===================================================== */
+
+    .empty {
+      padding:45px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media(max-width:1100px) {
+
+      .stats {
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+      }
+
+      .series-grid {
+        grid-template-columns:
+          repeat(4,minmax(0,1fr));
+      }
+    }
+
+    @media(max-width:800px) {
+
+      .layout {
+        display:block;
+      }
+
+      .sidebar {
+        position:static;
+        width:100%;
+        height:auto;
+      }
+
+      .sidebar-bottom {
+        position:static;
+      }
+
+      .main {
+        margin-left:0;
+        width:100%;
+      }
+
+      .topbar {
+        padding:0 20px;
+      }
+
+      .content {
+        padding:20px;
+      }
+
+      .stats {
+        grid-template-columns:1fr;
+      }
+
+      .series-grid {
+        grid-template-columns:
+          repeat(2,minmax(0,1fr));
+      }
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+<div class="layout">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-row">
+
+        <div class="brand-logo">
+          H
+        </div>
+
+        <div>
+
+          <div class="brand-name">
+            Habitat IAS
+          </div>
+
+          <div class="brand-subtitle">
+            ADMIN CONTROL PANEL
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <nav class="nav">
+
+      <div class="nav-section">
+        OVERVIEW
+      </div>
+
+      <a
+        href="/admin"
+        class="nav-link"
+      >
+        <span class="nav-icon">⌂</span>
+        Dashboard
+      </a>
+
+
+      <div
+        class="nav-section"
+        style="margin-top:25px;"
+      >
+        MOCK TEST
+      </div>
+
+      <a
+        href="/admin/mock-tests"
+        class="nav-link"
+      >
+        <span class="nav-icon">↗</span>
+        Mock Tests
+      </a>
+
+      <a
+        href="/admin/questions"
+        class="nav-link"
+      >
+        <span class="nav-icon">?</span>
+        Questions
+      </a>
+
+
+      <div
+        class="nav-section"
+        style="margin-top:25px;"
+      >
+        STUDENTS
+      </div>
+
+      <a
+        href="/admin/students"
+        class="nav-link"
+      >
+        <span class="nav-icon">●</span>
+        Students
+      </a>
+
+      <a
+        href="/admin/attempts"
+        class="nav-link"
+      >
+        <span class="nav-icon">↗</span>
+        Student Attempts
+      </a>
+
+
+      <div
+        class="nav-section"
+        style="margin-top:25px;"
+      >
+        ANALYTICS
+      </div>
+
+      <a
+        href="/admin/results"
+        class="nav-link"
+      >
+        <span class="nav-icon">▥</span>
+        Results &amp; Analytics
+      </a>
+
+
+      <div
+        class="nav-section"
+        style="margin-top:25px;"
+      >
+        ACCESS
+      </div>
+
+      <a
+        href="/admin/access"
+        class="nav-link active"
+      >
+        <span class="nav-icon">◇</span>
+        Series Access
+      </a>
+
+
+      <div
+        class="nav-section"
+        style="margin-top:25px;"
+      >
+        SYSTEM
+      </div>
+
+      <a
+        href="/admin/settings"
+        class="nav-link"
+      >
+        <span class="nav-icon">⚙</span>
+        Settings
+      </a>
+
+      <a
+        href="/admin/security"
+        class="nav-link"
+      >
+        <span class="nav-icon">◇</span>
+        Security
+      </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+      ← Back to Habitat IAS website
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="top-title">
+        Series Access Management
+      </div>
+
+      <div class="top-actions">
+
+        <a
+          href="/admin"
+          class="button"
+        >
+          ← Dashboard
+        </a>
+
+        <a
+          href="/mock-tests"
+          class="button"
+        >
+          View Mock Tests
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <!-- =================================================
+           PAGE HEADING
+      ================================================== -->
+
+      <div class="page-heading">
+
+        <h1>
+          Series Access
+        </h1>
+
+        <p>
+          Manage access to the JPSC Prelims 20-Test Series.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           ERROR
+      ================================================== -->
+
+      {
+        loadError && (
+
+          <div class="error">
+
+            <strong>
+              Unable to load access information.
+            </strong>
+
+            <div style="margin-top:6px;">
+              {loadError}
+            </div>
+
+          </div>
+
+        )
+      }
+
+
+      <!-- =================================================
+           STATISTICS
+      ================================================== -->
+
+      <div class="stats">
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Total Students
+          </div>
+
+          <div class="stat-number">
+            {totalStudents}
+          </div>
+
+          <div class="stat-description">
+            Registered accounts
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Paid Access
+          </div>
+
+          <div class="stat-number">
+            {paidStudents}
+          </div>
+
+          <div class="stat-description">
+            Students with genuine purchase
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Manual Access
+          </div>
+
+          <div class="stat-number">
+            {manualStudents}
+          </div>
+
+          <div class="stat-description">
+            Complimentary/admin access
+          </div>
+
+        </div>
+
+
+        <div class="stat">
+
+          <div class="stat-label">
+            Total Access
+          </div>
+
+          <div class="stat-number">
+            {studentsWithAccess}
+          </div>
+
+          <div class="stat-description">
+            {accessPercentage}% of registered students
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           SERIES INFORMATION
+      ================================================== -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <h2>
+            JPSC Prelims — 20 Test Series
+          </h2>
+
+          <p>
+            Product ID:
+            <strong>
+              {PRODUCT_ID}
+            </strong>
+          </p>
+
+        </div>
+
+
+        <div class="card-body">
+
+          <div class="note">
+
+            <strong>
+              Access Rule:
+            </strong>
+
+            A paid purchase OR an administrator-granted
+            manual access record unlocks all
+            <strong>{TOTAL_TESTS}</strong>
+            mock tests.
+
+            <br />
+
+            Manual access does not create or modify a
+            payment record.
+
+            <br />
+
+            Genuine paid access can never be removed by
+            revoking manual access.
+
+          </div>
+
+
+          <div
+            style="height:20px;"
+          ></div>
+
+
+          <div class="series-grid">
+
+            {
+              Array.from(
+                {
+                  length: TOTAL_TESTS
+                },
+                (_, index) =>
+                  index + 1
+              ).map(
+                (testNumber) => (
+
+                  <div class="test-box">
+
+                    <div class="test-number">
+                      TEST {
+                        String(
+                          testNumber
+                        ).padStart(
+                          2,
+                          "0"
+                        )
+                      }
+                    </div>
+
+                    <div class="test-title">
+                      JPSC Prelims Mock Test
+                    </div>
+
+                    <span class="test-status">
+                      Included
+                    </span>
+
+                  </div>
+
+                )
+              )
+            }
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           STUDENT ACCESS TABLE
+      ================================================== -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <h2>
+            Student Access
+          </h2>
+
+          <p>
+            Paid and manually granted access status.
+          </p>
+
+        </div>
+
+
+        <div class="table-wrap">
+
+          <table>
+
+            <thead>
+
+              <tr>
+
+                <th>
+                  Student
+                </th>
+
+                <th>
+                  Series
+                </th>
+
+                <th>
+                  Access
+                </th>
+
+                <th>
+                  Tests
+                </th>
+
+                <th>
+                  Purchase
+                </th>
+
+                <th>
+                  Registered
+                </th>
+
+                <th>
+                  Action
+                </th>
+
+              </tr>
+
+            </thead>
+
+
+            <tbody>
+
+              {
+                students.length === 0 ? (
+
+                  <tr>
+
+                    <td
+                      colspan="7"
+                      class="empty"
+                    >
+                      No registered students found.
+                    </td>
+
+                  </tr>
+
+                ) : (
+
+                  students.map(
+                    (student) => (
+
+                      <tr
+                        data-student-row={
+                          student.id
+                        }
+                      >
+
+                        <!-- STUDENT -->
+
+                        <td>
+
+                          <div class="student-name">
+                            {student.name}
+                          </div>
+
+                          <div class="student-email">
+                            {student.email}
+                          </div>
+
+                        </td>
+
+
+                        <!-- SERIES -->
+
+                        <td>
+
+                          JPSC Prelims
+
+                          <br />
+
+                          20-Test Series
+
+                        </td>
+
+
+                        <!-- ACCESS -->
+
+                        <td>
+
+                          {
+                            student.paid ? (
+
+                              <div>
+
+                                <span
+                                  class="badge paid"
+                                >
+                                  <span class="badge-dot"></span>
+                                  Paid Access
+                                </span>
+
+                                {
+                                  student.manualAccess && (
+
+                                    <div
+                                      style="
+                                        margin-top:6px;
+                                      "
+                                    >
+
+                                      <span
+                                        class="badge manual"
+                                      >
+                                        <span class="badge-dot"></span>
+                                        Manual Backup
+                                      </span>
+
+                                    </div>
+
+                                  )
+                                }
+
+                              </div>
+
+                            ) : student.manualAccess ? (
+
+                              <span
+                                class="badge manual"
+                              >
+                                <span class="badge-dot"></span>
+                                Manual Access
+                              </span>
+
+                            ) : (
+
+                              <span
+                                class="badge unpaid"
+                              >
+                                <span class="badge-dot"></span>
+                                No Access
+                              </span>
+
+                            )
+                          }
+
+                        </td>
+
+
+                        <!-- TEST COUNT -->
+
+                        <td>
+
+                          <span
+                            class="access-count"
+                          >
+                            {
+                              student.hasAccess
+                                ? `${TOTAL_TESTS} / ${TOTAL_TESTS}`
+                                : `0 / ${TOTAL_TESTS}`
+                            }
+                          </span>
+
+                        </td>
+
+
+                        <!-- PURCHASE -->
+
+                        <td>
+
+                          {
+                            student.purchaseId ? (
+
+                              <span
+                                class="badge paid"
+                              >
+                                Paid
+                              </span>
+
+                            ) : (
+
+                              <span
+                                style="
+                                  color:#7b8da9;
+                                  font-size:11px;
+                                "
+                              >
+                                No purchase
+                              </span>
+
+                            )
+                          }
+
+                        </td>
+
+
+                        <!-- REGISTERED -->
+
+                        <td>
+
+                          {
+                            new Date(
+                              student.createdAt
+                            ).toLocaleDateString(
+                              "en-IN",
+                              {
+                                day:"2-digit",
+                                month:"short",
+                                year:"numeric",
+                              }
+                            )
+                          }
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td class="action-cell">
+
+                          {
+                            student.paid ? (
+
+                              <div>
+
+                                <button
+                                  type="button"
+                                  class="action-button protected-button"
+                                  disabled
+                                >
+                                  Paid Access
+                                </button>
+
+                                <div class="action-note">
+                                  Purchase protected
+                                </div>
+
+                              </div>
+
+                            ) : student.manualAccess ? (
+
+                              <button
+                                type="button"
+                                class="action-button revoke-button"
+                                data-action="revoke"
+                                data-user-id={
+                                  student.id
+                                }
+                                data-user-name={
+                                  student.name
+                                }
+                              >
+                                Revoke Access
+                              </button>
+
+                            ) : (
+
+                              <button
+                                type="button"
+                                class="action-button grant-button"
+                                data-action="grant"
+                                data-user-id={
+                                  student.id
+                                }
+                                data-user-name={
+                                  student.name
+                                }
+                              >
+                                Grant Access
+                              </button>
+
+                            )
+                          }
+
+                        </td>
+
+                      </tr>
+
+                    )
+                  )
+
+                )
+              }
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      </div>
+
+
+      <!-- =================================================
+           ACCESS RULE
+      ================================================== -->
+
+      <div class="card">
+
+        <div class="card-header">
+
+          <h2>
+            How Access Works
+          </h2>
+
+        </div>
+
+
+        <div class="card-body">
+
+          <div class="note">
+
+            <strong>
+              1. Paid Student
+            </strong>
+
+            <br />
+
+            A successful paid purchase automatically
+            unlocks all 20 tests.
+
+            <br /><br />
+
+
+            <strong>
+              2. Manual Student
+            </strong>
+
+            <br />
+
+            Admin can grant complimentary access without
+            creating a fake payment.
+
+            <br /><br />
+
+
+            <strong>
+              3. Revoking Manual Access
+            </strong>
+
+            <br />
+
+            Removes only the manual access record.
+            It does not affect a genuine paid purchase.
+
+            <br /><br />
+
+
+            <strong>
+              4. No Access
+            </strong>
+
+            <br />
+
+            Students with neither a paid purchase nor
+            manual access remain locked out of the series.
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =======================================================
+     ACTION MESSAGE
+======================================================== -->
+
+<div
+  id="actionMessage"
+></div>
+
+
+<!-- =======================================================
+     GRANT / REVOKE SCRIPT
+======================================================== -->
+
+<script>
+
+  const message =
+    document.getElementById(
+      "actionMessage"
+    );
+
+
+  function showMessage(
+    text,
+    type
+  ) {
+
+    if (!message) {
+      return;
+    }
+
+    message.textContent =
+      text;
+
+    message.className =
+      type;
+
+    window.setTimeout(
+      () => {
+        message.className = "";
+        message.textContent = "";
+      },
+      3500
+    );
+
+  }
+
+
+  async function changeAccess(
+    button
+  ) {
+
+    const action =
+      button.dataset.action;
+
+    const userId =
+      button.dataset.userId;
+
+    const userName =
+      button.dataset.userName ||
+      "this student";
+
+
+    if (
+      !action ||
+      !userId
+    ) {
+
+      showMessage(
+        "Invalid student information.",
+        "error"
+      );
+
+      return;
+    }
+
+
+    /* =====================================================
+       CONFIRMATION
+    ===================================================== */
+
+    if (
+      action === "grant"
+    ) {
+
+      const confirmed =
+        window.confirm(
+          `Grant all 20 mock tests to ${userName}?\n\nThis creates manual access only. It does NOT create a payment record.`
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
+    }
+
+
+    if (
+      action === "revoke"
+    ) {
+
+      const confirmed =
+        window.confirm(
+          `Revoke manual access for ${userName}?\n\nThis will lock the student unless they have a genuine paid purchase.`
+        );
+
+      if (!confirmed) {
+        return;
+      }
+
+    }
+
+
+    /* =====================================================
+       BUTTON LOADING
+    ===================================================== */
+
+    const originalText =
+      button.textContent;
+
+    button.disabled = true;
+
+    button.textContent =
+      action === "grant"
+        ? "Granting..."
+        : "Revoking...";
+
+
+    try {
+
+      const response =
+        await fetch(
+          "/api/admin/access",
+          {
+            method:
+              action === "grant"
+                ? "POST"
+                : "DELETE",
+
+            credentials:
+              "include",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+            },
+
+            body:
+              JSON.stringify({
+                user_id:
+                  userId,
+              }),
+          }
+        );
+
+
+      let result = null;
+
+      try {
+        result =
+          await response.json();
+      } catch {
+        result = null;
+      }
+
+
+      if (
+        !response.ok ||
+        !result?.success
+      ) {
+
+        throw new Error(
+          result?.message ||
+          "Access operation failed."
+        );
+
+      }
+
+
+      /* =================================================
+         SUCCESS
+      ================================================= */
+
+      showMessage(
+        result.message ||
+          (
+            action === "grant"
+              ? "Access granted successfully."
+              : "Access revoked successfully."
+          ),
+        "success"
+      );
+
+
+      /*
+       * Reload the page so:
+       *
+       * - status updates
+       * - counters update
+       * - buttons change
+       * - database becomes source of truth
+       */
+
+      window.setTimeout(
+        () => {
+          window.location.reload();
+        },
+        700
+      );
+
+
+    } catch (error) {
+
+      console.error(
+        "Series access action error:",
+        error
+      );
+
+
+      showMessage(
+        error instanceof Error
+          ? error.message
+          : "Unable to update access.",
+        "error"
+      );
+
+
+      button.disabled =
+        false;
+
+      button.textContent =
+        originalText;
+
+    }
+
+  }
+
+
+  /* =======================================================
+     ATTACH BUTTON EVENTS
+  ======================================================= */
+
+  document
+    .querySelectorAll(
+      "[data-action]"
+    )
+    .forEach(
+      (button) => {
+
+        button.addEventListener(
+          "click",
+          () => {
+
+            changeAccess(
+              button
+            );
+
+          }
+        );
+
+      }
+    );
+
+</script>
+
+</body>
+
+</html>

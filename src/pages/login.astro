@@ -1413,41 +1413,82 @@
         "loginForm"
       );
 
-
     const emailInput =
       document.getElementById(
         "email"
       );
-
 
     const passwordInput =
       document.getElementById(
         "password"
       );
 
-
     const passwordToggle =
       document.getElementById(
         "passwordToggle"
       );
-
 
     const loginButton =
       document.getElementById(
         "loginButton"
       );
 
-
     const loginButtonText =
       document.getElementById(
         "loginButtonText"
       );
 
-
     const statusBox =
       document.getElementById(
         "loginStatus"
       );
+
+
+    /* ======================================================
+       SAFE REDIRECT
+
+       If login was opened because the student clicked
+       Test 1, the URL will contain:
+
+       /login?redirect=/mock-tests/1
+
+       We preserve that destination after login.
+    ======================================================= */
+
+    function getRedirectDestination() {
+
+      try {
+
+        const params =
+          new URLSearchParams(
+            window.location.search
+          );
+
+        const requestedRedirect =
+          params.get("redirect");
+
+        if (
+          requestedRedirect &&
+          requestedRedirect.startsWith("/") &&
+          !requestedRedirect.startsWith("//")
+        ) {
+
+          return requestedRedirect;
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Redirect parsing failed:",
+          error
+        );
+
+      }
+
+      return "/dashboard";
+
+    }
 
 
     /* ======================================================
@@ -1461,10 +1502,8 @@
 
       if (!statusBox) return;
 
-
       statusBox.textContent =
         message;
-
 
       statusBox.className =
         "status " + type;
@@ -1475,7 +1514,6 @@
     function clearStatus() {
 
       if (!statusBox) return;
-
 
       statusBox.textContent =
         "";
@@ -1496,10 +1534,8 @@
 
       if (!loginButton) return;
 
-
       loginButton.disabled =
         loading;
-
 
       if (loading) {
 
@@ -1530,7 +1566,6 @@
         const isPassword =
           passwordInput.type ===
           "password";
-
 
         if (isPassword) {
 
@@ -1605,7 +1640,124 @@
 
 
     /* ======================================================
+       CREATE ASTRO SERVER SESSION
+
+       Supabase creates the browser session.
+       This endpoint creates the HttpOnly cookie:
+
+       habitat-access-token
+
+       The protected mock-test page uses that cookie.
+    ======================================================= */
+
+    async function createServerSession(
+      accessToken
+    ) {
+
+      if (!accessToken) {
+
+        throw new Error(
+          "No Supabase access token was returned."
+        );
+
+      }
+
+      const response =
+        await fetch(
+          "/api/auth/set-session",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json",
+              "Accept":
+                "application/json",
+            },
+
+            credentials:
+              "same-origin",
+
+            body:
+              JSON.stringify({
+                accessToken:
+                  accessToken,
+              }),
+
+          }
+        );
+
+
+      const responseText =
+        await response.text();
+
+
+      let result = {};
+
+      try {
+
+        result =
+          responseText
+            ? JSON.parse(
+                responseText
+              )
+            : {};
+
+      } catch (error) {
+
+        console.error(
+          "Invalid server-session response:",
+          responseText
+        );
+
+      }
+
+
+      if (
+        !response.ok ||
+        result?.success !== true
+      ) {
+
+        console.error(
+          "Server session creation failed:",
+          {
+            status:
+              response.status,
+            result:
+              result,
+            responseText:
+              responseText,
+          }
+        );
+
+        throw new Error(
+          result?.message ||
+          `Unable to create secure server session (HTTP ${response.status}).`
+        );
+
+      }
+
+
+      return result;
+
+    }
+
+
+    /* ======================================================
        CHECK EXISTING SESSION
+
+       IMPORTANT:
+
+       Do NOT automatically send every logged-in user to
+       /dashboard.
+
+       If the student originally clicked Test 1, preserve:
+
+       /mock-tests/1
+
+       We also recreate the server cookie here. This prevents
+       a login -> test -> login loop if the browser still has
+       a Supabase session but the HttpOnly cookie expired.
     ======================================================= */
 
     async function checkExistingSession() {
@@ -1632,21 +1784,57 @@
         }
 
 
+        const session =
+          data?.session;
+
+
         if (
-          data?.session?.user
+          !session?.user ||
+          !session?.access_token
         ) {
 
-          /*
-           * User is already logged in.
-           *
-           * Do not make them login again.
-           */
-
-          window.location.replace(
-            "/dashboard"
-          );
+          return;
 
         }
+
+
+        /*
+         * Existing Supabase login found.
+         * Re-create the Astro server cookie before
+         * navigating to the requested page.
+         */
+
+        try {
+
+          await createServerSession(
+            session.access_token
+          );
+
+        } catch (error) {
+
+          console.error(
+            "Existing server session creation failed:",
+            error
+          );
+
+          /*
+           * If the browser has a Supabase session but the
+           * server session cannot be created, do not silently
+           * redirect. The user can log in again or retry.
+           */
+
+          return;
+
+        }
+
+
+        const destination =
+          getRedirectDestination();
+
+
+        window.location.replace(
+          destination
+        );
 
       } catch (error) {
 
@@ -1660,6 +1848,9 @@
     }
 
 
+    /*
+     * Run this once when the login page loads.
+     */
     checkExistingSession();
 
 
@@ -1673,7 +1864,6 @@
 
         event.preventDefault();
 
-
         clearStatus();
 
 
@@ -1681,7 +1871,6 @@
           emailInput?.value
             ?.trim()
             ?.toLowerCase();
-
 
         const password =
           passwordInput?.value ||
@@ -1742,7 +1931,6 @@
 
         try {
 
-
           const {
             data,
             error
@@ -1793,7 +1981,6 @@
 
             }
 
-
             else if (
               errorText.includes(
                 "email not confirmed"
@@ -1805,7 +1992,6 @@
 
             }
 
-
             else if (
               errorText.includes(
                 "too many requests"
@@ -1816,7 +2002,6 @@
                 "Too many login attempts. Please wait a moment and try again.";
 
             }
-
 
             else if (
               errorText.includes(
@@ -1834,6 +2019,30 @@
               message
             );
 
+            setLoading(false);
+
+            return;
+
+          }
+
+
+          /* ------------------------------------------------
+             USER / SESSION CHECK
+          ------------------------------------------------- */
+
+          if (
+            !data?.user ||
+            !data?.session?.access_token
+          ) {
+
+            console.error(
+              "Supabase login returned no usable session:",
+              data
+            );
+
+            showStatus(
+              "Login could not be completed. Please try again."
+            );
 
             setLoading(false);
 
@@ -1843,17 +2052,37 @@
 
 
           /* ------------------------------------------------
-             USER CHECK
+             ESTABLISH SERVER-SIDE AUTH SESSION
+
+             This is the critical step.
+
+             The mock-test server checks:
+
+             habitat-access-token
+
+             Therefore we MUST call:
+
+             POST /api/auth/set-session
           ------------------------------------------------- */
 
-          if (
-            !data?.user
-          ) {
+          try {
 
-            showStatus(
-              "Login could not be completed. Please try again."
+            await createServerSession(
+              data.session.access_token
             );
 
+          } catch (error) {
+
+            console.error(
+              "Secure server session error:",
+              error
+            );
+
+            showStatus(
+              error?.message ||
+              "Login succeeded, but the secure server session could not be created. Please try again.",
+              "error"
+            );
 
             setLoading(false);
 
@@ -1867,25 +2096,43 @@
           ------------------------------------------------- */
 
           showStatus(
-            "Login successful. Opening your dashboard...",
+            "Login successful. Opening your requested page...",
             "success"
           );
 
 
           /*
-           * Give the success message
-           * a moment to appear.
+           * IMPORTANT:
+           *
+           * Preserve the original page requested by the
+           * student.
+           *
+           * Test 1:
+           * /login?redirect=/mock-tests/1
+           *
+           * becomes:
+           * /mock-tests/1
+           *
+           * Normal login:
+           * /login
+           *
+           * becomes:
+           * /dashboard
            */
+
+          const destination =
+            getRedirectDestination();
+
 
           setTimeout(
             () => {
 
               window.location.replace(
-                "/dashboard"
+                destination
               );
 
             },
-            500
+            300
           );
 
 
@@ -1901,7 +2148,6 @@
             "Something went wrong. Please try again."
           );
 
-
           setLoading(false);
 
         }
@@ -1911,32 +2157,33 @@
 
 
     /* ======================================================
-       AUTH STATE LISTENER
+       IMPORTANT — NO AUTH STATE REDIRECT
+
+       We intentionally DO NOT use:
+
+       supabase.auth.onAuthStateChange(...)
+
+       here.
+
+       That listener was causing:
+
+       Test 1
+         ↓
+       Login
+         ↓
+       SIGNED_IN
+         ↓
+       /dashboard
+
+       even when the student originally requested:
+
+       /mock-tests/1
+
+       The submit handler and existing-session check above
+       now control the redirect and preserve the requested
+       destination.
     ======================================================= */
 
-    supabase.auth.onAuthStateChange(
-      (
-        event,
-        session
-      ) => {
-
-        if (
-          event === "SIGNED_IN" &&
-          session?.user
-        ) {
-
-          /*
-           * Successful authentication.
-           */
-
-          window.location.replace(
-            "/dashboard"
-          );
-
-        }
-
-      }
-    );
 
   </script>
 

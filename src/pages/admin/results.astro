@@ -1,0 +1,2991 @@
+---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   HABITAT IAS — ADMIN RESULTS & ANALYTICS
+   ========================================================= */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const adminUserId =
+  import.meta.env.ADMIN_USER_ID;
+
+/* =========================================================
+   SUPABASE ADMIN CLIENT
+   ========================================================= */
+
+if (!supabaseUrl) {
+  throw new Error("PUBLIC_SUPABASE_URL is missing.");
+}
+
+if (!serviceRoleKey) {
+  throw new Error("SUPABASE_SERVICE_ROLE_KEY is missing.");
+}
+
+if (!adminUserId) {
+  throw new Error("ADMIN_USER_ID is missing.");
+}
+
+const supabaseAdmin = createClient(
+  supabaseUrl,
+  serviceRoleKey,
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
+);
+
+/* =========================================================
+   ADMIN AUTHENTICATION
+   ========================================================= */
+
+const accessToken =
+  Astro.cookies.get("habitat-access-token")?.value;
+
+if (!accessToken) {
+  return Astro.redirect(
+    "/login?redirect=" +
+      encodeURIComponent(
+        Astro.url.pathname +
+          Astro.url.search
+      )
+  );
+}
+
+const {
+  data: authData,
+  error: authError,
+} =
+  await supabaseAdmin.auth.getUser(
+    accessToken
+  );
+
+if (authError || !authData?.user) {
+  Astro.cookies.delete(
+    "habitat-access-token",
+    { path: "/" }
+  );
+
+  return Astro.redirect(
+    "/login?redirect=" +
+      encodeURIComponent(
+        Astro.url.pathname +
+          Astro.url.search
+      )
+  );
+}
+
+if (authData.user.id !== adminUserId) {
+  return new Response(
+    `<!doctype html>
+    <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Access Denied | Habitat IAS</title>
+        <style>
+          body {
+            margin:0;
+            min-height:100vh;
+            display:grid;
+            place-items:center;
+            background:#f5f7fb;
+            font-family:Inter,system-ui,sans-serif;
+            color:#172b4d;
+          }
+          .card {
+            width:min(460px,calc(100% - 40px));
+            background:#fff;
+            border:1px solid #e4e9f2;
+            border-radius:18px;
+            padding:35px;
+            text-align:center;
+            box-shadow:0 12px 40px rgba(16,38,75,.08);
+          }
+          .icon {
+            font-size:40px;
+            margin-bottom:14px;
+          }
+          h1 {
+            margin:0 0 10px;
+          }
+          p {
+            color:#667085;
+            line-height:1.6;
+          }
+          a {
+            display:inline-flex;
+            min-height:44px;
+            padding:0 18px;
+            align-items:center;
+            border-radius:10px;
+            background:#1557d6;
+            color:#fff;
+            text-decoration:none;
+            font-weight:700;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <div class="icon">🔒</div>
+          <h1>Admin Access Denied</h1>
+          <p>
+            Your account is authenticated, but it does not
+            have permission to access the Habitat IAS admin panel.
+          </p>
+          <a href="/admin">← Back to Admin</a>
+        </div>
+      </body>
+    </html>`,
+    {
+      status: 403,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+      },
+    }
+  );
+}
+
+/* =========================================================
+   LOAD ATTEMPTS
+   ========================================================= */
+
+const {
+  data: attempts,
+  error: attemptsError,
+} =
+  await supabaseAdmin
+    .from("mock_attempts")
+    .select(`
+      id,
+      user_id,
+      test_id,
+      started_at,
+      submitted_at,
+      score,
+      correct_count,
+      incorrect_count,
+      unanswered_count,
+      time_taken_seconds,
+      status,
+      created_at
+    `)
+    .order("created_at", {
+      ascending: false,
+    });
+
+const safeAttempts = attempts || [];
+
+/* =========================================================
+   LOAD TESTS
+   ========================================================= */
+
+const testIds = [
+  ...new Set(
+    safeAttempts
+      .map((attempt) => attempt.test_id)
+      .filter(Boolean)
+  ),
+];
+
+let testsById = new Map();
+
+if (testIds.length > 0) {
+  const {
+    data: tests,
+    error: testsError,
+  } =
+    await supabaseAdmin
+      .from("mock_tests")
+      .select(`
+        id,
+        test_number,
+        title,
+        question_count,
+        duration_minutes
+      `)
+      .in("id", testIds);
+
+  if (!testsError) {
+    testsById = new Map(
+      (tests || []).map((test) => [
+        String(test.id),
+        test,
+      ])
+    );
+  }
+}
+
+/* =========================================================
+   LOAD USERS
+   ========================================================= */
+
+const userIds = [
+  ...new Set(
+    safeAttempts
+      .map((attempt) => attempt.user_id)
+      .filter(Boolean)
+  ),
+];
+
+let usersById = new Map();
+
+if (userIds.length > 0) {
+  const userResults = await Promise.all(
+    userIds.map(async (userId) => {
+      try {
+        const {
+          data,
+          error,
+        } =
+          await supabaseAdmin.auth.admin.getUserById(
+            userId
+          );
+
+        if (error || !data?.user) {
+          return [
+            String(userId),
+            null,
+          ];
+        }
+
+        return [
+          String(userId),
+          data.user,
+        ];
+      } catch {
+        return [
+          String(userId),
+          null,
+        ];
+      }
+    })
+  );
+
+  usersById = new Map(userResults);
+}
+
+/* =========================================================
+   PREPARE DATA
+   ========================================================= */
+
+const rows = safeAttempts.map((attempt) => {
+  const test =
+    testsById.get(
+      String(attempt.test_id)
+    );
+
+  const user =
+    usersById.get(
+      String(attempt.user_id)
+    );
+
+  const correct =
+    Number(attempt.correct_count || 0);
+
+  const incorrect =
+    Number(attempt.incorrect_count || 0);
+
+  const unanswered =
+    Number(attempt.unanswered_count || 0);
+
+  const totalQuestions =
+    Math.max(
+      Number(test?.question_count || 0),
+      correct +
+        incorrect +
+        unanswered
+    );
+
+  /*
+   * HABITAT IAS SCORING
+   *
+   * Correct     = +2
+   * Incorrect   =  0
+   * Unanswered  =  0
+   *
+   * NO NEGATIVE MARKING
+   */
+
+  const totalMarks =
+    totalQuestions * 2;
+
+  const score =
+    Number(attempt.score || 0);
+
+  const percentage =
+    totalMarks > 0
+      ? (score / totalMarks) * 100
+      : 0;
+
+  const displayName =
+    user?.user_metadata?.full_name ||
+    user?.user_metadata?.name ||
+    user?.email ||
+    "Unknown Student";
+
+  return {
+    attempt,
+    test,
+    user,
+    displayName,
+    email:
+      user?.email ||
+      "Email unavailable",
+    correct,
+    incorrect,
+    unanswered,
+    totalQuestions,
+    totalMarks,
+    score,
+    percentage,
+    timeTaken:
+      Number(
+        attempt.time_taken_seconds || 0
+      ),
+  };
+});
+
+/* =========================================================
+   OVERALL STATISTICS
+   ========================================================= */
+
+const totalAttempts =
+  rows.length;
+
+const submittedRows =
+  rows.filter(
+    (row) =>
+      row.attempt.status ===
+      "submitted"
+  );
+
+const submittedAttempts =
+  submittedRows.length;
+
+const inProgressAttempts =
+  rows.filter(
+    (row) =>
+      row.attempt.status ===
+      "in_progress"
+  ).length;
+
+const totalCorrect =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.correct,
+    0
+  );
+
+const totalIncorrect =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.incorrect,
+    0
+  );
+
+const totalUnanswered =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.unanswered,
+    0
+  );
+
+const totalQuestionsAttempted =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.totalQuestions,
+    0
+  );
+
+const totalScore =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.score,
+    0
+  );
+
+const totalPossibleMarks =
+  rows.reduce(
+    (sum, row) =>
+      sum + row.totalMarks,
+    0
+  );
+
+const averageScore =
+  submittedAttempts > 0
+    ? submittedRows.reduce(
+        (sum, row) =>
+          sum + row.score,
+        0
+      ) / submittedAttempts
+    : 0;
+
+const averagePercentage =
+  submittedAttempts > 0
+    ? submittedRows.reduce(
+        (sum, row) =>
+          sum + row.percentage,
+        0
+      ) / submittedAttempts
+    : 0;
+
+const highestScore =
+  submittedAttempts > 0
+    ? Math.max(
+        ...submittedRows.map(
+          (row) => row.score
+        )
+      )
+    : 0;
+
+const lowestScore =
+  submittedAttempts > 0
+    ? Math.min(
+        ...submittedRows.map(
+          (row) => row.score
+        )
+      )
+    : 0;
+
+const averageTime =
+  submittedAttempts > 0
+    ? submittedRows.reduce(
+        (sum, row) =>
+          sum + row.timeTaken,
+        0
+      ) / submittedAttempts
+    : 0;
+
+/* =========================================================
+   PERFORMANCE DISTRIBUTION
+   ========================================================= */
+
+const highPerformers =
+  submittedRows.filter(
+    (row) =>
+      row.percentage >= 75
+  ).length;
+
+const mediumPerformers =
+  submittedRows.filter(
+    (row) =>
+      row.percentage >= 50 &&
+      row.percentage < 75
+  ).length;
+
+const lowPerformers =
+  submittedRows.filter(
+    (row) =>
+      row.percentage < 50
+  ).length;
+
+/* =========================================================
+   TEST-WISE ANALYTICS
+   ========================================================= */
+
+const testMap = new Map();
+
+for (const row of submittedRows) {
+  const key =
+    String(
+      row.test?.id ||
+      row.attempt.test_id ||
+      "unknown"
+    );
+
+  if (!testMap.has(key)) {
+    testMap.set(key, {
+      testId: key,
+      testNumber:
+        row.test?.test_number ??
+        null,
+      title:
+        row.test?.title ||
+        "JPSC Mock Test",
+      questionCount:
+        Number(
+          row.test?.question_count ||
+          row.totalQuestions ||
+          0
+        ),
+      attempts: 0,
+      totalScore: 0,
+      totalPercentage: 0,
+      highestScore: 0,
+      lowestScore: Infinity,
+      correct: 0,
+      incorrect: 0,
+      unanswered: 0,
+      totalTime: 0,
+    });
+  }
+
+  const item =
+    testMap.get(key);
+
+  item.attempts += 1;
+
+  item.totalScore +=
+    row.score;
+
+  item.totalPercentage +=
+    row.percentage;
+
+  item.highestScore =
+    Math.max(
+      item.highestScore,
+      row.score
+    );
+
+  item.lowestScore =
+    Math.min(
+      item.lowestScore,
+      row.score
+    );
+
+  item.correct +=
+    row.correct;
+
+  item.incorrect +=
+    row.incorrect;
+
+  item.unanswered +=
+    row.unanswered;
+
+  item.totalTime +=
+    row.timeTaken;
+}
+
+const testAnalytics =
+  Array.from(
+    testMap.values()
+  )
+    .map((item) => ({
+      ...item,
+      averageScore:
+        item.attempts > 0
+          ? item.totalScore /
+            item.attempts
+          : 0,
+      averagePercentage:
+        item.attempts > 0
+          ? item.totalPercentage /
+            item.attempts
+          : 0,
+      averageTime:
+        item.attempts > 0
+          ? item.totalTime /
+            item.attempts
+          : 0,
+      lowestScore:
+        item.lowestScore ===
+        Infinity
+          ? 0
+          : item.lowestScore,
+    }))
+    .sort(
+      (a, b) =>
+        Number(a.testNumber || 0) -
+        Number(b.testNumber || 0)
+    );
+
+/* =========================================================
+   STUDENT-WISE ANALYTICS
+   ========================================================= */
+
+const studentMap = new Map();
+
+for (const row of submittedRows) {
+  const key =
+    String(
+      row.attempt.user_id
+    );
+
+  if (!studentMap.has(key)) {
+    studentMap.set(key, {
+      userId: key,
+      name: row.displayName,
+      email: row.email,
+      attempts: 0,
+      totalScore: 0,
+      totalPercentage: 0,
+      highestScore: 0,
+      totalTime: 0,
+    });
+  }
+
+  const student =
+    studentMap.get(key);
+
+  student.attempts += 1;
+
+  student.totalScore +=
+    row.score;
+
+  student.totalPercentage +=
+    row.percentage;
+
+  student.highestScore =
+    Math.max(
+      student.highestScore,
+      row.score
+    );
+
+  student.totalTime +=
+    row.timeTaken;
+}
+
+const studentAnalytics =
+  Array.from(
+    studentMap.values()
+  )
+    .map((student) => ({
+      ...student,
+      averageScore:
+        student.attempts > 0
+          ? student.totalScore /
+            student.attempts
+          : 0,
+      averagePercentage:
+        student.attempts > 0
+          ? student.totalPercentage /
+            student.attempts
+          : 0,
+      averageTime:
+        student.attempts > 0
+          ? student.totalTime /
+            student.attempts
+          : 0,
+    }))
+    .sort(
+      (a, b) =>
+        b.averagePercentage -
+        a.averagePercentage
+    );
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+
+function formatTime(
+  seconds: number
+) {
+  const total =
+    Number(seconds || 0);
+
+  if (total <= 0) {
+    return "0 min";
+  }
+
+  const hours =
+    Math.floor(
+      total / 3600
+    );
+
+  const minutes =
+    Math.floor(
+      (total % 3600) / 60
+    );
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m`;
+  }
+
+  return `${minutes}m`;
+}
+
+function formatDate(
+  value: string | null
+) {
+  if (!value) {
+    return "—";
+  }
+
+  try {
+    return new Intl.DateTimeFormat(
+      "en-IN",
+      {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }
+    ).format(
+      new Date(value)
+    );
+  } catch {
+    return "—";
+  }
+}
+
+function testLabel(
+  testNumber: number | null,
+  title: string
+) {
+  if (
+    testNumber !== null &&
+    Number.isFinite(
+      Number(testNumber)
+    )
+  ) {
+    return `TEST ${String(
+      testNumber
+    ).padStart(2, "0")} — ${title}`;
+  }
+
+  return title;
+}
+
+function percentageClass(
+  percentage: number
+) {
+  if (percentage >= 75) {
+    return "high";
+  }
+
+  if (percentage >= 50) {
+    return "medium";
+  }
+
+  return "low";
+}
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Results & Analytics | Habitat IAS
+  </title>
+
+  <style>
+
+    :root {
+      --blue:#1557d6;
+      --blue-dark:#0f3f9f;
+      --blue-light:#eef4ff;
+
+      --navy:#10264b;
+      --text:#172b4d;
+      --muted:#667085;
+
+      --bg:#f5f7fb;
+      --white:#fff;
+
+      --border:#e4e9f2;
+      --border-dark:#d4dce9;
+
+      --green:#087443;
+      --green-bg:#eaf8f0;
+
+      --orange:#b54708;
+      --orange-bg:#fff4e8;
+
+      --red:#b42318;
+      --red-bg:#fff0ee;
+
+      --purple:#6941c6;
+      --purple-bg:#f4f0ff;
+
+      --shadow:
+        0 8px 30px
+        rgba(16,38,75,.055);
+
+      --sidebar-width:260px;
+      --header-height:76px;
+    }
+
+    * {
+      box-sizing:border-box;
+    }
+
+    body {
+      margin:0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background:var(--bg);
+      color:var(--text);
+    }
+
+    a {
+      color:inherit;
+      text-decoration:none;
+    }
+
+    .app {
+      min-height:100vh;
+      display:flex;
+    }
+
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
+
+    .sidebar {
+      width:var(--sidebar-width);
+      min-width:var(--sidebar-width);
+      height:100vh;
+      position:fixed;
+      left:0;
+      top:0;
+      background:#fff;
+      border-right:1px solid var(--border);
+      display:flex;
+      flex-direction:column;
+      z-index:100;
+    }
+
+    .brand {
+      height:var(--header-height);
+      padding:0 20px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .brand-logo {
+      width:44px;
+      height:44px;
+      border-radius:13px;
+      background:var(--blue);
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-size:21px;
+      font-weight:900;
+      box-shadow:
+        0 8px 18px
+        rgba(21,87,214,.22);
+    }
+
+    .brand-name {
+      font-size:18px;
+      font-weight:800;
+      color:var(--navy);
+      line-height:1.1;
+    }
+
+    .brand-subtitle {
+      margin-top:4px;
+      font-size:10px;
+      letter-spacing:.08em;
+      font-weight:700;
+      color:var(--muted);
+    }
+
+    .sidebar-content {
+      flex:1;
+      overflow-y:auto;
+      padding:18px 12px;
+    }
+
+    .nav-section {
+      margin-bottom:22px;
+    }
+
+    .nav-title {
+      padding:0 12px 8px;
+      color:#8a96a8;
+      font-size:10px;
+      font-weight:800;
+      letter-spacing:.1em;
+      text-transform:uppercase;
+    }
+
+    .nav-item {
+      min-height:44px;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      padding:0 12px;
+      margin-bottom:4px;
+      border-radius:10px;
+      color:#344563;
+      font-size:13px;
+      font-weight:650;
+    }
+
+    .nav-item:hover {
+      background:#f5f8ff;
+      color:var(--blue);
+    }
+
+    .nav-item.active {
+      background:var(--blue-light);
+      color:var(--blue);
+    }
+
+    .nav-icon {
+      width:22px;
+      min-width:22px;
+      display:grid;
+      place-items:center;
+      font-size:16px;
+      font-weight:800;
+    }
+
+    .nav-text {
+      flex:1;
+    }
+
+    .nav-count {
+      min-width:30px;
+      padding:4px 7px;
+      border-radius:999px;
+      background:#eef2f8;
+      color:#61708a;
+      font-size:10px;
+      text-align:center;
+      font-weight:800;
+    }
+
+    .sidebar-footer {
+      padding:14px 12px;
+      border-top:1px solid var(--border);
+    }
+
+    .website-link {
+      display:flex;
+      align-items:center;
+      gap:9px;
+      min-height:42px;
+      padding:0 12px;
+      border-radius:10px;
+      color:#52627a;
+      font-size:12px;
+      font-weight:650;
+    }
+
+    .website-link:hover {
+      background:#f5f8ff;
+      color:var(--blue);
+    }
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .main {
+      width:
+        calc(100% - var(--sidebar-width));
+      margin-left:var(--sidebar-width);
+      min-height:100vh;
+    }
+
+    .topbar {
+      height:var(--header-height);
+      background:rgba(255,255,255,.96);
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:0 28px;
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(12px);
+    }
+
+    .topbar-title {
+      display:flex;
+      flex-direction:column;
+      gap:3px;
+    }
+
+    .topbar-title strong {
+      font-size:19px;
+      color:var(--navy);
+      font-weight:800;
+    }
+
+    .topbar-title span {
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .topbar-actions {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .top-button {
+      min-height:40px;
+      padding:0 15px;
+      border:1px solid var(--border-dark);
+      border-radius:10px;
+      background:#fff;
+      color:#344563;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .top-button:hover {
+      background:#f8faff;
+    }
+
+    .admin-status {
+      display:inline-flex;
+      align-items:center;
+      gap:7px;
+      min-height:40px;
+      padding:0 13px;
+      border-radius:10px;
+      background:var(--green-bg);
+      color:var(--green);
+      font-size:12px;
+      font-weight:750;
+    }
+
+    .status-dot {
+      width:7px;
+      height:7px;
+      border-radius:50%;
+      background:#12b76a;
+    }
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+      max-width:1600px;
+      margin:0 auto;
+      padding:32px 30px 60px;
+    }
+
+    .page-title {
+      margin-bottom:24px;
+    }
+
+    .page-title h1 {
+      margin:0;
+      color:var(--navy);
+      font-size:30px;
+      line-height:1.15;
+      letter-spacing:-.025em;
+    }
+
+    .page-title p {
+      margin:7px 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* =====================================================
+       STAT CARDS
+    ===================================================== */
+
+    .stats {
+      display:grid;
+      grid-template-columns:
+        repeat(4,minmax(0,1fr));
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .stat-card {
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:20px;
+      box-shadow:var(--shadow);
+    }
+
+    .stat-label {
+      color:#66758c;
+      font-size:10px;
+      font-weight:800;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+    }
+
+    .stat-value {
+      margin-top:12px;
+      color:var(--navy);
+      font-size:29px;
+      line-height:1;
+      font-weight:850;
+    }
+
+    .stat-description {
+      margin-top:9px;
+      color:#8290a5;
+      font-size:11px;
+    }
+
+    /* =====================================================
+       PANELS
+    ===================================================== */
+
+    .panel {
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin-bottom:18px;
+    }
+
+    .panel-header {
+      min-height:68px;
+      padding:16px 20px;
+      border-bottom:1px solid var(--border);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .panel-header h2 {
+      margin:0;
+      color:var(--navy);
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .panel-header p {
+      margin:4px 0 0;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .panel-body {
+      padding:20px;
+    }
+
+    /* =====================================================
+       ANALYTICS GRID
+    ===================================================== */
+
+    .analytics-grid {
+      display:grid;
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-bottom:18px;
+    }
+
+    .metric-box {
+      min-height:145px;
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:18px;
+      background:#fff;
+    }
+
+    .metric-title {
+      color:#66758c;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      font-weight:800;
+    }
+
+    .metric-number {
+      margin-top:13px;
+      color:var(--navy);
+      font-size:25px;
+      font-weight:850;
+    }
+
+    .metric-note {
+      margin-top:7px;
+      color:#8290a5;
+      font-size:10px;
+    }
+
+    /* =====================================================
+       DISTRIBUTION
+    ===================================================== */
+
+    .distribution {
+      display:grid;
+      grid-template-columns:
+        repeat(3,minmax(0,1fr));
+      gap:14px;
+    }
+
+    .distribution-card {
+      border:1px solid var(--border);
+      border-radius:13px;
+      padding:17px;
+    }
+
+    .distribution-top {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+
+    .distribution-name {
+      font-size:12px;
+      font-weight:800;
+      color:var(--navy);
+    }
+
+    .distribution-value {
+      font-size:18px;
+      font-weight:850;
+      color:var(--navy);
+    }
+
+    .bar {
+      margin-top:13px;
+      height:8px;
+      border-radius:999px;
+      background:#edf1f7;
+      overflow:hidden;
+    }
+
+    .bar-fill {
+      height:100%;
+      border-radius:999px;
+    }
+
+    .bar-high {
+      background:#12b76a;
+    }
+
+    .bar-medium {
+      background:#f79009;
+    }
+
+    .bar-low {
+      background:#f04438;
+    }
+
+    /* =====================================================
+       SCORING RULE
+    ===================================================== */
+
+    .scoring-rule {
+      display:grid;
+      grid-template-columns:
+        repeat(3,1fr);
+      gap:12px;
+    }
+
+    .rule {
+      padding:16px;
+      border-radius:12px;
+      background:#fafbfe;
+      border:1px solid var(--border);
+      text-align:center;
+    }
+
+    .rule strong {
+      display:block;
+      font-size:21px;
+      color:var(--navy);
+    }
+
+    .rule span {
+      display:block;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:10px;
+      font-weight:700;
+    }
+
+    /* =====================================================
+       TABLES
+    ===================================================== */
+
+    .table-wrap {
+      overflow-x:auto;
+    }
+
+    table {
+      width:100%;
+      border-collapse:collapse;
+      min-width:900px;
+    }
+
+    th {
+      padding:13px 15px;
+      background:#fafbfe;
+      border-bottom:1px solid var(--border);
+      color:#66758c;
+      font-size:10px;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      text-align:left;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    td {
+      padding:14px 15px;
+      border-bottom:1px solid #edf0f5;
+      vertical-align:middle;
+      font-size:11px;
+      color:#344563;
+    }
+
+    tbody tr:hover {
+      background:#fbfcff;
+    }
+
+    tbody tr:last-child td {
+      border-bottom:none;
+    }
+
+    .student-name {
+      color:var(--navy);
+      font-weight:800;
+    }
+
+    .student-email {
+      margin-top:3px;
+      color:#8995a8;
+      font-size:9px;
+    }
+
+    .test-number {
+      color:var(--blue);
+      font-size:10px;
+      font-weight:850;
+    }
+
+    .test-title {
+      margin-top:3px;
+      color:var(--navy);
+      font-weight:700;
+      max-width:260px;
+    }
+
+    .score {
+      font-weight:850;
+      color:var(--navy);
+    }
+
+    .high {
+      color:var(--green);
+    }
+
+    .medium {
+      color:var(--orange);
+    }
+
+    .low {
+      color:var(--red);
+    }
+
+    .percentage {
+      margin-top:3px;
+      color:#8290a5;
+      font-size:9px;
+    }
+
+    .attempt-badge {
+      display:inline-flex;
+      min-width:30px;
+      justify-content:center;
+      padding:5px 8px;
+      border-radius:999px;
+      background:var(--blue-light);
+      color:var(--blue);
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .count-correct {
+      color:var(--green);
+      font-weight:800;
+    }
+
+    .count-incorrect {
+      color:var(--red);
+      font-weight:800;
+    }
+
+    .count-unanswered {
+      color:#667085;
+      font-weight:800;
+    }
+
+    /* =====================================================
+       SEARCH / FILTER
+    ===================================================== */
+
+    .controls {
+      display:grid;
+      grid-template-columns:
+        minmax(280px,1fr)
+        200px
+        130px;
+      gap:10px;
+      padding:18px 20px;
+    }
+
+    .search,
+    .select,
+    .clear {
+      min-height:42px;
+      border:1px solid var(--border-dark);
+      border-radius:10px;
+      background:#fff;
+      padding:0 13px;
+      color:var(--text);
+      outline:none;
+      font-size:11px;
+    }
+
+    .search:focus,
+    .select:focus {
+      border-color:var(--blue);
+      box-shadow:
+        0 0 0 3px
+        rgba(21,87,214,.08);
+    }
+
+    .clear {
+      cursor:pointer;
+      font-weight:750;
+    }
+
+    .clear:hover {
+      background:#f8faff;
+    }
+
+    /* =====================================================
+       EMPTY
+    ===================================================== */
+
+    .empty {
+      padding:50px 25px;
+      text-align:center;
+      color:var(--muted);
+    }
+
+    .empty-icon {
+      font-size:34px;
+      margin-bottom:10px;
+    }
+
+    .empty strong {
+      display:block;
+      color:var(--navy);
+      margin-bottom:6px;
+      font-size:15px;
+    }
+
+    .error {
+      margin:20px;
+      padding:16px;
+      border-radius:10px;
+      border:1px solid #f3b6b1;
+      background:var(--red-bg);
+      color:var(--red);
+      font-size:12px;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+      margin-top:25px;
+      padding-top:18px;
+      border-top:1px solid var(--border);
+      display:flex;
+      justify-content:space-between;
+      color:#8a96a8;
+      font-size:10px;
+    }
+
+    /* =====================================================
+       MOBILE
+    ===================================================== */
+
+    @media(max-width:1150px) {
+
+      .stats {
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+      .analytics-grid {
+        grid-template-columns:
+          repeat(2,1fr);
+      }
+
+      .controls {
+        grid-template-columns:
+          1fr 1fr;
+      }
+    }
+
+    @media(max-width:720px) {
+
+      .sidebar {
+        transform:translateX(-100%);
+      }
+
+      .main {
+        width:100%;
+        margin-left:0;
+      }
+
+      .topbar {
+        padding:0 15px;
+      }
+
+      .admin-status {
+        display:none;
+      }
+
+      .content {
+        padding:24px 15px 45px;
+      }
+
+      .stats,
+      .analytics-grid,
+      .distribution,
+      .scoring-rule {
+        grid-template-columns:1fr;
+      }
+
+      .controls {
+        grid-template-columns:1fr;
+      }
+
+      .footer {
+        flex-direction:column;
+        gap:8px;
+      }
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        H
+      </div>
+
+      <div>
+
+        <div class="brand-name">
+          Habitat IAS
+        </div>
+
+        <div class="brand-subtitle">
+          ADMIN CONTROL PANEL
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          Overview
+        </div>
+
+        <a
+          href="/admin"
+          class="nav-item"
+        >
+          <span class="nav-icon">⌂</span>
+          <span class="nav-text">
+            Dashboard
+          </span>
+        </a>
+
+      </div>
+
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          Mock Test
+        </div>
+
+        <a
+          href="/admin/mock-tests"
+          class="nav-item"
+        >
+          <span class="nav-icon">↗</span>
+
+          <span class="nav-text">
+            Mock Tests
+          </span>
+
+          <span class="nav-count">
+            20
+          </span>
+        </a>
+
+        <a
+          href="/admin/questions"
+          class="nav-item"
+        >
+          <span class="nav-icon">?</span>
+
+          <span class="nav-text">
+            Questions
+          </span>
+
+          <span class="nav-count">
+            2,000
+          </span>
+        </a>
+
+      </div>
+
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          Students
+        </div>
+
+        <a
+          href="/admin/students"
+          class="nav-item"
+        >
+          <span class="nav-icon">●</span>
+
+          <span class="nav-text">
+            Students
+          </span>
+        </a>
+
+        <a
+          href="/admin/attempts"
+          class="nav-item"
+        >
+          <span class="nav-icon">↗</span>
+
+          <span class="nav-text">
+            Student Attempts
+          </span>
+
+          <span class="nav-count">
+            {totalAttempts}
+          </span>
+        </a>
+
+      </div>
+
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          Analytics
+        </div>
+
+        <a
+          href="/admin/results"
+          class="nav-item active"
+        >
+          <span class="nav-icon">▥</span>
+
+          <span class="nav-text">
+            Results &amp; Analytics
+          </span>
+        </a>
+
+      </div>
+
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          Access
+        </div>
+
+        <a
+          href="/admin/access"
+          class="nav-item"
+        >
+          <span class="nav-icon">◇</span>
+
+          <span class="nav-text">
+            Series Access
+          </span>
+        </a>
+
+      </div>
+
+
+      <div class="nav-section">
+
+        <div class="nav-title">
+          System
+        </div>
+
+        <a
+          href="/admin/settings"
+          class="nav-item"
+        >
+          <span class="nav-icon">⚙</span>
+
+          <span class="nav-text">
+            Settings
+          </span>
+        </a>
+
+        <a
+          href="/admin/security"
+          class="nav-item"
+        >
+          <span class="nav-icon">◇</span>
+
+          <span class="nav-text">
+            Security
+          </span>
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="sidebar-footer">
+
+      <a
+        href="/"
+        class="website-link"
+      >
+        <span>←</span>
+        <span>
+          Back to Habitat IAS website
+        </span>
+      </a>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="topbar-title">
+
+        <strong>
+          Results &amp; Analytics
+        </strong>
+
+        <span>
+          Overall performance and mock-test analytics
+        </span>
+
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <a
+          href="/admin"
+          class="top-button"
+        >
+          ← Dashboard
+        </a>
+
+        <div class="admin-status">
+
+          <span class="status-dot"></span>
+
+          Admin Panel
+
+        </div>
+
+      </div>
+
+    </header>
+
+
+    <div class="content">
+
+      <!-- =================================================
+           TITLE
+      ================================================== -->
+
+      <section class="page-title">
+
+        <h1>
+          Results &amp; Analytics
+        </h1>
+
+        <p>
+          Analyse student performance across the
+          Habitat IAS JPSC Prelims Mock Test Series.
+        </p>
+
+      </section>
+
+
+      <!-- =================================================
+           TOP STATISTICS
+      ================================================== -->
+
+      <section class="stats">
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Total Attempts
+          </div>
+
+          <div class="stat-value">
+            {totalAttempts}
+          </div>
+
+          <div class="stat-description">
+            All recorded attempts
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Submitted
+          </div>
+
+          <div class="stat-value">
+            {submittedAttempts}
+          </div>
+
+          <div class="stat-description">
+            Completed attempts
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Average Score
+          </div>
+
+          <div class="stat-value">
+            {averageScore.toFixed(1)}
+          </div>
+
+          <div class="stat-description">
+            Average marks per submitted attempt
+          </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+          <div class="stat-label">
+            Average Performance
+          </div>
+
+          <div class="stat-value">
+            {averagePercentage.toFixed(1)}%
+          </div>
+
+          <div class="stat-description">
+            Average percentage
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           SCORE METRICS
+      ================================================== -->
+
+      <section class="analytics-grid">
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Highest Score
+          </div>
+
+          <div class="metric-number high">
+            {highestScore}
+          </div>
+
+          <div class="metric-note">
+            Best submitted attempt
+          </div>
+
+        </div>
+
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Lowest Score
+          </div>
+
+          <div class="metric-number low">
+            {lowestScore}
+          </div>
+
+          <div class="metric-note">
+            Lowest submitted attempt
+          </div>
+
+        </div>
+
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Average Time
+          </div>
+
+          <div class="metric-number">
+            {formatTime(averageTime)}
+          </div>
+
+          <div class="metric-note">
+            Average time per submitted attempt
+          </div>
+
+        </div>
+
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Correct Answers
+          </div>
+
+          <div class="metric-number high">
+            {totalCorrect}
+          </div>
+
+          <div class="metric-note">
+            Across all recorded attempts
+          </div>
+
+        </div>
+
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Incorrect Answers
+          </div>
+
+          <div class="metric-number low">
+            {totalIncorrect}
+          </div>
+
+          <div class="metric-note">
+            No marks deducted
+          </div>
+
+        </div>
+
+
+        <div class="metric-box">
+
+          <div class="metric-title">
+            Unanswered
+          </div>
+
+          <div class="metric-number">
+            {totalUnanswered}
+          </div>
+
+          <div class="metric-note">
+            Questions left unanswered
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           SCORING RULE
+      ================================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Mock Test Scoring System
+            </h2>
+
+            <p>
+              Current Habitat IAS scoring rule
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          <div class="scoring-rule">
+
+            <div class="rule">
+
+              <strong>
+                +2
+              </strong>
+
+              <span>
+                Correct Answer
+              </span>
+
+            </div>
+
+
+            <div class="rule">
+
+              <strong>
+                0
+              </strong>
+
+              <span>
+                Incorrect Answer
+              </span>
+
+            </div>
+
+
+            <div class="rule">
+
+              <strong>
+                0
+              </strong>
+
+              <span>
+                Unanswered
+              </span>
+
+            </div>
+
+          </div>
+
+          <p
+            style="
+              margin:15px 0 0;
+              color:#667085;
+              font-size:11px;
+              line-height:1.6;
+            "
+          >
+            There is <strong>no negative marking</strong>.
+            Wrong answers do not reduce the student's score.
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PERFORMANCE DISTRIBUTION
+      ================================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Performance Distribution
+            </h2>
+
+            <p>
+              Submitted attempts grouped by percentage
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          <div class="distribution">
+
+            <div class="distribution-card">
+
+              <div class="distribution-top">
+
+                <div class="distribution-name">
+                  75% and Above
+                </div>
+
+                <div class="distribution-value">
+                  {highPerformers}
+                </div>
+
+              </div>
+
+              <div class="bar">
+
+                <div
+                  class="bar-fill bar-high"
+                  style={`width:${
+                    submittedAttempts > 0
+                      ? (highPerformers /
+                          submittedAttempts) *
+                        100
+                      : 0
+                  }%`}
+                ></div>
+
+              </div>
+
+            </div>
+
+
+            <div class="distribution-card">
+
+              <div class="distribution-top">
+
+                <div class="distribution-name">
+                  50% – 74.99%
+                </div>
+
+                <div class="distribution-value">
+                  {mediumPerformers}
+                </div>
+
+              </div>
+
+              <div class="bar">
+
+                <div
+                  class="bar-fill bar-medium"
+                  style={`width:${
+                    submittedAttempts > 0
+                      ? (mediumPerformers /
+                          submittedAttempts) *
+                        100
+                      : 0
+                  }%`}
+                ></div>
+
+              </div>
+
+            </div>
+
+
+            <div class="distribution-card">
+
+              <div class="distribution-top">
+
+                <div class="distribution-name">
+                  Below 50%
+                </div>
+
+                <div class="distribution-value">
+                  {lowPerformers}
+                </div>
+
+              </div>
+
+              <div class="bar">
+
+                <div
+                  class="bar-fill bar-low"
+                  style={`width:${
+                    submittedAttempts > 0
+                      ? (lowPerformers /
+                          submittedAttempts) *
+                        100
+                      : 0
+                  }%`}
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           TEST-WISE ANALYTICS
+      ================================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Test-wise Performance
+            </h2>
+
+            <p>
+              Performance comparison across mock tests
+            </p>
+
+          </div>
+
+          <strong
+            style="
+              font-size:11px;
+              color:#667085;
+            "
+          >
+            {testAnalytics.length} tests
+          </strong>
+
+        </div>
+
+
+        {
+          testAnalytics.length === 0 ? (
+
+            <div class="empty">
+
+              <div class="empty-icon">
+                📊
+              </div>
+
+              <strong>
+                No submitted test data
+              </strong>
+
+              <div>
+                Test analytics will appear after students
+                submit mock tests.
+              </div>
+
+            </div>
+
+          ) : (
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Test
+                    </th>
+
+                    <th>
+                      Attempts
+                    </th>
+
+                    <th>
+                      Average Score
+                    </th>
+
+                    <th>
+                      Average %
+                    </th>
+
+                    <th>
+                      Highest
+                    </th>
+
+                    <th>
+                      Lowest
+                    </th>
+
+                    <th>
+                      Correct
+                    </th>
+
+                    <th>
+                      Incorrect
+                    </th>
+
+                    <th>
+                      Unanswered
+                    </th>
+
+                    <th>
+                      Avg Time
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                  {
+                    testAnalytics.map(
+                      (test) => (
+
+                        <tr>
+
+                          <td>
+
+                            <div class="test-number">
+                              TEST {
+                                test.testNumber !== null
+                                  ? String(
+                                      test.testNumber
+                                    ).padStart(
+                                      2,
+                                      "0"
+                                    )
+                                  : "—"
+                              }
+                            </div>
+
+                            <div class="test-title">
+                              {
+                                test.title
+                              }
+                            </div>
+
+                          </td>
+
+
+                          <td>
+
+                            <span class="attempt-badge">
+                              {test.attempts}
+                            </span>
+
+                          </td>
+
+
+                          <td>
+
+                            <strong>
+                              {test.averageScore.toFixed(1)}
+                            </strong>
+
+                            <div class="percentage">
+                              / {
+                                test.questionCount * 2
+                              }
+                            </div>
+
+                          </td>
+
+
+                          <td>
+
+                            <strong
+                              class={
+                                percentageClass(
+                                  test.averagePercentage
+                                )
+                              }
+                            >
+                              {
+                                test.averagePercentage.toFixed(
+                                  1
+                                )
+                              }%
+                            </strong>
+
+                          </td>
+
+
+                          <td>
+                            {test.highestScore}
+                          </td>
+
+
+                          <td>
+                            {test.lowestScore}
+                          </td>
+
+
+                          <td class="count-correct">
+                            {test.correct}
+                          </td>
+
+
+                          <td class="count-incorrect">
+                            {test.incorrect}
+                          </td>
+
+
+                          <td class="count-unanswered">
+                            {test.unanswered}
+                          </td>
+
+
+                          <td>
+                            {formatTime(
+                              test.averageTime
+                            )}
+                          </td>
+
+                        </tr>
+
+                      )
+                    )
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          )
+        }
+
+      </section>
+
+
+      <!-- =================================================
+           STUDENT PERFORMANCE
+      ================================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Student Performance
+            </h2>
+
+            <p>
+              Submitted-attempt performance by student
+            </p>
+
+          </div>
+
+          <strong
+            id="studentCount"
+            style="
+              font-size:11px;
+              color:#667085;
+            "
+          >
+            {studentAnalytics.length} students
+          </strong>
+
+        </div>
+
+
+        <div class="controls">
+
+          <input
+            id="studentSearch"
+            class="search"
+            type="search"
+            placeholder="Search student or email..."
+          >
+
+
+          <select
+            id="studentPerformanceFilter"
+            class="select"
+          >
+
+            <option value="">
+              All Performance
+            </option>
+
+            <option value="high">
+              75% and above
+            </option>
+
+            <option value="medium">
+              50% – 74.99%
+            </option>
+
+            <option value="low">
+              Below 50%
+            </option>
+
+          </select>
+
+
+          <button
+            id="clearStudentFilters"
+            class="clear"
+            type="button"
+          >
+            Clear
+          </button>
+
+        </div>
+
+
+        {
+          studentAnalytics.length === 0 ? (
+
+            <div class="empty">
+
+              <div class="empty-icon">
+                👨‍🎓
+              </div>
+
+              <strong>
+                No student results yet
+              </strong>
+
+              <div>
+                Student analytics will appear after
+                completed attempts are submitted.
+              </div>
+
+            </div>
+
+          ) : (
+
+            <div class="table-wrap">
+
+              <table>
+
+                <thead>
+
+                  <tr>
+
+                    <th>
+                      Student
+                    </th>
+
+                    <th>
+                      Attempts
+                    </th>
+
+                    <th>
+                      Average Score
+                    </th>
+
+                    <th>
+                      Average %
+                    </th>
+
+                    <th>
+                      Best Score
+                    </th>
+
+                    <th>
+                      Average Time
+                    </th>
+
+                  </tr>
+
+                </thead>
+
+
+                <tbody id="studentTableBody">
+
+                  {
+                    studentAnalytics.map(
+                      (student) => {
+
+                        const performance =
+                          percentageClass(
+                            student.averagePercentage
+                          );
+
+                        return (
+
+                          <tr
+                            class="student-row"
+                            data-search={
+                              `${student.name} ${student.email}`
+                                .toLowerCase()
+                            }
+                            data-performance={
+                              performance
+                            }
+                          >
+
+                            <td>
+
+                              <div class="student-name">
+                                {
+                                  student.name
+                                }
+                              </div>
+
+                              <div class="student-email">
+                                {
+                                  student.email
+                                }
+                              </div>
+
+                            </td>
+
+
+                            <td>
+
+                              <span class="attempt-badge">
+                                {student.attempts}
+                              </span>
+
+                            </td>
+
+
+                            <td>
+
+                              <strong>
+                                {
+                                  student.averageScore.toFixed(
+                                    1
+                                  )
+                                }
+                              </strong>
+
+                            </td>
+
+
+                            <td>
+
+                              <strong
+                                class={performance}
+                              >
+                                {
+                                  student.averagePercentage.toFixed(
+                                    1
+                                  )
+                                }%
+                              </strong>
+
+                            </td>
+
+
+                            <td>
+
+                              <strong>
+                                {
+                                  student.highestScore
+                                }
+                              </strong>
+
+                            </td>
+
+
+                            <td>
+
+                              {formatTime(
+                                student.averageTime
+                              )}
+
+                            </td>
+
+                          </tr>
+
+                        );
+
+                      }
+                    )
+                  }
+
+                </tbody>
+
+              </table>
+
+            </div>
+
+          )
+        }
+
+      </section>
+
+
+      <!-- =================================================
+           ANSWER SUMMARY
+      ================================================== -->
+
+      <section class="panel">
+
+        <div class="panel-header">
+
+          <div>
+
+            <h2>
+              Answer Summary
+            </h2>
+
+            <p>
+              Aggregate answer behaviour across attempts
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel-body">
+
+          <div class="analytics-grid">
+
+            <div class="metric-box">
+
+              <div class="metric-title">
+                Total Correct
+              </div>
+
+              <div class="metric-number high">
+                {totalCorrect}
+              </div>
+
+              <div class="metric-note">
+                Correct responses
+              </div>
+
+            </div>
+
+
+            <div class="metric-box">
+
+              <div class="metric-title">
+                Total Incorrect
+              </div>
+
+              <div class="metric-number low">
+                {totalIncorrect}
+              </div>
+
+              <div class="metric-note">
+                Incorrect responses — no deduction
+              </div>
+
+            </div>
+
+
+            <div class="metric-box">
+
+              <div class="metric-title">
+                Total Unanswered
+              </div>
+
+              <div class="metric-number">
+                {totalUnanswered}
+              </div>
+
+              <div class="metric-note">
+                Questions not attempted
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           FOOTER
+      ================================================== -->
+
+      <footer class="footer">
+
+        <span>
+          Habitat IAS · JPSC Prelims Mock Test Series
+        </span>
+
+        <span>
+          Admin Control Panel
+        </span>
+
+      </footer>
+
+    </div>
+
+  </main>
+
+</div>
+
+
+<!-- =======================================================
+     CLIENT FILTERING
+======================================================== -->
+
+<script>
+
+  const search =
+    document.getElementById(
+      "studentSearch"
+    );
+
+  const performance =
+    document.getElementById(
+      "studentPerformanceFilter"
+    );
+
+  const clear =
+    document.getElementById(
+      "clearStudentFilters"
+    );
+
+  const count =
+    document.getElementById(
+      "studentCount"
+    );
+
+  const rows =
+    Array.from(
+      document.querySelectorAll(
+        ".student-row"
+      )
+    );
+
+
+  function applyStudentFilters() {
+
+    const query =
+      (
+        search?.value ||
+        ""
+      )
+        .trim()
+        .toLowerCase();
+
+    const filter =
+      performance?.value ||
+      "";
+
+    let visible = 0;
+
+
+    rows.forEach(
+      (row) => {
+
+        const text =
+          row.dataset.search ||
+          "";
+
+        const rowPerformance =
+          row.dataset.performance ||
+          "";
+
+        const matchesSearch =
+          !query ||
+          text.includes(query);
+
+        const matchesPerformance =
+          !filter ||
+          rowPerformance === filter;
+
+        const show =
+          matchesSearch &&
+          matchesPerformance;
+
+        row.style.display =
+          show ? "" : "none";
+
+        if (show) {
+          visible++;
+        }
+
+      }
+    );
+
+
+    if (count) {
+
+      count.textContent =
+        `${visible} ${
+          visible === 1
+            ? "student"
+            : "students"
+        }`;
+
+    }
+
+  }
+
+
+  search?.addEventListener(
+    "input",
+    applyStudentFilters
+  );
+
+  performance?.addEventListener(
+    "change",
+    applyStudentFilters
+  );
+
+
+  clear?.addEventListener(
+    "click",
+    () => {
+
+      if (search) {
+        search.value = "";
+      }
+
+      if (performance) {
+        performance.value = "";
+      }
+
+      applyStudentFilters();
+
+    }
+  );
+
+</script>
+
+</body>
+
+</html>

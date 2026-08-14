@@ -197,6 +197,21 @@ const upscLinks = [
 
 
     <!-- =====================================================
+         STUDENT DASHBOARD — LOGGED-OUT CTA
+    ====================================================== -->
+
+    <a
+      href="/login/?redirect=%2Fdashboard%2F"
+      class="student-dashboard-button"
+      id="student-dashboard-button"
+      aria-label="Open Student Dashboard"
+    >
+      <span class="student-dashboard-icon" aria-hidden="true">🎓</span>
+      <span>Student Dashboard</span>
+    </a>
+
+
+    <!-- =====================================================
          DESKTOP BOOK BUTTON
     ====================================================== -->
 
@@ -206,6 +221,102 @@ const upscLinks = [
     >
       Get the Book
     </a>
+
+
+    <!-- =====================================================
+         STUDENT ACCOUNT
+    ====================================================== -->
+
+    <div
+      class="student-account"
+      id="student-account"
+      hidden
+    >
+      <button
+        type="button"
+        class="student-account-button"
+        id="student-account-button"
+        aria-haspopup="true"
+        aria-expanded="false"
+        aria-controls="student-account-menu"
+      >
+        <span class="student-account-icon" aria-hidden="true">♟</span>
+
+        <span
+          class="student-account-name"
+          id="student-account-name"
+        >
+          Student
+        </span>
+
+        <span
+          class="student-account-arrow"
+          aria-hidden="true"
+        >
+          ⌄
+        </span>
+      </button>
+
+      <div
+        class="student-account-menu"
+        id="student-account-menu"
+        hidden
+      >
+        <div class="student-account-user">
+          <div
+            class="student-account-user-name"
+            id="student-account-user-name"
+          >
+            Student
+          </div>
+
+          <div
+            class="student-account-user-email"
+            id="student-account-user-email"
+          >
+            —
+          </div>
+        </div>
+
+        <div class="student-account-divider"></div>
+
+        <a
+          href="/dashboard/"
+          class="student-account-link"
+        >
+          🎓 Student Dashboard
+        </a>
+
+        <a
+          href="/profile/"
+          class="student-account-link"
+        >
+          My Profile
+        </a>
+
+        <a
+          href="/mock-tests/"
+          class="student-account-link"
+        >
+          My Mock Tests
+        </a>
+
+        <a
+          href="/results/"
+          class="student-account-link"
+        >
+          My Results
+        </a>
+
+        <button
+          type="button"
+          class="student-account-logout"
+          id="student-account-logout"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
 
 
     <!-- =====================================================
@@ -372,6 +483,83 @@ const upscLinks = [
       >
         Contact
       </a>
+
+
+      <!-- =================================================
+           MOBILE STUDENT DASHBOARD — LOGGED-OUT CTA
+      ================================================== -->
+
+      <a
+        href="/login/?redirect=%2Fdashboard%2F"
+        class="mobile-dashboard-link"
+        id="mobile-dashboard-link"
+      >
+        <span aria-hidden="true">🎓</span>
+        <span>Student Dashboard</span>
+      </a>
+
+
+      <!-- =================================================
+           MOBILE STUDENT ACCOUNT
+      ================================================== -->
+
+      <div
+        class="mobile-student-account"
+        id="mobile-student-account"
+        hidden
+      >
+        <div class="mobile-student-account-card">
+          <div class="mobile-student-account-avatar" aria-hidden="true">
+            ♟
+          </div>
+
+          <div class="mobile-student-account-info">
+            <strong id="mobile-student-account-name">
+              Student
+            </strong>
+
+            <span id="mobile-student-account-email">
+              —
+            </span>
+          </div>
+        </div>
+
+        <a
+          href="/dashboard/"
+          class="mobile-account-link"
+        >
+          🎓 Student Dashboard
+        </a>
+
+        <a
+          href="/profile/"
+          class="mobile-account-link"
+        >
+          My Profile
+        </a>
+
+        <a
+          href="/mock-tests/"
+          class="mobile-account-link"
+        >
+          My Mock Tests
+        </a>
+
+        <a
+          href="/results/"
+          class="mobile-account-link"
+        >
+          My Results
+        </a>
+
+        <button
+          type="button"
+          class="mobile-account-logout"
+          id="mobile-account-logout"
+        >
+          Logout
+        </button>
+      </div>
 
 
       <!-- MOBILE BOOK BUTTON -->
@@ -625,6 +813,73 @@ const upscLinks = [
 
 
   /* =========================================================
+     STUDENT DASHBOARD — DESKTOP LOGGED-OUT CTA
+  ========================================================= */
+
+  /* =========================================================
+     STUDENT DASHBOARD — ALWAYS-VISIBLE FLOATING CTA
+  ========================================================= */
+
+  .student-dashboard-button {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 99999;
+
+    width: auto;
+    min-width: 142px;
+    height: 44px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+
+    padding: 8px 13px;
+
+    border: 2px solid #1657d9;
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #1657d9;
+
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 850;
+
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+
+    box-shadow:
+      0 8px 24px rgba(0, 0, 0, 0.16);
+
+    cursor: pointer;
+
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .student-dashboard-button:hover {
+    background: #1657d9;
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 12px 30px rgba(22, 87, 217, 0.28);
+  }
+
+  .student-dashboard-icon {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+
+  /* =========================================================
      DESKTOP BOOK BUTTON
   ========================================================= */
 
@@ -665,6 +920,200 @@ const upscLinks = [
 
     box-shadow:
       0 14px 30px rgba(22, 87, 217, 0.27);
+  }
+
+
+  /* =========================================================
+     STUDENT ACCOUNT
+  ========================================================= */
+
+  .student-account {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .student-account[hidden],
+  .mobile-student-account[hidden],
+  .student-dashboard-button[hidden],
+  .mobile-dashboard-link[hidden] {
+    display: none !important;
+  }
+
+  .student-account-button {
+    min-height: 50px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 8px 15px;
+
+    border: 1px solid #dce5f3;
+    border-radius: 999px;
+
+    background: #ffffff;
+    color: #20314f;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+  }
+
+  .student-account-button:hover,
+  .student-account.is-open .student-account-button {
+    background: #eef4ff;
+    border-color: #cbdafa;
+    color: #1657d9;
+  }
+
+  .student-account-icon {
+    width: 28px;
+    height: 28px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: #1657d9;
+    color: #ffffff;
+
+    font-size: 15px;
+    line-height: 1;
+  }
+
+  .student-account-name {
+    max-width: 150px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .student-account-arrow {
+    margin-top: -3px;
+    font-size: 16px;
+
+    transition:
+      transform 0.18s ease;
+  }
+
+  .student-account.is-open .student-account-arrow {
+    transform: rotate(180deg);
+  }
+
+  .student-account-menu {
+    position: absolute;
+
+    top: calc(100% + 10px);
+    right: 0;
+
+    width: 270px;
+
+    padding: 10px;
+
+    border: 1px solid #e1e8f4;
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+      0 18px 50px rgba(16, 42, 80, 0.16);
+
+    z-index: 1200;
+  }
+
+  .student-account-menu[hidden] {
+    display: none;
+  }
+
+  .student-account-user {
+    padding: 10px 12px 12px;
+  }
+
+  .student-account-user-name {
+    color: #172b4d;
+
+    font-size: 15px;
+    font-weight: 850;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .student-account-user-email {
+    margin-top: 4px;
+
+    color: #71809a;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .student-account-divider {
+    height: 1px;
+
+    margin: 2px 8px 7px;
+
+    background: #edf1f7;
+  }
+
+  .student-account-link,
+  .student-account-logout {
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    min-height: 42px;
+
+    padding: 9px 12px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: transparent;
+
+    color: #40516f;
+
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+
+    text-decoration: none;
+    text-align: left;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+  }
+
+  .student-account-link:hover {
+    background: #eef4ff;
+    color: #1657d9;
+  }
+
+  .student-account-logout {
+    margin-top: 3px;
+    color: #b42318;
+  }
+
+  .student-account-logout:hover {
+    background: #fff1f0;
+    color: #b42318;
   }
 
 
@@ -749,6 +1198,17 @@ const upscLinks = [
     .brand-mark {
       width: 50px;
       height: 50px;
+    }
+
+    .student-dashboard-button {
+      right: 14px;
+      bottom: 14px;
+
+      min-width: 136px;
+      height: 42px;
+
+      padding: 7px 12px;
+      font-size: 12px;
     }
 
     .header-book-button {
@@ -998,6 +1458,171 @@ const upscLinks = [
     }
 
 
+    /* =====================================================
+       MOBILE STUDENT DASHBOARD — LOGGED-OUT CTA
+    ====================================================== */
+
+    .mobile-dashboard-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      min-height: 48px;
+
+      margin-top: 8px;
+      padding: 11px 14px;
+
+      border: 2px solid #1657d9;
+      border-radius: 10px;
+
+      background: #ffffff;
+      color: #1657d9;
+
+      font-size: 15px;
+      font-weight: 800;
+
+      text-decoration: none;
+    }
+
+    .mobile-dashboard-link:hover {
+      background: #eef4ff;
+      color: #1657d9;
+    }
+
+
+    /* =====================================================
+       FLOATING STUDENT DASHBOARD — MOBILE
+    ====================================================== */
+
+    .student-dashboard-button {
+      right: 12px;
+      bottom: 12px;
+
+      min-width: 132px;
+      height: 40px;
+
+      padding: 7px 11px;
+
+      font-size: 12px;
+
+      box-shadow:
+        0 7px 20px rgba(0, 0, 0, 0.18);
+    }
+
+
+    /* =====================================================
+       MOBILE STUDENT ACCOUNT
+    ====================================================== */
+
+    .mobile-student-account {
+      margin-top: 12px;
+
+      padding: 12px;
+
+      border: 1px solid #e0e8f4;
+      border-radius: 14px;
+
+      background: #f8faff;
+    }
+
+    .mobile-student-account-card {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+
+      padding: 4px 2px 12px;
+    }
+
+    .mobile-student-account-avatar {
+      width: 40px;
+      height: 40px;
+
+      display: grid;
+      place-items: center;
+
+      flex-shrink: 0;
+
+      border-radius: 50%;
+
+      background: #1657d9;
+      color: #ffffff;
+
+      font-size: 18px;
+    }
+
+    .mobile-student-account-info {
+      min-width: 0;
+
+      display: grid;
+      gap: 3px;
+    }
+
+    .mobile-student-account-info strong {
+      color: #172b4d;
+
+      font-size: 14px;
+      font-weight: 850;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mobile-student-account-info span {
+      color: #71809a;
+
+      font-size: 11px;
+      font-weight: 600;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .mobile-account-link,
+    .mobile-account-logout {
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+
+      min-height: 44px;
+
+      padding: 9px 10px;
+
+      border: 0;
+      border-radius: 9px;
+
+      background: transparent;
+
+      color: #40516f;
+
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+
+      text-decoration: none;
+      text-align: left;
+
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+
+    .mobile-account-link:hover {
+      background: #eef4ff;
+      color: #1657d9;
+    }
+
+    .mobile-account-logout {
+      color: #b42318;
+    }
+
+    .mobile-account-logout:hover {
+      background: #fff1f0;
+    }
+
+
     /* MOBILE BOOK BUTTON */
 
     .mobile-book-button {
@@ -1076,77 +1701,790 @@ const upscLinks = [
 
 
 <script>
+  import { createClient } from "@supabase/supabase-js";
+
+
+  /* =========================================================
+     SUPABASE BROWSER CLIENT
+
+     IMPORTANT:
+     Only the PUBLIC anon key is used here.
+     Never put SUPABASE_SERVICE_ROLE_KEY in this component.
+  ========================================================= */
+
+  const SUPABASE_URL =
+    import.meta.env.PUBLIC_SUPABASE_URL;
+
+  const SUPABASE_ANON_KEY =
+    import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+
+
+  const supabase =
+    SUPABASE_URL &&
+    SUPABASE_ANON_KEY
+      ? createClient(
+          SUPABASE_URL,
+          SUPABASE_ANON_KEY,
+          {
+            auth: {
+              persistSession: true,
+              autoRefreshToken: true,
+              detectSessionInUrl: true,
+            },
+          }
+        )
+      : null;
+
+
+  /* =========================================================
+     ACCOUNT ELEMENTS
+  ========================================================= */
+
+  const studentDashboardButton =
+    document.querySelector(
+      "#student-dashboard-button"
+    );
+
+  const mobileDashboardLink =
+    document.querySelector(
+      "#mobile-dashboard-link"
+    );
+
+  const studentAccount =
+    document.querySelector(
+      "#student-account"
+    );
+
+  const studentAccountButton =
+    document.querySelector(
+      "#student-account-button"
+    );
+
+  const studentAccountMenu =
+    document.querySelector(
+      "#student-account-menu"
+    );
+
+  const studentAccountName =
+    document.querySelector(
+      "#student-account-name"
+    );
+
+  const studentAccountUserName =
+    document.querySelector(
+      "#student-account-user-name"
+    );
+
+  const studentAccountUserEmail =
+    document.querySelector(
+      "#student-account-user-email"
+    );
+
+  const studentAccountLogout =
+    document.querySelector(
+      "#student-account-logout"
+    );
+
+  const mobileStudentAccount =
+    document.querySelector(
+      "#mobile-student-account"
+    );
+
+  const mobileStudentAccountName =
+    document.querySelector(
+      "#mobile-student-account-name"
+    );
+
+  const mobileStudentAccountEmail =
+    document.querySelector(
+      "#mobile-student-account-email"
+    );
+
+  const mobileAccountLogout =
+    document.querySelector(
+      "#mobile-account-logout"
+    );
+
+
+  /* =========================================================
+     LOGIN LINK HELPER
+  ========================================================= */
+
+  function goToLogin() {
+
+    const currentPath =
+      window.location.pathname +
+      window.location.search;
+
+    const redirect =
+      encodeURIComponent(
+        currentPath
+      );
+
+    window.location.href =
+      `/login/?redirect=${redirect}`;
+  }
+
+
+  /* =========================================================
+     DISPLAY NAME
+  ========================================================= */
+
+  function getStudentName(
+    user
+  ) {
+
+    if (!user) {
+      return "Student";
+    }
+
+
+    const metadata =
+      user.user_metadata ||
+      {};
+
+
+    const name =
+      metadata.full_name ||
+      metadata.fullName ||
+      metadata.name ||
+      metadata.display_name ||
+      metadata.displayName;
+
+
+    if (
+      typeof name === "string" &&
+      name.trim()
+    ) {
+      return name.trim();
+    }
+
+
+    if (
+      typeof user.email === "string" &&
+      user.email.trim()
+    ) {
+
+      const emailName =
+        user.email
+          .split("@")[0]
+          .replace(/[._-]+/g, " ")
+          .trim();
+
+
+      if (emailName) {
+
+        return emailName
+          .replace(/\b\w/g, (letter) =>
+            letter.toUpperCase()
+          );
+      }
+    }
+
+
+    return "Student";
+  }
+
+
+  /* =========================================================
+     SHORT HEADER NAME
+  ========================================================= */
+
+  function getShortName(
+    name
+  ) {
+
+    if (
+      !name ||
+      name === "Student"
+    ) {
+      return "Student";
+    }
+
+
+    const words =
+      name
+        .trim()
+        .split(/\s+/);
+
+
+    if (words.length <= 2) {
+      return name;
+    }
+
+
+    return `${words[0]} ${words[1]}`;
+  }
+
+
+  /* =========================================================
+     RENDER LOGGED-OUT STATE
+  ========================================================= */
+
+  function renderLoggedOut() {
+
+    if (studentDashboardButton) {
+      studentDashboardButton.hidden = false;
+      studentDashboardButton.href =
+        "/login/?redirect=%2Fdashboard%2F";
+    }
+
+    if (mobileDashboardLink) {
+      mobileDashboardLink.hidden = false;
+    }
+
+    if (studentAccount) {
+
+      studentAccount.hidden =
+        true;
+    }
+
+
+    if (mobileStudentAccount) {
+
+      mobileStudentAccount.hidden =
+        true;
+    }
+  }
+
+
+  /* =========================================================
+     RENDER LOGGED-IN STATE
+  ========================================================= */
+
+  function renderLoggedIn(
+    user
+  ) {
+
+    if (studentDashboardButton) {
+      studentDashboardButton.hidden = false;
+      studentDashboardButton.href =
+        "/dashboard/";
+    }
+
+    if (mobileDashboardLink) {
+      mobileDashboardLink.hidden = true;
+    }
+
+    const fullName =
+      getStudentName(
+        user
+      );
+
+    const shortName =
+      getShortName(
+        fullName
+      );
+
+    const email =
+      user?.email ||
+      "Student account";
+
+
+    if (studentAccount) {
+
+      studentAccount.hidden =
+        false;
+    }
+
+
+    if (studentAccountName) {
+
+      studentAccountName.textContent =
+        shortName;
+    }
+
+
+    if (studentAccountUserName) {
+
+      studentAccountUserName.textContent =
+        fullName;
+    }
+
+
+    if (studentAccountUserEmail) {
+
+      studentAccountUserEmail.textContent =
+        email;
+    }
+
+
+    if (mobileStudentAccount) {
+
+      mobileStudentAccount.hidden =
+        false;
+    }
+
+
+    if (mobileStudentAccountName) {
+
+      mobileStudentAccountName.textContent =
+        fullName;
+    }
+
+
+    if (mobileStudentAccountEmail) {
+
+      mobileStudentAccountEmail.textContent =
+        email;
+    }
+  }
+
+
+  /* =========================================================
+     CLOSE ACCOUNT MENU
+  ========================================================= */
+
+  function closeAccountMenu() {
+
+    if (
+      !studentAccount ||
+      !studentAccountButton ||
+      !studentAccountMenu
+    ) {
+      return;
+    }
+
+
+    studentAccount.classList.remove(
+      "is-open"
+    );
+
+
+    studentAccountButton.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+
+    studentAccountMenu.hidden =
+      true;
+  }
+
+
+  /* =========================================================
+     TOGGLE ACCOUNT MENU
+  ========================================================= */
+
+  if (
+    studentAccountButton &&
+    studentAccountMenu &&
+    studentAccount
+  ) {
+
+    studentAccountButton.addEventListener(
+      "click",
+      (event) => {
+
+        event.stopPropagation();
+
+
+        const isOpen =
+          studentAccount.classList.toggle(
+            "is-open"
+          );
+
+
+        studentAccountButton.setAttribute(
+          "aria-expanded",
+          String(isOpen)
+        );
+
+
+        studentAccountMenu.hidden =
+          !isOpen;
+      }
+    );
+
+
+    studentAccountMenu.addEventListener(
+      "click",
+      (event) => {
+
+        event.stopPropagation();
+      }
+    );
+
+
+    document.addEventListener(
+      "click",
+      () => {
+
+        closeAccountMenu();
+      }
+    );
+  }
+
+
+  /* =========================================================
+     SERVER SESSION SYNC
+
+     Keeps the secure HttpOnly Astro cookie aligned with
+     the current Supabase browser session.
+  ========================================================= */
+
+  async function syncServerSession(
+    session
+  ) {
+
+    const token =
+      session?.access_token;
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const response =
+        await fetch(
+          "/api/auth/session",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            },
+            credentials: "same-origin",
+            body: JSON.stringify({
+              accessToken: token,
+            }),
+          }
+        );
+
+      const result =
+        await response.json()
+          .catch(() => ({}));
+
+      if (
+        !response.ok ||
+        result?.success !== true
+      ) {
+        console.error(
+          "[HEADER] Server session sync failed:",
+          result
+        );
+        return false;
+      }
+
+      return true;
+
+    } catch (error) {
+      console.error(
+        "[HEADER] Server session sync error:",
+        error
+      );
+      return false;
+    }
+  }
+
+
+  /* =========================================================
+     CLEAR SERVER SESSION
+  ========================================================= */
+
+  async function clearServerSession() {
+    try {
+      await fetch(
+        "/api/auth/session",
+        {
+          method: "DELETE",
+          credentials: "same-origin",
+          cache: "no-store",
+        }
+      );
+    } catch (error) {
+      console.error(
+        "[HEADER] Server logout sync failed:",
+        error
+      );
+    }
+  }
+
+
+  /* =========================================================
+     LOGOUT
+  ========================================================= */
+
+  async function logoutStudent() {
+
+    if (!supabase) {
+
+      console.error(
+        "[HEADER] Supabase browser client is not configured."
+      );
+
+      return;
+    }
+
+
+    if (studentAccountLogout) {
+
+      studentAccountLogout.disabled =
+        true;
+
+      studentAccountLogout.textContent =
+        "Logging out...";
+    }
+
+
+    if (mobileAccountLogout) {
+
+      mobileAccountLogout.disabled =
+        true;
+
+      mobileAccountLogout.textContent =
+        "Logging out...";
+    }
+
+
+    const {
+      error
+    } =
+      await supabase.auth.signOut();
+
+
+    if (error) {
+
+      console.error(
+        "[HEADER] Logout failed:",
+        error
+      );
+
+
+      if (studentAccountLogout) {
+
+        studentAccountLogout.disabled =
+          false;
+
+        studentAccountLogout.textContent =
+          "Logout";
+      }
+
+
+      if (mobileAccountLogout) {
+
+        mobileAccountLogout.disabled =
+          false;
+
+        mobileAccountLogout.textContent =
+          "Logout";
+      }
+
+
+      return;
+    }
+
+
+    await clearServerSession();
+
+
+    closeAccountMenu();
+
+
+    window.location.href =
+      "/";
+  }
+
+
+  if (studentAccountLogout) {
+
+    studentAccountLogout.addEventListener(
+      "click",
+      logoutStudent
+    );
+  }
+
+
+  if (mobileAccountLogout) {
+
+    mobileAccountLogout.addEventListener(
+      "click",
+      logoutStudent
+    );
+  }
+
+
+  /* =========================================================
+     AUTH STATE
+
+     This runs:
+       - when the page first loads
+       - after login
+       - after logout
+       - when the session refreshes
+       - when another tab changes auth state
+  ========================================================= */
+
+  async function loadCurrentStudent() {
+
+    if (!supabase) {
+
+      console.error(
+        "[HEADER] Supabase browser configuration is missing."
+      );
+
+      renderLoggedOut();
+
+      return;
+    }
+
+
+    const {
+      data,
+      error
+    } =
+      await supabase.auth.getSession();
+
+
+    if (error) {
+
+      console.error(
+        "[HEADER] Unable to read session:",
+        error
+      );
+
+      renderLoggedOut();
+
+      return;
+    }
+
+
+    if (data?.session?.user) {
+
+      await syncServerSession(
+        data.session
+      );
+
+      renderLoggedIn(
+        data.session.user
+      );
+
+    } else {
+
+      renderLoggedOut();
+    }
+  }
+
+
+  if (supabase) {
+
+    supabase.auth.onAuthStateChange(
+      (
+        event,
+        session
+      ) => {
+
+        if (
+          session?.user
+        ) {
+
+          void syncServerSession(
+            session
+          );
+
+          renderLoggedIn(
+            session.user
+          );
+
+        } else {
+
+          renderLoggedOut();
+        }
+      }
+    );
+
+  }
+
+
+  loadCurrentStudent();
+
 
   /* =========================================================
      MOBILE MENU
   ========================================================= */
 
   const mobileMenuButton =
-    document.querySelector(".mobile-menu-button");
+    document.querySelector(
+      ".mobile-menu-button"
+    );
 
   const mobileNavigation =
-    document.querySelector("#mobile-navigation");
+    document.querySelector(
+      "#mobile-navigation"
+    );
 
 
-  if (mobileMenuButton && mobileNavigation) {
+  if (
+    mobileMenuButton &&
+    mobileNavigation
+  ) {
 
-    mobileMenuButton.addEventListener("click", () => {
+    mobileMenuButton.addEventListener(
+      "click",
+      () => {
 
-      const isOpen =
-        mobileNavigation.classList.toggle("is-open");
+        const isOpen =
+          mobileNavigation.classList.toggle(
+            "is-open"
+          );
 
-      mobileMenuButton.setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
-      mobileNavigation.setAttribute(
-        "aria-hidden",
-        String(!isOpen)
-      );
-
-
-      /* Animate hamburger */
-
-      const bars =
-        mobileMenuButton.querySelectorAll("span");
-
-
-      if (isOpen) {
-
-        bars[0].style.transform =
-          "translateY(7px) rotate(45deg)";
-
-        bars[1].style.opacity =
-          "0";
-
-        bars[2].style.transform =
-          "translateY(-7px) rotate(-45deg)";
 
         mobileMenuButton.setAttribute(
-          "aria-label",
-          "Close navigation menu"
+          "aria-expanded",
+          String(isOpen)
         );
 
-      } else {
 
-        bars[0].style.transform =
-          "";
-
-        bars[1].style.opacity =
-          "";
-
-        bars[2].style.transform =
-          "";
-
-        mobileMenuButton.setAttribute(
-          "aria-label",
-          "Open navigation menu"
+        mobileNavigation.setAttribute(
+          "aria-hidden",
+          String(!isOpen)
         );
 
+
+        /* Animate hamburger */
+
+        const bars =
+          mobileMenuButton.querySelectorAll(
+            "span"
+          );
+
+
+        if (isOpen) {
+
+          bars[0].style.transform =
+            "translateY(7px) rotate(45deg)";
+
+          bars[1].style.opacity =
+            "0";
+
+          bars[2].style.transform =
+            "translateY(-7px) rotate(-45deg)";
+
+
+          mobileMenuButton.setAttribute(
+            "aria-label",
+            "Close navigation menu"
+          );
+
+        } else {
+
+          bars[0].style.transform =
+            "";
+
+          bars[1].style.opacity =
+            "";
+
+          bars[2].style.transform =
+            "";
+
+
+          mobileMenuButton.setAttribute(
+            "aria-label",
+            "Open navigation menu"
+          );
+        }
       }
-
-    });
+    );
 
 
     /* =======================================================
@@ -1155,42 +2493,54 @@ const upscLinks = [
 
     mobileNavigation
       .querySelectorAll("a")
-      .forEach((link) => {
+      .forEach(
+        (link) => {
 
-        link.addEventListener("click", () => {
+          link.addEventListener(
+            "click",
+            () => {
 
-          mobileNavigation.classList.remove(
-            "is-open"
+              mobileNavigation.classList.remove(
+                "is-open"
+              );
+
+
+              mobileMenuButton.setAttribute(
+                "aria-expanded",
+                "false"
+              );
+
+
+              mobileNavigation.setAttribute(
+                "aria-hidden",
+                "true"
+              );
+
+
+              const bars =
+                mobileMenuButton.querySelectorAll(
+                  "span"
+                );
+
+
+              bars[0].style.transform =
+                "";
+
+              bars[1].style.opacity =
+                "";
+
+              bars[2].style.transform =
+                "";
+
+
+              mobileMenuButton.setAttribute(
+                "aria-label",
+                "Open navigation menu"
+              );
+            }
           );
-
-          mobileMenuButton.setAttribute(
-            "aria-expanded",
-            "false"
-          );
-
-          mobileNavigation.setAttribute(
-            "aria-hidden",
-            "true"
-          );
-
-
-          const bars =
-            mobileMenuButton.querySelectorAll("span");
-
-
-          bars[0].style.transform = "";
-          bars[1].style.opacity = "";
-          bars[2].style.transform = "";
-
-          mobileMenuButton.setAttribute(
-            "aria-label",
-            "Open navigation menu"
-          );
-
-        });
-
-      });
-
+        }
+      );
   }
 
 
@@ -1199,28 +2549,39 @@ const upscLinks = [
   ========================================================= */
 
   document
-    .querySelectorAll(".mobile-dropdown-button")
-    .forEach((button) => {
+    .querySelectorAll(
+      ".mobile-dropdown-button"
+    )
+    .forEach(
+      (button) => {
 
-      button.addEventListener("click", () => {
+        button.addEventListener(
+          "click",
+          () => {
 
-        const parent =
-          button.closest(".mobile-dropdown");
-
-        if (!parent) return;
-
-
-        const isOpen =
-          parent.classList.toggle("is-open");
+            const parent =
+              button.closest(
+                ".mobile-dropdown"
+              );
 
 
-        button.setAttribute(
-          "aria-expanded",
-          String(isOpen)
+            if (!parent) {
+              return;
+            }
+
+
+            const isOpen =
+              parent.classList.toggle(
+                "is-open"
+              );
+
+
+            button.setAttribute(
+              "aria-expanded",
+              String(isOpen)
+            );
+          }
         );
-
-      });
-
-    });
-
+      }
+    );
 </script>

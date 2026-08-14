@@ -103,11 +103,16 @@ const questions = (questionRows ?? []).map((q: any) => ({
 
 const totalQuestions = questions.length;
 
-const durationMinutes = Number(
-  currentTest.duration_minutes ??
-  currentTest.duration ??
-  120
-);
+/*
+ * JPSC MOCK TEST STANDARD DURATION
+ *
+ * Every mock test in this series is 100 questions / 200 marks
+ * with a 120-minute (2-hour) duration.
+ *
+ * The client therefore never interprets an accidental 200-minute
+ * database value as the exam duration.
+ */
+const durationMinutes = 120;
 
 const marksPerQuestion = Number(
   currentTest.marks_per_question ??
@@ -737,88 +742,94 @@ const examData = {
     }
 
     .option {
+      position: relative;
+      isolation: isolate;
       width: 100%;
-
       display: grid;
-
-      grid-template-columns:
-        38px 1fr;
-
+      grid-template-columns: 38px 1fr;
       align-items: center;
-
       gap: 13px;
-
-      padding:
-        14px 15px;
-
-      border:
-        1px solid #dbe3ec;
-
+      padding: 14px 15px;
+      border: 1px solid #dbe3ec;
       border-radius: 13px;
-
-      background: white;
-
+      background: #ffffff;
       color: #334155;
-
       text-align: left;
-
       cursor: pointer;
-
-      transition:
-        .15s ease;
+      overflow: hidden;
+      transition: background .16s ease, border-color .16s ease,
+                  box-shadow .16s ease, transform .16s ease;
     }
 
     .option:hover {
       border-color: #93c5fd;
-
       background: #f8fbff;
-
-      transform:
-        translateY(-1px);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 16px rgba(15,23,42,.06);
     }
 
     .option.selected {
-      border-color: #2563eb;
+      border-color: #071a3a;
+      background: #071a3a;
+      color: #ffffff;
+      box-shadow: 0 0 0 2px rgba(7,26,58,.14),
+                  0 7px 18px rgba(7,26,58,.12);
+    }
 
-      background: #eff6ff;
+    /* A marked question gets a subtle dark/lilac treatment without
+       destroying the selected-answer contrast. */
+    .option.review-marked {
+      border-color: #8b7bd8;
+      background: linear-gradient(0deg, rgba(124,58,237,.055), rgba(124,58,237,.055)), #ffffff;
+    }
 
-      box-shadow:
-        0 0 0 2px
-        rgba(37,99,235,.08);
+    .option.review-marked::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background: rgba(76,58,120,.055);
+    }
+
+    .option.selected.review-marked {
+      border-color: #020b1c;
+      background: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)), #071a3a;
+      box-shadow: 0 0 0 2px rgba(124,58,237,.28),
+                  0 8px 20px rgba(7,26,58,.20);
     }
 
     .option-key {
+      position: relative;
       width: 34px;
       height: 34px;
-
       display: grid;
-
       place-items: center;
-
-      border:
-        1px solid #cbd5e1;
-
+      border: 1px solid #cbd5e1;
       border-radius: 9px;
-
       background: #f8fafc;
-
       color: #475569;
-
       font-size: 13px;
       font-weight: 900;
+      flex: 0 0 34px;
     }
 
     .option.selected .option-key {
-      border-color: #2563eb;
+      border-color: #ffffff;
+      background: #ffffff;
+      color: #071a3a;
+    }
 
-      background: #2563eb;
+    .option.review-marked .option-key {
+      box-shadow: inset 0 0 0 2px rgba(124,58,237,.16);
+    }
 
-      color: white;
+    .option.selected.review-marked .option-key {
+      box-shadow: inset 0 0 0 2px rgba(7,26,58,.20);
     }
 
     .option-text {
       font-size: 14px;
-
       line-height: 1.55;
     }
 
@@ -1011,88 +1022,100 @@ const examData = {
 
     .palette {
       display: grid;
-
-      grid-template-columns:
-        repeat(8, 1fr);
-
-      gap: 7px;
-
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      gap: 8px;
       max-height: 390px;
-
       overflow-y: auto;
+      padding: 2px;
+      scrollbar-width: thin;
     }
 
     .palette-button {
+      position: relative;
+      min-width: 0;
       aspect-ratio: 1;
-
       display: grid;
-
       place-items: center;
-
-      border:
-        1px solid #dbe2ea;
-
-      border-radius: 8px;
-
-      background: #f8fafc;
-
+      border: 1px solid #dbe2ea;
+      border-radius: 9px;
+      background: #f1f5f9;
       color: #64748b;
-
       font-size: 11px;
-
-      font-weight: 850;
-
+      font-weight: 900;
       cursor: pointer;
+      transition: transform .14s ease, box-shadow .14s ease, filter .14s ease;
+    }
+
+    .palette-button:hover {
+      transform: translateY(-1px);
+      filter: brightness(.97);
+      box-shadow: 0 4px 10px rgba(15,23,42,.10);
     }
 
     .palette-button.current {
-      outline:
-        3px solid #1e3a8a;
-
-      outline-offset: 1px;
+      outline: 3px solid #0f172a;
+      outline-offset: 2px;
+      z-index: 2;
     }
 
+    /* CBT palette states: Not Visited / Not Answered / Answered / Review */
     .palette-button.not-visited {
-      background: #f8fafc;
-
-      color: #64748b;
+      background: #e5e7eb !important;
+      border-color: #cbd5e1 !important;
+      color: #475569 !important;
     }
 
     .palette-button.not-answered {
-      background: #ef4444;
-
-      border-color: #ef4444;
-
-      color: white;
+      background: #ef4444 !important;
+      border-color: #dc2626 !important;
+      color: #ffffff !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
     }
 
     .palette-button.answered {
-      background: #16a34a;
-
-      border-color: #16a34a;
-
-      color: white;
+      background: #16a34a !important;
+      border-color: #15803d !important;
+      color: #ffffff !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
     }
 
     .palette-button.review {
-      background: #7c3aed;
-
-      border-color: #7c3aed;
-
-      color: white;
+      background: #7c3aed !important;
+      border-color: #6d28d9 !important;
+      color: #ffffff !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
     }
 
     .palette-button.review-answered {
-      border-color: #7c3aed;
+      border-color: #6d28d9 !important;
+      background: linear-gradient(135deg, #16a34a 0 54%, #7c3aed 54% 100%) !important;
+      color: #ffffff !important;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.16);
+    }
 
-      background:
-        linear-gradient(
-          135deg,
-          #16a34a 0 52%,
-          #7c3aed 52% 100%
-        );
+    .palette-button.current::after {
+      content: '●';
+      position: absolute;
+      right: 3px;
+      top: 1px;
+      font-size: 7px;
+      line-height: 1;
+      color: currentColor;
+      opacity: .85;
+    }
 
-      color: white;
+    .palette-status-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 0 0 10px;
+      padding: 8px 10px;
+      border: 1px solid #e2e8f0;
+      border-radius: 9px;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 9px;
+      font-weight: 800;
     }
 
     /* =====================================================
@@ -1785,6 +1808,15 @@ const examData = {
       </button>
 
       <button
+        id="restartButton"
+        class="icon-button"
+        type="button"
+        title="Restart test"
+      >
+        ↻
+      </button>
+
+      <button
         id="fullscreenButton"
         class="icon-button"
         type="button"
@@ -1803,7 +1835,7 @@ const examData = {
         </span>
 
         <span id="timer">
-          {String(durationMinutes).padStart(2,"0")}:00
+          {String(durationMinutes).padStart(3,"0")}:00
         </span>
 
       </div>
@@ -2092,9 +2124,15 @@ const examData = {
 
             </div>
 
+            <div class="palette-status-line">
+              <span id="paletteStatusText">Question 1 active</span>
+              <span id="paletteProgressText">0 / {totalQuestions} answered</span>
+            </div>
+
             <div
               id="questionPalette"
               class="palette"
+              aria-label="Question palette"
             ></div>
 
             <div class="legend">
@@ -2455,7 +2493,7 @@ const examData = {
           class="btn btn-primary"
           type="button"
         >
-          Return to Mock Tests
+          Return to Student Dashboard
         </button>
 
       </div>
@@ -2513,9 +2551,24 @@ const examData = {
       questions.length;
 
 
+    /*
+     * CLIENT-SIDE JPSC MOCK TEST DURATION
+     *
+     * IMPORTANT:
+     * This declaration must exist inside the browser script.
+     * The previous version accidentally removed it, causing
+     * "durationMinutes is not defined" and stopping the entire
+     * CBT engine before renderQuestion() could run.
+     *
+     * 120 minutes = 120:00 on the CBT timer.
+     */
+    const durationMinutes =
+      120;
+
+
     /* =====================================================
        STORAGE
-       ===================================================== */
+       =====================================================
 
     const storageKey =
       `habitat-ias-cbt-${exam.testId}-FINAL`;
@@ -2546,10 +2599,7 @@ const examData = {
     let remainingSeconds =
       Math.max(
         0,
-        Number(
-          exam.durationMinutes ||
-          120
-        ) * 60
+        durationMinutes * 60
       );
 
     let timerInterval =
@@ -2559,6 +2609,9 @@ const examData = {
       18;
 
     let startedAt =
+      null;
+
+    let attemptId =
       null;
 
 
@@ -2656,6 +2709,11 @@ const examData = {
         "submitButton"
       );
 
+    const restartButton =
+      document.getElementById(
+        "restartButton"
+      );
+
     const submitOverlay =
       document.getElementById(
         "submitOverlay"
@@ -2684,6 +2742,16 @@ const examData = {
     const sidebar =
       document.getElementById(
         "sidebar"
+      );
+
+    const paletteStatusText =
+      document.getElementById(
+        "paletteStatusText"
+      );
+
+    const paletteProgressText =
+      document.getElementById(
+        "paletteProgressText"
       );
 
 
@@ -2735,33 +2803,26 @@ const examData = {
           )
         );
 
-      const hours =
-        Math.floor(
-          safe / 3600
-        );
+      /*
+       * Display TOTAL MINUTES : SECONDS.
+       *
+       * 120 minutes = 120:00
+       * 119 minutes 59 seconds = 119:59
+       *
+       * This avoids the confusing 02:00 display and makes
+       * the 120-minute JPSC duration explicit.
+       */
 
-      const minutes =
+      const totalMinutes =
         Math.floor(
-          (safe % 3600) / 60
+          safe / 60
         );
 
       const secs =
         safe % 60;
 
-      if (
-        hours > 0
-      ) {
-
-        return (
-          `${String(hours).padStart(2,"0")}:` +
-          `${String(minutes).padStart(2,"0")}:` +
-          `${String(secs).padStart(2,"0")}`
-        );
-
-      }
-
       return (
-        `${String(minutes).padStart(2,"0")}:` +
+        `${String(totalMinutes).padStart(3,"0")}:` +
         `${String(secs).padStart(2,"0")}`
       );
 
@@ -2795,10 +2856,7 @@ const examData = {
       remainingSeconds =
         Math.max(
           0,
-          Number(
-            exam.durationMinutes ||
-            120
-          ) * 60
+          durationMinutes * 60
         );
 
       fontSize =
@@ -2812,6 +2870,123 @@ const examData = {
 
       } catch {}
 
+    }
+
+
+    /* =====================================================
+       START SERVER ATTEMPT
+       ===================================================== */
+
+    async function startServerAttempt(
+      restart = false
+    ) {
+
+      try {
+
+        const {
+          data: sessionData,
+          error: sessionError,
+        } = await supabase.auth.getSession();
+
+        if (sessionError) {
+          throw new Error(
+            sessionError.message ||
+            "Unable to verify your login session."
+          );
+        }
+
+        const accessToken =
+          sessionData?.session?.access_token;
+
+        if (!accessToken) {
+          window.location.href =
+            "/login?redirect=" +
+            encodeURIComponent(
+              window.location.pathname +
+              window.location.search
+            );
+
+          return false;
+        }
+
+        const response =
+          await fetch(
+            "/api/mock-tests/start",
+            {
+              method: "POST",
+
+              credentials: "same-origin",
+
+              headers: {
+                "Content-Type":
+                  "application/json",
+
+                "Accept":
+                  "application/json",
+
+                "Authorization":
+                  `Bearer ${accessToken}`,
+              },
+
+              body:
+                JSON.stringify({
+                  testId:
+                    exam.testId,
+
+                  restart:
+                    Boolean(restart),
+                }),
+            }
+          );
+
+        const result =
+          await response.json();
+
+        if (
+          !response.ok ||
+          !result?.success
+        ) {
+          throw new Error(
+            result?.message ||
+            result?.error ||
+            "Unable to start the test."
+          );
+        }
+
+        attemptId =
+          result.attemptId ??
+          null;
+
+        if (!attemptId) {
+          throw new Error(
+            "The server did not return a valid attempt ID."
+          );
+        }
+
+        if (result.startedAt) {
+          startedAt =
+            new Date(
+              result.startedAt
+            ).getTime();
+        }
+
+        return true;
+
+      } catch (error) {
+
+        console.error(
+          "Start attempt error:",
+          error
+        );
+
+        alert(
+          error instanceof Error
+            ? error.message
+            : "Unable to start the test. Please try again."
+        );
+
+        return false;
+      }
     }
 
 
@@ -2833,6 +3008,7 @@ const examData = {
             visited,
             reviewFlags,
             startedAt,
+            attemptId,
             fontSize,
           })
         );
@@ -2856,10 +3032,7 @@ const examData = {
       const durationSeconds =
         Math.max(
           0,
-          Number(
-            exam.durationMinutes ||
-            120
-          ) * 60
+          durationMinutes * 60
         );
 
       try {
@@ -2986,6 +3159,10 @@ const examData = {
 
         startedAt =
           savedStartedAt;
+
+        attemptId =
+          saved.attemptId ??
+          null;
 
         remainingSeconds =
           Math.max(
@@ -3243,13 +3420,29 @@ const examData = {
           currentIndex
         ];
 
-      if (
-        !questionBody ||
-        !question
-      ) {
+      if (!questionBody) {
+        console.error(
+          "CBT question container #questionBody was not found."
+        );
+        return;
+      }
+
+      if (!question) {
+        console.error(
+          "CBT question data missing at index:",
+          currentIndex,
+          "total:",
+          total
+        );
+
+        questionBody.innerHTML = `
+          <div class="question-empty-state">
+            <strong>Question could not be loaded.</strong>
+            <span>Please use the question palette or refresh the test.</span>
+          </div>
+        `;
 
         return;
-
       }
 
       const selected =
@@ -3369,16 +3562,19 @@ const examData = {
                 <button
                   type="button"
                   class="option ${
-                    selected ===
-                    option.key
+                    selected === option.key
                       ? "selected"
+                      : ""
+                  } ${
+                    reviewFlags[currentIndex]
+                      ? "review-marked"
                       : ""
                   }"
                   data-option="${option.key}"
                 >
 
                   <span class="option-key">
-                    ${option.key}
+                    ${option.key}.
                   </span>
 
                   <span class="option-text">
@@ -3462,8 +3658,113 @@ const examData = {
 
       }
 
+
+      const statusLabels = {
+        "not-visited":
+          "Not Visited",
+
+        "not-answered":
+          "Not Answered",
+
+        "answered":
+          "Answered",
+
+        "review":
+          "Marked for Review",
+
+        "review-answered":
+          "Answered + Review",
+      };
+
+
+      const statusStyles = {
+
+        "not-visited": {
+          background:
+            "#e5e7eb",
+
+          border:
+            "#cbd5e1",
+
+          color:
+            "#475569",
+        },
+
+        "not-answered": {
+          background:
+            "#ef4444",
+
+          border:
+            "#dc2626",
+
+          color:
+            "#ffffff",
+        },
+
+        "answered": {
+          background:
+            "#16a34a",
+
+          border:
+            "#15803d",
+
+          color:
+            "#ffffff",
+        },
+
+        "review": {
+          background:
+            "#7c3aed",
+
+          border:
+            "#6d28d9",
+
+          color:
+            "#ffffff",
+        },
+
+        "review-answered": {
+          background:
+            "linear-gradient(135deg,#16a34a 0%,#16a34a 54%,#7c3aed 54%,#7c3aed 100%)",
+
+          border:
+            "#6d28d9",
+
+          color:
+            "#ffffff",
+        },
+
+      };
+
+
+      const currentStatus =
+        getQuestionStatus(
+          currentIndex
+        );
+
+
+      if (paletteStatusText) {
+
+        paletteStatusText.textContent =
+          `Q${currentIndex + 1} • ${
+            statusLabels[currentStatus] ||
+            "Active"
+          }`;
+
+      }
+
+
+      if (paletteProgressText) {
+
+        paletteProgressText.textContent =
+          `${getAnsweredCount()} / ${total} answered`;
+
+      }
+
+
       questionPalette.innerHTML =
         "";
+
 
       questions.forEach(
         (
@@ -3476,15 +3777,24 @@ const examData = {
               "button"
             );
 
+
           button.type =
             "button";
 
+
+          const status =
+            getQuestionStatus(
+              index
+            );
+
+
           button.className =
-            `palette-button ${
-              getQuestionStatus(
-                index
-              )
-            }`;
+            "palette-button";
+
+
+          button.dataset.status =
+            status;
+
 
           if (
             index ===
@@ -3497,13 +3807,92 @@ const examData = {
 
           }
 
+
+          /*
+           * Apply the color directly to the element.
+           *
+           * This intentionally uses CSSStyleDeclaration.setProperty
+           * with !important so global/button styles cannot override
+           * the CBT state colors.
+           */
+
+          const style =
+            statusStyles[status] ||
+            statusStyles["not-visited"];
+
+
+          button.style.setProperty(
+            "background",
+            style.background,
+            "important"
+          );
+
+
+          button.style.setProperty(
+            "border-color",
+            style.border,
+            "important"
+          );
+
+
+          button.style.setProperty(
+            "color",
+            style.color,
+            "important"
+          );
+
+
+          if (
+            index ===
+            currentIndex
+          ) {
+
+            button.style.setProperty(
+              "outline",
+              "3px solid #0f172a",
+              "important"
+            );
+
+            button.style.setProperty(
+              "outline-offset",
+              "2px",
+              "important"
+            );
+
+          }
+
+
           button.textContent =
             String(
               index + 1
             );
 
+
           button.title =
-            `Question ${index + 1}`;
+            `Question ${index + 1} — ${
+              statusLabels[status] ||
+              "Not Visited"
+            }`;
+
+
+          button.setAttribute(
+            "aria-label",
+            button.title
+          );
+
+
+          if (
+            index ===
+            currentIndex
+          ) {
+
+            button.setAttribute(
+              "aria-current",
+              "true"
+            );
+
+          }
+
 
           button.addEventListener(
             "click",
@@ -3517,13 +3906,16 @@ const examData = {
 
               }
 
+
               currentIndex =
                 index;
+
 
               visited[
                 index
               ] =
                 true;
+
 
               renderQuestion();
 
@@ -3533,7 +3925,10 @@ const examData = {
 
               updateFooterState();
 
+              updateProgress();
+
               saveLocalState();
+
 
               if (
                 window.innerWidth <=
@@ -3546,6 +3941,7 @@ const examData = {
 
               }
 
+
               window.scrollTo({
                 top: 0,
                 behavior: "smooth",
@@ -3553,6 +3949,7 @@ const examData = {
 
             }
           );
+
 
           questionPalette.appendChild(
             button
@@ -4149,10 +4546,7 @@ const examData = {
       );
 
       const durationSeconds =
-        Number(
-          exam.durationMinutes ||
-          120
-        ) * 60;
+        durationMinutes * 60;
 
       const timeTaken =
         Math.max(
@@ -4160,6 +4554,56 @@ const examData = {
           durationSeconds -
           remainingSeconds
         );
+
+      /*
+       * SAFETY: The submit API requires a real server-side
+       * attempt ID. If the browser state lost it, recover
+       * the current attempt before sending the submission.
+       */
+      if (
+        !Number.isInteger(
+          Number(attemptId)
+        ) ||
+        Number(attemptId) <= 0
+      ) {
+
+        submitted =
+          false;
+
+        const restarted =
+          await startServerAttempt();
+
+        if (!restarted) {
+
+          submitted =
+            false;
+
+          throw new Error(
+            "A valid mock-test attempt could not be recovered. Please restart the test."
+          );
+
+        }
+
+        attemptId =
+          Number(attemptId);
+
+      }
+
+      if (
+        !Number.isInteger(
+          Number(attemptId)
+        ) ||
+        Number(attemptId) <= 0
+      ) {
+
+        submitted =
+          false;
+
+        throw new Error(
+          "A valid mock-test attempt is required. Please restart the test."
+        );
+
+      }
 
       try {
 
@@ -4276,7 +4720,10 @@ const examData = {
           JSON.stringify({
 
             testId:
-              exam.testId,
+              Number(exam.testId),
+
+            attemptId:
+              Number(attemptId),
 
             answers:
               submittedAnswers,
@@ -4622,10 +5069,215 @@ const examData = {
       () => {
 
         window.location.href =
-          "/mock-tests";
+          "/dashboard";
 
       }
     );
+
+
+    /* =====================================================
+       RESTART TEST
+
+       This resets the current browser attempt state and starts
+       the CBT again from Question 1. It does not create a second
+       server attempt; the existing in-progress attempt is reused
+       by the existing start API.
+       ===================================================== */
+
+    restartButton?.addEventListener(
+      "click",
+      async () => {
+
+        /*
+         * IMPORTANT:
+         *
+         * Restart must remain available even after the previous
+         * attempt has expired or has been automatically submitted.
+         * The server will create the fresh attempt when restart=true.
+         */
+
+        const confirmed =
+          window.confirm(
+            "Restart this test?\n\nYour current answers and review marks will be cleared and a new server-side attempt will be created."
+          );
+
+
+        if (!confirmed) {
+
+          return;
+
+        }
+
+
+        restartButton.disabled =
+          true;
+
+
+        const oldText =
+          restartButton.textContent;
+
+
+        restartButton.textContent =
+          "…";
+
+
+        try {
+
+          if (
+            timerInterval
+          ) {
+
+            clearInterval(
+              timerInterval
+            );
+
+            timerInterval =
+              null;
+
+          }
+
+
+          /*
+           * IMPORTANT:
+           *
+           * Ask the server to abandon the current in-progress
+           * attempt and create a fresh attempt.
+           *
+           * We only clear the browser state after the server
+           * confirms that the new attempt exists.
+           */
+
+          const restarted =
+            await startServerAttempt(
+              true
+            );
+
+
+          if (
+            !restarted
+          ) {
+
+            return;
+
+          }
+
+
+          currentIndex =
+            0;
+
+
+          answers =
+            Array(total)
+              .fill(null);
+
+
+          visited =
+            Array(total)
+              .fill(false);
+
+
+          reviewFlags =
+            Array(total)
+              .fill(false);
+
+
+          remainingSeconds =
+            durationMinutes *
+            60;
+
+
+          /*
+           * IMPORTANT:
+           * Keep the server-provided startedAt.
+           * startServerAttempt(true) already received the authoritative
+           * start timestamp for the new attempt.
+           */
+
+          submitted =
+            false;
+
+
+          visited[0] =
+            total > 0;
+
+
+          try {
+
+            localStorage.removeItem(
+              storageKey
+            );
+
+          } catch {}
+
+
+          renderQuestion();
+
+          renderPalette();
+
+          updateCounts();
+
+          updateFooterState();
+
+          updateProgress();
+
+          updateTimer();
+
+          saveLocalState();
+
+          startTimer();
+
+
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+
+
+        } finally {
+
+          restartButton.disabled =
+            false;
+
+          restartButton.textContent =
+            oldText;
+
+        }
+
+      }
+    );
+
+
+    /* =====================================================
+       KEYBOARD SHORTCUTS
+       A/B/C/D = answer; ArrowLeft/ArrowRight = navigate
+       Escape = close mobile palette
+    ===================================================== */
+
+    document.addEventListener("keydown", (event) => {
+      if (submitted) return;
+
+      const target = event.target;
+      if (target && (target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable)) {
+        return;
+      }
+
+      const key = event.key.toUpperCase();
+      if (["A", "B", "C", "D"].includes(key)) {
+        const option = questionBody?.querySelector(`[data-option="${key}"]`);
+        option?.click();
+        return;
+      }
+
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goPrevious();
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goNext();
+      } else if (event.key === "Escape") {
+        sidebar?.classList.remove("open");
+      }
+    });
 
 
     /* =====================================================
@@ -4950,11 +5602,96 @@ const examData = {
        INITIALIZE
        ===================================================== */
 
-    if (
-      total > 0
-    ) {
+    async function initializeCBT() {
+
+      if (total <= 0) {
+        return;
+      }
+
+      /*
+       * The server creates or resumes the real attempt first.
+       * The timer must never start before this succeeds.
+       */
+      const attemptStarted =
+        await startServerAttempt();
+
+      if (!attemptStarted) {
+        /*
+         * Keep the CBT UI usable even if the attempt-start API temporarily
+         * fails. The server attempt is still required before submission.
+         */
+        visited[0] =
+          total > 0;
+
+        renderQuestion();
+        renderPalette();
+        updateCounts();
+        updateFooterState();
+        updateTimer();
+
+        return;
+      }
+
+      /*
+       * Keep the server attempt values authoritative.
+       * If localStorage belongs to another attempt, discard it.
+       */
+      const serverAttemptId =
+        attemptId;
+
+      const serverStartedAt =
+        startedAt;
 
       restoreLocalState();
+
+      const localAttemptMatches =
+        attemptId === serverAttemptId;
+
+      if (!localAttemptMatches) {
+        resetClientState();
+      }
+
+      attemptId =
+        serverAttemptId;
+
+      startedAt =
+        serverStartedAt;
+
+      /*
+       * Calculate remaining time from the server attempt start.
+       * This prevents an old browser timestamp from controlling
+       * the official attempt timer.
+       */
+      const durationSeconds =
+        Math.max(
+          0,
+          durationMinutes * 60
+        );
+
+      const elapsed =
+        Math.max(
+          0,
+          Math.floor(
+            (
+              Date.now() -
+              Number(startedAt)
+            ) / 1000
+          )
+        );
+
+      remainingSeconds =
+        Math.max(
+          0,
+          durationSeconds - elapsed
+        );
+
+      if (remainingSeconds <= 0) {
+        updateTimer();
+        alert(
+          "This test attempt has expired. Please start a new attempt."
+        );
+        return;
+      }
 
       visited[
         currentIndex
@@ -4974,8 +5711,10 @@ const examData = {
       startTimer();
 
       saveLocalState();
-
     }
+
+
+    initializeCBT();
 
   </script>
 

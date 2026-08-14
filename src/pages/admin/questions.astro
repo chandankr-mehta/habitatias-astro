@@ -1,0 +1,7 @@
+---
+// Compatibility route for the old /admin/questions URL.
+// The admin question manager is organized per mock test.
+export const prerender = false;
+
+return Astro.redirect("/admin/mock-tests/1/questions");
+---

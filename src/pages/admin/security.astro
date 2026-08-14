@@ -1,0 +1,1570 @@
+---
+export const prerender = false;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Security — Habitat IAS</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      background: #f4f7fb;
+      color: #092c63;
+    }
+
+    body {
+      min-height: 100vh;
+    }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
+
+    .sidebar {
+      width: 285px;
+      background: #ffffff;
+      border-right: 1px solid #dce5f2;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 20;
+    }
+
+    .brand {
+      height: 108px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 24px;
+      border-bottom: 1px solid #dce5f2;
+    }
+
+    .brand-logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 14px;
+      background: #175bd7;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .brand-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #092c63;
+    }
+
+    .brand-subtitle {
+      margin-top: 3px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      color: #61789b;
+      font-weight: 600;
+    }
+
+    .nav {
+      padding: 25px 14px;
+      padding-bottom: 90px;
+    }
+
+    .nav-section {
+      margin: 0 12px 12px;
+      color: #7890b0;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      min-height: 48px;
+      margin-bottom: 5px;
+      padding: 0 18px;
+      border-radius: 11px;
+      text-decoration: none;
+      color: #153b70;
+      font-size: 15px;
+      font-weight: 700;
+      transition: 0.15s ease;
+    }
+
+    .nav-link:hover {
+      background: #eef4ff;
+      color: #175bd7;
+    }
+
+    .nav-link.active {
+      background: #eaf1ff;
+      color: #175bd7;
+    }
+
+    .nav-icon {
+      width: 22px;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    .nav-spacer {
+      height: 18px;
+    }
+
+    .back-link {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 18px 25px;
+      border-top: 1px solid #dce5f2;
+      background: #ffffff;
+      color: #58749b;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .main {
+      margin-left: 285px;
+      width: calc(100% - 285px);
+      min-height: 100vh;
+    }
+
+    .topbar {
+      height: 82px;
+      background: #ffffff;
+      border-bottom: 1px solid #dce5f2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 34px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .top-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: #092c63;
+    }
+
+    .top-subtitle {
+      margin-top: 4px;
+      color: #6b83a5;
+      font-size: 13px;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      border: 1px solid #d5e0ef;
+      background: #ffffff;
+      color: #092c63;
+      border-radius: 10px;
+      padding: 11px 17px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background: #f4f7fb;
+    }
+
+    .btn-primary {
+      background: #175bd7;
+      border-color: #175bd7;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #104bb7;
+    }
+
+    .content {
+      padding: 30px 34px 60px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .page-header {
+      margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #092c63;
+    }
+
+    .page-header p {
+      margin: 8px 0 0;
+      color: #637b9d;
+      font-size: 15px;
+    }
+
+    /* =====================================================
+       GRID
+    ===================================================== */
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    /* =====================================================
+       CARD
+    ===================================================== */
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #dce5f2;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(24, 58, 105, 0.03);
+    }
+
+    .card-header {
+      padding: 22px 24px;
+      border-bottom: 1px solid #e1e8f2;
+    }
+
+    .card-title {
+      margin: 0;
+      font-size: 19px;
+      color: #092c63;
+    }
+
+    .card-description {
+      margin: 6px 0 0;
+      color: #6b83a5;
+      font-size: 13px;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    /* =====================================================
+       SECURITY HERO
+    ===================================================== */
+
+    .security-hero {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 23px;
+      border-radius: 15px;
+      background: #f1f6ff;
+      border: 1px solid #cfe0ff;
+      margin-bottom: 22px;
+    }
+
+    .security-icon {
+      width: 58px;
+      height: 58px;
+      flex-shrink: 0;
+      border-radius: 15px;
+      background: #175bd7;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .security-title {
+      font-size: 21px;
+      font-weight: 850;
+      color: #092c63;
+    }
+
+    .security-description {
+      margin-top: 5px;
+      color: #5f789d;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .status-green {
+      background: #e9f8f0;
+      color: #087d50;
+    }
+
+    .status-red {
+      background: #fff0f0;
+      color: #c52f2f;
+    }
+
+    .status-yellow {
+      background: #fff7e8;
+      color: #a86b00;
+    }
+
+    .status-blue {
+      background: #eaf2ff;
+      color: #175bd7;
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* =====================================================
+       SECURITY ROWS
+    ===================================================== */
+
+    .security-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .security-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 17px 0;
+      border-bottom: 1px solid #edf1f6;
+    }
+
+    .security-row:first-child {
+      padding-top: 0;
+    }
+
+    .security-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .security-name {
+      font-size: 14px;
+      font-weight: 750;
+      color: #173e70;
+    }
+
+    .security-help {
+      margin-top: 4px;
+      color: #7890af;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       CHECKLIST
+    ===================================================== */
+
+    .checklist {
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+      padding: 15px;
+      border: 1px solid #e1e8f2;
+      border-radius: 11px;
+      background: #fbfcfe;
+    }
+
+    .check-icon {
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: #e9f8f0;
+      color: #087d50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+    }
+
+    .check-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #173e70;
+    }
+
+    .check-description {
+      margin-top: 4px;
+      color: #7890af;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    /* =====================================================
+       API STATUS
+    ===================================================== */
+
+    .api-box {
+      padding: 18px;
+      border-radius: 12px;
+      background: #f7f9fc;
+      border: 1px solid #e0e7f1;
+    }
+
+    .api-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #173e70;
+    }
+
+    .api-message {
+      margin-top: 8px;
+      font-size: 13px;
+      color: #647d9f;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       WARNING
+    ===================================================== */
+
+    .warning {
+      padding: 19px 21px;
+      border-radius: 14px;
+      border: 1px solid #f0dcae;
+      background: #fff9eb;
+    }
+
+    .warning-title {
+      color: #875b00;
+      font-weight: 850;
+      margin-bottom: 7px;
+    }
+
+    .warning-text {
+      color: #856e3d;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 1000px) {
+      .sidebar {
+        width: 235px;
+      }
+
+      .main {
+        margin-left: 235px;
+        width: calc(100% - 235px);
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .layout {
+        display: block;
+      }
+
+      .back-link {
+        position: relative;
+      }
+
+      .topbar {
+        padding: 0 18px;
+      }
+
+      .content {
+        padding: 22px 18px 40px;
+      }
+
+      .top-actions {
+        display: none;
+      }
+
+      .security-hero {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+  <!-- =====================================================
+       SIDEBAR
+  ====================================================== -->
+
+  <aside class="sidebar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        H
+      </div>
+
+      <div>
+
+        <div class="brand-title">
+          Habitat IAS
+        </div>
+
+        <div class="brand-subtitle">
+          ADMIN CONTROL PANEL
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <nav class="nav">
+
+      <div class="nav-section">
+        OVERVIEW
+      </div>
+
+      <a
+        href="/admin"
+        class="nav-link"
+      >
+        <span class="nav-icon">⌂</span>
+        <span>Dashboard</span>
+      </a>
+
+
+      <div class="nav-spacer"></div>
+
+
+      <div class="nav-section">
+        MOCK TEST
+      </div>
+
+      <a
+        href="/admin/mock-tests"
+        class="nav-link"
+      >
+        <span class="nav-icon">↗</span>
+        <span>Mock Tests</span>
+      </a>
+
+      <a
+        href="/admin/questions"
+        class="nav-link"
+      >
+        <span class="nav-icon">?</span>
+        <span>Questions</span>
+      </a>
+
+
+      <div class="nav-spacer"></div>
+
+
+      <div class="nav-section">
+        STUDENTS
+      </div>
+
+      <a
+        href="/admin/students"
+        class="nav-link"
+      >
+        <span class="nav-icon">•</span>
+        <span>Students</span>
+      </a>
+
+      <a
+        href="/admin/attempts"
+        class="nav-link"
+      >
+        <span class="nav-icon">↗</span>
+        <span>Student Attempts</span>
+      </a>
+
+
+      <div class="nav-spacer"></div>
+
+
+      <div class="nav-section">
+        ANALYTICS
+      </div>
+
+      <a
+        href="/admin/results"
+        class="nav-link"
+      >
+        <span class="nav-icon">▥</span>
+        <span>Results &amp; Analytics</span>
+      </a>
+
+
+      <div class="nav-spacer"></div>
+
+
+      <div class="nav-section">
+        ACCESS
+      </div>
+
+      <a
+        href="/admin/access"
+        class="nav-link"
+      >
+        <span class="nav-icon">◇</span>
+        <span>Series Access</span>
+      </a>
+
+
+      <div class="nav-spacer"></div>
+
+
+      <div class="nav-section">
+        SYSTEM
+      </div>
+
+      <a
+        href="/admin/settings"
+        class="nav-link"
+      >
+        <span class="nav-icon">⚙</span>
+        <span>Settings</span>
+      </a>
+
+      <a
+        href="/admin/security"
+        class="nav-link active"
+      >
+        <span class="nav-icon">◇</span>
+        <span>Security</span>
+      </a>
+
+    </nav>
+
+
+    <a
+      href="/"
+      class="back-link"
+    >
+      ← Back to Habitat IAS website
+    </a>
+
+  </aside>
+
+
+  <!-- =====================================================
+       MAIN
+  ====================================================== -->
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div>
+
+        <div class="top-title">
+          Security
+        </div>
+
+        <div class="top-subtitle">
+          Admin authentication and application security
+        </div>
+
+      </div>
+
+
+      <div class="top-actions">
+
+        <a
+          href="/admin"
+          class="btn"
+        >
+          ← Dashboard
+        </a>
+
+        <a
+          href="/"
+          class="btn btn-primary"
+        >
+          View Website
+        </a>
+
+      </div>
+
+    </header>
+
+
+    <section class="content">
+
+      <!-- =================================================
+           PAGE HEADER
+      ================================================== -->
+
+      <div class="page-header">
+
+        <h1>
+          Security Center
+        </h1>
+
+        <p>
+          Review authentication, authorization and server-side
+          protection for the Habitat IAS administration system.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           LIVE ADMIN AUTH STATUS
+      ================================================== -->
+
+      <div class="security-hero">
+
+        <div class="security-icon">
+          ✓
+        </div>
+
+        <div style="flex:1;">
+
+          <div class="security-title">
+            Admin Authorization
+          </div>
+
+          <div
+            class="security-description"
+            id="authDescription"
+          >
+            Checking the current administrator session...
+          </div>
+
+        </div>
+
+        <div id="authStatus">
+          <span class="status status-yellow">
+            <span class="dot"></span>
+            Checking
+          </span>
+        </div>
+
+      </div>
+
+
+      <div class="grid">
+
+        <!-- =================================================
+             AUTHENTICATION
+        ================================================== -->
+
+        <section class="card">
+
+          <div class="card-header">
+
+            <h2 class="card-title">
+              Authentication
+            </h2>
+
+            <p class="card-description">
+              Current authentication protection.
+            </p>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="security-list">
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Supabase Authentication
+                  </div>
+
+                  <div class="security-help">
+                    User identity is validated through Supabase.
+                  </div>
+
+                </div>
+
+                <span class="status status-green">
+                  <span class="dot"></span>
+                  Enabled
+                </span>
+
+              </div>
+
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Server-side Session Validation
+                  </div>
+
+                  <div class="security-help">
+                    Access tokens are validated on the server.
+                  </div>
+
+                </div>
+
+                <span class="status status-green">
+                  <span class="dot"></span>
+                  Enabled
+                </span>
+
+              </div>
+
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Admin Authorization
+                  </div>
+
+                  <div class="security-help">
+                    The authenticated user is compared against
+                    the server-side administrator ID.
+                  </div>
+
+                </div>
+
+                <span
+                  class="status status-yellow"
+                  id="adminAuthRow"
+                >
+                  <span class="dot"></span>
+                  Checking
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SECRET PROTECTION
+        ================================================== -->
+
+        <section class="card">
+
+          <div class="card-header">
+
+            <h2 class="card-title">
+              Secret Protection
+            </h2>
+
+            <p class="card-description">
+              Sensitive credentials and configuration.
+            </p>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="security-list">
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Supabase Service Role Key
+                  </div>
+
+                  <div class="security-help">
+                    Used only by server-side API routes.
+                  </div>
+
+                </div>
+
+                <span class="status status-green">
+                  <span class="dot"></span>
+                  Server Only
+                </span>
+
+              </div>
+
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Administrator User ID
+                  </div>
+
+                  <div class="security-help">
+                    Stored in server environment configuration.
+                  </div>
+
+                </div>
+
+                <span class="status status-green">
+                  <span class="dot"></span>
+                  Server Only
+                </span>
+
+              </div>
+
+
+              <div class="security-row">
+
+                <div>
+
+                  <div class="security-name">
+                    Environment Variables
+                  </div>
+
+                  <div class="security-help">
+                    Private configuration is not rendered into
+                    this page.
+                  </div>
+
+                </div>
+
+                <span class="status status-green">
+                  <span class="dot"></span>
+                  Protected
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SERVER SECURITY
+        ================================================== -->
+
+        <section class="card">
+
+          <div class="card-header">
+
+            <h2 class="card-title">
+              Server Security
+            </h2>
+
+            <p class="card-description">
+              Protection applied to administrator operations.
+            </p>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="checklist">
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Server-side authorization
+                  </div>
+
+                  <div class="check-description">
+                    Administrator access is verified on the
+                    server rather than relying only on browser UI.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Service-role key isolation
+                  </div>
+
+                  <div class="check-description">
+                    The Supabase service-role key is not exposed
+                    to client-side JavaScript.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    No sensitive API response data
+                  </div>
+
+                  <div class="check-description">
+                    The admin authorization endpoint returns only
+                    authorization status.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  ✓
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Session verification
+                  </div>
+
+                  <div class="check-description">
+                    Invalid or expired authentication sessions
+                    are rejected by the server.
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             LIVE API
+        ================================================== -->
+
+        <section class="card">
+
+          <div class="card-header">
+
+            <h2 class="card-title">
+              Authorization API
+            </h2>
+
+            <p class="card-description">
+              Live status returned by the admin authorization endpoint.
+            </p>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="api-box">
+
+              <div class="api-title">
+                Endpoint
+              </div>
+
+              <div
+                class="code-box"
+                style="margin-top:10px;"
+              >
+                /api/admin/access
+              </div>
+
+
+              <div
+                class="api-message"
+                id="apiMessage"
+              >
+                Waiting for authorization check...
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             SECURITY RULES
+        ================================================== -->
+
+        <section class="card full">
+
+          <div class="card-header">
+
+            <h2 class="card-title">
+              Security Rules
+            </h2>
+
+            <p class="card-description">
+              Important rules for maintaining the administration system.
+            </p>
+
+          </div>
+
+          <div class="card-body">
+
+            <div class="checklist">
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  1
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Never expose the Supabase service-role key
+                  </div>
+
+                  <div class="check-description">
+                    It must remain in server environment variables
+                    and must never be placed in public Astro code,
+                    browser JavaScript or client-side API requests.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  2
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Never expose ADMIN_USER_ID
+                  </div>
+
+                  <div class="check-description">
+                    Administrator identity should remain a
+                    server-side authorization detail.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  3
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Do not rely on hidden buttons for security
+                  </div>
+
+                  <div class="check-description">
+                    Hiding an admin button in the browser does not
+                    provide authorization. Server-side authorization
+                    must always be enforced.
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="check-item">
+
+                <div class="check-icon">
+                  4
+                </div>
+
+                <div>
+
+                  <div class="check-title">
+                    Keep payment verification server-side
+                  </div>
+
+                  <div class="check-description">
+                    Student access must continue to depend on
+                    verified purchase or approved manual access,
+                    not on browser-controlled values.
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WARNING
+        ================================================== -->
+
+        <section class="warning full">
+
+          <div class="warning-title">
+            ⚠ Security Reminder
+          </div>
+
+          <div class="warning-text">
+            Never paste your Supabase service-role key, payment
+            gateway secret, webhook secret or other private
+            credentials into a browser-side Astro page. Keep all
+            sensitive credentials in server environment variables
+            and use protected server-side API routes for operations
+            requiring those credentials.
+          </div>
+
+        </section>
+
+      </div>
+
+    </section>
+
+  </main>
+
+</div>
+
+
+<!-- =======================================================
+     LIVE AUTHORIZATION CHECK
+======================================================== -->
+
+<script>
+
+  async function checkAdminAuthorization() {
+
+    const authStatus =
+      document.getElementById("authStatus");
+
+    const authDescription =
+      document.getElementById("authDescription");
+
+    const adminAuthRow =
+      document.getElementById("adminAuthRow");
+
+    const apiMessage =
+      document.getElementById("apiMessage");
+
+
+    try {
+
+      const response =
+        await fetch(
+          "/api/admin/access",
+          {
+            method: "GET",
+            credentials: "include",
+            cache: "no-store",
+            headers: {
+              "Accept":
+                "application/json"
+            }
+          }
+        );
+
+
+      let data = null;
+
+      try {
+        data = await response.json();
+      } catch {
+        data = null;
+      }
+
+
+      /* ===============================================
+         ADMIN AUTHORIZED
+      =============================================== */
+
+      if (
+        response.ok &&
+        data?.success === true &&
+        data?.isAdmin === true
+      ) {
+
+        authStatus.innerHTML = `
+          <span class="status status-green">
+            <span class="dot"></span>
+            Authorized
+          </span>
+        `;
+
+
+        authDescription.textContent =
+          "The current session is authenticated and authorized as an administrator.";
+
+
+        adminAuthRow.innerHTML = `
+          <span class="status status-green">
+            <span class="dot"></span>
+            Authorized
+          </span>
+        `;
+
+
+        apiMessage.textContent =
+          "Admin authorization verified successfully by the server.";
+
+        return;
+      }
+
+
+      /* ===============================================
+         AUTHENTICATED BUT NOT ADMIN
+      =============================================== */
+
+      if (
+        response.status === 403 &&
+        data?.isAuthenticated === true
+      ) {
+
+        authStatus.innerHTML = `
+          <span class="status status-red">
+            <span class="dot"></span>
+            Access Denied
+          </span>
+        `;
+
+
+        authDescription.textContent =
+          "The current account is authenticated but is not authorized to access the administrator area.";
+
+
+        adminAuthRow.innerHTML = `
+          <span class="status status-red">
+            <span class="dot"></span>
+            Denied
+          </span>
+        `;
+
+
+        apiMessage.textContent =
+          "The server rejected administrator authorization.";
+
+        return;
+      }
+
+
+      /* ===============================================
+         NOT AUTHENTICATED
+      =============================================== */
+
+      if (
+        response.status === 401
+      ) {
+
+        authStatus.innerHTML = `
+          <span class="status status-red">
+            <span class="dot"></span>
+            Not Authenticated
+          </span>
+        `;
+
+
+        authDescription.textContent =
+          "No valid administrator session was detected.";
+
+
+        adminAuthRow.innerHTML = `
+          <span class="status status-red">
+            <span class="dot"></span>
+            Not Authenticated
+          </span>
+        `;
+
+
+        apiMessage.textContent =
+          "The server requires a valid authenticated session.";
+
+        return;
+      }
+
+
+      /* ===============================================
+         UNKNOWN RESPONSE
+      =============================================== */
+
+      authStatus.innerHTML = `
+        <span class="status status-yellow">
+          <span class="dot"></span>
+          Unable to Verify
+        </span>
+      `;
+
+
+      authDescription.textContent =
+        "The authorization endpoint returned an unexpected response.";
+
+
+      adminAuthRow.innerHTML = `
+        <span class="status status-yellow">
+          <span class="dot"></span>
+          Unknown
+        </span>
+      `;
+
+
+      apiMessage.textContent =
+        "Unable to determine the current authorization state.";
+
+    } catch (error) {
+
+      console.error(
+        "Security authorization check failed:",
+        error
+      );
+
+
+      authStatus.innerHTML = `
+        <span class="status status-red">
+          <span class="dot"></span>
+          Connection Error
+        </span>
+      `;
+
+
+      authDescription.textContent =
+        "The administrator authorization service could not be reached.";
+
+
+      adminAuthRow.innerHTML = `
+        <span class="status status-red">
+          <span class="dot"></span>
+          Error
+        </span>
+      `;
+
+
+      apiMessage.textContent =
+        "Unable to connect to /api/admin/access.";
+    }
+
+  }
+
+
+  checkAdminAuthorization();
+
+</script>
+
+</body>
+</html>

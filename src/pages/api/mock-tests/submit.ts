@@ -1,1176 +1,1545 @@
-import type { APIRoute } from 'astro';
-import { createClient } from '@supabase/supabase-js';
+import type { APIRoute } from "astro";
 
-const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
-const serviceRoleKey = import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+import { createClient } from "@supabase/supabase-js";
 
-if (!supabaseUrl || !serviceRoleKey) {
+import {
+  checkTestAccess,
+} from "../../../lib/mockAccess";
+
+
+/* =========================================================
+   ENVIRONMENT
+========================================================= */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+
+if (!supabaseUrl) {
   throw new Error(
-    'Supabase server environment variables are missing.'
+    "PUBLIC_SUPABASE_URL is missing."
   );
 }
 
-const supabaseAdmin = createClient(
-  supabaseUrl,
-  serviceRoleKey,
-  {
-    auth: {
-      autoRefreshToken: false,
-      persistSession: false,
-    },
-  }
-);
 
-export const prerender = false;
+if (!serviceRoleKey) {
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is missing."
+  );
 
-export const POST: APIRoute = async ({
-  request,
-  cookies,
-}) => {
-  try {
-    console.log('');
-    console.log('========================================');
-    console.log('[Habitat IAS] SUBMISSION REQUEST');
-    console.log('========================================');
 
-    console.log(
-      '[Habitat IAS] METHOD:',
-      request.method
+}
+
+
+/* =========================================================
+   SERVER SUPABASE CLIENT
+========================================================= */
+
+const supabaseAdmin =
+  createClient(
+    supabaseUrl,
+    serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+
+
+/* =========================================================
+   RESPONSE HELPER
+========================================================= */
+
+function jsonResponse(
+  data: Record<string, unknown>,
+  status = 200
+) {
+
+  return new Response(
+    JSON.stringify(data),
+    {
+      status,
+
+      headers: {
+        "Content-Type":
+          "application/json",
+      },
+    }
+  );
+
+}
+
+
+/* =========================================================
+   AUTH TOKEN
+========================================================= */
+
+function getAccessToken(
+  request: Request
+): string | null {
+
+  const authorization =
+    request.headers.get(
+      "Authorization"
     );
 
-    console.log(
-      '[Habitat IAS] CONTENT-TYPE:',
-      request.headers.get('content-type')
-    );
 
-    /*
-     * =========================================================
-     * 1. READ REQUEST BODY ONCE
-     * =========================================================
-     */
+  if (
+    authorization &&
+    authorization.startsWith(
+      "Bearer "
+    )
+  ) {
 
-    const rawBody = await request.text();
+    const token =
+      authorization
+        .slice(7)
+        .trim();
 
-    console.log(
-      '[Habitat IAS] RAW BODY LENGTH:',
-      rawBody.length
-    );
 
-    console.log(
-      '[Habitat IAS] RAW BODY:',
-      rawBody
-    );
-
-    if (!rawBody || rawBody.trim().length === 0) {
-      console.error(
-        '[Habitat IAS] EMPTY REQUEST BODY'
-      );
-
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'The server received an empty submission body.',
-          code: 'EMPTY_REQUEST_BODY',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
+    if (token) {
+      return token;
     }
 
-    /*
-     * =========================================================
-     * 2. PARSE JSON
-     * =========================================================
-     */
+  }
 
-    let body: any;
+
+  return null;
+
+}
+
+
+/* =========================================================
+   NORMALIZE OPTION
+========================================================= */
+
+function normalizeOption(
+  value: unknown
+): string | null {
+
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
+    return null;
+
+  }
+
+
+  const normalized =
+    String(value)
+      .trim()
+      .toUpperCase();
+
+
+  if (
+    normalized === "" ||
+    normalized === "NULL"
+  ) {
+
+    return null;
+
+  }
+
+
+  if (
+    ![
+      "A",
+      "B",
+      "C",
+      "D",
+    ].includes(
+      normalized
+    )
+  ) {
+
+    return null;
+
+  }
+
+
+  return normalized;
+
+}
+
+
+/* =========================================================
+   POST /api/mock-tests/submit
+========================================================= */
+
+export const POST: APIRoute =
+  async ({
+    request,
+  }) => {
 
     try {
-      body = JSON.parse(rawBody);
-    } catch (parseError) {
-      console.error(
-        '[Habitat IAS] JSON PARSE ERROR:',
-        parseError
-      );
 
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Invalid JSON submission body.',
-          code: 'INVALID_JSON',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
+      /* =====================================================
+         1. METHOD
+      ===================================================== */
+
+      if (
+        request.method !==
+        "POST"
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "METHOD_NOT_ALLOWED",
+
+            message:
+              "Only POST requests are allowed.",
           },
-        }
-      );
-    }
 
-    console.log(
-      '[Habitat IAS] PARSED BODY:',
-      body
-    );
+          405
+        );
 
-    /*
-     * =========================================================
-     * 3. EXTRACT SUBMISSION DATA
-     * =========================================================
-     */
+      }
 
-    const testId = body?.testId ?? null;
 
-    const attemptId =
-      body?.attemptId ??
-      null;
+      /* =====================================================
+         2. READ BODY
+      ===================================================== */
 
-    const answers =
-      Array.isArray(body?.answers)
-        ? body.answers
-        : [];
+      let body:
+        Record<string, any>;
 
-    const submittedAt =
-      body?.submittedAt ??
-      new Date().toISOString();
 
-    const timeTaken =
-      body?.timeTaken ??
-      null;
+      try {
 
-    const automatic =
-      body?.automatic ??
-      false;
+        body =
+          await request.json();
 
-    console.log(
-      '[Habitat IAS] TEST ID:',
-      testId
-    );
+      } catch {
 
-    console.log(
-      '[Habitat IAS] ATTEMPT ID:',
-      attemptId
-    );
+        return jsonResponse(
+          {
+            success: false,
 
-    console.log(
-      '[Habitat IAS] ANSWER COUNT:',
-      answers.length
-    );
+            code:
+              "INVALID_JSON",
 
-    console.log(
-      '[Habitat IAS] TIME TAKEN:',
-      timeTaken
-    );
-
-    console.log(
-      '[Habitat IAS] AUTOMATIC:',
-      automatic
-    );
-
-    /*
-     * =========================================================
-     * 4. VALIDATE TEST ID
-     * =========================================================
-     */
-
-    if (!testId) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'testId is required.',
-          code: 'TEST_ID_REQUIRED',
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json',
+            message:
+              "Invalid JSON request body.",
           },
-        }
-      );
-    }
 
-    /*
-     * =========================================================
-     * 5. AUTHENTICATION
-     * =========================================================
-     */
+          400
+        );
 
-    const authHeader =
-      request.headers.get('Authorization');
+      }
 
-    let userId: string | null = null;
 
-    /*
-     * ---------------------------------------------------------
-     * Authorization header
-     * ---------------------------------------------------------
-     */
+      /* =====================================================
+         3. TEST ID
+      ===================================================== */
 
-    if (
-      authHeader &&
-      authHeader.startsWith('Bearer ')
-    ) {
+      const testId =
+        Number(
+          body?.testId
+        );
+
+
+      if (
+        !Number.isInteger(
+          testId
+        ) ||
+        testId <= 0
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "INVALID_TEST_ID",
+
+            message:
+              "A valid test ID is required.",
+          },
+
+          400
+        );
+
+      }
+
+
+      /* =====================================================
+         4. ATTEMPT ID
+         
+         The frontend should send the attempt created by
+         /api/mock-tests/start.
+      ===================================================== */
+
+      const requestedAttemptId =
+        Number(
+          body?.attemptId
+        );
+
+
+      if (
+        !Number.isInteger(
+          requestedAttemptId
+        ) ||
+        requestedAttemptId <= 0
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "INVALID_ATTEMPT_ID",
+
+            message:
+              "A valid mock-test attempt is required. Please restart the test.",
+          },
+
+          400
+        );
+
+      }
+
+
+      /* =====================================================
+         5. AUTHENTICATE USER
+      ===================================================== */
+
       const accessToken =
-        authHeader.substring(7);
+        getAccessToken(
+          request
+        );
+
+
+      if (!accessToken) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "LOGIN_REQUIRED",
+
+            message:
+              "Your login session is required to submit this test.",
+          },
+
+          401
+        );
+
+      }
+
+
+      /* =====================================================
+         6. VERIFY TOKEN
+      ===================================================== */
 
       const {
-        data: { user },
-        error: authError,
+        data: userData,
+        error: userError,
       } =
-        await supabaseAdmin.auth.getUser(
-          accessToken
-        );
-
-      if (authError) {
-        console.error(
-          '[Habitat IAS] AUTH ERROR:',
-          authError
-        );
-      } else if (user) {
-        userId = user.id;
-      }
-    }
-
-    /*
-     * =========================================================
-     * 6. FALLBACK COOKIE AUTHENTICATION
-     * =========================================================
-     */
-
-    if (!userId) {
-      const accessToken =
-        cookies.get('sb-access-token')?.value;
-
-      if (accessToken) {
-        const {
-          data: { user },
-          error: cookieAuthError,
-        } =
-          await supabaseAdmin.auth.getUser(
+        await supabaseAdmin
+          .auth
+          .getUser(
             accessToken
           );
 
-        if (cookieAuthError) {
-          console.error(
-            '[Habitat IAS] COOKIE AUTH ERROR:',
-            cookieAuthError
-          );
-        } else if (user) {
-          userId = user.id;
-        }
+
+      if (
+        userError ||
+        !userData?.user
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "INVALID_SESSION",
+
+            message:
+              "Your login session is invalid or expired. Please login again.",
+          },
+
+          401
+        );
+
       }
-    }
 
-    /*
-     * =========================================================
-     * 7. REQUIRE AUTHENTICATION
-     * =========================================================
-     */
 
-    if (!userId) {
-      console.error(
-        '[Habitat IAS] USER NOT AUTHENTICATED'
-      );
+      const userId =
+        userData.user.id;
 
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'You must be logged in to submit the test.',
-          code: 'UNAUTHENTICATED',
-        }),
-        {
-          status: 401,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      );
-    }
 
-    console.log(
-      '[Habitat IAS] USER ID:',
-      userId
-    );
+      /* =====================================================
+         7. VERIFY PAID ACCESS
+         
+         LOGIN ALONE IS NOT ENOUGH.
+      ===================================================== */
 
-    /*
-     * =========================================================
-     * 8. VERIFY TEST
-     * =========================================================
-     */
-
-    const {
-      data: test,
-      error: testError,
-    } =
-      await supabaseAdmin
-        .from('mock_tests')
-        .select('*')
-        .eq('id', testId)
-        .maybeSingle();
-
-    if (testError) {
-      console.error(
-        '[Habitat IAS] TEST LOOKUP ERROR:',
-        testError
-      );
-
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Unable to verify test.',
-          details:
-            testError.message,
-        }),
-        {
-          status: 500,
-          headers: {
-            'Content-Type':
-              'application/json',
-          },
-        }
-      );
-    }
-
-    if (!test) {
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Test not found.',
-          code:
-            'TEST_NOT_FOUND',
-        }),
-        {
-          status: 404,
-          headers: {
-            'Content-Type':
-              'application/json',
-          },
-        }
-      );
-    }
-
-    console.log(
-      '[Habitat IAS] TEST VERIFIED:',
-      testId
-    );
-
-    /*
-     * =========================================================
-     * 9. FIND EXISTING ATTEMPT
-     * =========================================================
-     */
-
-    let currentAttemptId =
-      attemptId;
-
-    if (!currentAttemptId) {
       const {
-        data: existingAttempt,
-        error: attemptLookupError,
+        data: test,
+        error: testError,
       } =
         await supabaseAdmin
-          .from('mock_attempts')
-          .select('*')
-          .eq('test_id', testId)
-          .eq('user_id', userId)
-          .eq('status', 'in_progress')
-          .order('created_at', {
-            ascending: false,
-          })
-          .limit(1)
+
+          .from("mock_tests")
+
+          .select(`
+            id,
+            test_number,
+            title,
+            question_count,
+            duration_minutes,
+            is_published,
+            release_at,
+            test_type
+          `)
+
+          .eq(
+            "id",
+            testId
+          )
+
           .maybeSingle();
 
-      if (attemptLookupError) {
+
+      if (testError) {
+
         console.error(
-          '[Habitat IAS] ATTEMPT LOOKUP ERROR:',
-          attemptLookupError
+          "Submit test lookup error:",
+          testError
         );
+
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "TEST_LOOKUP_ERROR",
+
+            message:
+              "Unable to verify the mock test.",
+          },
+
+          500
+        );
+
       }
 
-      currentAttemptId =
-        existingAttempt?.id ??
-        null;
-    }
 
-    /*
-     * =========================================================
-     * 10. CREATE ATTEMPT IF NECESSARY
-     * =========================================================
-     */
+      if (!test) {
 
-    if (!currentAttemptId) {
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "TEST_NOT_FOUND",
+
+            message:
+              "Mock test not found.",
+          },
+
+          404
+        );
+
+      }
+
+
+      /* =====================================================
+         8. PUBLISHED CHECK
+      ===================================================== */
+
+      if (
+        test.is_published === false
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "TEST_NOT_PUBLISHED",
+
+            message:
+              "This mock test is not available.",
+          },
+
+          403
+        );
+
+      }
+
+
+      /* =====================================================
+         9. RELEASE CHECK
+      ===================================================== */
+
+      if (
+        test.release_at
+      ) {
+
+        const releaseTime =
+          new Date(
+            test.release_at
+          ).getTime();
+
+
+        if (
+          Number.isFinite(
+            releaseTime
+          ) &&
+          releaseTime >
+            Date.now()
+        ) {
+
+          return jsonResponse(
+            {
+              success: false,
+
+              code:
+                "TEST_NOT_RELEASED",
+
+              message:
+                "This mock test has not been released yet.",
+            },
+
+            403
+          );
+
+        }
+
+      }
+
+
+      /* =====================================================
+         10. PAID ENTITLEMENT
+      ===================================================== */
+
+      const access =
+        await checkTestAccess(
+          userId,
+          Number(
+            test.test_number
+          )
+        );
+
+
+      if (!access.allowed) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ACCESS_DENIED",
+
+            message:
+              "You do not have valid paid access to this mock-test series.",
+
+            reason:
+              access.reason,
+          },
+
+          403
+        );
+
+      }
+
+
+      /* =====================================================
+         11. VERIFY ATTEMPT
+         
+         CRITICAL:
+         The attempt must belong to:
+           - authenticated user
+           - requested test
+           - current in-progress status
+      ===================================================== */
+
       const {
-        data: newAttempt,
-        error: createAttemptError,
+        data: attempt,
+        error: attemptError,
       } =
         await supabaseAdmin
-          .from('mock_attempts')
-          .insert({
-            user_id: userId,
-            test_id: testId,
-            started_at:
-              new Date().toISOString(),
-            status:
-              'in_progress',
-          })
-          .select()
-          .single();
 
-      if (createAttemptError) {
+          .from("mock_attempts")
+
+          .select(`
+            id,
+            user_id,
+            test_id,
+            started_at,
+            submitted_at,
+            score,
+            correct_count,
+            incorrect_count,
+            unanswered_count,
+            time_taken_seconds,
+            status
+          `)
+
+          .eq(
+            "id",
+            requestedAttemptId
+          )
+
+          .maybeSingle();
+
+
+      if (attemptError) {
+
         console.error(
-          '[Habitat IAS] CREATE ATTEMPT ERROR:',
-          createAttemptError
+          "Attempt lookup error:",
+          attemptError
         );
 
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error:
-              'Unable to create test attempt.',
-            details:
-              createAttemptError.message,
-          }),
+
+        return jsonResponse(
           {
-            status: 500,
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-          }
-        );
-      }
+            success: false,
 
-      currentAttemptId =
-        newAttempt.id;
-    }
+            code:
+              "ATTEMPT_LOOKUP_ERROR",
 
-    console.log(
-      '[Habitat IAS] ATTEMPT ID:',
-      currentAttemptId
-    );
+            message:
+              "Unable to verify your test attempt.",
+          },
 
-    /*
-     * =========================================================
-     * 11. PROCESS ANSWERS
-     * =========================================================
-     */
-
-    let correctCount = 0;
-    let incorrectCount = 0;
-    let unansweredCount = 0;
-
-    /*
-     * Keep track of questions actually processed.
-     */
-
-    const processedQuestionIds =
-      new Set<string>();
-
-    for (const answer of answers) {
-      /*
-       * -------------------------------------------------------
-       * QUESTION ID
-       * -------------------------------------------------------
-       */
-
-      const questionId =
-        answer?.questionId ??
-        answer?.question_id ??
-        null;
-
-      if (!questionId) {
-        console.warn(
-          '[Habitat IAS] ANSWER WITHOUT QUESTION ID:',
-          answer
+          500
         );
 
-        continue;
       }
 
+
+      if (!attempt) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_NOT_FOUND",
+
+            message:
+              "This test attempt could not be found.",
+          },
+
+          404
+        );
+
+      }
+
+
+      /* =====================================================
+         12. ATTEMPT OWNERSHIP
+      ===================================================== */
+
+      if (
+        String(
+          attempt.user_id
+        ) !==
+        String(
+          userId
+        )
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_FORBIDDEN",
+
+            message:
+              "This test attempt does not belong to your account.",
+          },
+
+          403
+        );
+
+      }
+
+
+      /* =====================================================
+         13. TEST OWNERSHIP
+      ===================================================== */
+
+      if (
+        Number(
+          attempt.test_id
+        ) !==
+        Number(
+          testId
+        )
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_TEST_MISMATCH",
+
+            message:
+              "This attempt does not belong to the selected test.",
+          },
+
+          403
+        );
+
+      }
+
+
+      /* =====================================================
+         14. ATTEMPT STATUS
+      ===================================================== */
+
+      if (
+        attempt.status !==
+        "in_progress"
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_ALREADY_SUBMITTED",
+
+            message:
+              "This test attempt has already been submitted.",
+          },
+
+          409
+        );
+
+      }
+
+
+      /* =====================================================
+         15. ANSWERS
+      ===================================================== */
+
+      const incomingAnswers =
+        Array.isArray(
+          body?.answers
+        )
+          ? body.answers
+          : [];
+
+
       /*
-       * -------------------------------------------------------
-       * IMPORTANT:
+       * Map by question ID.
        *
-       * Frontend currently sends:
-       *
-       * {
-       *   questionId: "...",
-       *   answer: "A"
-       * }
-       *
-       * Therefore we accept answer.answer.
-       *
-       * We also support the older names.
-       * -------------------------------------------------------
+       * This also prevents duplicate question IDs from
+       * being counted multiple times.
        */
 
-      const selectedOption =
-        answer?.answer ??
-        answer?.selectedOption ??
-        answer?.selected_option ??
-        null;
+      const answerMap =
+        new Map<
+          number,
+          string | null
+        >();
 
-      console.log(
-        '[Habitat IAS] PROCESSING:',
-        {
-          questionId,
-          selectedOption,
+
+      for (
+        const item
+        of incomingAnswers
+      ) {
+
+        const questionId =
+          Number(
+            item?.questionId
+          );
+
+
+        if (
+          !Number.isInteger(
+            questionId
+          ) ||
+          questionId <= 0
+        ) {
+
+          continue;
+
         }
-      );
 
-      /*
-       * -------------------------------------------------------
-       * GET QUESTION
-       * -------------------------------------------------------
-       */
+
+        const selectedOption =
+          normalizeOption(
+            item?.selectedOption ??
+            item?.selected_option ??
+            item?.answer
+          );
+
+
+        answerMap.set(
+          questionId,
+          selectedOption
+        );
+
+      }
+
+
+      /* =====================================================
+         16. LOAD QUESTIONS
+         
+         Correct answers are obtained ONLY on server.
+      ===================================================== */
 
       const {
-        data: question,
+        data: questionRows,
         error: questionError,
       } =
         await supabaseAdmin
-          .from('mock_questions')
-          .select(
-            'id, correct_option, marks, negative_marks'
+
+          .from("mock_questions")
+
+          .select(`
+            id,
+            test_id,
+            question_number,
+            correct_option,
+            marks,
+            negative_marks
+          `)
+
+          .eq(
+            "test_id",
+            testId
           )
-          .eq('id', questionId)
-          .maybeSingle();
 
-      if (questionError) {
-        console.error(
-          '[Habitat IAS] QUESTION LOOKUP ERROR:',
-          questionError
-        );
-
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error:
-              'Unable to verify question.',
-            details:
-              questionError.message,
-            questionId,
-          }),
-          {
-            status: 500,
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-          }
-        );
-      }
-
-      if (!question) {
-        console.error(
-          '[Habitat IAS] QUESTION NOT FOUND:',
-          questionId
-        );
-
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error:
-              'Question not found.',
-            questionId,
-          }),
-          {
-            status: 400,
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-          }
-        );
-      }
-
-      processedQuestionIds.add(
-        String(questionId)
-      );
-
-      /*
-       * -------------------------------------------------------
-       * NORMALIZE ANSWER
-       * -------------------------------------------------------
-       */
-
-      const normalizedOption =
-        selectedOption === null ||
-        selectedOption === undefined
-          ? null
-          : String(
-              selectedOption
-            )
-              .trim()
-              .toUpperCase();
-
-      /*
-       * -------------------------------------------------------
-       * DETERMINE ANSWERED STATUS
-       * -------------------------------------------------------
-       */
-
-      const isAnswered =
-        normalizedOption !== null &&
-        normalizedOption !== '';
-
-      let isCorrect:
-        | boolean
-        | null = null;
-
-      if (!isAnswered) {
-        unansweredCount++;
-      } else {
-        isCorrect =
-          normalizedOption ===
-          String(
-            question.correct_option
-          )
-            .trim()
-            .toUpperCase();
-
-        if (isCorrect) {
-          correctCount++;
-        } else {
-          incorrectCount++;
-        }
-      }
-
-      /*
-       * -------------------------------------------------------
-       * SAVE ANSWER
-       * -------------------------------------------------------
-       */
-
-      const {
-        error: answerError,
-      } =
-        await supabaseAdmin
-          .from('mock_answers')
-          .upsert(
+          .order(
+            "question_number",
             {
-              attempt_id:
-                currentAttemptId,
-
-              question_id:
-                questionId,
-
-              selected_option:
-                isAnswered
-                  ? normalizedOption
-                  : null,
-
-              is_correct:
-                isCorrect,
-
-              answered_at:
-                isAnswered
-                  ? new Date().toISOString()
-                  : null,
-            },
-            {
-              onConflict:
-                'attempt_id,question_id',
+              ascending: true,
             }
           );
 
-      if (answerError) {
+
+      if (questionError) {
+
         console.error(
-          '[Habitat IAS] SAVE ANSWER ERROR:',
-          answerError
+          "Question lookup error:",
+          questionError
         );
 
-        /*
-         * IMPORTANT:
-         * Do not report submission success
-         * when an answer could not be saved.
-         */
 
-        return new Response(
-          JSON.stringify({
-            success: false,
-            error:
-              'Unable to save your answer.',
-            details:
-              answerError.message,
-            questionId,
-          }),
+        return jsonResponse(
           {
-            status: 500,
-            headers: {
-              'Content-Type':
-                'application/json',
-            },
-          }
+            success: false,
+
+            code:
+              "QUESTION_LOOKUP_ERROR",
+
+            message:
+              "Unable to evaluate the test questions.",
+          },
+
+          500
         );
+
       }
-    }
 
-    /*
-     * =========================================================
-     * 12. LOAD ALL SAVED ANSWERS
-     * =========================================================
-     */
 
-    const {
-      data: savedAnswers,
-      error: savedAnswersError,
-    } =
-      await supabaseAdmin
-        .from('mock_answers')
-        .select(
-          `
-          question_id,
-          selected_option,
-          is_correct
-        `
-        )
-        .eq(
-          'attempt_id',
-          currentAttemptId
-        );
+      const questions =
+        questionRows ?? [];
 
-    if (savedAnswersError) {
-      console.error(
-        '[Habitat IAS] SAVED ANSWERS ERROR:',
-        savedAnswersError
-      );
 
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Unable to read saved answers.',
-          details:
-            savedAnswersError.message,
-        }),
-        {
-          status: 500,
-          headers: {
-            'Content-Type':
-              'application/json',
+      if (
+        questions.length === 0
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "NO_QUESTIONS",
+
+            message:
+              "This mock test currently has no questions.",
           },
+
+          400
+        );
+
+      }
+
+
+      /* =====================================================
+         17. VERIFY QUESTION IDS
+         
+         Ignore any question IDs that don't belong to
+         this test.
+      ===================================================== */
+
+      const validQuestionIds =
+        new Set(
+          questions.map(
+            (question) =>
+              Number(
+                question.id
+              )
+          )
+        );
+
+
+      const sanitizedAnswers =
+        new Map<
+          number,
+          string | null
+        >();
+
+
+      for (
+        const [
+          questionId,
+          selectedOption
+        ]
+        of answerMap.entries()
+      ) {
+
+        if (
+          validQuestionIds.has(
+            questionId
+          )
+        ) {
+
+          sanitizedAnswers.set(
+            questionId,
+            selectedOption
+          );
+
         }
-      );
-    }
 
-    /*
-     * =========================================================
-     * 13. CALCULATE SCORE
-     * =========================================================
-     */
+      }
 
-    let finalScore = 0;
-    let maximumMarks = 0;
 
-    /*
-     * Get all questions belonging to this test.
-     */
+      /* =====================================================
+         18. SCORE SERVER-SIDE
+         
+         HABITAT IAS JPSC RULE:
+         
+         Correct     +2
+         Incorrect    0
+         Unanswered   0
+         
+         NO NEGATIVE MARKING.
+         
+         We intentionally DO NOT subtract negative_marks.
+      ===================================================== */
 
-    const {
-      data: testQuestions,
-      error: testQuestionsError,
-    } =
-      await supabaseAdmin
-        .from('mock_questions')
-        .select(
-          'id, marks, negative_marks'
+      let score =
+        0;
+
+      let correctCount =
+        0;
+
+      let incorrectCount =
+        0;
+
+      let unansweredCount =
+        0;
+
+
+      for (
+        const question
+        of questions
+      ) {
+
+        const questionId =
+          Number(
+            question.id
+          );
+
+
+        const selectedOption =
+          sanitizedAnswers.get(
+            questionId
+          );
+
+
+        const correctOption =
+          normalizeOption(
+            question.correct_option
+          );
+
+
+        /* =================================================
+           UNANSWERED
+        ================================================= */
+
+        if (
+          !selectedOption
+        ) {
+
+          unansweredCount++;
+
+          continue;
+
+        }
+
+
+        /* =================================================
+           CORRECT
+        ================================================= */
+
+        if (
+          correctOption &&
+          selectedOption ===
+            correctOption
+        ) {
+
+          correctCount++;
+
+          /*
+           * Current JPSC mock configuration:
+           * +2 marks per correct answer.
+           */
+
+          score += 2;
+
+          continue;
+
+        }
+
+
+        /* =================================================
+           INCORRECT
+           
+           IMPORTANT:
+           NO NEGATIVE MARKING.
+        ================================================= */
+
+        incorrectCount++;
+
+      }
+
+
+      /* =====================================================
+         19. QUESTION COUNT CONSISTENCY
+      ===================================================== */
+
+      unansweredCount =
+        Math.max(
+          0,
+          questions.length -
+          correctCount -
+          incorrectCount
+        );
+
+
+      /* =====================================================
+         20. TIME
+         
+         Browser time is accepted as a convenience, but
+         server-side elapsed time is used as the authoritative
+         upper bound.
+      ===================================================== */
+
+      const browserTime =
+        Math.max(
+          0,
+          Number(
+            body?.timeTaken
+          ) || 0
+        );
+
+
+      const startedAtMs =
+        new Date(
+          attempt.started_at
+        ).getTime();
+
+
+      const serverElapsed =
+        Number.isFinite(
+          startedAtMs
         )
-        .eq(
-          'test_id',
-          testId
-        );
-
-    if (testQuestionsError) {
-      console.error(
-        '[Habitat IAS] TEST QUESTIONS ERROR:',
-        testQuestionsError
-      );
-
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Unable to calculate test marks.',
-          details:
-            testQuestionsError.message,
-        }),
-        {
-          status: 500,
-          headers: {
-            'Content-Type':
-              'application/json',
-          },
-        }
-      );
-    }
-
-    /*
-     * Calculate maximum possible marks.
-     */
-
-    for (
-      const question of
-        testQuestions ?? []
-    ) {
-      maximumMarks +=
-        Number(
-          question.marks ?? 0
-        );
-    }
-
-    /*
-     * Calculate actual score from
-     * saved answers.
-     */
-
-    for (
-      const savedAnswer of
-        savedAnswers ?? []
-    ) {
-      const question =
-        (
-          testQuestions ?? []
-        ).find(
-          q =>
-            String(q.id) ===
-            String(
-              savedAnswer.question_id
+          ? Math.max(
+              0,
+              Math.floor(
+                (
+                  Date.now() -
+                  startedAtMs
+                ) / 1000
+              )
             )
+          : browserTime;
+
+
+      const configuredDuration =
+        Math.max(
+          0,
+          Number(
+            test.duration_minutes
+          ) || 0
+        ) * 60;
+
+
+      /*
+       * We don't allow the client to report more time than
+       * the actual server elapsed time by a large margin.
+       *
+       * If the server clock is available, use the smaller
+       * of browser-reported and server elapsed time.
+       */
+
+      let timeTaken =
+        serverElapsed;
+
+
+      if (
+        browserTime > 0
+      ) {
+
+        timeTaken =
+          Math.min(
+            browserTime,
+            serverElapsed
+          );
+
+      }
+
+
+      /*
+       * Never exceed configured test duration.
+       */
+
+      if (
+        configuredDuration > 0
+      ) {
+
+        timeTaken =
+          Math.min(
+            timeTaken,
+            configuredDuration
+          );
+
+      }
+
+
+      timeTaken =
+        Math.max(
+          0,
+          Math.floor(
+            timeTaken
+          )
         );
 
-      if (!question) {
-        continue;
-      }
+
+      /* =====================================================
+         21. PREVENT DUPLICATE ANSWERS
+         
+         Existing answers are removed only for an
+         in-progress attempt immediately before finalization.
+      ===================================================== */
+
+      const {
+        error:
+          deleteAnswersError,
+      } =
+        await supabaseAdmin
+
+          .from("mock_answers")
+
+          .delete()
+
+          .eq(
+            "attempt_id",
+            requestedAttemptId
+          );
+
 
       if (
-        savedAnswer.is_correct ===
-        true
+        deleteAnswersError
       ) {
-        finalScore +=
-          Number(
-            question.marks ?? 0
-          );
-      } else if (
-        savedAnswer.is_correct ===
-        false
-      ) {
-        finalScore -=
-          Number(
-            question.negative_marks ??
-              0
-          );
+
+        console.error(
+          "Existing answer cleanup error:",
+          deleteAnswersError
+        );
+
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ANSWER_CLEANUP_ERROR",
+
+            message:
+              "Unable to prepare your answers for final submission.",
+          },
+
+          500
+        );
+
       }
-    }
 
-    /*
-     * =========================================================
-     * 14. RE-CALCULATE COUNTS FROM DATABASE
-     * =========================================================
-     *
-     * This prevents the result from depending only
-     * on the browser's answer array.
-     */
 
-    let finalCorrectCount = 0;
-    let finalIncorrectCount = 0;
-    let finalUnansweredCount = 0;
+      /* =====================================================
+         22. BUILD ANSWER RECORDS
+      ===================================================== */
 
-    for (
-      const savedAnswer of
-        savedAnswers ?? []
-    ) {
+      const answerRows =
+        questions
+          .map(
+            (
+              question
+            ) => {
+
+              const questionId =
+                Number(
+                  question.id
+                );
+
+
+              const selectedOption =
+                sanitizedAnswers.get(
+                  questionId
+                ) ??
+                null;
+
+
+              let isCorrect:
+                boolean | null =
+                null;
+
+
+              if (
+                selectedOption
+              ) {
+
+                const correctOption =
+                  normalizeOption(
+                    question.correct_option
+                  );
+
+
+                isCorrect =
+                  Boolean(
+                    correctOption &&
+                    selectedOption ===
+                      correctOption
+                  );
+
+              }
+
+
+              return {
+
+                attempt_id:
+                  requestedAttemptId,
+
+                question_id:
+                  questionId,
+
+                selected_option:
+                  selectedOption,
+
+                is_correct:
+                  isCorrect,
+
+              };
+
+            }
+          );
+
+
+      /* =====================================================
+         23. INSERT ANSWERS
+      ===================================================== */
+
       if (
-        savedAnswer.is_correct ===
-        true
+        answerRows.length > 0
       ) {
-        finalCorrectCount++;
-      } else if (
-        savedAnswer.is_correct ===
-        false
-      ) {
-        finalIncorrectCount++;
-      } else {
-        finalUnansweredCount++;
+
+        const {
+          error:
+            answerInsertError,
+        } =
+          await supabaseAdmin
+
+            .from("mock_answers")
+
+            .insert(
+              answerRows
+            );
+
+
+        if (
+          answerInsertError
+        ) {
+
+          console.error(
+            "Answer insert error:",
+            answerInsertError
+          );
+
+
+          return jsonResponse(
+            {
+              success: false,
+
+              code:
+                "ANSWER_SAVE_ERROR",
+
+              message:
+                "Unable to save your answers.",
+            },
+
+            500
+          );
+
+        }
+
       }
-    }
 
-    /*
-     * Use database counts as final values.
-     */
 
-    correctCount =
-      finalCorrectCount;
+      /* =====================================================
+         24. FINALIZE ATTEMPT
+      ===================================================== */
 
-    incorrectCount =
-      finalIncorrectCount;
+      const submittedAt =
+        new Date()
+          .toISOString();
 
-    unansweredCount =
-      finalUnansweredCount;
 
-    /*
-     * =========================================================
-     * 15. PERCENTAGE
-     * =========================================================
-     */
+      const {
+        data:
+          updatedAttempt,
+        error:
+          updateAttemptError,
+      } =
+        await supabaseAdmin
 
-    const percentage =
-      maximumMarks > 0
-        ? (finalScore /
-            maximumMarks) *
-          100
-        : 0;
+          .from("mock_attempts")
 
-    /*
-     * =========================================================
-     * 16. UPDATE ATTEMPT
-     * =========================================================
-     */
+          .update({
 
-    const {
-      error: updateAttemptError,
-    } =
-      await supabaseAdmin
-        .from('mock_attempts')
-        .update({
-          submitted_at:
-            submittedAt,
+            submitted_at:
+              submittedAt,
 
-          score:
-            finalScore,
+            score:
+              score,
 
-          correct_count:
-            correctCount,
+            correct_count:
+              correctCount,
 
-          incorrect_count:
-            incorrectCount,
+            incorrect_count:
+              incorrectCount,
 
-          unanswered_count:
-            unansweredCount,
+            unanswered_count:
+              unansweredCount,
+
+            time_taken_seconds:
+              timeTaken,
+
+            status:
+              "submitted",
+
+          })
+
+          .eq(
+            "id",
+            requestedAttemptId
+          )
+
+          .eq(
+            "user_id",
+            userId
+          )
+
+          .eq(
+            "test_id",
+            testId
+          )
+
+          .eq(
+            "status",
+            "in_progress"
+          )
+
+          .select(`
+            id,
+            user_id,
+            test_id,
+            started_at,
+            submitted_at,
+            score,
+            correct_count,
+            incorrect_count,
+            unanswered_count,
+            time_taken_seconds,
+            status
+          `)
+
+          .maybeSingle();
+
+
+      if (
+        updateAttemptError
+      ) {
+
+        console.error(
+          "Attempt finalization error:",
+          updateAttemptError
+        );
+
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_FINALIZE_ERROR",
+
+            message:
+              "Your answers were saved, but the attempt could not be finalized. Please contact support.",
+          },
+
+          500
+        );
+
+      }
+
+
+      /*
+       * If no row was returned, another request may have
+       * finalized the attempt first.
+       */
+
+      if (
+        !updatedAttempt
+      ) {
+
+        return jsonResponse(
+          {
+            success: false,
+
+            code:
+              "ATTEMPT_ALREADY_FINALIZED",
+
+            message:
+              "This test attempt has already been submitted.",
+          },
+
+          409
+        );
+
+      }
+
+
+      /* =====================================================
+         25. PERCENTAGE
+      ===================================================== */
+
+      const maximumMarks =
+        questions.length *
+        2;
+
+
+      const percentage =
+        maximumMarks > 0
+          ? Number(
+              (
+                (
+                  score /
+                  maximumMarks
+                ) *
+                100
+              ).toFixed(2)
+            )
+          : 0;
+
+
+      /* =====================================================
+         26. SUCCESS RESPONSE
+      ===================================================== */
+
+      return jsonResponse(
+        {
+          success: true,
+
+          message:
+            "Mock test submitted successfully.",
+
+          attemptId:
+            updatedAttempt.id,
+
+          testId:
+            updatedAttempt.test_id,
 
           status:
-            'submitted',
-        })
-        .eq(
-          'id',
-          currentAttemptId
-        )
-        .eq(
-          'user_id',
-          userId
-        );
+            updatedAttempt.status,
 
-    if (updateAttemptError) {
+          score:
+            score,
+
+          maximumMarks:
+            maximumMarks,
+
+          percentage:
+            percentage,
+
+          correctCount:
+            correctCount,
+
+          incorrectCount:
+            incorrectCount,
+
+          unansweredCount:
+            unansweredCount,
+
+          timeTaken:
+            timeTaken,
+
+          submittedAt:
+            updatedAttempt.submitted_at,
+
+        },
+
+        200
+      );
+
+
+    } catch (error) {
+
       console.error(
-        '[Habitat IAS] UPDATE ATTEMPT ERROR:',
-        updateAttemptError
+        "Submit mock test API error:",
+        error
       );
 
-      return new Response(
-        JSON.stringify({
-          success: false,
-          error:
-            'Unable to finalize test attempt.',
-          details:
-            updateAttemptError.message,
-        }),
+
+      return jsonResponse(
         {
-          status: 500,
-          headers: {
-            'Content-Type':
-              'application/json',
-          },
-        }
+          success: false,
+
+          code:
+            "SERVER_ERROR",
+
+          message:
+            error instanceof Error
+              ? error.message
+              : "Unexpected server error.",
+        },
+
+        500
       );
+
     }
 
-    /*
-     * =========================================================
-     * 17. SUCCESS LOG
-     * =========================================================
-     */
-
-    console.log('');
-    console.log(
-      '========================================'
-    );
-
-    console.log(
-      '[Habitat IAS] SUBMISSION SUCCESS'
-    );
-
-    console.log(
-      '[Habitat IAS] TEST:',
-      testId
-    );
-
-    console.log(
-      '[Habitat IAS] USER:',
-      userId
-    );
-
-    console.log(
-      '[Habitat IAS] ATTEMPT:',
-      currentAttemptId
-    );
-
-    console.log(
-      '[Habitat IAS] SCORE:',
-      finalScore
-    );
-
-    console.log(
-      '[Habitat IAS] MAXIMUM MARKS:',
-      maximumMarks
-    );
-
-    console.log(
-      '[Habitat IAS] PERCENTAGE:',
-      percentage
-    );
-
-    console.log(
-      '[Habitat IAS] CORRECT:',
-      correctCount
-    );
-
-    console.log(
-      '[Habitat IAS] INCORRECT:',
-      incorrectCount
-    );
-
-    console.log(
-      '[Habitat IAS] UNANSWERED:',
-      unansweredCount
-    );
-
-    console.log(
-      '[Habitat IAS] TIME TAKEN:',
-      timeTaken
-    );
-
-    console.log(
-      '[Habitat IAS] AUTOMATIC:',
-      automatic
-    );
-
-    console.log(
-      '========================================'
-    );
-
-    /*
-     * =========================================================
-     * 18. SUCCESS RESPONSE
-     * =========================================================
-     */
-
-    return new Response(
-      JSON.stringify({
-        success: true,
-
-        message:
-          'Test submitted successfully.',
-
-        attemptId:
-          currentAttemptId,
-
-        testId,
-
-        score:
-          finalScore,
-
-        maximumMarks,
-
-        percentage:
-          Number(
-            percentage.toFixed(2)
-          ),
-
-        /*
-         * Frontend-compatible names
-         */
-
-        correct:
-          correctCount,
-
-        wrong:
-          incorrectCount,
-
-        skipped:
-          unansweredCount,
-
-        /*
-         * Existing backend-compatible names
-         */
-
-        correctCount,
-
-        incorrectCount,
-
-        unansweredCount,
-
-        totalQuestions:
-          test.question_count ??
-          testQuestions?.length ??
-          answers.length,
-
-        timeTaken:
-          timeTaken ?? 0,
-
-        automatic,
-      }),
-      {
-        status: 200,
-        headers: {
-          'Content-Type':
-            'application/json',
-        },
-      }
-    );
-  } catch (error) {
-    console.error('');
-    console.error(
-      '========================================'
-    );
-
-    console.error(
-      '[Habitat IAS] SUBMIT API ERROR'
-    );
-
-    console.error(error);
-
-    console.error(
-      '========================================'
-    );
-
-    return new Response(
-      JSON.stringify({
-        success: false,
-
-        error:
-          error instanceof Error
-            ? error.message
-            : 'Unexpected server error.',
-
-        code:
-          'SUBMIT_API_ERROR',
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type':
-            'application/json',
-        },
-      }
-    );
-  }
-};
+  };

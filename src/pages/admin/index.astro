@@ -1,0 +1,2496 @@
+---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   HABITAT IAS — ADMIN AUTHENTICATION
+   ---------------------------------------------------------
+   This page is server-protected.
+   Only the Supabase user whose ID matches ADMIN_USER_ID
+   can access the admin dashboard.
+   ========================================================= */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+const adminUserId =
+  import.meta.env.ADMIN_USER_ID;
+
+if (!supabaseUrl) {
+  throw new Error(
+    "PUBLIC_SUPABASE_URL is missing."
+  );
+}
+
+if (!serviceRoleKey) {
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is missing."
+  );
+}
+
+if (!adminUserId) {
+  throw new Error(
+    "ADMIN_USER_ID is missing."
+  );
+}
+
+const supabaseAdmin =
+  createClient(
+    supabaseUrl,
+    serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+
+const accessToken =
+  Astro.cookies.get(
+    "habitat-access-token"
+  )?.value;
+
+if (!accessToken) {
+  return Astro.redirect(
+    "/login?redirect=" +
+      encodeURIComponent(
+        Astro.url.pathname
+      )
+  );
+}
+
+const {
+  data: authData,
+  error: authError,
+} = await supabaseAdmin.auth.getUser(
+  accessToken
+);
+
+if (authError || !authData?.user) {
+  Astro.cookies.delete(
+    "habitat-access-token",
+    { path: "/" }
+  );
+
+  return Astro.redirect(
+    "/login?redirect=" +
+      encodeURIComponent(
+        Astro.url.pathname
+      )
+  );
+}
+
+if (authData.user.id !== adminUserId) {
+  return new Response(
+    `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Access Denied | Habitat IAS</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f5f7fb;
+      color: #172b4d;
+    }
+    .card {
+      width: min(460px, 100%);
+      background: #fff;
+      border: 1px solid #e4e9f2;
+      border-radius: 18px;
+      padding: 34px;
+      text-align: center;
+      box-shadow: 0 12px 40px rgba(16, 38, 75, 0.08);
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: #fff0ee;
+      color: #b42318;
+      font-size: 28px;
+      font-weight: 800;
+    }
+    h1 { margin: 0 0 10px; font-size: 25px; }
+    p { margin: 0 0 24px; color: #667085; line-height: 1.6; font-size: 14px; }
+    a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 10px;
+      background: #1557d6;
+      color: #fff;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+    }
+    a:hover { background: #0f3f9f; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">🔒</div>
+    <h1>Admin Access Denied</h1>
+    <p>Your account is authenticated, but it does not have permission to access the Habitat IAS administration panel.</p>
+    <a href="/">← Back to Website</a>
+  </div>
+</body>
+</html>`,
+    {
+      status: 403,
+      headers: {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
+      },
+    }
+  );
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Admin Dashboard | Habitat IAS</title>
+
+  <style>
+    :root {
+      --blue: #1557d6;
+      --blue-dark: #0f3f9f;
+      --blue-light: #eef4ff;
+
+      --navy: #10264b;
+      --text: #172b4d;
+      --muted: #667085;
+
+      --bg: #f5f7fb;
+      --white: #ffffff;
+
+      --border: #e4e9f2;
+      --border-dark: #d4dce9;
+
+      --green: #087443;
+      --green-bg: #eaf8f0;
+
+      --orange: #b54708;
+      --orange-bg: #fff4e8;
+
+      --red: #b42318;
+      --red-bg: #fff0ee;
+
+      --shadow: 0 8px 30px rgba(16, 38, 75, 0.055);
+
+      --sidebar-width: 260px;
+      --header-height: 76px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    /* =====================================================
+       APP SHELL
+    ===================================================== */
+
+    .app {
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* =====================================================
+       SIDEBAR
+    ===================================================== */
+
+    .sidebar {
+      width: var(--sidebar-width);
+      min-width: var(--sidebar-width);
+
+      height: 100vh;
+
+      position: fixed;
+      left: 0;
+      top: 0;
+
+      background: #ffffff;
+
+      border-right: 1px solid var(--border);
+
+      display: flex;
+      flex-direction: column;
+
+      z-index: 100;
+    }
+
+    .brand {
+      height: var(--header-height);
+
+      padding: 0 20px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 12px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand-logo {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 13px;
+
+      background: var(--blue);
+
+      color: white;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 21px;
+      font-weight: 900;
+
+      box-shadow:
+        0 8px 18px rgba(21, 87, 214, 0.22);
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--navy);
+
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+
+      font-size: 10px;
+      letter-spacing: 0.08em;
+
+      font-weight: 700;
+
+      color: var(--muted);
+    }
+
+    .sidebar-content {
+      flex: 1;
+
+      overflow-y: auto;
+
+      padding: 18px 12px;
+    }
+
+    .nav-section {
+      margin-bottom: 22px;
+    }
+
+    .nav-title {
+      padding: 0 12px 8px;
+
+      color: #8a96a8;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      letter-spacing: 0.1em;
+
+      text-transform: uppercase;
+    }
+
+    .nav-item {
+      min-height: 44px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 11px;
+
+      padding: 0 12px;
+
+      margin-bottom: 4px;
+
+      border-radius: 10px;
+
+      color: #344563;
+
+      font-size: 13px;
+
+      font-weight: 650;
+
+      transition:
+        background 0.15s ease,
+        color 0.15s ease;
+    }
+
+    .nav-item:hover {
+      background: #f5f8ff;
+      color: var(--blue);
+    }
+
+    .nav-item.active {
+      background: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .nav-icon {
+      width: 22px;
+      min-width: 22px;
+
+      display: grid;
+      place-items: center;
+
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .nav-text {
+      flex: 1;
+    }
+
+    .nav-count {
+      min-width: 30px;
+
+      padding: 4px 7px;
+
+      border-radius: 999px;
+
+      background: #eef2f8;
+
+      color: #61708a;
+
+      font-size: 10px;
+
+      text-align: center;
+
+      font-weight: 800;
+    }
+
+    .sidebar-footer {
+      padding: 14px 12px;
+
+      border-top: 1px solid var(--border);
+    }
+
+    .website-link {
+      display: flex;
+      align-items: center;
+
+      gap: 9px;
+
+      min-height: 42px;
+
+      padding: 0 12px;
+
+      border-radius: 10px;
+
+      color: #52627a;
+
+      font-size: 12px;
+
+      font-weight: 650;
+    }
+
+    .website-link:hover {
+      background: #f5f8ff;
+      color: var(--blue);
+    }
+
+    /* =====================================================
+       MAIN AREA
+    ===================================================== */
+
+    .main {
+      width: calc(100% - var(--sidebar-width));
+
+      margin-left: var(--sidebar-width);
+
+      min-height: 100vh;
+    }
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .topbar {
+      height: var(--header-height);
+
+      background: rgba(255, 255, 255, 0.96);
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      padding: 0 28px;
+
+      position: sticky;
+      top: 0;
+
+      z-index: 50;
+
+      backdrop-filter: blur(12px);
+    }
+
+    .topbar-title {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .topbar-title strong {
+      font-size: 19px;
+
+      color: var(--navy);
+
+      font-weight: 800;
+    }
+
+    .topbar-title span {
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .website-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 40px;
+
+      padding: 0 15px;
+
+      border: 1px solid var(--border-dark);
+
+      border-radius: 10px;
+
+      background: white;
+
+      color: #344563;
+
+      font-size: 12px;
+
+      font-weight: 700;
+    }
+
+    .website-button:hover {
+      border-color: #b7c6df;
+
+      background: #f8faff;
+    }
+
+    .admin-status {
+      display: inline-flex;
+      align-items: center;
+
+      gap: 7px;
+
+      min-height: 40px;
+
+      padding: 0 13px;
+
+      border-radius: 10px;
+
+      background: var(--green-bg);
+
+      color: var(--green);
+
+      font-size: 12px;
+
+      font-weight: 750;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: #12b76a;
+    }
+
+    /* =====================================================
+       CONTENT
+    ===================================================== */
+
+    .content {
+      max-width: 1500px;
+
+      margin: 0 auto;
+
+      padding: 32px 30px 60px;
+    }
+
+    .welcome {
+      margin-bottom: 24px;
+    }
+
+    .welcome h1 {
+      margin: 0;
+
+      font-size: 30px;
+
+      line-height: 1.15;
+
+      color: var(--navy);
+
+      letter-spacing: -0.025em;
+    }
+
+    .welcome p {
+      margin: 7px 0 0;
+
+      color: var(--muted);
+
+      font-size: 14px;
+    }
+
+    /* =====================================================
+       QUICK ACTIONS
+    ===================================================== */
+
+    .quick-actions {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 10px;
+
+      margin-bottom: 26px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 42px;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 7px;
+
+      padding: 0 16px;
+
+      border-radius: 10px;
+
+      font-size: 12px;
+
+      font-weight: 750;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.12s ease;
+    }
+
+    .primary-button {
+      border: 1px solid var(--blue);
+
+      background: var(--blue);
+
+      color: white;
+
+      box-shadow:
+        0 6px 14px rgba(21, 87, 214, 0.18);
+    }
+
+    .primary-button:hover {
+      background: var(--blue-dark);
+
+      transform: translateY(-1px);
+    }
+
+    .secondary-button {
+      border: 1px solid var(--border-dark);
+
+      background: white;
+
+      color: #344563;
+    }
+
+    .secondary-button:hover {
+      background: #f8faff;
+
+      border-color: #b8c6dd;
+    }
+
+    /* =====================================================
+       STAT CARDS
+    ===================================================== */
+
+    .stats {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 16px;
+
+      margin-bottom: 22px;
+    }
+
+    .stat-card {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      padding: 20px;
+
+      box-shadow: var(--shadow);
+    }
+
+    .stat-top {
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 10px;
+    }
+
+    .stat-label {
+      color: #66758c;
+
+      font-size: 11px;
+
+      font-weight: 750;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.04em;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 10px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      font-size: 13px;
+
+      font-weight: 900;
+    }
+
+    .stat-value {
+      margin-top: 13px;
+
+      font-size: 30px;
+
+      line-height: 1;
+
+      color: var(--navy);
+
+      font-weight: 850;
+    }
+
+    .stat-description {
+      margin-top: 9px;
+
+      color: #8290a5;
+
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       MAIN GRID
+    ===================================================== */
+
+    .dashboard-grid {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.7fr)
+        minmax(320px, 1fr);
+
+      gap: 18px;
+
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: white;
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      box-shadow: var(--shadow);
+
+      overflow: hidden;
+    }
+
+    .panel-header {
+      min-height: 68px;
+
+      padding: 16px 20px;
+
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 15px;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+
+      font-size: 15px;
+
+      color: var(--navy);
+
+      font-weight: 800;
+    }
+
+    .panel-heading p {
+      margin: 4px 0 0;
+
+      font-size: 11px;
+
+      color: var(--muted);
+    }
+
+    .panel-link {
+      color: var(--blue);
+
+      font-size: 11px;
+
+      font-weight: 750;
+
+      white-space: nowrap;
+    }
+
+    /* =====================================================
+       TEST LIST
+    ===================================================== */
+
+    .test-list {
+      padding: 5px 20px 10px;
+    }
+
+    .test-row {
+      min-height: 61px;
+
+      display: grid;
+
+      grid-template-columns:
+        45px
+        minmax(0, 1fr)
+        95px
+        100px;
+
+      align-items: center;
+
+      gap: 12px;
+
+      border-bottom: 1px solid #edf0f5;
+    }
+
+    .test-row:last-child {
+      border-bottom: none;
+    }
+
+    .test-number {
+      color: var(--blue);
+
+      font-size: 12px;
+
+      font-weight: 850;
+    }
+
+    .test-name {
+      min-width: 0;
+    }
+
+    .test-title {
+      display: block;
+
+      overflow: hidden;
+
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+
+      color: #23385c;
+
+      font-size: 12px;
+
+      font-weight: 700;
+    }
+
+    .test-subtitle {
+      margin-top: 3px;
+
+      color: #8995a8;
+
+      font-size: 10px;
+    }
+
+    .test-questions {
+      color: #53637a;
+
+      font-size: 11px;
+
+      font-weight: 650;
+    }
+
+    .published {
+      justify-self: start;
+
+      padding: 5px 8px;
+
+      border-radius: 999px;
+
+      background: var(--green-bg);
+
+      color: var(--green);
+
+      font-size: 9px;
+
+      font-weight: 800;
+    }
+
+    .unpublished {
+      justify-self: start;
+
+      padding: 5px 8px;
+
+      border-radius: 999px;
+
+      background: var(--orange-bg);
+
+      color: var(--orange);
+
+      font-size: 9px;
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       PUBLICATION OVERVIEW
+    ===================================================== */
+
+    .publication-body {
+      padding: 22px 20px;
+    }
+
+    .publication-percent {
+      font-size: 42px;
+
+      line-height: 1;
+
+      font-weight: 850;
+
+      color: var(--navy);
+    }
+
+    .publication-label {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .progress {
+      width: 100%;
+
+      height: 9px;
+
+      margin-top: 18px;
+
+      overflow: hidden;
+
+      border-radius: 999px;
+
+      background: #edf1f7;
+    }
+
+    .progress-bar {
+      width: 100%;
+
+      height: 100%;
+
+      border-radius: inherit;
+
+      background: var(--blue);
+    }
+
+    .publication-stats {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 10px;
+
+      margin-top: 20px;
+    }
+
+    .publication-stat {
+      padding: 13px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      background: #fafbfe;
+    }
+
+    .publication-stat strong {
+      display: block;
+
+      color: var(--navy);
+
+      font-size: 18px;
+    }
+
+    .publication-stat span {
+      display: block;
+
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+    }
+
+    /* =====================================================
+       MANAGEMENT CENTRE
+    ===================================================== */
+
+    .management {
+      margin-top: 18px;
+    }
+
+    .management-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 12px;
+
+      padding: 18px;
+    }
+
+    .management-card {
+      min-height: 145px;
+
+      padding: 17px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 13px;
+
+      background: white;
+
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .management-card:hover {
+      border-color: #b9c8e1;
+
+      box-shadow:
+        0 8px 20px rgba(16, 38, 75, 0.06);
+
+      transform: translateY(-1px);
+    }
+
+    .management-icon {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 9px;
+
+      background: var(--blue-light);
+
+      color: var(--blue);
+
+      font-size: 12px;
+
+      font-weight: 900;
+    }
+
+    .management-card h3 {
+      margin: 13px 0 5px;
+
+      color: var(--navy);
+
+      font-size: 13px;
+
+      font-weight: 800;
+    }
+
+    .management-card p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 10px;
+
+      line-height: 1.5;
+    }
+
+    .management-open {
+      display: inline-block;
+
+      margin-top: 12px;
+
+      color: var(--blue);
+
+      font-size: 10px;
+
+      font-weight: 800;
+    }
+
+    /* =====================================================
+       SYSTEM STATUS
+    ===================================================== */
+
+    .system-status {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+      gap: 12px;
+
+      padding: 18px;
+    }
+
+    .system-item {
+      display: flex;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 13px;
+
+      border: 1px solid var(--border);
+
+      border-radius: 11px;
+
+      background: #fafbfe;
+    }
+
+    .system-indicator {
+      width: 9px;
+      height: 9px;
+
+      flex: 0 0 9px;
+
+      border-radius: 50%;
+
+      background: #12b76a;
+    }
+
+    .system-item strong {
+      display: block;
+
+      color: #35445d;
+
+      font-size: 11px;
+    }
+
+    .system-item span {
+      display: block;
+
+      margin-top: 2px;
+
+      color: #8b97aa;
+
+      font-size: 9px;
+    }
+
+    /* =====================================================
+       FOOTER
+    ===================================================== */
+
+    .footer {
+      margin-top: 25px;
+
+      padding-top: 18px;
+
+      border-top: 1px solid var(--border);
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 15px;
+
+      color: #8a96a8;
+
+      font-size: 10px;
+    }
+
+    /* =====================================================
+       MOBILE SIDEBAR BUTTON
+    ===================================================== */
+
+    .mobile-menu {
+      display: none;
+
+      width: 38px;
+      height: 38px;
+
+      border: 1px solid var(--border-dark);
+
+      border-radius: 9px;
+
+      background: white;
+
+      color: var(--navy);
+
+      cursor: pointer;
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 1150px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .management-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .system-status {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 950px) {
+      :root {
+        --sidebar-width: 225px;
+      }
+
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .test-row {
+        grid-template-columns:
+          40px
+          minmax(0, 1fr)
+          80px
+          90px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .sidebar {
+        transform: translateX(-100%);
+
+        transition: transform 0.2s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .mobile-menu {
+        display: grid;
+        place-items: center;
+      }
+
+      .topbar {
+        padding: 0 16px;
+      }
+
+      .topbar-title {
+        flex: 1;
+        margin-left: 10px;
+      }
+
+      .topbar-title strong {
+        font-size: 16px;
+      }
+
+      .website-button {
+        display: none;
+      }
+
+      .content {
+        padding: 24px 15px 45px;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .management-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .system-status {
+        grid-template-columns: 1fr;
+      }
+
+      .test-list {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      .test-row {
+        grid-template-columns:
+          34px
+          minmax(0, 1fr)
+          70px;
+      }
+
+      .test-questions {
+        display: none;
+      }
+
+      .published,
+      .unpublished {
+        font-size: 8px;
+      }
+
+      .footer {
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .admin-status {
+        display: none;
+      }
+
+      .welcome h1 {
+        font-size: 25px;
+      }
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .primary-button,
+      .secondary-button {
+        width: 100%;
+      }
+
+      .panel-header {
+        padding: 14px;
+      }
+
+      .publication-body {
+        padding: 20px 14px;
+      }
+
+      .management-grid {
+        padding: 12px;
+      }
+
+      .system-status {
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- ===================================================
+         SIDEBAR
+    ==================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+      <div class="brand">
+
+        <div class="brand-logo">
+          H
+        </div>
+
+        <div>
+          <div class="brand-name">
+            Habitat IAS
+          </div>
+
+          <div class="brand-subtitle">
+            ADMIN CONTROL PANEL
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="sidebar-content">
+
+        <!-- OVERVIEW -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            Overview
+          </div>
+
+          <a
+            href="/admin"
+            class="nav-item active"
+          >
+            <span class="nav-icon">⌂</span>
+            <span class="nav-text">Dashboard</span>
+          </a>
+
+        </div>
+
+
+        <!-- MOCK TEST -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            Mock Test
+          </div>
+
+          <a
+            href="/admin/mock-tests"
+            class="nav-item"
+          >
+            <span class="nav-icon">↗</span>
+            <span class="nav-text">Mock Tests</span>
+
+            <span class="nav-count">
+              20
+            </span>
+          </a>
+
+          <a
+            href="/admin/mock-tests/1/questions"
+            class="nav-item"
+          >
+            <span class="nav-icon">?</span>
+            <span class="nav-text">Questions</span>
+
+            <span class="nav-count">
+              2,000
+            </span>
+          </a>
+
+        </div>
+
+
+        <!-- STUDENTS -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            Students
+          </div>
+
+          <a
+            href="/admin/students"
+            class="nav-item"
+          >
+            <span class="nav-icon">●</span>
+            <span class="nav-text">Students</span>
+          </a>
+
+          <a
+            href="/admin/attempts"
+            class="nav-item"
+          >
+            <span class="nav-icon">↗</span>
+            <span class="nav-text">Student Attempts</span>
+          </a>
+
+        </div>
+
+
+        <!-- ANALYTICS -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            Analytics
+          </div>
+
+          <a
+            href="/admin/results"
+            class="nav-item"
+          >
+            <span class="nav-icon">▥</span>
+            <span class="nav-text">Results &amp; Analytics</span>
+          </a>
+
+        </div>
+
+
+        <!-- ACCESS -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            Access
+          </div>
+
+          <a
+            href="/admin/access"
+            class="nav-item"
+          >
+            <span class="nav-icon">◇</span>
+            <span class="nav-text">Series Access</span>
+          </a>
+
+        </div>
+
+
+        <!-- SYSTEM -->
+
+        <div class="nav-section">
+
+          <div class="nav-title">
+            System
+          </div>
+
+          <a
+            href="/admin/settings"
+            class="nav-item"
+          >
+            <span class="nav-icon">⚙</span>
+            <span class="nav-text">Settings</span>
+          </a>
+
+          <a
+            href="/admin/security"
+            class="nav-item"
+          >
+            <span class="nav-icon">◇</span>
+            <span class="nav-text">Security</span>
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div class="sidebar-footer">
+
+        <a
+          href="/"
+          class="website-link"
+        >
+          <span>←</span>
+          <span>Back to Habitat IAS website</span>
+        </a>
+
+      </div>
+
+    </aside>
+
+
+    <!-- ===================================================
+         MAIN
+    ==================================================== -->
+
+    <main class="main">
+
+      <!-- TOPBAR -->
+
+      <header class="topbar">
+
+        <button
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
+
+
+        <div class="topbar-title">
+
+          <strong>
+            Admin Dashboard
+          </strong>
+
+          <span>
+            JPSC Prelims Mock Test Management
+          </span>
+
+        </div>
+
+
+        <div class="topbar-actions">
+
+          <a
+            href="/"
+            class="website-button"
+          >
+            ↗ View Website
+          </a>
+
+          <div class="admin-status">
+            <span class="status-dot"></span>
+            Admin Panel
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- CONTENT -->
+
+      <div class="content">
+
+        <!-- WELCOME -->
+
+        <section class="welcome">
+
+          <h1>
+            Welcome to Habitat IAS Admin
+          </h1>
+
+          <p>
+            Manage your JPSC Prelims mock-test ecosystem
+            from one central control panel.
+          </p>
+
+        </section>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <section class="quick-actions">
+
+          <a
+            href="/admin/mock-tests"
+            class="primary-button"
+          >
+            + Manage Mock Tests
+          </a>
+
+          <a
+            href="/admin/mock-tests"
+            class="secondary-button"
+          >
+            + Create Mock Test
+          </a>
+
+          <a
+            href="/admin/attempts"
+            class="secondary-button"
+          >
+            View Attempts
+          </a>
+
+          <a
+            href="/admin/results"
+            class="secondary-button"
+          >
+            View Analytics
+          </a>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+
+        <section class="stats">
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-label">
+                Total Mock Tests
+              </div>
+
+              <div class="stat-icon">
+                MT
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              20
+            </div>
+
+            <div class="stat-description">
+              Tests in the JPSC mock-test series
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-label">
+                Total Questions
+              </div>
+
+              <div class="stat-icon">
+                Q
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              2,000
+            </div>
+
+            <div class="stat-description">
+              Planned questions across 20 tests
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-label">
+                Published Tests
+              </div>
+
+              <div class="stat-icon">
+                ✓
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              20
+            </div>
+
+            <div class="stat-description">
+              Tests currently marked as published
+            </div>
+
+          </div>
+
+
+          <div class="stat-card">
+
+            <div class="stat-top">
+
+              <div class="stat-label">
+                Unpublished Tests
+              </div>
+
+              <div
+                class="stat-icon"
+                style="background:#fff4e8;color:#b54708;"
+              >
+                !
+              </div>
+
+            </div>
+
+            <div class="stat-value">
+              0
+            </div>
+
+            <div class="stat-description">
+              Tests currently unpublished
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- MAIN DASHBOARD -->
+
+        <section class="dashboard-grid">
+
+
+          <!-- MOCK TEST SERIES -->
+
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <div class="panel-heading">
+
+                <h2>
+                  Mock Test Series
+                </h2>
+
+                <p>
+                  Existing tests from your Supabase database
+                </p>
+
+              </div>
+
+              <a
+                href="/admin/mock-tests"
+                class="panel-link"
+              >
+                View all →
+              </a>
+
+            </div>
+
+
+            <div class="test-list">
+
+
+              <!-- TEST 01 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  01
+                </div>
+
+                <div class="test-name">
+
+                  <a
+                    href="/admin/mock-tests/2"
+                    class="test-title"
+                  >
+                    GS Sectional Test 01 — Indian History
+                  </a>
+
+                  <div class="test-subtitle">
+                    Ancient India, Medieval India and Modern India
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  100 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+
+              <!-- TEST 02 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  02
+                </div>
+
+                <div class="test-name">
+
+                  <span class="test-title">
+                    Sectional Test 02
+                  </span>
+
+                  <div class="test-subtitle">
+                    Question content can be added later
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  0 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+
+              <!-- TEST 03 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  03
+                </div>
+
+                <div class="test-name">
+
+                  <span class="test-title">
+                    Sectional Test 03
+                  </span>
+
+                  <div class="test-subtitle">
+                    Question content can be added later
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  0 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+
+              <!-- TEST 04 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  04
+                </div>
+
+                <div class="test-name">
+
+                  <span class="test-title">
+                    Sectional Test 04
+                  </span>
+
+                  <div class="test-subtitle">
+                    Question content can be added later
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  0 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+
+              <!-- TEST 05 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  05
+                </div>
+
+                <div class="test-name">
+
+                  <span class="test-title">
+                    Sectional Test 05
+                  </span>
+
+                  <div class="test-subtitle">
+                    Question content can be added later
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  0 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+
+              <!-- TEST 06 -->
+
+              <div class="test-row">
+
+                <div class="test-number">
+                  06
+                </div>
+
+                <div class="test-name">
+
+                  <span class="test-title">
+                    Sectional Test 06
+                  </span>
+
+                  <div class="test-subtitle">
+                    Question content can be added later
+                  </div>
+
+                </div>
+
+                <div class="test-questions">
+                  0 Questions
+                </div>
+
+                <div class="published">
+                  Published
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- PUBLICATION -->
+
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <div class="panel-heading">
+
+                <h2>
+                  Publication Overview
+                </h2>
+
+                <p>
+                  Current test availability
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div class="publication-body">
+
+              <div class="publication-percent">
+                100%
+              </div>
+
+              <div class="publication-label">
+                20 of 20 mock tests are currently published
+              </div>
+
+
+              <div class="progress">
+                <div class="progress-bar"></div>
+              </div>
+
+
+              <div class="publication-stats">
+
+                <div class="publication-stat">
+
+                  <strong>
+                    20
+                  </strong>
+
+                  <span>
+                    Published
+                  </span>
+
+                </div>
+
+
+                <div class="publication-stat">
+
+                  <strong>
+                    0
+                  </strong>
+
+                  <span>
+                    Unpublished
+                  </span>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- MANAGEMENT CENTRE -->
+
+        <section class="panel management">
+
+          <div class="panel-header">
+
+            <div class="panel-heading">
+
+              <h2>
+                Management Centre
+              </h2>
+
+              <p>
+                Access the major parts of the mock-test system
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="management-grid">
+
+
+            <!-- MOCK TESTS -->
+
+            <a
+              href="/admin/mock-tests"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                MT
+              </div>
+
+              <h3>
+                Mock Tests
+              </h3>
+
+              <p>
+                Create, edit, publish and manage
+                the complete test series.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- QUESTIONS -->
+
+            <a
+              href="/admin/mock-tests/1/questions"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                Q
+              </div>
+
+              <h3>
+                Question Bank
+              </h3>
+
+              <p>
+                Manage questions, options,
+                answers, explanations and topics.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- STUDENTS -->
+
+            <a
+              href="/admin/students"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                S
+              </div>
+
+              <h3>
+                Students
+              </h3>
+
+              <p>
+                View student accounts and
+                mock-test participation.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- ATTEMPTS -->
+
+            <a
+              href="/admin/attempts"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                A
+              </div>
+
+              <h3>
+                Attempts
+              </h3>
+
+              <p>
+                Review test attempts,
+                scores, accuracy and time.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- RESULTS -->
+
+            <a
+              href="/admin/results"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                R
+              </div>
+
+              <h3>
+                Results &amp; Analytics
+              </h3>
+
+              <p>
+                Analyse performance and
+                test-wise results.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- ACCESS -->
+
+            <a
+              href="/admin/access"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                AC
+              </div>
+
+              <h3>
+                Series Access
+              </h3>
+
+              <p>
+                Manage student access to
+                the JPSC mock-test series.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- SETTINGS -->
+
+            <a
+              href="/admin/settings"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                ⚙
+              </div>
+
+              <h3>
+                Settings
+              </h3>
+
+              <p>
+                Configure mock-test system
+                settings and defaults.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- SECURITY -->
+
+            <a
+              href="/admin/security"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                SC
+              </div>
+
+              <h3>
+                Security
+              </h3>
+
+              <p>
+                Admin authentication,
+                permissions and RLS controls.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+          </div>
+
+        </section>
+
+
+        <!-- SYSTEM STATUS -->
+
+        <section class="panel management">
+
+          <div class="panel-header">
+
+            <div class="panel-heading">
+
+              <h2>
+                System Status
+              </h2>
+
+              <p>
+                Core Habitat IAS mock-test services
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <div class="system-status">
+
+            <div class="system-item">
+
+              <span class="system-indicator"></span>
+
+              <div>
+
+                <strong>
+                  Database
+                </strong>
+
+                <span>
+                  Supabase connected
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="system-item">
+
+              <span class="system-indicator"></span>
+
+              <div>
+
+                <strong>
+                  Mock Tests
+                </strong>
+
+                <span>
+                  Test system available
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="system-item">
+
+              <span class="system-indicator"></span>
+
+              <div>
+
+                <strong>
+                  Question Bank
+                </strong>
+
+                <span>
+                  Question system available
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <div class="system-item">
+
+              <span class="system-indicator"></span>
+
+              <div>
+
+                <strong>
+                  Access Control
+                </strong>
+
+                <span>
+                  RLS enabled
+                </span>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+          <span>
+            Habitat IAS · JPSC Prelims Mock Test Series
+          </span>
+
+          <span>
+            Admin Control Panel
+          </span>
+
+        </footer>
+
+      </div>
+
+    </main>
+
+  </div>
+
+
+  <!-- =====================================================
+       MOBILE MENU
+  ====================================================== -->
+
+  <script>
+    const menuButton =
+      document.getElementById("mobileMenu");
+
+    const sidebar =
+      document.getElementById("sidebar");
+
+    if (menuButton && sidebar) {
+      menuButton.addEventListener("click", () => {
+        sidebar.classList.toggle("open");
+      });
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (
+          target instanceof Node &&
+          !sidebar.contains(target) &&
+          !menuButton.contains(target)
+        ) {
+          sidebar.classList.remove("open");
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
