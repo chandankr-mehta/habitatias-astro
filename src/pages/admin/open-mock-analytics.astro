@@ -86,8 +86,10 @@ if (authError || !authData?.user) {
 }
 
 if (authData.user.id !== adminUserId) {
-  return new Response(
-    `
+  return new Response("Forbidden", {
+    status: 403,
+  });
+}
 type AttemptRow = {
   id: string;
   user_id: string | null;
@@ -486,6 +488,8 @@ const combined = {
         )
       : 0,
 };
+
+---
 
 <!doctype html>
 <html lang="en">
