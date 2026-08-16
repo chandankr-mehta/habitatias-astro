@@ -1,0 +1,1527 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Eligibility Criteria 2026: Age Limit, Qualification, Domicile, Reservation & Attempts";
+const description =
+  "Complete JPSC eligibility guide covering educational qualification, age limit, category-wise age relaxation, Jharkhand domicile and reservation, nationality, attempts and the important difference between eligibility and application.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-eligibility-criteria-age-qualification-domicile/";
+
+const faqs = [
+  {
+    q: "What is the minimum educational qualification for JPSC Combined Civil Services?",
+    a: "For the Combined Civil Services Examination-2025, Advt. No. 01/2026, the qualification is a degree from an eligible university/institution as specified in the advertisement. The exact qualification and cut-off date must always be checked in the current official notification.",
+  },
+  {
+    q: "What is the minimum age for JPSC Civil Services?",
+    a: "For the Combined Civil Services Examination-2025, the minimum age is 21 years, with the applicable age calculated according to the dates prescribed in the notification.",
+  },
+  {
+    q: "What is the upper age limit for JPSC?",
+    a: "For the Combined Civil Services Examination-2025, the upper age varies by category. The unreserved and EWS upper age is 35 years; other category-specific limits and relaxations apply according to the notification and applicable Jharkhand rules.",
+  },
+  {
+    q: "Can candidates from outside Jharkhand apply for JPSC?",
+    a: "Eligibility to apply and entitlement to Jharkhand reservation benefits are separate questions. A candidate must check the current advertisement's nationality, domicile and reservation provisions. Do not assume that applying to JPSC automatically gives an outside-state candidate the same reservation benefits as a Jharkhand-resident candidate.",
+  },
+  {
+    q: "Is there an attempt limit in JPSC Civil Services?",
+    a: "The applicable Combined Civil Services rules do not operate like an examination with a simple fixed attempt cap comparable to some other civil services examinations. Candidates must continue to satisfy the applicable age and other eligibility conditions for each recruitment.",
+  },
+  {
+    q: "Can a final-year graduation student apply for JPSC?",
+    a: "Only when the candidate satisfies the qualification possession requirement and the date prescribed in the particular advertisement. Being in the final year by itself does not guarantee eligibility.",
+  },
+  {
+    q: "Does JPSC require a particular graduation subject?",
+    a: "For the Combined Civil Services Examination, the basic qualification is a degree from an eligible university/institution; the current advertisement should be checked for the precise wording and any service-specific requirement.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC eligibility criteria, JPSC eligibility 2026, JPSC age limit, JPSC qualification, JPSC educational qualification, JPSC domicile, JPSC reservation, JPSC age relaxation, JPSC attempts, JPSC civil services eligibility"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Eligibility</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC ELIGIBILITY • 2026 GUIDE</div>
+
+          <h1>
+            JPSC Eligibility:
+            <span>Are You Actually Eligible?</span>
+          </h1>
+
+          <p class="hero-text">
+            Understand JPSC age limit, graduation qualification, category-wise
+            relaxation, domicile and reservation, nationality, attempts and
+            the difference between being eligible to apply and being entitled
+            to a particular reservation benefit.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Eligibility Guide</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#quick">Check Eligibility ↓</a>
+            <a
+              class="btn outline"
+              href="https://www.jpsc.gov.in/exam_files.php?id=13039"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Official JPSC Recruitment →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            Eligibility is recruitment-specific. This article uses the
+            Combined Civil Services Examination-2025, Advt. No. 01/2026 as the
+            current reference cycle, but a future JPSC advertisement can change
+            dates, age calculations, vacancies, reservation provisions or
+            qualification conditions. The current official notification always
+            has priority.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>21+</b><span>Minimum age</span><p>For the referenced Combined Civil Services cycle.</p></div>
+          <div><b>35</b><span>UR / EWS upper age</span><p>For the referenced 2025 examination cycle.</p></div>
+          <div><b>GRAD</b><span>Basic qualification</span><p>Eligible degree qualification is required.</p></div>
+          <div><b>RULES</b><span>Reservation</span><p>Domicile and category provisions must be checked separately.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#quick">Quick eligibility</a>
+            <a href="#qualification">Educational qualification</a>
+            <a href="#age">Age limit</a>
+            <a href="#relaxation">Age relaxation</a>
+            <a href="#domicile">Domicile</a>
+            <a href="#reservation">Reservation</a>
+            <a href="#nationality">Nationality</a>
+            <a href="#attempts">Attempts</a>
+            <a href="#finalyear">Final-year students</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#checklist">Eligibility checklist</a>
+            <a href="#mock">After eligibility</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              JPSC eligibility is not just “I am a graduate and I am under 35.”
+              <strong>The correct answer depends on age-reference dates,
+              category, qualification possession, domicile/reservation rules
+              and the exact recruitment notification.</strong>
+            </p>
+
+            <p>
+              The Jharkhand Public Service Commission currently publishes its
+              Combined Civil Services recruitment documents through its official
+              examination pages. The Commission's website identifies the
+              Jharkhand Combined Civil Services Examination-2025 as
+              Advertisement No. 01/2026. citeturn1search0turn1search1
+            </p>
+
+            <h2 id="quick">1. JPSC Eligibility at a Glance</h2>
+
+            <div class="eligibility-card">
+              <div>
+                <span>EDUCATION</span>
+                <strong>Graduation / eligible degree</strong>
+                <p>The degree must satisfy the qualification wording in the applicable advertisement.</p>
+              </div>
+              <div>
+                <span>MINIMUM AGE</span>
+                <strong>21 years</strong>
+                <p>The applicable age is determined using the dates specified for that recruitment.</p>
+              </div>
+              <div>
+                <span>UPPER AGE</span>
+                <strong>Category dependent</strong>
+                <p>For the referenced 2025 cycle, UR and EWS are capped at 35 years before applicable relaxations.</p>
+              </div>
+              <div>
+                <span>RESERVATION</span>
+                <strong>Rule dependent</strong>
+                <p>Reservation benefit and eligibility to apply should not be treated as the same thing.</p>
+              </div>
+            </div>
+
+            <div class="rule">
+              <strong>Best practice:</strong>
+              Before calculating your eligibility, write down the advertisement
+              number and the exact age/qualification cut-off dates from that
+              notification. Then calculate from those dates—not from today's
+              date.
+            </div>
+
+            <h2 id="qualification">2. JPSC Educational Qualification</h2>
+
+            <p>
+              For the Combined Civil Services Examination-2025, the advertised
+              qualification requires a degree from an eligible university or
+              institution as specified in the recruitment notification.
+            </p>
+
+            <p>
+              In practical terms, this means the key question is not simply
+              “Do I have a degree?” but:
+              <strong>“Did I possess the prescribed qualification by the date
+              required by the notification?”</strong>
+            </p>
+
+            <div class="qualification-grid">
+              <div>
+                <span>DEGREE</span>
+                <strong>Recognised qualification</strong>
+                <p>The university/institution must fall within the categories accepted by the rules.</p>
+              </div>
+              <div>
+                <span>DATE</span>
+                <strong>Qualification possession</strong>
+                <p>Check the exact cut-off date in the advertisement.</p>
+              </div>
+              <div>
+                <span>DOCUMENT</span>
+                <strong>Proof</strong>
+                <p>Keep marksheets, degree/provisional certificate and other records available.</p>
+              </div>
+              <div>
+                <span>SERVICE</span>
+                <strong>Specific conditions</strong>
+                <p>Check whether any particular service has an additional requirement.</p>
+              </div>
+            </div>
+
+            <h2>3. Does JPSC Require a Particular Graduation Subject?</h2>
+
+            <p>
+              For the basic Combined Civil Services qualification, the important
+              requirement is possession of an eligible degree rather than
+              restricting every candidate to one particular graduation stream.
+              However, never generalise this rule to every JPSC recruitment:
+              technical and specialist posts can have subject-specific
+              qualifications.
+            </p>
+
+            <div class="comparison">
+              <div>
+                <span>COMBINED CIVIL SERVICES</span>
+                <strong>General degree route</strong>
+                <p>Check the exact degree wording in the current CCE advertisement.</p>
+              </div>
+              <div>
+                <span>SPECIALIST RECRUITMENT</span>
+                <strong>May require a specific subject</strong>
+                <p>Engineering, medical, scientific and other specialist posts can have different qualifications.</p>
+              </div>
+            </div>
+
+            <h2 id="age">4. JPSC Age Limit</h2>
+
+            <p>
+              Age is one of the most misunderstood parts of JPSC eligibility.
+              You do not calculate eligibility from your age today. You
+              calculate it from the reference dates specified in the particular
+              recruitment.
+            </p>
+
+            <p>
+              For the Combined Civil Services Examination-2025, the recruitment
+              material states a minimum age of 21 years and an upper age limit
+              of 35 years for the unreserved category. EWS was also specified
+              with an upper age of 35 years in the referenced notification.
+              citeturn1search3
+            </p>
+
+            <div class="age-table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category / group</th>
+                    <th>Upper-age reference in CCE-2025</th>
+                    <th>Important point</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Unreserved</td>
+                    <td>35 years</td>
+                    <td>Subject to the notification's age-reference date.</td>
+                  </tr>
+                  <tr>
+                    <td>EWS</td>
+                    <td>35 years</td>
+                    <td>Check the current Jharkhand rules and notification.</td>
+                  </tr>
+                  <tr>
+                    <td>EBC / BC</td>
+                    <td>Higher limit under applicable provisions</td>
+                    <td>Exact limit must be read from the current advertisement.</td>
+                  </tr>
+                  <tr>
+                    <td>SC / ST</td>
+                    <td>Higher limit under applicable provisions</td>
+                    <td>Category and gender provisions can matter.</td>
+                  </tr>
+                  <tr>
+                    <td>Other relaxation groups</td>
+                    <td>As prescribed</td>
+                    <td>PwBD, ex-servicemen and government-service provisions may apply.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="source-note">
+              The 2025 recruitment cycle used recruitment-specific age
+              calculations. Do not copy these limits into another JPSC
+              recruitment without checking its advertisement.
+            </div>
+
+            <h2 id="relaxation">5. JPSC Age Relaxation</h2>
+
+            <p>
+              Age relaxation is not one universal number for every candidate.
+              The applicable relaxation depends on the candidate's category or
+              status and the rules incorporated into the particular
+              recruitment.
+            </p>
+
+            <div class="relax-grid">
+              <div><b>EBC / BC</b><span>Check the applicable upper-age provision.</span></div>
+              <div><b>SC / ST</b><span>Category-specific relaxation applies under the rules.</span></div>
+              <div><b>Women</b><span>Applicable upper-age provisions can differ by category.</span></div>
+              <div><b>PwBD</b><span>Additional relaxation may apply as prescribed.</span></div>
+              <div><b>Ex-servicemen</b><span>Check the specific relaxation provision.</span></div>
+              <div><b>Govt. service</b><span>Some provisions depend on qualifying service and Jharkhand rules.</span></div>
+            </div>
+
+            <div class="warning-box">
+              <strong>Do not add relaxations yourself.</strong>
+              If two or more relaxation provisions appear applicable to you,
+              read the current notification carefully to determine how they
+              interact.
+            </div>
+
+            <h2 id="domicile">6. JPSC Domicile: Can a Non-Jharkhand Candidate Apply?</h2>
+
+            <p>
+              This is a high-search and high-confusion issue. The concepts
+              <strong>“eligible to submit an application”</strong> and
+              <strong>“eligible for a Jharkhand reservation benefit”</strong>
+              should not automatically be treated as identical.
+            </p>
+
+            <div class="domicile">
+              <div>
+                <span>QUESTION A</span>
+                <h3>Can I apply?</h3>
+                <p>Check the nationality and recruitment eligibility conditions.</p>
+              </div>
+              <div>
+                <span>QUESTION B</span>
+                <h3>Can I claim reservation?</h3>
+                <p>Check the Jharkhand-specific domicile/category requirements and current rules.</p>
+              </div>
+              <div>
+                <span>QUESTION C</span>
+                <h3>What documents prove the claim?</h3>
+                <p>Follow the certificates and formats specified in the advertisement.</p>
+              </div>
+            </div>
+
+            <p>
+              For candidates from outside Jharkhand, this distinction is
+              particularly important. Never select a reserved category simply
+              because you belong to that category under another state's
+              certificate system. The current JPSC advertisement and applicable
+              Jharkhand reservation rules determine the benefit available in
+              the recruitment.
+            </p>
+
+            <h2 id="reservation">7. JPSC Reservation & Category</h2>
+
+            <p>
+              Reservation is a legal and administrative eligibility dimension,
+              not simply a score advantage. Your category claim must be
+              supported by the applicable rules and documents.
+            </p>
+
+            <div class="category-grid">
+              <div><b>UR</b><span>Unreserved category.</span></div>
+              <div><b>EWS</b><span>Check current EWS conditions and certificate requirements.</span></div>
+              <div><b>BC-I / BC-II</b><span>Follow Jharkhand's applicable category framework.</span></div>
+              <div><b>SC / ST</b><span>Check the applicable Jharkhand reservation provisions.</span></div>
+              <div><b>PwBD</b><span>Horizontal reservation and disability provisions may apply.</span></div>
+              <div><b>Other claims</b><span>Follow the current notification rather than an old form.</span></div>
+            </div>
+
+            <div class="source-note">
+              Category, domicile and reservation rules can change through
+              government resolutions and recruitment-specific amendments.
+              Therefore, the current notification and applicable rules must
+              control the final eligibility decision.
+            </div>
+
+            <h2 id="nationality">8. Nationality</h2>
+
+            <p>
+              The basic nationality requirement for the Combined Civil Services
+              recruitment is Indian citizenship, subject to the exact wording
+              of the applicable notification.
+            </p>
+
+            <div class="simple-card">
+              <strong>Nationality → Qualification → Age → Category/Domicile → Documents</strong>
+              <span>All relevant conditions must be satisfied; one condition does not replace another.</span>
+            </div>
+
+            <h2 id="attempts">9. Is There an Attempt Limit in JPSC?</h2>
+
+            <p>
+              Aspirants often compare JPSC with UPSC and assume that the same
+              attempt structure applies. That is unsafe.
+            </p>
+
+            <div class="attempt">
+              <div>
+                <span>DO NOT THINK</span>
+                <strong>“I have only X attempts.”</strong>
+                <p>Do not import another examination's attempt rule into JPSC.</p>
+              </div>
+              <div>
+                <span>THINK</span>
+                <strong>“Am I eligible for this recruitment?”</strong>
+                <p>Check age, qualification and other conditions for each cycle.</p>
+              </div>
+            </div>
+
+            <p>
+              In practice, the major recurring constraint for a candidate is
+              whether the candidate remains within the applicable age and
+              qualification requirements. Always read the current rules if JPSC
+              changes the examination framework.
+            </p>
+
+            <h2 id="finalyear">10. Can Final-Year Students Apply?</h2>
+
+            <p>
+              “Final year” is not automatically equivalent to “qualified.”
+              The decisive question is whether the candidate possesses the
+              prescribed qualification by the date required by the recruitment
+              advertisement.
+            </p>
+
+            <div class="timeline">
+              <div><span>A</span><strong>Final year</strong><p>You are still completing the degree.</p></div>
+              <b>→</b>
+              <div><span>B</span><strong>Result declared</strong><p>You have completed the qualification.</p></div>
+              <b>→</b>
+              <div><span>C</span><strong>Cut-off date</strong><p>The advertisement determines whether the qualification is timely.</p></div>
+              <b>→</b>
+              <div><span>D</span><strong>Eligibility</strong><p>Apply only if all prescribed conditions are satisfied.</p></div>
+            </div>
+
+            <div class="warning-box">
+              <strong>Do not rely on “my result will come soon.”</strong>
+              Check the exact qualification possession requirement in the
+              current notification.
+            </div>
+
+            <h2>11. Physical Standards: Does JPSC Require Them?</h2>
+
+            <p>
+              Physical standards are not a single universal requirement for
+              every JPSC post. Specialist or service-specific requirements can
+              exist depending on the recruitment.
+            </p>
+
+            <div class="physical">
+              <div><b>CCE</b><span>Check the exact service and current rules.</span></div>
+              <div><b>POLICE / FIELD</b><span>Service-specific physical requirements may be prescribed.</span></div>
+              <div><b>SPECIALIST</b><span>Medical or technical conditions may apply.</span></div>
+            </div>
+
+            <p>
+              Therefore, never use a generic “JPSC physical eligibility” table
+              for every post. The advertisement for the particular recruitment
+              is the controlling document.
+            </p>
+
+            <h2>12. Eligibility vs Application vs Selection</h2>
+
+            <div class="three-stage">
+              <div>
+                <span>01</span>
+                <h3>Eligibility</h3>
+                <p>You satisfy the conditions prescribed by the recruitment.</p>
+              </div>
+              <div>
+                <span>02</span>
+                <h3>Application</h3>
+                <p>You submit the form correctly within the prescribed period.</p>
+              </div>
+              <div>
+                <span>03</span>
+                <h3>Selection</h3>
+                <p>You perform sufficiently well through the examination and later stages.</p>
+              </div>
+            </div>
+
+            <p>
+              Being eligible does not mean you will qualify. Being able to
+              submit an application does not mean your documents will
+              automatically pass later scrutiny. And passing Prelims does not
+              guarantee final service allocation.
+            </p>
+
+            <h2 id="mistakes">13. Common JPSC Eligibility Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Calculating age from today's date instead of the notification's reference date.</span></div>
+              <div><b>02</b><span>Assuming every JPSC recruitment has the same age limits.</span></div>
+              <div><b>03</b><span>Assuming final-year status always means eligible.</span></div>
+              <div><b>04</b><span>Confusing domicile with nationality.</span></div>
+              <div><b>05</b><span>Assuming an outside-state category certificate automatically gives Jharkhand reservation.</span></div>
+              <div><b>06</b><span>Importing UPSC attempt rules into JPSC.</span></div>
+              <div><b>07</b><span>Using an old notification to decide current eligibility.</span></div>
+              <div><b>08</b><span>Ignoring service-specific qualifications or conditions.</span></div>
+              <div><b>09</b><span>Assuming an application submission proves final eligibility.</span></div>
+              <div><b>10</b><span>Ignoring later amendments or corrigenda.</span></div>
+            </div>
+
+            <h2 id="checklist">14. JPSC Eligibility Checklist</h2>
+
+            <div class="checklist">
+              <div><b>✓</b><span>I have read the correct advertisement number.</span></div>
+              <div><b>✓</b><span>I have checked the exact age-reference date.</span></div>
+              <div><b>✓</b><span>I satisfy the minimum age condition.</span></div>
+              <div><b>✓</b><span>I am within the applicable upper-age limit.</span></div>
+              <div><b>✓</b><span>I possess the prescribed educational qualification by the required date.</span></div>
+              <div><b>✓</b><span>I understand my category and reservation status.</span></div>
+              <div><b>✓</b><span>I have checked domicile requirements where relevant.</span></div>
+              <div><b>✓</b><span>I have the required supporting certificates.</span></div>
+              <div><b>✓</b><span>I have checked service-specific conditions.</span></div>
+              <div><b>✓</b><span>I have checked amendments/corrigenda.</span></div>
+            </div>
+
+            <h2>15. How to Calculate Your JPSC Age Correctly</h2>
+
+            <p>
+              Use a simple three-step method. First, copy the exact age
+              reference date from the advertisement. Second, calculate your
+              age on that date. Third, compare it with the category-specific
+              minimum and maximum conditions.
+            </p>
+
+            <div class="calculation">
+              <div><span>STEP 1</span><strong>Find reference date</strong><p>Example: the notification may specify a particular date for age calculation.</p></div>
+              <b>→</b>
+              <div><span>STEP 2</span><strong>Calculate age</strong><p>Use your official date of birth, not an approximate age.</p></div>
+              <b>→</b>
+              <div><span>STEP 3</span><strong>Apply category rule</strong><p>Compare against the limit and any valid relaxation.</p></div>
+            </div>
+
+            <div class="formula">
+              <strong>Eligibility ≠ “I am 35 today.”</strong>
+              <span>Eligibility = age on prescribed reference date + applicable category/rule + qualification requirement.</span>
+            </div>
+
+            <h2>16. What Documents Should You Keep Ready?</h2>
+
+            <div class="documents">
+              <div><b>Identity</b><span>Accepted identity proof as required.</span></div>
+              <div><b>10th certificate</b><span>Useful for date-of-birth verification.</span></div>
+              <div><b>Degree</b><span>Graduation certificate/provisional proof as applicable.</span></div>
+              <div><b>Marksheets</b><span>Keep academic records organised.</span></div>
+              <div><b>Category</b><span>Where a reservation claim is made.</span></div>
+              <div><b>Domicile</b><span>Where required for a relevant claim.</span></div>
+              <div><b>Photograph</b><span>Current application-ready digital copy.</span></div>
+              <div><b>Signature</b><span>Current application-ready digital copy.</span></div>
+            </div>
+
+            <h2>17. Why Eligibility Research Is Important for JPSC Preparation</h2>
+
+            <p>
+              Eligibility research is not wasted time. It prevents a common
+              aspirant problem: spending months preparing for a recruitment
+              without first checking whether the candidate satisfies the
+              qualification, age or category requirements.
+            </p>
+
+            <div class="logic">
+              <div><strong>ELIGIBLE?</strong><span>Confirm first.</span></div>
+              <b>→</b>
+              <div><strong>SYLLABUS?</strong><span>Understand next.</span></div>
+              <b>→</b>
+              <div><strong>PYQs?</strong><span>Study the real pattern.</span></div>
+              <b>→</b>
+              <div><strong>MOCKS?</strong><span>Measure performance.</span></div>
+              <b>→</b>
+              <div><strong>IMPROVE?</strong><span>Repeat the cycle.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Eligible? Now find out how prepared you really are.</h2>
+                <p>
+                  Use PYQs to understand the examination and mocks to measure
+                  your actual performance.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free GS Mock →</a>
+                <a class="btn outline" href="/book/">Explore JPSC PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2>18. Official JPSC Sources</h2>
+
+            <p>
+              JPSC's official recruitment page identifies the Combined Civil
+              Services Examination-2025 as Advt. No. 01/2026 and provides the
+              advertisement, notices and applicable examination rules.
+              citeturn1search0
+            </p>
+
+            <div class="official">
+              <a
+                href="https://www.jpsc.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                JPSC Official Website →
+              </a>
+              <a
+                href="https://www.jpsc.gov.in/exam_files.php?id=13039"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Combined Civil Services-2025 Documents →
+              </a>
+              <a
+                href="https://www.jpsc.gov.in/Syllabus.php"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                JPSC Official Syllabus Page →
+              </a>
+            </div>
+
+            <h2>19. Final Takeaway</h2>
+
+            <div class="final-grid">
+              <div><b>Age</b><span>Calculate on the prescribed date.</span></div>
+              <div><b>Degree</b><span>Check qualification possession.</span></div>
+              <div><b>Domicile</b><span>Separate application from reservation.</span></div>
+              <div><b>Category</b><span>Use valid supporting documents.</span></div>
+              <div><b>Rules</b><span>Read amendments and corrigenda.</span></div>
+            </div>
+
+            <p>
+              The safest JPSC strategy is simple: identify the exact recruitment,
+              read its notification, calculate eligibility from the prescribed
+              dates, verify documents and only then move fully into preparation.
+            </p>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Check eligibility once. Prepare seriously after that.</h2>
+          <p>
+            Use the official notification for eligibility and use PYQs,
+            revision and mock tests to build examination performance.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free GS Mock →</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article h3 {
+    margin: 8px 0;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+
+  article p { color: #4c617e; }
+
+  .eligibility-card,
+  .qualification-grid,
+  .comparison,
+  .relax-grid,
+  .category-grid,
+  .physical,
+  .documents,
+  .final-grid {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .eligibility-card,
+  .qualification-grid,
+  .relax-grid,
+  .category-grid,
+  .documents,
+  .final-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .comparison,
+  .physical {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .eligibility-card > div,
+  .qualification-grid > div,
+  .comparison > div,
+  .relax-grid > div,
+  .category-grid > div,
+  .physical > div,
+  .documents > div,
+  .final-grid > div {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .eligibility-card > div {
+    border-top: 4px solid var(--blue);
+  }
+
+  .eligibility-card span,
+  .qualification-grid span,
+  .comparison span,
+  .domicile span,
+  .attempt span,
+  .timeline span,
+  .calculation span,
+  .mindset b {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .eligibility-card strong,
+  .qualification-grid strong,
+  .comparison strong,
+  .relax-grid b,
+  .category-grid b,
+  .physical b,
+  .documents b,
+  .final-grid b {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+  }
+
+  .eligibility-card p,
+  .qualification-grid p,
+  .comparison p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .relax-grid > div,
+  .category-grid > div {
+    background: white;
+  }
+
+  .relax-grid span,
+  .category-grid span,
+  .physical span,
+  .documents span,
+  .final-grid span {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .rule,
+  .warning-box,
+  .source-note,
+  .formula {
+    margin: 27px 0;
+    padding: 21px 23px;
+    border-radius: 14px;
+    background: #fffbed;
+    border: 1px solid #eadfb0;
+    color: #6e6240;
+  }
+
+  .rule strong,
+  .warning-box strong,
+  .formula strong {
+    color: var(--dark);
+  }
+
+  .age-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin: 28px 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 690px;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  th, td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e8edf5;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  th {
+    background: #eef4ff;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  td { color: #50647f; }
+
+  tr:last-child td { border-bottom: 0; }
+
+  .domicile {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .domicile > div {
+    padding: 24px;
+    border-radius: 15px;
+    background: #eef4ff;
+  }
+
+  .domicile p {
+    margin: 7px 0 0;
+    font-size: 14px;
+  }
+
+  .simple-card {
+    margin: 28px 0;
+    padding: 27px;
+    border-radius: 15px;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .simple-card strong,
+  .simple-card span {
+    display: block;
+  }
+
+  .simple-card strong {
+    color: white;
+    font-size: 21px;
+  }
+
+  .simple-card span {
+    margin-top: 8px;
+    color: rgba(255,255,255,.68);
+    font-size: 13px;
+  }
+
+  .attempt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .attempt > div {
+    padding: 24px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+  }
+
+  .attempt > div:first-child { background: #fff4f4; }
+  .attempt > div:last-child { background: #f1f8f4; }
+
+  .attempt strong {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+  }
+
+  .attempt p {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .timeline,
+  .calculation,
+  .logic {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin: 28px 0;
+  }
+
+  .timeline > div,
+  .calculation > div,
+  .logic > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .timeline strong,
+  .calculation strong,
+  .logic strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+  }
+
+  .timeline p,
+  .calculation p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .timeline > b,
+  .calculation > b,
+  .logic > b {
+    color: #91a5c5;
+  }
+
+  .three-stage {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .three-stage > div {
+    padding: 26px;
+    border-radius: 15px;
+    border: 1px solid var(--border);
+    background: #f8faff;
+  }
+
+  .three-stage span {
+    display: inline-flex;
+    width: 29px;
+    height: 29px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-weight: 900;
+    font-size: 11px;
+  }
+
+  .three-stage h3 {
+    margin-top: 11px;
+  }
+
+  .three-stage p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .checklist {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+
+  .checklist > div {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    border: 1px solid #d5eadd;
+    border-radius: 11px;
+    background: #f1f8f4;
+  }
+
+  .checklist b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+  }
+
+  .checklist span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .final-grid {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .final-grid > div {
+    text-align: center;
+    background: white;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .eligibility-card,
+    .qualification-grid,
+    .relax-grid,
+    .category-grid,
+    .documents,
+    .final-grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .three-stage,
+    .domicile {
+      grid-template-columns: 1fr;
+    }
+
+    .physical,
+    .comparison {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .eligibility-card,
+    .qualification-grid,
+    .comparison,
+    .relax-grid,
+    .category-grid,
+    .physical,
+    .documents,
+    .final-grid,
+    .mistakes,
+    .checklist,
+    .attempt {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .timeline,
+    .calculation,
+    .logic {
+      grid-template-columns: 1fr;
+    }
+
+    .timeline > b,
+    .calculation > b,
+    .logic > b {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .official {
+      flex-direction: column;
+    }
+  }
+</style>

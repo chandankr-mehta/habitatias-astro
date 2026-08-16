@@ -1,0 +1,1679 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Previous Year Question Paper: PYQ Analysis, Topic-Wise Trends & Preparation Strategy";
+const description =
+  "Learn how to use JPSC Previous Year Questions (PYQs) for Prelims: paper analysis, subject-wise mapping, repeated topics, revision strategy, mock-test practice and a practical PYQ workflow.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-previous-year-question-papers-pyq-analysis/";
+
+const faqs = [
+  {
+    q: "What is JPSC PYQ?",
+    a: "JPSC PYQ means Previous Year Questions asked in the Jharkhand Public Service Commission examination. For Prelims, PYQs are objective questions from earlier General Studies papers and are useful for understanding the examination's actual question style.",
+  },
+  {
+    q: "How many years of JPSC PYQs should I solve?",
+    a: "There is no single mandatory number. A strong approach is to solve as many relevant recent papers as are available and then expand backward to identify recurring concepts and long-term trends.",
+  },
+  {
+    q: "Why are JPSC previous year questions important?",
+    a: "PYQs show how broad syllabus topics are converted into actual MCQs. They help identify recurring themes, factual areas, conceptual depth, elimination opportunities and gaps in preparation.",
+  },
+  {
+    q: "Should I solve JPSC PYQs before completing the syllabus?",
+    a: "Yes. You do not need to finish the entire syllabus first. Early PYQ exposure helps you understand what the syllabus looks like in actual questions and prevents unfocused study.",
+  },
+  {
+    q: "Should JPSC PYQs be solved year-wise or topic-wise?",
+    a: "Use both. Solve topic-wise during learning and revision to identify patterns within a subject, and solve complete papers year-wise during mock practice to develop speed, stamina and examination judgment.",
+  },
+  {
+    q: "Is there negative marking in JPSC Prelims?",
+    a: "The official 2021 Combined Civil Services rules stated that there was no negative marking for incorrect answers. However, candidates should verify the current recruitment notification before applying the same rule to a future examination.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC previous year question paper, JPSC PYQ, JPSC Prelims PYQ, JPSC previous year questions, JPSC PYQ analysis, JPSC question paper, JPSC topic wise PYQ, JPSC Prelims previous year paper, JPSC PYQ book"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC PYQ Analysis</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PYQ • PREVIOUS YEAR QUESTIONS</div>
+
+          <h1>
+            JPSC PYQ:
+            <span>Decode the Actual Exam.</span>
+          </h1>
+
+          <p class="hero-text">
+            Previous Year Questions are not just practice papers. They are the
+            closest practical evidence of how JPSC converts its syllabus into
+            questions. Learn how to analyse them topic-wise, revise from them,
+            identify recurring areas and turn PYQs into a preparation system.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>PYQ Strategy</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#method">Learn PYQ Method ↓</a>
+            <a class="btn outline" href="/book/">Explore JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            JPSC has changed examination rules and structures across different
+            recruitment cycles. Use the current official notification for the
+            exact paper pattern and marking rules. This article focuses on the
+            durable preparation value of PYQs and uses official JPSC material
+            where specific historical rules are mentioned.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>PYQ</b><span>Reality check</span><p>See what the examination actually asks.</p></div>
+          <div><b>TOPIC</b><span>Pattern detector</span><p>Group questions under syllabus topics.</p></div>
+          <div><b>ERROR</b><span>Weakness finder</span><p>Identify knowledge and reasoning gaps.</p></div>
+          <div><b>MOCK</b><span>Performance test</span><p>Move from isolated questions to full-paper practice.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#what">What is JPSC PYQ?</a>
+            <a href="#why">Why PYQs matter</a>
+            <a href="#pattern">What PYQs reveal</a>
+            <a href="#method">PYQ analysis method</a>
+            <a href="#topic">Topic-wise analysis</a>
+            <a href="#subjects">Subject-wise approach</a>
+            <a href="#repeat">Repeated topics</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#yearwise">Year-wise practice</a>
+            <a href="#mock">PYQ + mock tests</a>
+            <a href="#book">PYQ book strategy</a>
+            <a href="#plan">30-day plan</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              <strong>If you want to understand JPSC, don't study only what a
+              book says the exam may ask.</strong> Study what JPSC has actually
+              asked, map it to the syllabus, and then identify the concepts
+              behind those questions.
+            </p>
+
+            <p>
+              Previous-year papers are widely used for JPSC preparation because
+              they reveal the examination's pattern, question level, recurring
+              areas and practical time-management requirements. Current
+              question-paper repositories also show that recent JPSC papers are
+              available for multiple cycles, including the 2026 examination
+              cycle. citeturn0search0turn0search3
+            </p>
+
+            <h2 id="what">1. What Is JPSC PYQ?</h2>
+
+            <p>
+              PYQ stands for <strong>Previous Year Question</strong>. In JPSC
+              preparation, a PYQ is an actual question asked in an earlier
+              examination—not a coaching institute's prediction and not a
+              practice question written to imitate the exam.
+            </p>
+
+            <div class="definition">
+              <div><span>SYLLABUS</span><strong>What can be asked</strong><p>The official syllabus defines the examination's subject boundaries.</p></div>
+              <div><span>PYQ</span><strong>What was asked</strong><p>Previous papers show how those boundaries were converted into questions.</p></div>
+              <div><span>MOCK</span><strong>What you can handle</strong><p>Mocks measure whether you can apply your preparation under time pressure.</p></div>
+            </div>
+
+            <h2 id="why">2. Why JPSC Previous Year Questions Are So Important</h2>
+
+            <div class="benefits">
+              <div><b>01</b><strong>Understand the real demand</strong><p>The syllabus can be broad. PYQs show the level and style of actual questioning.</p></div>
+              <div><b>02</b><strong>Find recurring concepts</strong><p>Questions may return to the same constitutional, geographical, historical or scientific concepts in different forms.</p></div>
+              <div><b>03</b><strong>Prioritise preparation</strong><p>Topic mapping helps you distinguish high-value areas from low-priority reading.</p></div>
+              <div><b>04</b><strong>Improve elimination</strong><p>Repeated exposure to MCQ construction improves option comparison and elimination.</p></div>
+              <div><b>05</b><strong>Improve speed</strong><p>Full-paper practice reveals how quickly you can process 100-question-style papers under a fixed time limit when that structure applies.</p></div>
+              <div><b>06</b><strong>Diagnose weaknesses</strong><p>An incorrect PYQ becomes useful when you identify why you got it wrong.</p></div>
+            </div>
+
+            <div class="quote">
+              <strong>The PYQ principle:</strong>
+              Don't ask only “What is the answer?” Ask
+              <em>“Why did JPSC ask this, which syllabus topic does it represent,
+              and what related concepts can be tested next?”</em>
+            </div>
+
+            <h2 id="pattern">3. What Can PYQs Tell You?</h2>
+
+            <div class="reveal">
+              <div><span>CONTENT</span><strong>What topics appear?</strong><p>Map every question to a syllabus unit.</p></div>
+              <div><span>DEPTH</span><strong>How difficult?</strong><p>Direct fact, concept, application or multi-statement question?</p></div>
+              <div><span>STYLE</span><strong>How framed?</strong><p>Statement-based, match-the-following, chronology, assertion or direct MCQ?</p></div>
+              <div><span>TREND</span><strong>What returns?</strong><p>Identify concepts that repeatedly receive attention.</p></div>
+              <div><span>JHARKHAND</span><strong>How state-focused?</strong><p>Track regional history, geography, economy, culture and current affairs.</p></div>
+              <div><span>CURRENT</span><strong>How much changes?</strong><p>Connect current events to static syllabus areas.</p></div>
+            </div>
+
+            <h2 id="method">4. The Correct Way to Analyse a JPSC PYQ</h2>
+
+            <p>
+              Simply solving a paper and checking the answer key is not
+              sufficient. Use a six-step analysis process.
+            </p>
+
+            <div class="method">
+              <div><span>01</span><strong>Attempt</strong><p>Answer without looking at the solution.</p></div>
+              <div><span>02</span><strong>Classify</strong><p>Mark correct, incorrect and unanswered.</p></div>
+              <div><span>03</span><strong>Map</strong><p>Assign the question to a syllabus topic.</p></div>
+              <div><span>04</span><strong>Explain</strong><p>Understand why the correct option is correct.</p></div>
+              <div><span>05</span><strong>Expand</strong><p>Study the related concept, not only the answer.</p></div>
+              <div><span>06</span><strong>Record</strong><p>Add the lesson to your revision/error log.</p></div>
+            </div>
+
+            <div class="formula">
+              <strong>Useful PYQ analysis = Question + Answer + Concept + Syllabus Topic + Related Facts + Error Reason</strong>
+            </div>
+
+            <h2 id="topic">5. Topic-Wise PYQ Analysis</h2>
+
+            <p>
+              Topic-wise analysis is especially powerful for JPSC because it
+              transforms hundreds of disconnected questions into a structured
+              map of the syllabus.
+            </p>
+
+            <div class="topic-flow">
+              <div><b>QUESTION</b><span>Read the PYQ</span></div>
+              <b>→</b>
+              <div><b>SUBJECT</b><span>History / polity / geography etc.</span></div>
+              <b>→</b>
+              <div><b>TOPIC</b><span>e.g. Fundamental Rights</span></div>
+              <b>→</b>
+              <div><b>SUB-TOPIC</b><span>Specific concept</span></div>
+              <b>→</b>
+              <div><b>NOTE</b><span>Build targeted revision</span></div>
+            </div>
+
+            <div class="example">
+              <div class="label">EXAMPLE OF THE METHOD</div>
+              <h3>Polity → Fundamental Rights → Article-based question</h3>
+              <p>
+                Do not stop after memorising the correct option. Review the
+                relevant constitutional provision, related Articles, exceptions,
+                important judgments and common MCQ traps.
+              </p>
+              <div class="mini">
+                <span>Question</span><b>→</b><span>Topic</span><b>→</b><span>Concept</span><b>→</b><span>Related areas</span>
+              </div>
+            </div>
+
+            <h2 id="subjects">6. Subject-Wise JPSC PYQ Strategy</h2>
+
+            <div class="subjects">
+              <div>
+                <span>HISTORY</span>
+                <strong>Timeline + theme</strong>
+                <p>Map ancient, medieval and modern questions separately. Track chronology, personalities, movements, culture and Jharkhand-linked history.</p>
+              </div>
+              <div>
+                <span>GEOGRAPHY</span>
+                <strong>Concept + map</strong>
+                <p>Connect physical geography with Indian geography, resources, agriculture, rivers, climate and Jharkhand geography.</p>
+              </div>
+              <div>
+                <span>POLITY</span>
+                <strong>Constitution + institutions</strong>
+                <p>Build Article-based understanding and connect questions to Parliament, President, judiciary, federalism and governance.</p>
+              </div>
+              <div>
+                <span>ECONOMY</span>
+                <strong>Concept + current</strong>
+                <p>Link static economic concepts with budgets, monetary policy, development, schemes and contemporary economic events.</p>
+              </div>
+              <div>
+                <span>SCIENCE</span>
+                <strong>Application</strong>
+                <p>Identify recurring basics in physics, chemistry, biology and technology, then connect them with current developments.</p>
+              </div>
+              <div>
+                <span>ENVIRONMENT</span>
+                <strong>Static + current</strong>
+                <p>Track ecology, biodiversity, protected areas, climate and environmental developments.</p>
+              </div>
+              <div>
+                <span>CURRENT AFFAIRS</span>
+                <strong>Event + context</strong>
+                <p>Record important events together with the underlying organisation, place, policy, report or concept.</p>
+              </div>
+              <div>
+                <span>JHARKHAND</span>
+                <strong>Permanent priority</strong>
+                <p>Maintain separate PYQ mapping for state history, movements, geography, culture, economy, schemes and contemporary issues.</p>
+              </div>
+            </div>
+
+            <h2 id="repeat">7. How to Identify Repeated Topics</h2>
+
+            <p>
+              “Repeated” does not necessarily mean the exact same question will
+              appear again. More often, the same concept, institution, place,
+              event type or theme returns through a differently worded question.
+            </p>
+
+            <div class="repeat-grid">
+              <div><b>EXACT REPEAT</b><span>Same or nearly identical fact/question.</span></div>
+              <div><b>CONCEPT REPEAT</b><span>Same underlying concept with new wording.</span></div>
+              <div><b>THEME REPEAT</b><span>Same broad area tested from another angle.</span></div>
+              <div><b>CURRENT REPEAT</b><span>A current issue connected to an established static topic.</span></div>
+            </div>
+
+            <div class="quote">
+              <strong>Never build a “guess list” from repetition.</strong>
+              Build a <em>priority list</em>. A recurring topic deserves deeper
+              understanding, but no previous question guarantees a future
+              question.
+            </div>
+
+            <h2>8. Difficulty Analysis: Don't Label Everything Easy or Hard</h2>
+
+            <div class="difficulty">
+              <div><b>DIRECT</b><span>One known fact can solve it.</span></div>
+              <div><b>CONCEPTUAL</b><span>Understanding is required.</span></div>
+              <div><b>APPLICATION</b><span>Knowledge must be applied to a situation.</span></div>
+              <div><b>ELIMINATION</b><span>Options can be narrowed using partial knowledge.</span></div>
+              <div><b>MULTI-STATEMENT</b><span>Several statements must be evaluated.</span></div>
+              <div><b>CURRENT-LINKED</b><span>Static knowledge plus contemporary context.</span></div>
+            </div>
+
+            <p>
+              This classification helps you identify why a question was difficult.
+              A low score does not always mean you need more facts; sometimes
+              the actual problem is reading speed, option analysis or
+              conceptual clarity.
+            </p>
+
+            <h2>9. Your PYQ Error Log</h2>
+
+            <div class="error-table">
+              <div class="head"><span>ERROR TYPE</span><span>WHAT IT MEANS</span><span>ACTION</span></div>
+              <div><b>Knowledge gap</b><span>You did not know the concept.</span><strong>Study the topic.</strong></div>
+              <div><b>Concept gap</b><span>You knew the facts but misunderstood the principle.</span><strong>Relearn the concept.</strong></div>
+              <div><b>Careless error</b><span>You knew the answer but misread.</span><strong>Improve question discipline.</strong></div>
+              <div><b>Elimination error</b><span>You failed to use available clues.</span><strong>Practise option analysis.</strong></div>
+              <div><b>Guessing error</b><span>You selected without adequate reasoning.</span><strong>Build decision rules.</strong></div>
+              <div><b>Memory error</b><span>You learned it but could not recall.</span><strong>Use spaced revision.</strong></div>
+            </div>
+
+            <h2 id="yearwise">10. Year-Wise vs Topic-Wise PYQs</h2>
+
+            <div class="compare">
+              <div>
+                <span>TOPIC-WISE</span>
+                <h3>Best during learning</h3>
+                <ul>
+                  <li>Find recurring concepts.</li>
+                  <li>Compare questions from different years.</li>
+                  <li>Build focused notes.</li>
+                  <li>Revise weak subjects quickly.</li>
+                </ul>
+              </div>
+              <div>
+                <span>YEAR-WISE</span>
+                <h3>Best during testing</h3>
+                <ul>
+                  <li>Simulate the actual paper.</li>
+                  <li>Develop time management.</li>
+                  <li>Measure overall performance.</li>
+                  <li>Practise switching between subjects.</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="rule">
+              <strong>Best combination:</strong>
+              Use <strong>topic-wise PYQs</strong> while learning and revising;
+              use <strong>complete year-wise papers</strong> after sufficient
+              syllabus coverage to test exam readiness.
+            </div>
+
+            <h2>11. How Many Times Should You Solve a PYQ?</h2>
+
+            <p>
+              Repetition is useful only when the purpose changes.
+            </p>
+
+            <div class="passes">
+              <div><b>PASS 1</b><span>Understand</span><p>Learn the question and concept.</p></div>
+              <div><b>PASS 2</b><span>Recall</span><p>Try again without notes.</p></div>
+              <div><b>PASS 3</b><span>Speed</span><p>Answer under time pressure.</p></div>
+              <div><b>PASS 4</b><span>Integration</span><p>Connect with related syllabus topics.</p></div>
+            </div>
+
+            <h2 id="mock">12. PYQ + Mock Test: The Strongest Combination</h2>
+
+            <p>
+              PYQs tell you what the examination has asked. Mock tests tell you
+              whether you can reproduce your preparation under pressure.
+              Neither should completely replace the other.
+            </p>
+
+            <div class="mock-cycle">
+              <div><span>PYQ</span><strong>Learn the pattern</strong></div>
+              <b>→</b>
+              <div><span>STUDY</span><strong>Build the concept</strong></div>
+              <b>→</b>
+              <div><span>MOCK</span><strong>Test yourself</strong></div>
+              <b>→</b>
+              <div><span>ANALYSE</span><strong>Find weaknesses</strong></div>
+              <b>→</b>
+              <div><span>REVISION</span><strong>Repair + retest</strong></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC MOCK TESTS</span>
+                <h2>Turn PYQ knowledge into exam performance.</h2>
+                <p>
+                  Attempt a free JPSC mock, analyse your mistakes and identify
+                  the syllabus areas that need another round of revision.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2 id="book">13. Why a Topic-Wise PYQ Book Is Useful</h2>
+
+            <p>
+              A year-wise paper collection forces the aspirant to repeatedly
+              jump between subjects. A topic-wise PYQ resource reverses that
+              workflow: it brings related questions together so you can study
+              a concept and immediately see how JPSC has tested it over time.
+            </p>
+
+            <div class="book-features">
+              <div><b>TOPIC-WISE</b><span>Questions grouped under syllabus topics.</span></div>
+              <div><b>SUBJECT-WISE</b><span>History, geography, polity, economy, science and other areas organised systematically.</span></div>
+              <div><b>EXPLANATION</b><span>Use the answer as a starting point for conceptual revision.</span></div>
+              <div><b>TREND</b><span>Observe concentration and recurrence across previous examinations.</span></div>
+              <div><b>REVISION</b><span>Return to the same topic without searching multiple papers.</span></div>
+              <div><b>EXAM FOCUS</b><span>Spend more time on areas demonstrated by actual questions.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC PRELIMS DECODED</span>
+                <h2>JPSC Prelims Decoded: Topic-Wise PYQs</h2>
+                <p>
+                  Topic-wise, subject-wise JPSC Civil Services PYQs with
+                  explanations and exam-focused analysis.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">View the PYQ Book →</a>
+                <a class="btn outline" href="/book/sample/">View Sample →</a>
+              </div>
+            </div>
+
+            <h2>14. PYQ Analysis for Jharkhand-Specific Preparation</h2>
+
+            <div class="jharkhand">
+              <div><b>HISTORY</b><span>Track tribal resistance, Birsa movement, Santhal movement and Jharkhand movement questions.</span></div>
+              <div><b>GEOGRAPHY</b><span>Map rivers, plateaus, districts, forests, minerals and industrial locations.</span></div>
+              <div><b>CULTURE</b><span>Build recurring lists for tribes, festivals, literature, languages and folk traditions.</span></div>
+              <div><b>ECONOMY</b><span>Connect mining, industry, agriculture, development and state schemes.</span></div>
+              <div><b>POLITY</b><span>Track state institutions, local governance and Jharkhand-specific laws.</span></div>
+              <div><b>CURRENT</b><span>Attach recent state events to their static background.</span></div>
+            </div>
+
+            <h2>15. How to Read an Answer Explanation</h2>
+
+            <div class="explanation">
+              <div><b>LEVEL 1</b><span>Why is the correct option correct?</span></div>
+              <div><b>LEVEL 2</b><span>Why are the other options wrong?</span></div>
+              <div><b>LEVEL 3</b><span>What related facts can JPSC ask?</span></div>
+              <div><b>LEVEL 4</b><span>Which syllabus topic does it belong to?</span></div>
+              <div><b>LEVEL 5</b><span>What should I revise before the next test?</span></div>
+            </div>
+
+            <p>
+              This turns an explanation from a one-question answer into a
+              compact revision lesson.
+            </p>
+
+            <h2 id="mistakes">16. Common JPSC PYQ Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Solving PYQs only once and never revisiting errors.</span></div>
+              <div><b>02</b><span>Memorising answers without understanding concepts.</span></div>
+              <div><b>03</b><span>Ignoring questions answered correctly by guessing.</span></div>
+              <div><b>04</b><span>Studying only exact repeats instead of recurring concepts.</span></div>
+              <div><b>05</b><span>Never mapping questions to the syllabus.</span></div>
+              <div><b>06</b><span>Using PYQs as the only source of preparation.</span></div>
+              <div><b>07</b><span>Taking a full paper without analysing the result.</span></div>
+              <div><b>08</b><span>Ignoring Jharkhand-specific PYQ trends.</span></div>
+            </div>
+
+            <h2>17. What About Negative Marking?</h2>
+
+            <p>
+              This is an area where candidates should rely on the applicable
+              recruitment rules rather than coaching summaries. The official
+              Jharkhand Combined Civil Services Examination Rules, 2021 stated
+              that the Preliminary Examination had two objective papers of 200
+              marks each and that there was <strong>no negative marking for
+              incorrect answers</strong>. The same rules also stated that
+              multiple answers to a question were treated as wrong and received
+              no marks. citeturn0search14
+            </p>
+
+            <p>
+              The 2024 recruitment advertisement likewise described two
+              compulsory 200-mark objective papers and a two-hour duration for
+              each paper. citeturn0search16
+            </p>
+
+            <div class="warning-box">
+              <strong>For the actual examination:</strong>
+              always verify the current JPSC notification before deciding your
+              attempt strategy. Historical rules are evidence of a past cycle,
+              not a substitute for the current advertisement.
+            </div>
+
+            <h2>18. PYQ as a Prediction Tool — But Not a Prediction Guarantee</h2>
+
+            <p>
+              Good PYQ analysis can identify probability and priority, but it
+              cannot predict the exact next paper.
+            </p>
+
+            <div class="prediction">
+              <div><b>HIGH PRIORITY</b><span>Recurring concept + syllabus importance + current relevance.</span></div>
+              <div><b>MEDIUM PRIORITY</b><span>Relevant syllabus topic with moderate historical attention.</span></div>
+              <div><b>LOW PRIORITY</b><span>Peripheral topic with limited evidence—but never assume it is impossible.</span></div>
+            </div>
+
+            <h2>19. JPSC PYQ Research: What to Track in a Spreadsheet</h2>
+
+            <div class="sheet">
+              <div><b>Year</b><span>Which examination?</span></div>
+              <div><b>Paper</b><span>GS-I / GS-II</span></div>
+              <div><b>Subject</b><span>History / polity etc.</span></div>
+              <div><b>Topic</b><span>Syllabus unit</span></div>
+              <div><b>Sub-topic</b><span>Specific concept</span></div>
+              <div><b>Type</b><span>Fact / concept / statement</span></div>
+              <div><b>Difficulty</b><span>Easy / moderate / hard</span></div>
+              <div><b>Error</b><span>Why you missed it</span></div>
+              <div><b>Revision</b><span>Next review date</span></div>
+              <div><b>Status</b><span>Mastered / weak</span></div>
+            </div>
+
+            <p>
+              This is exactly the kind of structure that turns PYQ practice into
+              measurable preparation rather than a pile of solved papers.
+            </p>
+
+            <h2 id="plan">20. A 30-Day JPSC PYQ Plan</h2>
+
+            <div class="plan">
+              <div>
+                <span>DAYS 1–5</span>
+                <strong>Map</strong>
+                <p>Collect papers and classify questions by subject and topic.</p>
+              </div>
+              <div>
+                <span>DAYS 6–12</span>
+                <strong>History + Geography</strong>
+                <p>Solve topic-wise and build error notes.</p>
+              </div>
+              <div>
+                <span>DAYS 13–18</span>
+                <strong>Polity + Economy</strong>
+                <p>Connect PYQs with core concepts and current affairs.</p>
+              </div>
+              <div>
+                <span>DAYS 19–24</span>
+                <strong>Science + Environment + Jharkhand</strong>
+                <p>Map recurring themes and revise weak areas.</p>
+              </div>
+              <div>
+                <span>DAYS 25–30</span>
+                <strong>Full Papers + Mocks</strong>
+                <p>Attempt under timed conditions and analyse every error.</p>
+              </div>
+            </div>
+
+            <h2>21. The Complete JPSC PYQ Workflow</h2>
+
+            <div class="workflow">
+              <div><strong>01</strong><span>Download / collect</span></div>
+              <b>→</b>
+              <div><strong>02</strong><span>Attempt</span></div>
+              <b>→</b>
+              <div><strong>03</strong><span>Check</span></div>
+              <b>→</b>
+              <div><strong>04</strong><span>Map topic</span></div>
+              <b>→</b>
+              <div><strong>05</strong><span>Study concept</span></div>
+              <b>→</b>
+              <div><strong>06</strong><span>Record error</span></div>
+              <b>→</b>
+              <div><strong>07</strong><span>Revise</span></div>
+              <b>→</b>
+              <div><strong>08</strong><span>Retest</span></div>
+            </div>
+
+            <h2>22. Official JPSC Reference</h2>
+
+            <p>
+              JPSC's official rules and advertisements are the appropriate
+              primary source for the examination scheme. The 2021 rules
+              explicitly describe the Preliminary Examination as two compulsory
+              objective papers, while the 2024 advertisement again describes
+              two 200-mark General Studies papers. citeturn0search14turn0search16
+            </p>
+
+            <div class="official">
+              <a href="https://www.jpsc.gov.in/" target="_blank" rel="noopener noreferrer">
+                JPSC Official Website →
+              </a>
+              <a href="https://www.jpsc.gov.in/Syllabus.php" target="_blank" rel="noopener noreferrer">
+                JPSC Syllabus →
+              </a>
+              <a href="https://www.jpsc.gov.in/exam_files.php?id=13039" target="_blank" rel="noopener noreferrer">
+                Combined Civil Services Documents →
+              </a>
+            </div>
+
+            <h2>23. Final Takeaway</h2>
+
+            <div class="final">
+              <div><b>SYLLABUS</b><span>Defines the boundaries.</span></div>
+              <div><b>PYQs</b><span>Reveal the real demand.</span></div>
+              <div><b>NOTES</b><span>Build conceptual depth.</span></div>
+              <div><b>MOCKS</b><span>Measure performance.</span></div>
+              <div><b>ERROR LOG</b><span>Closes the gaps.</span></div>
+            </div>
+
+            <p>
+              The strongest PYQ strategy is not “solve more papers.” It is
+              <strong>solve → classify → understand → connect → revise →
+              retest</strong>. When you repeat that loop, previous-year
+              questions become a map of the examination rather than a collection
+              of old PDFs.
+            </p>
+
+            <div class="conversion final-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Decode JPSC. Then test yourself.</h2>
+                <p>
+                  Explore the topic-wise PYQ resource and attempt a free mock
+                  to turn preparation into measurable performance.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Free JPSC Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Don't just solve PYQs. Decode them.</h2>
+          <p>
+            Previous-year questions become powerful when every question leads
+            to a topic, concept, revision point and retest.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning,
+  .warning-box {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong,
+  .warning-box strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article h3 {
+    margin: 8px 0;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+
+  article p { color: #4c617e; }
+
+  .definition,
+  .benefits,
+  .reveal,
+  .subjects,
+  .repeat-grid,
+  .difficulty,
+  .passes,
+  .book-features,
+  .jharkhand,
+  .explanation,
+  .prediction,
+  .sheet,
+  .plan,
+  .final {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .definition {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .definition > div,
+  .benefits > div,
+  .reveal > div,
+  .subjects > div,
+  .repeat-grid > div,
+  .difficulty > div,
+  .passes > div,
+  .book-features > div,
+  .jharkhand > div,
+  .explanation > div,
+  .prediction > div,
+  .sheet > div,
+  .plan > div,
+  .final > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .definition span,
+  .reveal span,
+  .subjects span,
+  .passes span,
+  .book-features span,
+  .plan span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .definition strong,
+  .reveal strong,
+  .subjects strong,
+  .book-features strong,
+  .plan strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+  }
+
+  .definition p,
+  .reveal p,
+  .subjects p,
+  .book-features p,
+  .plan p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .benefits {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .benefits > div {
+    min-height: 170px;
+  }
+
+  .benefits b {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .benefits strong {
+    display: block;
+    margin-top: 11px;
+    color: var(--dark);
+  }
+
+  .benefits p {
+    margin-bottom: 0;
+    font-size: 13px;
+  }
+
+  .quote,
+  .formula,
+  .rule {
+    margin: 27px 0;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #526987;
+  }
+
+  .quote strong,
+  .formula strong,
+  .rule strong {
+    color: var(--dark);
+  }
+
+  .reveal {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .method {
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    gap: 10px;
+    margin: 28px 0;
+  }
+
+  .method > div {
+    min-height: 150px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .method span {
+    display: inline-flex;
+    width: 31px;
+    height: 31px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-weight: 900;
+    font-size: 11px;
+  }
+
+  .method strong {
+    display: block;
+    margin-top: 10px;
+    color: var(--dark);
+    font-size: 14px;
+  }
+
+  .method p {
+    margin: 6px 0 0;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+
+  .topic-flow,
+  .mock-cycle,
+  .workflow {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+
+  .topic-flow > div,
+  .mock-cycle > div,
+  .workflow > div {
+    min-width: 150px;
+    flex: 1;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .topic-flow > div b,
+  .mock-cycle > div span {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .topic-flow > div span {
+    display: block;
+    margin-top: 8px;
+    color: #566b87;
+    font-size: 13px;
+  }
+
+  .topic-flow > b,
+  .mock-cycle > b,
+  .workflow > b {
+    align-self: center;
+    color: #91a5c5;
+  }
+
+  .example {
+    padding: 27px;
+    margin: 28px 0;
+    border-radius: 16px;
+    background: var(--dark);
+  }
+
+  .example .label {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.1px;
+  }
+
+  .example h3 {
+    color: white;
+    font-size: 23px;
+  }
+
+  .example p {
+    color: rgba(255,255,255,.7);
+  }
+
+  .mini {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 9px;
+    margin-top: 20px;
+  }
+
+  .mini span {
+    padding: 8px 11px;
+    border-radius: 8px;
+    background: rgba(255,255,255,.1);
+    color: white;
+    font-size: 12px;
+  }
+
+  .mini b { color: var(--yellow); }
+
+  .subjects {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .repeat-grid,
+  .difficulty,
+  .prediction {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .repeat-grid b,
+  .difficulty b,
+  .prediction b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .repeat-grid span,
+  .difficulty span,
+  .prediction span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .difficulty {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .error-table {
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .error-table > div {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1.4fr;
+    gap: 0;
+    border-bottom: 1px solid #e8edf5;
+  }
+
+  .error-table > div:last-child { border-bottom: 0; }
+
+  .error-table > div > * {
+    margin: 0;
+    padding: 14px 16px;
+    font-size: 13px;
+  }
+
+  .error-table .head {
+    background: #eef4ff;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .error-table b { color: var(--dark); }
+  .error-table span { color: #5a6e89; }
+  .error-table strong { color: var(--blue); }
+
+  .compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .compare > div {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+  }
+
+  .compare > div:first-child { background: #f8faff; }
+  .compare > div:last-child { background: #f4faf7; }
+
+  .compare span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .compare h3 { font-size: 23px; }
+
+  .compare ul {
+    padding-left: 19px;
+    color: #566b87;
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .passes {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .passes b {
+    display: block;
+    color: var(--blue);
+    font-size: 11px;
+  }
+
+  .passes span {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .passes p {
+    margin-bottom: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .mock-cycle > div {
+    text-align: center;
+  }
+
+  .mock-cycle > div span {
+    font-size: 10px;
+  }
+
+  .mock-cycle > div strong {
+    display: block;
+    margin-top: 8px;
+    color: var(--dark);
+    font-size: 14px;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .book-features {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .jharkhand {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .explanation {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .explanation b {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .explanation span {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .sheet {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .sheet > div {
+    text-align: center;
+    background: white;
+  }
+
+  .sheet b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .sheet span {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .plan {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .plan strong {
+    font-size: 16px;
+  }
+
+  .workflow {
+    align-items: center;
+  }
+
+  .workflow > div {
+    min-width: 105px;
+    text-align: center;
+  }
+
+  .workflow strong {
+    display: block;
+    color: var(--blue);
+    font-size: 18px;
+  }
+
+  .workflow span {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .final {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .final > div {
+    text-align: center;
+    background: white;
+  }
+
+  .final b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .final span {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .definition,
+    .benefits,
+    .reveal,
+    .subjects,
+    .repeat-grid,
+    .difficulty,
+    .passes,
+    .book-features,
+    .jharkhand,
+    .explanation,
+    .prediction,
+    .sheet,
+    .plan,
+    .final {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .method {
+      grid-template-columns: repeat(3,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .definition,
+    .benefits,
+    .reveal,
+    .subjects,
+    .repeat-grid,
+    .difficulty,
+    .passes,
+    .book-features,
+    .jharkhand,
+    .explanation,
+    .prediction,
+    .sheet,
+    .plan,
+    .final,
+    .method {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .compare {
+      grid-template-columns: 1fr;
+    }
+
+    .error-table {
+      overflow-x: auto;
+    }
+
+    .error-table > div {
+      min-width: 650px;
+    }
+
+    .official {
+      flex-direction: column;
+    }
+  }
+</style>

@@ -357,14 +357,39 @@ const rows = safeAttempts.map((attempt) => {
 });
 
 /* =========================================================
+   SELECTED TEST FILTER
+   ========================================================= */
+
+const selectedTestId =
+  Astro.url.searchParams.get("test_id");
+
+const selectedTest =
+  selectedTestId
+    ? testsById.get(
+        String(selectedTestId)
+      ) || null
+    : null;
+
+const analysisRows =
+  selectedTestId
+    ? rows.filter(
+        (row) =>
+          String(
+            row.attempt.test_id
+          ) ===
+          String(selectedTestId)
+      )
+    : rows;
+
+/* =========================================================
    OVERALL STATISTICS
    ========================================================= */
 
 const totalAttempts =
-  rows.length;
+  analysisRows.length;
 
 const submittedRows =
-  rows.filter(
+  analysisRows.filter(
     (row) =>
       row.attempt.status ===
       "submitted"
@@ -374,49 +399,49 @@ const submittedAttempts =
   submittedRows.length;
 
 const inProgressAttempts =
-  rows.filter(
+  analysisRows.filter(
     (row) =>
       row.attempt.status ===
       "in_progress"
   ).length;
 
 const totalCorrect =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.correct,
     0
   );
 
 const totalIncorrect =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.incorrect,
     0
   );
 
 const totalUnanswered =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.unanswered,
     0
   );
 
 const totalQuestionsAttempted =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.totalQuestions,
     0
   );
 
 const totalScore =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.score,
     0
   );
 
 const totalPossibleMarks =
-  rows.reduce(
+  analysisRows.reduce(
     (sum, row) =>
       sum + row.totalMarks,
     0
@@ -673,6 +698,155 @@ const studentAnalytics =
         b.averagePercentage -
         a.averagePercentage
     );
+
+/* =========================================================
+   DYNAMIC OVERALL STUDENT RANK
+   ========================================================= */
+
+let previousPercentage: number | null = null;
+let currentRank = 0;
+
+const rankedStudentAnalytics =
+  studentAnalytics.map(
+    (student, index) => {
+      const percentage =
+        Number(
+          student.averagePercentage || 0
+        );
+
+      if (
+        previousPercentage === null ||
+        percentage !== previousPercentage
+      ) {
+        currentRank = index + 1;
+      }
+
+      previousPercentage = percentage;
+
+      return {
+        ...student,
+        rank: currentRank,
+      };
+    }
+  );
+
+/* =========================================================
+   SELECTED TEST — BEST-ATTEMPT LEADERBOARD
+   ========================================================= */
+
+const selectedTestSubmittedRows =
+  selectedTestId
+    ? submittedRows
+    : [];
+
+const selectedStudentBestMap =
+  new Map<string, {
+    userId: string;
+    name: string;
+    email: string;
+    score: number;
+    percentage: number;
+    timeTaken: number;
+    attemptId: number | string;
+  }>();
+
+for (
+  const row of selectedTestSubmittedRows
+) {
+  const userId =
+    String(
+      row.attempt.user_id
+    );
+
+  const existing =
+    selectedStudentBestMap.get(
+      userId
+    );
+
+  if (
+    !existing ||
+    row.score > existing.score
+  ) {
+    selectedStudentBestMap.set(
+      userId,
+      {
+        userId,
+        name: row.displayName,
+        email: row.email,
+        score: row.score,
+        percentage: row.percentage,
+        timeTaken: row.timeTaken,
+        attemptId: row.attempt.id,
+      }
+    );
+  }
+}
+
+const selectedTestLeaderboard =
+  Array.from(
+    selectedStudentBestMap.values()
+  )
+    .sort(
+      (a, b) =>
+        b.score - a.score ||
+        a.timeTaken - b.timeTaken
+    )
+    .map(
+      (student, index, array) => {
+
+        const rank =
+          index === 0
+            ? 1
+            : student.score ===
+              array[index - 1].score
+              ? (
+                  array
+                    .slice(
+                      0,
+                      index
+                    )
+                    .filter(
+                      (item) =>
+                        item.score >
+                        student.score
+                    ).length + 1
+                )
+              : index + 1;
+
+        return {
+          ...student,
+          rank,
+        };
+      }
+    );
+
+const selectedParticipantCount =
+  selectedTestLeaderboard.length;
+
+const selectedTopScore =
+  selectedParticipantCount > 0
+    ? selectedTestLeaderboard[0].score
+    : 0;
+
+const selectedAverageBestScore =
+  selectedParticipantCount > 0
+    ? selectedTestLeaderboard.reduce(
+        (sum, student) =>
+          sum + student.score,
+        0
+      ) /
+      selectedParticipantCount
+    : 0;
+
+const selectedAverageBestPercentage =
+  selectedParticipantCount > 0
+    ? selectedTestLeaderboard.reduce(
+        (sum, student) =>
+          sum + student.percentage,
+        0
+      ) /
+      selectedParticipantCount
+    : 0;
 
 /* =========================================================
    HELPERS
@@ -1362,6 +1536,21 @@ function percentageClass(
       font-weight:800;
     }
 
+
+    .student-rank {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:42px;
+      min-height:30px;
+      padding:0 9px;
+      border-radius:999px;
+      background:var(--blue-light);
+      color:var(--blue);
+      font-size:12px;
+      font-weight:900;
+    }
+
     .student-email {
       margin-top:3px;
       color:#8995a8;
@@ -1430,6 +1619,77 @@ function percentageClass(
       color:#667085;
       font-weight:800;
     }
+
+    /* =====================================================
+       SELECTED TEST / LEADERBOARD
+    ===================================================== */
+
+    .selected-test-banner {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      margin-bottom:22px;
+      padding:18px 20px;
+      border:1px solid #c9d9ff;
+      border-radius:16px;
+      background:#f4f7ff;
+      box-shadow:var(--shadow);
+    }
+
+    .selected-test-banner strong {
+      display:block;
+      margin-top:5px;
+      color:var(--navy);
+      font-size:15px;
+      font-weight:850;
+    }
+
+    .selected-test-banner span {
+      display:block;
+      margin-top:5px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    .selected-test-label {
+      color:var(--blue);
+      font-size:9px;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+
+    .clear-test-filter,
+    .leaderboard-link {
+      color:var(--blue);
+      font-size:10px;
+      font-weight:850;
+      white-space:nowrap;
+    }
+
+    .clear-test-filter:hover,
+    .leaderboard-link:hover {
+      text-decoration:underline;
+    }
+
+    .selected-test-metrics {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .score-total {
+      color:#8290a5;
+      font-size:12px;
+      font-weight:700;
+    }
+
+    .top-rank {
+      background:#fff4cc;
+      color:#8a5b00;
+    }
+
 
     /* =====================================================
        SEARCH / FILTER
@@ -1569,8 +1829,14 @@ function percentageClass(
       .stats,
       .analytics-grid,
       .distribution,
-      .scoring-rule {
+      .scoring-rule,
+      .selected-test-metrics {
         grid-template-columns:1fr;
+      }
+
+      .selected-test-banner {
+        flex-direction:column;
+        align-items:flex-start;
       }
 
       .controls {
@@ -1864,6 +2130,47 @@ function percentageClass(
         </p>
 
       </section>
+
+
+      <!-- =================================================
+           SELECTED TEST FILTER / CONTEXT
+      ================================================== -->
+
+      {
+        selectedTest ? (
+          <section class="selected-test-banner">
+
+            <div>
+              <div class="selected-test-label">
+                FILTERED TEST PERFORMANCE
+              </div>
+
+              <strong>
+                TEST {
+                  selectedTest.test_number !== null
+                    ? String(
+                        selectedTest.test_number
+                      ).padStart(2, "0")
+                    : "—"
+                } — {selectedTest.title}
+              </strong>
+
+              <span>
+                Showing analytics and leaderboard for
+                this mock test only.
+              </span>
+            </div>
+
+            <a
+              href="/admin/results"
+              class="clear-test-filter"
+            >
+              View All Tests
+            </a>
+
+          </section>
+        ) : null
+      }
 
 
       <!-- =================================================
@@ -2367,6 +2674,10 @@ function percentageClass(
                       Avg Time
                     </th>
 
+                    <th>
+                      Leaderboard
+                    </th>
+
                   </tr>
 
                 </thead>
@@ -2478,6 +2789,15 @@ function percentageClass(
                             )}
                           </td>
 
+                          <td>
+                            <a
+                              href={`/admin/results?test_id=${test.testId}`}
+                              class="leaderboard-link"
+                            >
+                              View Ranking →
+                            </a>
+                          </td>
+
                         </tr>
 
                       )
@@ -2494,6 +2814,205 @@ function percentageClass(
         }
 
       </section>
+
+
+      <!-- =================================================
+           SELECTED TEST LEADERBOARD
+      ================================================== -->
+
+      {
+        selectedTest ? (
+          <section class="panel">
+
+            <div class="panel-header">
+
+              <div>
+
+                <h2>
+                  Test Leaderboard
+                </h2>
+
+                <p>
+                  Best submitted score for each unique student
+                  in this mock test.
+                </p>
+
+              </div>
+
+              <a
+                href="/admin/results"
+                class="top-button"
+              >
+                Clear Test Filter
+              </a>
+
+            </div>
+
+            <div class="panel-body">
+
+              <div class="selected-test-metrics">
+
+                <div class="metric-box">
+                  <div class="metric-title">
+                    Participants
+                  </div>
+
+                  <div class="metric-number">
+                    {selectedParticipantCount}
+                  </div>
+
+                  <div class="metric-note">
+                    Unique students with a submitted attempt
+                  </div>
+                </div>
+
+                <div class="metric-box">
+                  <div class="metric-title">
+                    Top Score
+                  </div>
+
+                  <div class="metric-number high">
+                    {selectedTopScore}
+                    <span class="score-total">
+                      / {Number(selectedTest.question_count || 0) * 2}
+                    </span>
+                  </div>
+
+                  <div class="metric-note">
+                    Highest best attempt
+                  </div>
+                </div>
+
+                <div class="metric-box">
+                  <div class="metric-title">
+                    Average Best Score
+                  </div>
+
+                  <div class="metric-number">
+                    {selectedAverageBestScore.toFixed(1)}
+                  </div>
+
+                  <div class="metric-note">
+                    {selectedAverageBestPercentage.toFixed(1)}%
+                    average among best attempts
+                  </div>
+                </div>
+
+              </div>
+
+              {
+                selectedTestLeaderboard.length === 0 ? (
+                  <div class="empty">
+                    <div class="empty-icon">
+                      🏆
+                    </div>
+
+                    <strong>
+                      No submitted attempts
+                    </strong>
+
+                    <div>
+                      The leaderboard will appear after students
+                      submit this mock test.
+                    </div>
+                  </div>
+                ) : (
+                  <div class="table-wrap">
+
+                    <table class="leaderboard-table">
+
+                      <thead>
+                        <tr>
+                          <th>Rank</th>
+                          <th>Student</th>
+                          <th>Best Score</th>
+                          <th>Percentage</th>
+                          <th>Time</th>
+                          <th>Attempt</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {
+                          selectedTestLeaderboard.map(
+                            (student) => (
+                              <tr>
+
+                                <td>
+                                  <span
+                                    class={`student-rank ${
+                                      student.rank <= 3
+                                        ? "top-rank"
+                                        : ""
+                                    }`}
+                                  >
+                                    #{student.rank}
+                                  </span>
+                                </td>
+
+                                <td>
+                                  <div class="student-name">
+                                    {student.name}
+                                  </div>
+
+                                  <div class="student-email">
+                                    {student.email}
+                                  </div>
+                                </td>
+
+                                <td>
+                                  <strong class="score">
+                                    {student.score}
+                                    <span class="percentage">
+                                      / {Number(selectedTest.question_count || 0) * 2}
+                                    </span>
+                                  </strong>
+                                </td>
+
+                                <td>
+                                  <strong
+                                    class={percentageClass(
+                                      student.percentage
+                                    )}
+                                  >
+                                    {student.percentage.toFixed(1)}%
+                                  </strong>
+                                </td>
+
+                                <td>
+                                  {formatTime(
+                                    student.timeTaken
+                                  )}
+                                </td>
+
+                                <td>
+                                  <a
+                                    href={`/test-result?attempt_id=${student.attemptId}`}
+                                    class="leaderboard-link"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                  >
+                                    View Result →
+                                  </a>
+                                </td>
+
+                              </tr>
+                            )
+                          )
+                        }
+                      </tbody>
+
+                    </table>
+
+                  </div>
+                )
+              }
+
+            </div>
+
+          </section>
+        ) : null
+      }
 
 
       <!-- =================================================
@@ -2636,7 +3155,7 @@ function percentageClass(
                 <tbody id="studentTableBody">
 
                   {
-                    studentAnalytics.map(
+                    rankedStudentAnalytics.map(
                       (student) => {
 
                         const performance =

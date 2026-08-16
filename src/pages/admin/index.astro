@@ -1127,6 +1127,110 @@ if (authData.user.id !== adminUserId) {
     }
 
     /* =====================================================
+       OPEN MOCK MANAGEMENT
+    ===================================================== */
+
+    .open-mocks {
+      margin-top: 18px;
+    }
+
+    .open-mock-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      padding: 18px;
+    }
+
+    .open-mock-card {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+    }
+
+    .open-mock-card:hover {
+      border-color: #b9c8e1;
+      box-shadow: 0 8px 20px rgba(16, 38, 75, 0.06);
+    }
+
+    .open-mock-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .open-mock-number {
+      color: var(--blue);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .open-mock-card h3 {
+      margin: 6px 0 0;
+      color: var(--navy);
+      font-size: 15px;
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .open-mock-meta {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .open-mock-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .open-mock-action {
+      min-height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 12px;
+      border: 1px solid var(--border-dark);
+      border-radius: 9px;
+      background: #fff;
+      color: #344563;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .open-mock-action.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .open-mock-action:hover {
+      border-color: #aebed8;
+      background: #f8faff;
+    }
+
+    .open-mock-action.primary:hover {
+      border-color: var(--blue-dark);
+      background: var(--blue-dark);
+    }
+
+    .open-mock-badge {
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: var(--green-bg);
+      color: var(--green);
+      font-size: 9px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* =====================================================
        SYSTEM STATUS
     ===================================================== */
 
@@ -1242,6 +1346,10 @@ if (authData.user.id !== adminUserId) {
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .open-mock-grid {
+        grid-template-columns: 1fr;
+      }
+
       .system-status {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -1313,6 +1421,20 @@ if (authData.user.id !== adminUserId) {
 
       .management-grid {
         grid-template-columns: 1fr;
+      }
+
+      .open-mock-grid {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .open-mock-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .open-mock-action {
+        width: 100%;
       }
 
       .system-status {
@@ -1449,7 +1571,7 @@ if (authData.user.id !== adminUserId) {
             <span class="nav-text">Mock Tests</span>
 
             <span class="nav-count">
-              20
+              22
             </span>
           </a>
 
@@ -1461,7 +1583,7 @@ if (authData.user.id !== adminUserId) {
             <span class="nav-text">Questions</span>
 
             <span class="nav-count">
-              2,000
+              2,200
             </span>
           </a>
 
@@ -1509,6 +1631,14 @@ if (authData.user.id !== adminUserId) {
           >
             <span class="nav-icon">▥</span>
             <span class="nav-text">Results &amp; Analytics</span>
+          </a>
+
+          <a
+            href="/admin/open-mock-analytics"
+            class="nav-item"
+          >
+            <span class="nav-icon">📊</span>
+            <span class="nav-text">Open Mock Analytics</span>
           </a>
 
         </div>
@@ -1680,6 +1810,13 @@ if (authData.user.id !== adminUserId) {
             View Analytics
           </a>
 
+          <a
+            href="/admin/open-mock-analytics"
+            class="secondary-button"
+          >
+            Open Mock Analytics
+          </a>
+
         </section>
 
 
@@ -1702,7 +1839,7 @@ if (authData.user.id !== adminUserId) {
             </div>
 
             <div class="stat-value">
-              20
+              22
             </div>
 
             <div class="stat-description">
@@ -1727,11 +1864,11 @@ if (authData.user.id !== adminUserId) {
             </div>
 
             <div class="stat-value">
-              2,000
+              2,200
             </div>
 
             <div class="stat-description">
-              Planned questions across 20 tests
+              Questions across 22 configured tests
             </div>
 
           </div>
@@ -1752,7 +1889,7 @@ if (authData.user.id !== adminUserId) {
             </div>
 
             <div class="stat-value">
-              20
+              22
             </div>
 
             <div class="stat-description">
@@ -2049,7 +2186,7 @@ if (authData.user.id !== adminUserId) {
               </div>
 
               <div class="publication-label">
-                20 of 20 mock tests are currently published
+                22 of 22 mock tests are currently published
               </div>
 
 
@@ -2063,7 +2200,7 @@ if (authData.user.id !== adminUserId) {
                 <div class="publication-stat">
 
                   <strong>
-                    20
+                    22
                   </strong>
 
                   <span>
@@ -2084,6 +2221,145 @@ if (authData.user.id !== adminUserId) {
                   </span>
 
                 </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- OPEN MOCK MANAGEMENT -->
+
+        <section class="panel open-mocks">
+
+          <div class="panel-header">
+
+            <div class="panel-heading">
+
+              <h2>
+                Open Mock Tests
+              </h2>
+
+              <p>
+                Free public mocks with question management and live performance access
+              </p>
+
+            </div>
+
+            <span class="panel-link">
+              Tests 21–22
+            </span>
+
+          </div>
+
+
+          <div class="open-mock-grid">
+
+            <!-- TEST 21 -->
+
+            <div class="open-mock-card">
+
+              <div class="open-mock-top">
+
+                <div>
+                  <div class="open-mock-number">
+                    Test 21
+                  </div>
+
+                  <h3>
+                    JPSC General Studies Open Mock
+                  </h3>
+
+                  <div class="open-mock-meta">
+                    100 Questions · Free Open Mock · +2 marks per correct answer · No negative marking
+                  </div>
+                </div>
+
+                <span class="open-mock-badge">
+                  Published
+                </span>
+
+              </div>
+
+              <div class="open-mock-actions">
+
+                <a
+                  href="/admin/mock-tests/21/questions"
+                  class="open-mock-action primary"
+                >
+                  Questions
+                </a>
+
+                <a
+                  href="/admin/results?test_id=24"
+                  class="open-mock-action"
+                >
+                  Performance
+                </a>
+
+                <a
+                  href="/admin/mock-tests/21/questions"
+                  class="open-mock-action"
+                >
+                  Edit Questions
+                </a>
+
+              </div>
+
+            </div>
+
+
+            <!-- TEST 22 -->
+
+            <div class="open-mock-card">
+
+              <div class="open-mock-top">
+
+                <div>
+                  <div class="open-mock-number">
+                    Test 22
+                  </div>
+
+                  <h3>
+                    JPSC Jharkhand Special Open Mock
+                  </h3>
+
+                  <div class="open-mock-meta">
+                    100 Questions · Free Open Mock · +2 marks per correct answer · No negative marking
+                  </div>
+                </div>
+
+                <span class="open-mock-badge">
+                  Published
+                </span>
+
+              </div>
+
+              <div class="open-mock-actions">
+
+                <a
+                  href="/admin/mock-tests/22/questions"
+                  class="open-mock-action primary"
+                >
+                  Questions
+                </a>
+
+                <a
+                  href="/admin/results?test_id=25"
+                  class="open-mock-action"
+                >
+                  Performance
+                </a>
+
+                <a
+                  href="/admin/mock-tests/22/questions"
+                  class="open-mock-action"
+                >
+                  Edit Questions
+                </a>
 
               </div>
 
@@ -2244,6 +2520,33 @@ if (authData.user.id !== adminUserId) {
               <p>
                 Analyse performance and
                 test-wise results.
+              </p>
+
+              <span class="management-open">
+                Open →
+              </span>
+
+            </a>
+
+
+            <!-- OPEN MOCK ANALYTICS -->
+
+            <a
+              href="/admin/open-mock-analytics"
+              class="management-card"
+            >
+
+              <div class="management-icon">
+                OA
+              </div>
+
+              <h3>
+                Open Mock Analytics
+              </h3>
+
+              <p>
+                Compare Test 21 and Test 22,
+                attempts, scores, ranks and performance.
               </p>
 
               <span class="management-open">

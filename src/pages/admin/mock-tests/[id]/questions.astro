@@ -1140,6 +1140,13 @@ const messageText =
       Mock Tests
     </a>
 
+    <a
+      href={`/admin/results?test_id=${numericTestId}`}
+      class="btn btn-primary"
+    >
+      Performance
+    </a>
+
   </div>
 
 </header>
@@ -1191,6 +1198,16 @@ const messageText =
     <div class="scoring-note">
       Scoring rule: <strong>+2 marks for every correct answer</strong> ·
       <strong>0 negative marking</strong>
+    </div>
+
+    <div style="margin-top:14px;">
+      <a
+        href={`/admin/results?test_id=${numericTestId}`}
+        class="btn btn-primary"
+        style="display:inline-flex;align-items:center;justify-content:center;"
+      >
+        View Test Performance &amp; Leaderboard →
+      </a>
     </div>
 
   </section>
@@ -1657,6 +1674,20 @@ const messageText =
           {totalQuestions} question{totalQuestions === 1 ? "" : "s"} currently added.
         </p>
 
+        <div style="margin-top:10px;display:flex;gap:7px;flex-wrap:wrap;">
+          <span class="badge">
+            Test #{testId}
+          </span>
+
+          <span class="badge">
+            {totalQuestions} / 100 Questions
+          </span>
+
+          <span class="badge badge-green">
+            +2 / 0 Negative
+          </span>
+        </div>
+
       </div>
 
 
@@ -1744,7 +1775,7 @@ const messageText =
 
                       <form
                         method="POST"
-                        onsubmit="return confirm('Are you sure you want to delete this question?');"
+                        onsubmit={`return confirm('Delete Question #${question.question_number}? This action cannot be undone.');`}
                       >
 
                         <input

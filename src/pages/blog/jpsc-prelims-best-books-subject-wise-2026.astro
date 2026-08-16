@@ -1,0 +1,1121 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Prelims Best Books 2026: Subject-Wise Booklist, PYQs, Notes & Study Resources";
+const description =
+  "A practical JPSC Prelims booklist for History, Geography, Polity, Economy, Science, Environment, Jharkhand GK and Current Affairs, with a strategy to avoid excessive books and use PYQs effectively.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-prelims-best-books-subject-wise-2026/";
+
+const faqs = [
+  {
+    q: "Which books are best for JPSC Prelims?",
+    a: "The best resources are those that cover the current syllabus clearly and can be revised multiple times. Use one dependable core source per subject, then supplement it with JPSC PYQs, Jharkhand-specific material, current affairs and mock tests.",
+  },
+  {
+    q: "How many books should I read for JPSC Prelims?",
+    a: "There is no fixed number. A focused preparation usually works better with a limited core set of resources than with a large collection that cannot be completed and revised.",
+  },
+  {
+    q: "Are JPSC previous-year questions necessary?",
+    a: "Yes. PYQs help you understand how JPSC converts syllabus topics into objective questions and reveal the areas where your preparation needs more attention.",
+  },
+  {
+    q: "What should I use for Jharkhand GK?",
+    a: "Use reliable Jharkhand-specific study material that follows the current syllabus, and supplement it with official state information and relevant current affairs. Verify important facts against authoritative sources.",
+  },
+  {
+    q: "Should I buy a separate book for every JPSC subject?",
+    a: "Not necessarily. First identify the syllabus requirement and the quality of your existing sources. Buy or add material only when it fills a specific gap.",
+  },
+  {
+    q: "When should I start solving JPSC PYQs?",
+    a: "Start early. You can use topic-wise PYQs while studying a subject and later solve complete papers under timed conditions.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC best books 2026, JPSC Prelims books, JPSC booklist, JPSC subject wise books, JPSC preparation books, JPSC PYQ book, Jharkhand GK book, JPSC current affairs"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Best Books</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PRELIMS • BOOKLIST & RESOURCES</div>
+          <h1>
+            JPSC Prelims Best Books:
+            <span>Build a Focused Booklist.</span>
+          </h1>
+          <p class="hero-text">
+            A subject-wise resource strategy for JPSC Prelims covering History,
+            Geography, Polity, Economy, Science, Environment, Jharkhand,
+            Current Affairs, PYQs, notes and mock tests—without creating an
+            unnecessary mountain of books.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>JPSC Prelims</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#booklist">See Booklist ↓</a>
+            <a class="btn outline" href="/blog/jpsc-prelims-preparation-strategy-2026/">
+              Preparation Strategy →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            There is no single universally “best” JPSC booklist. The correct
+            resource is the one that covers the current syllabus, is reliable,
+            can be understood and—most importantly—can be revised. Always check
+            the latest JPSC syllabus and notification before finalising your
+            preparation material.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>01</b><span>Core source</span><p>One dependable primary source for each major subject.</p></div>
+          <div><b>02</b><span>PYQ resource</span><p>Actual JPSC questions mapped to topics.</p></div>
+          <div><b>03</b><span>Jharkhand file</span><p>Dedicated state-specific preparation.</p></div>
+          <div><b>04</b><span>Mocks</span><p>Timed practice + performance analysis.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#principle">Booklist principle</a>
+            <a href="#booklist">Subject-wise list</a>
+            <a href="#history">History</a>
+            <a href="#geography">Geography</a>
+            <a href="#polity">Polity</a>
+            <a href="#economy">Economy</a>
+            <a href="#science">Science</a>
+            <a href="#environment">Environment</a>
+            <a href="#jharkhand">Jharkhand</a>
+            <a href="#current">Current affairs</a>
+            <a href="#pyq">PYQs</a>
+            <a href="#notes">Notes</a>
+            <a href="#selection">How to select</a>
+            <a href="#revision">Revision</a>
+            <a href="#mistakes">Mistakes</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              The biggest mistake in a competitive-exam booklist is treating
+              <strong>collection as preparation</strong>. For JPSC, your
+              resources should form a system: one core source, targeted
+              supplementation, PYQs, revision and tests.
+            </p>
+
+            <h2 id="principle">1. The JPSC Booklist Rule</h2>
+
+            <div class="formula">
+              <strong>Core source + PYQs + Jharkhand + Current Affairs + Mocks = Complete resource system</strong>
+              <span>You do not need ten sources simply because ten sources exist.</span>
+            </div>
+
+            <p>
+              Before buying anything, compare the resource against the current
+              official syllabus. A book may be excellent for UPSC or another
+              State PCS and still be inefficient for JPSC if it leaves out
+              Jharkhand-specific areas or contains far more material than you
+              can realistically revise.
+            </p>
+
+            <div class="decision">
+              <div><b>NEED</b><span>Does it cover a syllabus requirement?</span></div>
+              <div><b>QUALITY</b><span>Is the information reliable and clear?</span></div>
+              <div><b>REVISE</b><span>Can you realistically revise it?</span></div>
+              <div><b>PYQ LINK</b><span>Does it help answer actual questions?</span></div>
+            </div>
+
+            <h2 id="booklist">2. JPSC Prelims Subject-Wise Resource Plan</h2>
+
+            <div class="master">
+              <div><b>HISTORY</b><span>Standard Indian history source + concise revision notes + JPSC PYQs.</span></div>
+              <div><b>GEOGRAPHY</b><span>Conceptual geography source + atlas/maps + India/Jharkhand focus + PYQs.</span></div>
+              <div><b>POLITY</b><span>One standard Indian polity source + constitutional notes + PYQs.</span></div>
+              <div><b>ECONOMY</b><span>Basic economy source + current economic developments + PYQs.</span></div>
+              <div><b>SCIENCE</b><span>School-level fundamentals + selected Science & Technology current affairs.</span></div>
+              <div><b>ENVIRONMENT</b><span>Core ecology/environment source + current developments + maps/examples.</span></div>
+              <div><b>JHARKHAND</b><span>Dedicated Jharkhand material + official/state information + current affairs.</span></div>
+              <div><b>CURRENT</b><span>One reliable current-affairs system with aggressive filtering and revision.</span></div>
+              <div><b>PYQs</b><span>Topic-wise and year-wise JPSC previous-year questions.</span></div>
+              <div><b>MOCKS</b><span>Full-length and sectional tests with detailed analysis.</span></div>
+            </div>
+
+            <h2 id="history">3. History — What to Study</h2>
+
+            <p>
+              History preparation should be divided into Ancient, Medieval and
+              Modern India, with special attention to chronology, major
+              developments, movements, personalities, causes and consequences.
+            </p>
+
+            <div class="resource">
+              <div>
+                <span>CORE</span>
+                <strong>Choose one standard History source</strong>
+                <p>
+                  Use a recognised Indian-history textbook or standard
+                  competitive-exam source that matches your level. Do not read
+                  several books covering the same narrative.
+                </p>
+              </div>
+              <div>
+                <span>SUPPLEMENT</span>
+                <strong>Concise notes / school texts</strong>
+                <p>
+                  Use school-level material when your basics are weak or when a
+                  topic needs a simpler explanation.
+                </p>
+              </div>
+              <div>
+                <span>ESSENTIAL</span>
+                <strong>JPSC PYQs</strong>
+                <p>
+                  Map every historical PYQ to the relevant chapter and revise
+                  that chapter again.
+                </p>
+              </div>
+            </div>
+
+            <div class="tip">
+              <strong>History tip:</strong>
+              Create one-page timelines for major periods and movements. Your
+              revision should become progressively shorter, not progressively
+              larger.
+            </div>
+
+            <h2 id="geography">4. Geography — Books Are Not Enough</h2>
+
+            <p>
+              Geography is best prepared through a combination of concepts,
+              maps, diagrams, location-based facts and PYQs. A book alone
+              cannot replace spatial understanding.
+            </p>
+
+            <div class="resource">
+              <div><span>CORE</span><strong>Physical Geography</strong><p>Build fundamentals of geomorphology, climatology, oceanography and related processes.</p></div>
+              <div><span>INDIA</span><strong>Indian Geography</strong><p>Focus on physiography, rivers, climate, soils, agriculture, resources, industries and population.</p></div>
+              <div><span>MAP</span><strong>Atlas practice</strong><p>Locate rivers, mountains, mineral belts, industries, protected areas and important places.</p></div>
+              <div><span>STATE</span><strong>Jharkhand Geography</strong><p>Maintain a dedicated state map and district-wise revision file.</p></div>
+            </div>
+
+            <h2 id="polity">5. Polity — One Strong Book + PYQs</h2>
+
+            <p>
+              Polity is a subject where one standard source can cover a large
+              proportion of your conceptual preparation. Avoid repeatedly
+              switching between books.
+            </p>
+
+            <div class="topic-grid">
+              <div>Constitution</div>
+              <div>Fundamental Rights</div>
+              <div>Directive Principles</div>
+              <div>Parliament</div>
+              <div>President & Governor</div>
+              <div>Judiciary</div>
+              <div>Federalism</div>
+              <div>Local Government</div>
+              <div>Constitutional Bodies</div>
+              <div>Governance</div>
+              <div>Important Amendments</div>
+              <div>Current Constitutional Issues</div>
+            </div>
+
+            <p>
+              The important point is not the brand of the book. It is whether
+              you can explain the concept and correctly solve JPSC-style
+              questions after studying it.
+            </p>
+
+            <h2 id="economy">6. Economy — Avoid Memorising Without Understanding</h2>
+
+            <p>
+              Start with basic economic concepts and then connect them to Indian
+              development, government policy and current events.
+            </p>
+
+            <div class="economy">
+              <div><b>BASICS</b><span>GDP, inflation, unemployment, fiscal policy, monetary policy, banking and national income.</span></div>
+              <div><b>INDIA</b><span>Development, agriculture, industry, infrastructure, poverty and inclusive growth.</span></div>
+              <div><b>CURRENT</b><span>Major policy developments, reports, schemes and economic indicators.</span></div>
+              <div><b>JHARKHAND</b><span>Mining, industry, agriculture, development and state economy.</span></div>
+            </div>
+
+            <h2 id="science">7. Science & Technology — Build Practical Fundamentals</h2>
+
+            <p>
+              For general science, a strong school-level foundation can be more
+              useful than an excessively advanced reference book. Add selected
+              technology developments that connect with the syllabus.
+            </p>
+
+            <div class="science">
+              <div><b>PHYSICS</b><span>Mechanics, heat, waves, sound, optics, electricity and basic modern physics.</span></div>
+              <div><b>CHEMISTRY</b><span>Basic chemistry, materials, reactions, everyday applications and environment-linked chemistry.</span></div>
+              <div><b>BIOLOGY</b><span>Human biology, cells, genetics, diseases, ecology and basic biotechnology.</span></div>
+              <div><b>TECH</b><span>Space, defence, computers, AI, biotechnology and major contemporary applications.</span></div>
+            </div>
+
+            <h2 id="environment">8. Environment — Concept + Current Affairs</h2>
+
+            <p>
+              Environment should not be reduced to lists of species and
+              conventions. Understand ecosystems, biodiversity, conservation,
+              pollution, climate change and institutions, then connect them with
+              current affairs.
+            </p>
+
+            <div class="environment">
+              <div><b>ECOLOGY</b><span>Food chains, ecosystems, cycles, populations and communities.</span></div>
+              <div><b>BIODIVERSITY</b><span>Species, habitats, hotspots and conservation.</span></div>
+              <div><b>CLIMATE</b><span>Climate change, mitigation, adaptation and major agreements.</span></div>
+              <div><b>INDIA</b><span>Protected areas, environmental laws and institutions.</span></div>
+              <div><b>JHARKHAND</b><span>Forests, wildlife, mining impacts and environmental issues.</span></div>
+            </div>
+
+            <h2 id="jharkhand">9. Jharkhand GK — Your Special Preparation File</h2>
+
+            <p>
+              Jharkhand-specific preparation deserves a dedicated resource
+              strategy because generic Indian-GK books cannot cover the state's
+              complete examination relevance.
+            </p>
+
+            <div class="jharkhand">
+              <div><b>HISTORY</b><span>Tribal resistance, movements, regional history and personalities.</span></div>
+              <div><b>GEOGRAPHY</b><span>Districts, rivers, plateau, forests, minerals, industries and agriculture.</span></div>
+              <div><b>SOCIETY</b><span>Tribes, communities, languages and demographic features.</span></div>
+              <div><b>CULTURE</b><span>Literature, festivals, art, music, traditions and heritage.</span></div>
+              <div><b>ECONOMY</b><span>Mining, industry, agriculture, infrastructure and development.</span></div>
+              <div><b>CURRENT</b><span>State schemes, projects, appointments, awards, institutions and major events.</span></div>
+            </div>
+
+            <div class="tip">
+              <strong>Resource rule for Jharkhand:</strong>
+              Use one reliable state-specific source, then continuously update
+              it with current information. Avoid maintaining five competing
+              factual lists.
+            </div>
+
+            <h2 id="current">10. Current Affairs — Don't Buy Every Monthly Magazine</h2>
+
+            <p>
+              Current affairs is a system rather than a single book. Pick one
+              dependable source and create your own short revision notes.
+            </p>
+
+            <div class="current">
+              <div><b>DAILY</b><span>Read selectively.</span></div>
+              <div><b>WEEKLY</b><span>Filter and organise.</span></div>
+              <div><b>MONTHLY</b><span>Condense major events.</span></div>
+              <div><b>PYQ LINK</b><span>Connect news to syllabus.</span></div>
+              <div><b>REVISION</b><span>Repeat before tests.</span></div>
+            </div>
+
+            <p>
+              For JPSC, always ask whether a current-affairs item has a
+              Jharkhand angle, a constitutional/governance angle, a geography
+              angle, an environment angle, a science angle or another clear
+              syllabus connection.
+            </p>
+
+            <h2 id="pyq">11. The Most Important “Book” Is Your PYQ Resource</h2>
+
+            <p>
+              A book teaches content. A PYQ resource teaches you how the
+              Commission has tested that content. For that reason, previous-year
+              questions should not be postponed until the end.
+            </p>
+
+            <div class="pyq-cycle">
+              <div><b>READ</b><span>Study topic.</span></div>
+              <i>→</i>
+              <div><b>ATTEMPT</b><span>Solve PYQs.</span></div>
+              <i>→</i>
+              <div><b>MAP</b><span>Find topic.</span></div>
+              <i>→</i>
+              <div><b>ANALYSE</b><span>Find pattern.</span></div>
+              <i>→</i>
+              <div><b>REVISE</b><span>Repair gaps.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC PYQ DECODED</span>
+                <h2>One resource for topic-wise PYQ analysis.</h2>
+                <p>
+                  Habitat IAS's JPSC PYQ resource is designed around topic-wise
+                  and subject-wise analysis so that previous questions become a
+                  study tool rather than just a question paper collection.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">View JPSC PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2 id="notes">12. Notes: Make Them Smaller Every Revision</h2>
+
+            <p>
+              Your first notes may be detailed. Your second notes should be
+              shorter. Your final revision sheet should contain only the
+              information you repeatedly forget or need to connect.
+            </p>
+
+            <div class="notes">
+              <div><b>LEVEL 1</b><span>Detailed understanding.</span></div>
+              <div><b>LEVEL 2</b><span>Short notes + diagrams.</span></div>
+              <div><b>LEVEL 3</b><span>PYQ-linked revision points.</span></div>
+              <div><b>LEVEL 4</b><span>One-page rapid revision.</span></div>
+            </div>
+
+            <h2 id="selection">13. How to Select a Book Before Buying It</h2>
+
+            <div class="checklist">
+              <div><b>01</b><strong>Check the syllabus</strong><span>Does the book actually cover your required topics?</span></div>
+              <div><b>02</b><strong>Check the edition</strong><span>Is the material reasonably current for your preparation?</span></div>
+              <div><b>03</b><strong>Check readability</strong><span>Can you understand it without constant external help?</span></div>
+              <div><b>04</b><strong>Check PYQs</strong><span>Can you use it to answer actual JPSC questions?</span></div>
+              <div><b>05</b><strong>Check revision</strong><span>Can you finish and revise it multiple times?</span></div>
+              <div><b>06</b><strong>Check overlap</strong><span>Does it duplicate a source you already own?</span></div>
+            </div>
+
+            <h2>14. Physical Book vs PDF vs Notes</h2>
+
+            <div class="compare">
+              <div>
+                <b>PHYSICAL BOOK</b>
+                <span>Best when you prefer deep reading, annotation and long-term reference.</span>
+              </div>
+              <div>
+                <b>PDF / DIGITAL</b>
+                <span>Useful for portability, search and rapid access, provided your reading workflow remains disciplined.</span>
+              </div>
+              <div>
+                <b>PERSONAL NOTES</b>
+                <span>Best for final revision because they contain your own difficult areas and errors.</span>
+              </div>
+            </div>
+
+            <h2 id="revision">15. Book + PYQ + Mock: The Correct Order</h2>
+
+            <div class="system">
+              <div><span>STEP 1</span><b>Study</b><p>Learn the topic from the core source.</p></div>
+              <div><span>STEP 2</span><b>PYQ</b><p>See how JPSC has tested it.</p></div>
+              <div><span>STEP 3</span><b>Notes</b><p>Record difficult points.</p></div>
+              <div><span>STEP 4</span><b>Revision</b><p>Retrieve without looking.</p></div>
+              <div><span>STEP 5</span><b>Mock</b><p>Apply under time pressure.</p></div>
+              <div><span>STEP 6</span><b>Error log</b><p>Repair the next weakness.</p></div>
+            </div>
+
+            <h2>16. How to Use NCERT / School-Level Material</h2>
+
+            <p>
+              School-level textbooks can be useful for building fundamentals,
+              especially in History, Geography, Science and basic Economics.
+              But do not assume that reading every page of every school textbook
+              is automatically the most efficient JPSC strategy.
+            </p>
+
+            <div class="tip">
+              <strong>Use fundamentals strategically:</strong>
+              If a concept repeatedly causes mistakes in your PYQs or mocks,
+              return to a simpler foundational source and rebuild it.
+            </div>
+
+            <h2>17. How to Use Standard Competitive-Exam Books</h2>
+
+            <p>
+              Standard competitive-exam books are useful when they organise a
+              broad syllabus into a revision-friendly structure. Select them
+              according to subject and your existing level rather than following
+              a universal “must-buy” list.
+            </p>
+
+            <div class="decision">
+              <div><b>BEGINNER</b><span>Prioritise clarity and fundamentals.</span></div>
+              <div><b>INTERMEDIATE</b><span>Prioritise PYQ gaps and revision.</span></div>
+              <div><b>ADVANCED</b><span>Prioritise test performance and weak areas.</span></div>
+              <div><b>ALL LEVELS</b><span>Keep Jharkhand + PYQ + current affairs integrated.</span></div>
+            </div>
+
+            <h2>18. Don't Ignore the Mock-Test Resource</h2>
+
+            <p>
+              A book cannot tell you whether you can solve 100 questions under
+              examination pressure. That requires timed practice and analysis.
+              Start with topic tests, move to sectional tests and then use
+              full-length mocks.
+            </p>
+
+            <div class="mock">
+              <div><b>TOPIC TEST</b><span>Check one area.</span></div>
+              <div><b>SECTIONAL</b><span>Check subject performance.</span></div>
+              <div><b>FULL MOCK</b><span>Replicate the paper.</span></div>
+              <div><b>ANALYSIS</b><span>Repair the weakness.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC MOCK TEST</span>
+                <h2>Don't wait until the final month to test yourself.</h2>
+                <p>
+                  Use the free mock as a diagnostic and let the result decide
+                  what you revise next.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2>19. A Minimal JPSC Resource Kit</h2>
+
+            <div class="kit">
+              <div><b>01</b><strong>Official syllabus</strong><span>Your master checklist.</span></div>
+              <div><b>02</b><strong>Core subject sources</strong><span>One dependable source per major area.</span></div>
+              <div><b>03</b><strong>Jharkhand source</strong><span>Dedicated state preparation.</span></div>
+              <div><b>04</b><strong>Current affairs</strong><span>One filtered system.</span></div>
+              <div><b>05</b><strong>JPSC PYQs</strong><span>Topic-wise + year-wise practice.</span></div>
+              <div><b>06</b><strong>Mock tests</strong><span>Timed practice + analysis.</span></div>
+              <div><b>07</b><strong>Error log</strong><span>Your personalised revision list.</span></div>
+              <div><b>08</b><strong>Revision notes</strong><span>Shorter with every cycle.</span></div>
+            </div>
+
+            <h2 id="mistakes">20. Biggest Booklist Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Buying a book because every aspirant has it.</span></div>
+              <div><b>02</b><span>Using multiple books for the same subject without a clear purpose.</span></div>
+              <div><b>03</b><span>Ignoring Jharkhand-specific material.</span></div>
+              <div><b>04</b><span>Collecting current-affairs PDFs but not revising them.</span></div>
+              <div><b>05</b><span>Leaving PYQs until after the syllabus is “complete.”</span></div>
+              <div><b>06</b><span>Never making a short revision layer.</span></div>
+              <div><b>07</b><span>Confusing a large book with complete preparation.</span></div>
+              <div><b>08</b><span>Ignoring mock tests because the syllabus is unfinished.</span></div>
+            </div>
+
+            <h2>21. Final JPSC Booklist Philosophy</h2>
+
+            <div class="final">
+              <div><b>FEWER</b><span>Choose deliberately.</span></div>
+              <div><b>BETTER</b><span>Use reliable sources.</span></div>
+              <div><b>PYQ</b><span>Connect to JPSC demand.</span></div>
+              <div><b>REVISE</b><span>Repeat intelligently.</span></div>
+              <div><b>TEST</b><span>Measure actual performance.</span></div>
+            </div>
+
+            <p>
+              The best JPSC booklist is not the longest list. It is the smallest
+              set of reliable resources that lets you cover the syllabus,
+              understand concepts, solve PYQs, revise repeatedly and perform
+              under timed conditions.
+            </p>
+
+            <div class="conversion final-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Complete your resource system with PYQs and mocks.</h2>
+                <p>
+                  Use the Habitat IAS JPSC PYQ resource to analyse previous
+                  questions and the free mock to diagnose your preparation.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Free JPSC Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Don't collect books. Build a preparation system.</h2>
+          <p>
+            Core source → PYQs → revision → mocks → analysis → improvement.
+          </p>
+          <div class="buttons center">
+            <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+  }
+
+  .container { width: min(1180px, calc(100% - 48px)); margin: auto; }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1050px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline { color: white; border: 1px solid rgba(255,255,255,.48); }
+
+  .warning-section { padding-top: 25px; }
+  .warning, .warning-box, .tip {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+  .warning strong, .warning-box strong, .tip strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .stats-grid b { display: block; color: var(--blue); font-size: 28px; }
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+  article p { color: #4c617e; }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 20px;
+    align-items: center;
+    margin: 28px 0;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #526987;
+  }
+  .formula strong { color: var(--dark); }
+
+  .decision, .master, .resource, .topic-grid, .economy, .science,
+  .environment, .jharkhand, .current, .notes, .checklist, .compare,
+  .system, .mock, .kit, .final {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .decision { grid-template-columns: repeat(4,1fr); }
+  .decision > div, .master > div, .resource > div, .topic-grid > div,
+  .economy > div, .science > div, .environment > div, .jharkhand > div,
+  .current > div, .notes > div, .checklist > div, .compare > div,
+  .system > div, .mock > div, .kit > div, .final > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .decision b, .master b, .resource strong, .economy b, .science b,
+  .environment b, .jharkhand b, .current b, .notes b, .checklist strong,
+  .compare b, .system b, .mock b, .kit strong, .final b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .decision span, .master span, .resource span, .economy span, .science span,
+  .environment span, .jharkhand span, .current span, .notes span,
+  .checklist span, .compare span, .system p, .system span, .mock span,
+  .kit span, .final span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .master { grid-template-columns: repeat(5,1fr); }
+  .resource { grid-template-columns: repeat(3,1fr); }
+  .resource strong { margin-top: 7px; }
+  .resource p { font-size: 14px; margin-bottom: 0; }
+
+  .topic-grid { grid-template-columns: repeat(4,1fr); }
+  .topic-grid > div {
+    text-align: center;
+    color: #52657f;
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .economy, .science, .environment { grid-template-columns: repeat(4,1fr); }
+  .jharkhand { grid-template-columns: repeat(3,1fr); }
+  .current { grid-template-columns: repeat(5,1fr); }
+  .notes { grid-template-columns: repeat(4,1fr); }
+  .checklist { grid-template-columns: repeat(3,1fr); }
+  .compare { grid-template-columns: repeat(3,1fr); }
+  .system { grid-template-columns: repeat(3,1fr); }
+  .mock { grid-template-columns: repeat(4,1fr); }
+  .kit { grid-template-columns: repeat(4,1fr); }
+  .final { grid-template-columns: repeat(5,1fr); }
+
+  .resource span, .subjects span, .daily span, .system span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .resource p, .system p { margin-bottom: 0; }
+
+  .pyq-cycle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+  .pyq-cycle > div {
+    min-width: 125px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+  .pyq-cycle b {
+    display: block;
+    color: var(--blue);
+    font-size: 11px;
+  }
+  .pyq-cycle span {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .pyq-cycle i {
+    color: #91a5c5;
+    font-style: normal;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .checklist > div {
+    display: grid;
+    grid-template-columns: 38px 1fr;
+    column-gap: 10px;
+  }
+  .checklist b {
+    grid-row: span 2;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .system > div { text-align: center; }
+  .system span, .kit > div > b {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .kit > div {
+    text-align: center;
+  }
+  .kit > div > b {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+  }
+  .kit strong { margin-top: 8px; }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .faq { display: grid; gap: 9px; }
+  details { border: 1px solid var(--border); border-radius: 12px; }
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .stats-grid, .master, .resource, .topic-grid, .economy, .science,
+    .environment, .jharkhand, .current, .notes, .checklist, .compare,
+    .system, .mock, .kit, .final, .decision {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+    .stats-grid, .master, .resource, .topic-grid, .economy, .science,
+    .environment, .jharkhand, .current, .notes, .checklist, .compare,
+    .system, .mock, .kit, .final, .decision {
+      grid-template-columns: 1fr;
+    }
+    .buttons, .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn { width: 100%; }
+    .cta-buttons { flex-direction: column; }
+  }
+</style>

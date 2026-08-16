@@ -1,0 +1,1369 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Salary, Posts & Job Profile 2026: Services, Career, Promotion and Preparation Guide";
+const description =
+  "JPSC salary and posts guide covering the nature of Combined Civil Services posts, job profiles, pay and allowances, career progression, authority, responsibilities and how to prepare for JPSC.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-salary-posts-job-profile/";
+
+const faqs = [
+  {
+    q: "What is the salary of a JPSC officer?",
+    a: "The exact pay applicable to a post must be taken from the recruitment advertisement and the applicable Jharkhand pay/service rules for that recruitment cycle. A generic salary figure copied from an old article should not be treated as the current official pay.",
+  },
+  {
+    q: "Which posts are recruited through JPSC Combined Civil Services?",
+    a: "The posts and services included in a Combined Civil Services recruitment are determined by the applicable advertisement. JPSC's official website currently lists the Jharkhand Combined Civil Services Examination-2025 under Advt. No. 01/2026. Candidates should use that advertisement for the current post/vacancy list.",
+  },
+  {
+    q: "Is JPSC a good career?",
+    a: "For candidates interested in state administration and public service, JPSC services can provide substantial responsibility, administrative exposure and a structured government career. The actual work depends on the service and posting.",
+  },
+  {
+    q: "Does JPSC salary include allowances?",
+    a: "Government compensation can include basic pay and applicable allowances and benefits under the relevant rules. The exact components and rates can change, so the applicable service/pay rules should be checked rather than relying on an old salary blog.",
+  },
+  {
+    q: "What is the promotion system after clearing JPSC?",
+    a: "Promotion depends on the service, cadre rules, vacancy position, seniority, performance and applicable government rules. It should not be represented as one identical promotion ladder for every JPSC service.",
+  },
+  {
+    q: "Is JPSC preparation useful for other state PSC exams?",
+    a: "A large part of preparation can overlap with other State PSC examinations, particularly general studies, history, geography, polity, economy, science, environment, current affairs and examination skills. However, state-specific content and each commission's syllabus must be studied separately.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC salary, JPSC salary structure, JPSC officer salary, JPSC posts, JPSC job profile, JPSC pay scale, JPSC career, JPSC services, JPSC post list, JPSC government job salary"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Salary, Posts & Job Profile</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC CAREER • POSTS • SALARY</div>
+
+          <h1>
+            JPSC Salary, Posts &
+            <span>Job Profile Explained.</span>
+          </h1>
+
+          <p class="hero-text">
+            What makes a JPSC career attractive? Understand posts, work,
+            responsibility, pay, allowances, career progression and the
+            preparation required to compete for Jharkhand's state civil
+            services.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Career Guide</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#posts">Explore Posts ↓</a>
+            <a class="btn outline" href="/blog/jpsc-prelims-preparation-strategy/">
+              Preparation Strategy →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Salary warning:</strong>
+            Exact pay, post availability, vacancies, allowances and service
+            conditions are recruitment- and rule-dependent. This guide explains
+            the career structure without inventing a current salary figure.
+            Always verify the latest JPSC advertisement and applicable Jharkhand
+            service/pay rules before relying on a number.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>01</b><span>Posts</span><p>Understand the types of responsibility associated with state services.</p></div>
+          <div><b>02</b><span>Pay</span><p>Learn how to read official pay information instead of outdated salary tables.</p></div>
+          <div><b>03</b><span>Work</span><p>See what administrative responsibility can look like in practice.</p></div>
+          <div><b>04</b><span>Career</span><p>Understand promotion as a service-specific process.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#overview">JPSC career overview</a>
+            <a href="#posts">Posts & services</a>
+            <a href="#salary">Salary & pay</a>
+            <a href="#allowances">Allowances & benefits</a>
+            <a href="#profile">Job profile</a>
+            <a href="#responsibility">Authority & responsibility</a>
+            <a href="#promotion">Promotion & career</a>
+            <a href="#posting">Posting & work environment</a>
+            <a href="#skills">Skills required</a>
+            <a href="#preparation">Preparation roadmap</a>
+            <a href="#mock">PYQ + mock strategy</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              Many aspirants search “JPSC salary” first. But salary is only one
+              part of the decision. A better question is:
+              <strong>What kind of public-service career does a JPSC selection
+              create?</strong>
+            </p>
+
+            <p>
+              The Jharkhand Public Service Commission conducts competitive
+              examinations and interviews for recruitment to government
+              services in the state. Its official website currently lists the
+              Jharkhand Combined Civil Services Examination-2025 under Advt.
+              No. 01/2026. citeturn1search0turn0search2
+            </p>
+
+            <h2 id="overview">JPSC Career at a Glance</h2>
+
+            <div class="career-grid">
+              <div>
+                <span>ENTRY</span>
+                <h3>Competitive examination</h3>
+                <p>Selection is based on the applicable recruitment process.</p>
+              </div>
+              <div>
+                <span>ROLE</span>
+                <h3>Public administration</h3>
+                <p>Work can involve administration, implementation, regulation and public service.</p>
+              </div>
+              <div>
+                <span>CAREER</span>
+                <h3>Service-based progression</h3>
+                <p>Promotion and progression depend on cadre and applicable rules.</p>
+              </div>
+              <div>
+                <span>IMPACT</span>
+                <h3>State-level governance</h3>
+                <p>Officers contribute to implementation of government programmes and administration.</p>
+              </div>
+            </div>
+
+            <h2 id="posts">1. JPSC Posts & Services</h2>
+
+            <p>
+              There is no single permanent “JPSC salary table” that can safely
+              be copied from one recruitment cycle into another. The
+              <strong>current advertisement determines which posts/services
+              are being recruited, the vacancies and the applicable
+              conditions.</strong>
+            </p>
+
+            <p>
+              JPSC's official examination page currently provides a dedicated
+              document section for the Combined Civil Services Examination-2025,
+              Advt. No. 01/2026, including the advertisement and related
+              amendment-rule documents. citeturn0search2
+            </p>
+
+            <div class="post-map">
+              <div>
+                <strong>Administrative services</strong>
+                <p>Policy implementation, field administration and coordination.</p>
+              </div>
+              <div>
+                <strong>Revenue-related work</strong>
+                <p>Land, revenue administration and related public-service functions.</p>
+              </div>
+              <div>
+                <strong>Other state services</strong>
+                <p>Responsibilities vary according to the service and department.</p>
+              </div>
+              <div>
+                <strong>Departmental administration</strong>
+                <p>Implementation, supervision, reporting and coordination within the assigned department.</p>
+              </div>
+            </div>
+
+            <div class="official-box">
+              <strong>Current recruitment source</strong>
+              <p>
+                For the exact post list and vacancies, use the advertisement
+                for the recruitment cycle you are applying for.
+              </p>
+              <a
+                href="https://www.jpsc.gov.in/exam_files.php?id=13039"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Open JPSC Combined Civil Services documents →
+              </a>
+            </div>
+
+            <h2 id="salary">2. JPSC Salary: How to Understand the Pay</h2>
+
+            <p>
+              The phrase “JPSC salary” usually combines several different
+              things: basic pay, applicable allowances, deductions and the
+              overall compensation attached to a particular service/post.
+            </p>
+
+            <div class="pay-flow">
+              <div>
+                <span>01</span>
+                <strong>Basic pay</strong>
+                <p>The pay attached to the applicable post/service and pay structure.</p>
+              </div>
+              <b>+</b>
+              <div>
+                <span>02</span>
+                <strong>Allowances</strong>
+                <p>Applicable allowances depend on rules, posting and eligibility.</p>
+              </div>
+              <b>−</b>
+              <div>
+                <span>03</span>
+                <strong>Deductions</strong>
+                <p>Take-home pay is not the same as gross compensation.</p>
+              </div>
+            </div>
+
+            <div class="important">
+              <strong>Important distinction:</strong>
+              “Pay scale,” “gross salary” and “in-hand salary” are not
+              interchangeable terms. A good JPSC salary article should identify
+              which figure it is discussing.
+            </div>
+
+            <h3 class="sub">Why online salary tables can be misleading</h3>
+
+            <div class="misleading">
+              <div><b>Old notification</b><span>May reflect an earlier recruitment cycle.</span></div>
+              <div><b>Different post</b><span>Different services can have different pay structures.</span></div>
+              <div><b>Allowance change</b><span>Allowances can change under government orders.</span></div>
+              <div><b>Gross vs in-hand</b><span>Tax and other deductions affect take-home pay.</span></div>
+            </div>
+
+            <h2 id="allowances">3. Allowances & Benefits</h2>
+
+            <p>
+              Government employees can receive allowances and service benefits
+              under applicable rules. However, eligibility and rates can depend
+              on the post, posting, government orders and current rules.
+            </p>
+
+            <div class="benefits">
+              <div><span>PAY</span><strong>Basic pay</strong><p>Determined by the applicable pay structure.</p></div>
+              <div><span>ALLOWANCE</span><strong>Applicable allowances</strong><p>Depend on the relevant government rules and circumstances.</p></div>
+              <div><span>SERVICE</span><strong>Leave & service benefits</strong><p>Governed by applicable service regulations.</p></div>
+              <div><span>POSTING</span><strong>Location-linked provisions</strong><p>Some components can depend on posting and eligibility.</p></div>
+            </div>
+
+            <h2 id="profile">4. JPSC Job Profile: What Does an Officer Actually Do?</h2>
+
+            <p>
+              A government officer's work is much broader than the examination
+              syllabus. Depending on the service and posting, responsibilities
+              can include administration, field visits, implementation of
+              government schemes, inter-departmental coordination, public
+              grievance handling, records, reporting and supervision.
+            </p>
+
+            <div class="work-grid">
+              <div>
+                <span>ADMINISTRATION</span>
+                <h3>Coordinate government work</h3>
+                <p>Translate departmental decisions and government programmes into implementation.</p>
+              </div>
+              <div>
+                <span>FIELD WORK</span>
+                <h3>Understand ground reality</h3>
+                <p>Field responsibilities can require inspections, verification and interaction with local institutions.</p>
+              </div>
+              <div>
+                <span>PUBLIC SERVICE</span>
+                <h3>Handle citizen-facing issues</h3>
+                <p>Government administration often involves responding to public needs and grievances.</p>
+              </div>
+              <div>
+                <span>REPORTING</span>
+                <h3>Maintain accountability</h3>
+                <p>Files, records, reports and compliance are important parts of administrative work.</p>
+              </div>
+              <div>
+                <span>COORDINATION</span>
+                <h3>Work across departments</h3>
+                <p>Many public problems require coordination among multiple agencies.</p>
+              </div>
+              <div>
+                <span>SUPERVISION</span>
+                <h3>Monitor implementation</h3>
+                <p>Officers can supervise teams, programmes and institutional processes according to their role.</p>
+              </div>
+            </div>
+
+            <h2 id="responsibility">5. Authority Comes With Responsibility</h2>
+
+            <div class="authority">
+              <div>
+                <strong>Decision-making</strong>
+                <p>Use the powers legally assigned to the post.</p>
+              </div>
+              <div>
+                <strong>Accountability</strong>
+                <p>Decisions and expenditure can be subject to administrative and legal oversight.</p>
+              </div>
+              <div>
+                <strong>Public trust</strong>
+                <p>Government officers operate in a citizen-facing environment.</p>
+              </div>
+              <div>
+                <strong>Pressure</strong>
+                <p>Deadlines, public expectations and complex cases can make the work demanding.</p>
+              </div>
+            </div>
+
+            <h2 id="promotion">6. JPSC Promotion & Career Progression</h2>
+
+            <p>
+              Promotion should not be presented as one fixed ladder for every
+              JPSC service. The actual progression depends on the service/cadre,
+              recruitment rules, seniority, vacancies, performance and other
+              applicable conditions.
+            </p>
+
+            <div class="career-flow">
+              <span>ENTRY POST</span>
+              <b>→</b>
+              <span>EXPERIENCE</span>
+              <b>→</b>
+              <span>ELIGIBILITY UNDER RULES</span>
+              <b>→</b>
+              <strong>PROMOTION / PROGRESSION</strong>
+            </div>
+
+            <div class="rule-box">
+              <strong>Do not believe guaranteed promotion claims.</strong>
+              <p>
+                Any website promising a fixed number of years to a particular
+                senior post without identifying the applicable service rules is
+                oversimplifying the career structure.
+              </p>
+            </div>
+
+            <h2 id="posting">7. Posting & Work Environment</h2>
+
+            <p>
+              JPSC service should not be imagined as a single desk job. The
+              working environment can change significantly with department,
+              designation and posting.
+            </p>
+
+            <div class="posting-grid">
+              <div><b>Urban</b><span>Office administration, meetings, coordination and public-facing work.</span></div>
+              <div><b>District / field</b><span>Implementation, inspections, coordination and field administration.</span></div>
+              <div><b>Rural</b><span>Closer interaction with local institutions and development programmes.</span></div>
+              <div><b>Departmental</b><span>Policy implementation, files, monitoring and inter-agency coordination.</span></div>
+            </div>
+
+            <h2>8. Is JPSC Work Easy?</h2>
+
+            <p>
+              A government job should not be evaluated only through salary.
+              Administrative responsibility can involve difficult decisions,
+              public expectations, legal procedures, deadlines and resource
+              constraints.
+            </p>
+
+            <div class="balance">
+              <div class="positive">
+                <h3>Why aspirants value it</h3>
+                <ul>
+                  <li>Public-service orientation</li>
+                  <li>State-level administrative exposure</li>
+                  <li>Structured government career</li>
+                  <li>Professional responsibility</li>
+                  <li>Opportunity to work on public programmes</li>
+                </ul>
+              </div>
+              <div class="challenge">
+                <h3>What makes it demanding</h3>
+                <ul>
+                  <li>High public expectations</li>
+                  <li>Administrative deadlines</li>
+                  <li>Field-level complexity</li>
+                  <li>Legal and procedural accountability</li>
+                  <li>Transfers/posting-related uncertainty</li>
+                </ul>
+              </div>
+            </div>
+
+            <h2 id="skills">9. Skills You Need to Become a Good JPSC Officer</h2>
+
+            <div class="skills">
+              <div><b>01</b><strong>Analytical thinking</strong><p>Understand problems before deciding how to address them.</p></div>
+              <div><b>02</b><strong>Communication</strong><p>Explain decisions clearly to different stakeholders.</p></div>
+              <div><b>03</b><strong>Decision-making</strong><p>Work within rules while dealing with real-world constraints.</p></div>
+              <div><b>04</b><strong>Documentation</strong><p>Maintain accurate records and reports.</p></div>
+              <div><b>05</b><strong>Leadership</strong><p>Coordinate people and institutions.</p></div>
+              <div><b>06</b><strong>Empathy</strong><p>Understand citizen concerns without compromising procedure.</p></div>
+            </div>
+
+            <h2>10. JPSC vs Simply Chasing a Salary Figure</h2>
+
+            <p>
+              If you are choosing JPSC only because of a salary number found on
+              a website, your decision process is incomplete. Compare the
+              actual role, service, work environment, responsibility, career
+              progression and your interest in state administration.
+            </p>
+
+            <div class="decision">
+              <div><strong>Salary</strong><span>Financial component</span></div>
+              <div><strong>Role</strong><span>Nature of work</span></div>
+              <div><strong>Career</strong><span>Long-term progression</span></div>
+              <div><strong>Purpose</strong><span>Public-service motivation</span></div>
+            </div>
+
+            <h2 id="preparation">11. How to Prepare for JPSC</h2>
+
+            <p>
+              Once you decide that the career matches your goals, the next
+              question is preparation. Do not begin by collecting dozens of
+              books. Begin with the official syllabus, previous year questions
+              and a limited study-resource stack.
+            </p>
+
+            <div class="prep-flow">
+              <div><span>01</span><strong>Syllabus</strong><p>Know exactly what you must cover.</p></div>
+              <div><span>02</span><strong>Standard sources</strong><p>Build your core knowledge.</p></div>
+              <div><span>03</span><strong>PYQs</strong><p>Understand how JPSC asks questions.</p></div>
+              <div><span>04</span><strong>Revision</strong><p>Convert reading into retention.</p></div>
+              <div><span>05</span><strong>Mocks</strong><p>Measure speed, accuracy and weaknesses.</p></div>
+            </div>
+
+            <div class="related">
+              <a href="/blog/jpsc-prelims-syllabus/">
+                <span>START HERE</span>
+                <h3>JPSC Prelims Syllabus</h3>
+                <p>Break the examination into subjects and topics.</p>
+                <strong>Read syllabus →</strong>
+              </a>
+              <a href="/blog/jpsc-prelims-preparation-strategy/">
+                <span>THEN</span>
+                <h3>JPSC Preparation Strategy</h3>
+                <p>Build a practical preparation system.</p>
+                <strong>Read strategy →</strong>
+              </a>
+              <a href="/blog/jpsc-previous-year-question-papers/">
+                <span>ANALYSE</span>
+                <h3>JPSC PYQs</h3>
+                <p>Learn from questions actually asked by the examination.</p>
+                <strong>Read PYQ guide →</strong>
+              </a>
+            </div>
+
+            <h2 id="mock">12. PYQs + Mock Tests: The Performance Layer</h2>
+
+            <p>
+              Reading about JPSC posts does not improve your score. Performance
+              comes from repeatedly attempting questions, analysing errors and
+              retesting weak areas.
+            </p>
+
+            <div class="mock-system">
+              <div><span>PYQ</span><strong>Understand pattern</strong></div>
+              <b>→</b>
+              <div><span>REVISION</span><strong>Fix knowledge gaps</strong></div>
+              <b>→</b>
+              <div><span>MOCK</span><strong>Test under pressure</strong></div>
+              <b>→</b>
+              <div><span>ANALYSIS</span><strong>Find weaknesses</strong></div>
+              <b>→</b>
+              <div><span>RETEST</span><strong>Measure improvement</strong></div>
+            </div>
+
+            <div class="mock-cta">
+              <div>
+                <span>HABITAT IAS</span>
+                <h3>Ready to test your preparation?</h3>
+                <p>
+                  Start with a free JPSC-oriented mock and use the result to
+                  identify what you need to revise.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Free GS Mock →</a>
+                <a class="btn outline" href="/mock-tests/free-jharkhand/">Free Jharkhand Mock →</a>
+              </div>
+            </div>
+
+            <h2>13. Use JPSC's Official Information as the Final Authority</h2>
+
+            <p>
+              JPSC's website currently lists the Combined Civil Services
+              Examination-2025 under Advt. No. 01/2026 and provides the related
+              advertisement and amendment-rule documents. citeturn1search0turn0search2
+            </p>
+
+            <p>
+              The Commission's 2026 examination calendar also identifies
+              Combined Civil Services regular and backlog examinations and
+              states that the dates are liable to alteration. This illustrates
+              why candidates should check official updates rather than relying
+              permanently on a static blog. citeturn0search13
+            </p>
+
+            <div class="official">
+              <h3>Useful official sources</h3>
+              <a href="https://www.jpsc.gov.in/" target="_blank" rel="noopener noreferrer">
+                JPSC Official Website →
+              </a>
+              <a href="https://www.jpsc.gov.in/exam_files.php?id=13039" target="_blank" rel="noopener noreferrer">
+                Combined Civil Services Documents →
+              </a>
+              <a href="https://www.jpsc.gov.in/Examination-Links.php" target="_blank" rel="noopener noreferrer">
+                JPSC Examination Links →
+              </a>
+            </div>
+
+            <h2>14. JPSC Career Decision Checklist</h2>
+
+            <div class="checklist">
+              <div><b>✓</b><span>I understand that the exact post list depends on the recruitment notification.</span></div>
+              <div><b>✓</b><span>I will verify salary/pay from the applicable official rules.</span></div>
+              <div><b>✓</b><span>I understand that different services have different responsibilities.</span></div>
+              <div><b>✓</b><span>I understand that promotion is service/rule dependent.</span></div>
+              <div><b>✓</b><span>I am interested in public administration, not only salary.</span></div>
+              <div><b>✓</b><span>I am ready to prepare consistently for Prelims and later stages.</span></div>
+            </div>
+
+            <div class="book-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Now turn the career goal into an exam plan.</h2>
+                <p>
+                  Use structured JPSC PYQs, topic-wise revision and mock tests
+                  to move from interest to measurable preparation.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC</div>
+          <h2>Don't prepare only for a salary. Prepare for the responsibility.</h2>
+          <p>
+            Understand the career, verify the current recruitment rules and
+            build your preparation around syllabus, PYQs, revision and mocks.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/mock-tests/free-gs/">Free GS Mock →</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 135px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article h3 {
+    margin: 0 0 8px;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+
+  article p { color: #4c617e; }
+
+  .career-grid,
+  .post-map,
+  .misleading,
+  .benefits,
+  .work-grid,
+  .authority,
+  .posting-grid,
+  .skills,
+  .prep-flow,
+  .related,
+  .checklist {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .career-grid,
+  .post-map,
+  .benefits,
+  .work-grid,
+  .skills {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .misleading,
+  .authority,
+  .posting-grid,
+  .checklist {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .career-grid > div,
+  .post-map > div,
+  .misleading > div,
+  .benefits > div,
+  .work-grid > div,
+  .authority > div,
+  .posting-grid > div,
+  .skills > div,
+  .prep-flow > div,
+  .related > a,
+  .checklist > div {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .career-grid span,
+  .benefits span,
+  .work-grid span,
+  .prep-flow span,
+  .related span {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .career-grid p,
+  .post-map p,
+  .misleading span,
+  .benefits p,
+  .work-grid p,
+  .authority p,
+  .posting-grid span,
+  .skills p,
+  .prep-flow p,
+  .related p,
+  .checklist span {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .post-map > div { border-top: 4px solid var(--blue); }
+  .post-map strong { color: var(--dark); }
+
+  .official-box {
+    margin: 28px 0;
+    padding: 24px;
+    border-radius: 15px;
+    background: #eef4ff;
+  }
+
+  .official-box strong {
+    display: block;
+    color: var(--dark);
+  }
+
+  .official-box p { margin: 6px 0 12px; }
+  .official-box a,
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .pay-flow,
+  .career-flow,
+  .mock-system {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin: 28px 0;
+  }
+
+  .pay-flow > div,
+  .mock-system > div {
+    min-height: 130px;
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .pay-flow span,
+  .mock-system span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .pay-flow strong,
+  .mock-system strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--dark);
+  }
+
+  .pay-flow p,
+  .mock-system p { margin: 0; font-size: 13px; }
+  .pay-flow > b,
+  .career-flow > b,
+  .mock-system > b { color: #8ba0bf; }
+
+  .important,
+  .rule-box {
+    padding: 20px 22px;
+    border-radius: 13px;
+    background: #fffbed;
+    color: #6e6240;
+  }
+
+  .important strong,
+  .rule-box strong { color: var(--dark); }
+
+  .misleading > div { background: white; }
+  .misleading b {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--dark);
+  }
+
+  .benefits > div { border-top: 4px solid var(--blue); }
+
+  .work-grid > div { border-top: 4px solid #6f88ad; }
+
+  .authority > div {
+    border-left: 4px solid var(--blue);
+    background: white;
+  }
+
+  .authority strong {
+    display: block;
+    color: var(--dark);
+    margin-bottom: 5px;
+  }
+
+  .career-flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 25px;
+    border-radius: 15px;
+    background: #eef4ff;
+  }
+
+  .career-flow span,
+  .career-flow strong {
+    padding: 10px 13px;
+    border-radius: 8px;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .career-flow strong { color: var(--green); }
+
+  .posting-grid > div { background: white; }
+  .posting-grid b {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--dark);
+  }
+
+  .balance {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 13px;
+    margin: 28px 0;
+  }
+
+  .balance > div {
+    padding: 25px;
+    border-radius: 15px;
+  }
+
+  .balance .positive {
+    background: #f1f8f4;
+    border: 1px solid #d5eadd;
+  }
+
+  .balance .challenge {
+    background: #fffbed;
+    border: 1px solid #eadfb0;
+  }
+
+  .balance ul {
+    margin: 10px 0 0;
+    padding-left: 20px;
+    color: #536780;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .skills > div { text-align: center; }
+  .skills b {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 10px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--dark);
+    font-size: 10px;
+  }
+
+  .skills strong { color: var(--dark); }
+
+  .prep-flow {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .prep-flow > div { min-height: 145px; }
+
+  .related {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .related > a {
+    background: white;
+    transition: .2s;
+  }
+
+  .related > a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(16,42,97,.08);
+  }
+
+  .related h3 { font-size: 20px; }
+  .related strong {
+    display: block;
+    margin-top: 14px;
+    color: var(--blue);
+    font-size: 13px;
+  }
+
+  .mock-cta,
+  .book-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 40px 0;
+    padding: 33px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .mock-cta span,
+  .book-cta span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .mock-cta h3,
+  .book-cta h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .mock-cta p,
+  .book-cta p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .official {
+    margin: 28px 0;
+    padding: 27px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official h3 { margin-top: 0; }
+  .official a {
+    display: inline-block;
+    margin: 4px 18px 4px 0;
+  }
+
+  .checklist > div {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #f1f8f4;
+    border-color: #d5eadd;
+  }
+
+  .checklist b {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    font-size: 13px;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .career-grid,
+    .post-map,
+    .benefits,
+    .work-grid,
+    .skills,
+    .prep-flow,
+    .related {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .misleading,
+    .authority,
+    .posting-grid,
+    .checklist {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .career-grid,
+    .post-map,
+    .misleading,
+    .benefits,
+    .work-grid,
+    .authority,
+    .posting-grid,
+    .skills,
+    .prep-flow,
+    .related,
+    .checklist,
+    .balance {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .mock-cta,
+    .book-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .pay-flow,
+    .mock-system {
+      grid-template-columns: 1fr;
+    }
+
+    .pay-flow > b,
+    .mock-system > b {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .career-flow {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .toc {
+      position: static;
+    }
+  }
+</style>

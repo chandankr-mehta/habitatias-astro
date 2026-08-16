@@ -1,4 +1,68 @@
 ---
+import { createClient } from "@supabase/supabase-js";
+import { checkMockAccess } from "../lib/mockAccess";
+
+export const prerender = false;
+
+/* =====================================================
+   CORE SERIES ACCESS
+   Uses the SAME authentication and entitlement system
+   used by /mock-tests and the CBT.
+
+   PAID PURCHASE OR MANUAL ADMIN ACCESS = ACTIVE
+====================================================== */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+let coreSeriesAccess = false;
+
+if (supabaseUrl && serviceRoleKey) {
+
+  const supabaseAdmin =
+    createClient(
+      supabaseUrl,
+      serviceRoleKey,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false,
+        },
+      }
+    );
+
+  const accessToken =
+    Astro.cookies.get(
+      "habitat-access-token"
+    )?.value;
+
+  if (accessToken) {
+
+    const {
+      data: authData,
+      error: authError,
+    } = await supabaseAdmin.auth.getUser(
+      accessToken
+    );
+
+    if (
+      !authError &&
+      authData?.user?.id
+    ) {
+
+      const access =
+        await checkMockAccess(
+          authData.user.id
+        );
+
+      coreSeriesAccess =
+        access.allowed;
+    }
+  }
+}
 ---
 
 <!DOCTYPE html>
@@ -590,7 +654,7 @@
       display: grid;
 
       grid-template-columns:
-        repeat(4, 1fr);
+        repeat(5, 1fr);
 
       gap: 15px;
 
@@ -859,6 +923,55 @@
 
       background:
         #0b55a5;
+    }
+
+    .series-access-area {
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: flex-end;
+
+      gap: 8px;
+
+      min-width: 170px;
+    }
+
+
+    .series-access-status {
+
+      padding: 6px 9px;
+
+      border-radius: 7px;
+
+      font-size: 8px;
+
+      font-weight: 900;
+
+      text-align: center;
+
+      white-space: nowrap;
+    }
+
+
+    .series-access-status.active {
+
+      color: #15803d;
+
+      background: #ecfdf5;
+
+      border: 1px solid #bbf7d0;
+    }
+
+
+    .series-access-status.locked {
+
+      color: #b45309;
+
+      background: #fffbeb;
+
+      border: 1px solid #fde68a;
     }
 
 
@@ -1506,6 +1619,93 @@
 
 
     /* =====================================================
+       COMPETITIVE RANKING
+       ====================================================== */
+
+    .ranking-card {
+      padding: 20px;
+      background: #fff;
+      border: 1px solid #e2eaf3;
+      border-radius: 14px;
+      box-shadow: 0 5px 18px rgba(20,50,90,.035);
+    }
+
+    .ranking-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .ranking-title {
+      color: #17385f;
+      font-size: 13px;
+      font-weight: 950;
+    }
+
+    .ranking-subtitle {
+      margin-top: 4px;
+      color: #8b9aac;
+      font-size: 9px;
+      line-height: 1.5;
+    }
+
+    .ranking-badge {
+      padding: 5px 8px;
+      border-radius: 6px;
+      color: #15803d;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      font-size: 7px;
+      font-weight: 950;
+      letter-spacing: .6px;
+    }
+
+    .ranking-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .ranking-item {
+      padding: 14px;
+      border-radius: 11px;
+      background: #f8fafc;
+      border: 1px solid #edf2f7;
+    }
+
+    .ranking-item-label {
+      color: #8a9aae;
+      font-size: 8px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+    }
+
+    .ranking-item-value {
+      margin-top: 7px;
+      color: #17385f;
+      font-size: 22px;
+      font-weight: 950;
+    }
+
+    .ranking-item-sub {
+      margin-top: 3px;
+      color: #9aa8b8;
+      font-size: 8px;
+    }
+
+    @media (max-width: 600px) {
+
+      .ranking-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+
+    /* =====================================================
        PROGRESS REPORT
        ====================================================== */
 
@@ -1758,6 +1958,16 @@
        RESPONSIVE
     ====================================================== */
 
+    @media (max-width: 1200px) {
+
+      .stats {
+
+        grid-template-columns:
+          repeat(3, 1fr);
+      }
+
+    }
+
     @media (max-width: 1000px) {
 
       .stats {
@@ -1878,7 +2088,23 @@
 
     }
 
-  </style>
+  
+    @media (max-width: 600px) {
+
+      .series-access-area {
+
+        width: 100%;
+
+        align-items: stretch;
+      }
+
+      .series-access-status {
+
+        white-space: normal;
+      }
+    }
+
+</style>
 
 </head>
 
@@ -2287,6 +2513,39 @@
         </div>
 
 
+        <div class="stat">
+
+          <div class="stat-top">
+
+            <span class="stat-label">
+              Overall Rank
+            </span>
+
+            <span class="stat-icon">
+              🏅
+            </span>
+
+          </div>
+
+
+          <div
+            class="stat-value"
+            id="overallRank"
+          >
+            —
+          </div>
+
+
+          <div
+            class="stat-sub"
+            id="overallRankSub"
+          >
+            Complete a test to get ranked
+          </div>
+
+        </div>
+
+
       </section>
 
 
@@ -2343,6 +2602,109 @@
             </div>
 
           </div>
+
+
+          <!-- =================================================
+               COMPETITIVE POSITION
+          ================================================== -->
+
+          <div
+            class="ranking-card"
+            id="rankingCard"
+          >
+
+            <div class="ranking-header">
+
+              <div>
+
+                <div class="ranking-title">
+                  Competitive Position
+                </div>
+
+                <div class="ranking-subtitle">
+                  Your current standing among students who have submitted a mock test
+                </div>
+
+              </div>
+
+              <div class="ranking-badge">
+                LIVE
+              </div>
+
+            </div>
+
+
+            <div class="ranking-grid">
+
+              <div class="ranking-item">
+
+                <div class="ranking-item-label">
+                  Overall Rank
+                </div>
+
+                <div
+                  class="ranking-item-value"
+                  id="rankingOverall"
+                >
+                  —
+                </div>
+
+                <div
+                  class="ranking-item-sub"
+                  id="rankingOverallSub"
+                >
+                  Complete a test to appear here
+                </div>
+
+              </div>
+
+
+              <div class="ranking-item">
+
+                <div class="ranking-item-label">
+                  Latest Test Rank
+                </div>
+
+                <div
+                  class="ranking-item-value"
+                  id="rankingLatest"
+                >
+                  —
+                </div>
+
+                <div
+                  class="ranking-item-sub"
+                  id="rankingLatestSub"
+                >
+                  Complete a test to appear here
+                </div>
+
+              </div>
+
+
+              <div class="ranking-item">
+
+                <div class="ranking-item-label">
+                  Percentile
+                </div>
+
+                <div
+                  class="ranking-item-value"
+                  id="rankingPercentile"
+                >
+                  —
+                </div>
+
+                <div class="ranking-item-sub">
+                  Overall performance
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
 
           <div class="progress-grid">
 
@@ -2491,12 +2853,39 @@
           </div>
 
 
-          <a
-            href="/mock-tests"
-            class="series-button"
-          >
-            View Tests →
-          </a>
+          <div class="series-access-area">
+
+            <div
+              class:list={[
+                "series-access-status",
+                coreSeriesAccess
+                  ? "active"
+                  : "locked"
+              ]}
+            >
+              {
+                coreSeriesAccess
+                  ? "✓ Core Series Access Active"
+                  : "🔒 Access Required"
+              }
+            </div>
+
+            <a
+              href={
+                coreSeriesAccess
+                  ? "/mock-tests"
+                  : "/mock-tests/buy/"
+              }
+              class="series-button"
+            >
+              {
+                coreSeriesAccess
+                  ? "Open Test Series →"
+                  : "View Access Options →"
+              }
+            </a>
+
+          </div>
 
 
         </div>
@@ -2744,6 +3133,28 @@
 
     const progressInsight =
       document.getElementById("progressInsight");
+
+
+    const overallRank =
+      document.getElementById("overallRank");
+
+    const overallRankSub =
+      document.getElementById("overallRankSub");
+
+    const rankingOverall =
+      document.getElementById("rankingOverall");
+
+    const rankingOverallSub =
+      document.getElementById("rankingOverallSub");
+
+    const rankingLatest =
+      document.getElementById("rankingLatest");
+
+    const rankingLatestSub =
+      document.getElementById("rankingLatestSub");
+
+    const rankingPercentile =
+      document.getElementById("rankingPercentile");
 
 
     /* =====================================================
@@ -3221,6 +3632,203 @@
     }
 
 
+    /* =====================================================
+       LOAD LIVE STUDENT RANKING
+    ====================================================== */
+
+    async function loadStudentRanking(
+      userId,
+      latestTestId
+    ) {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabase.rpc(
+            "get_student_ranking",
+            {
+              p_user_id: userId,
+              p_latest_test_id:
+                latestTestId || null
+            }
+          );
+
+
+        if (error) {
+
+          console.error(
+            "Unable to load student ranking:",
+            error
+          );
+
+          return;
+        }
+
+
+        if (!data) {
+          return;
+        }
+
+
+        /* ---------------------------------------------
+           OVERALL RANK
+        --------------------------------------------- */
+
+        if (
+          data.overall_rank &&
+          data.total_students
+        ) {
+
+          const rank =
+            Number(data.overall_rank);
+
+          const total =
+            Number(data.total_students);
+
+
+          if (overallRank) {
+
+            overallRank.textContent =
+              `#${rank}`;
+
+          }
+
+
+          if (overallRankSub) {
+
+            overallRankSub.textContent =
+              `of ${total} ranked students`;
+
+          }
+
+
+          if (rankingOverall) {
+
+            rankingOverall.textContent =
+              `#${rank}`;
+
+          }
+
+
+          if (rankingOverallSub) {
+
+            rankingOverallSub.textContent =
+              `of ${total} students`;
+
+          }
+
+        } else {
+
+          if (overallRank) {
+            overallRank.textContent = "—";
+          }
+
+          if (overallRankSub) {
+            overallRankSub.textContent =
+              "Complete a test to get ranked";
+          }
+
+          if (rankingOverall) {
+            rankingOverall.textContent = "—";
+          }
+
+          if (rankingOverallSub) {
+            rankingOverallSub.textContent =
+              "Complete a test to appear here";
+          }
+
+        }
+
+
+        /* ---------------------------------------------
+           PERCENTILE
+        --------------------------------------------- */
+
+        if (rankingPercentile) {
+
+          if (
+            data.total_students &&
+            Number(data.total_students) > 0
+          ) {
+
+            rankingPercentile.textContent =
+              `${Number(
+                data.percentile || 0
+              ).toFixed(1)}%`;
+
+          } else {
+
+            rankingPercentile.textContent =
+              "—";
+
+          }
+
+        }
+
+
+        /* ---------------------------------------------
+           LATEST TEST RANK
+        --------------------------------------------- */
+
+        if (
+          data.latest_test_rank &&
+          data.latest_test_total
+        ) {
+
+          if (rankingLatest) {
+
+            rankingLatest.textContent =
+              `#${Number(
+                data.latest_test_rank
+              )}`;
+
+          }
+
+
+          if (rankingLatestSub) {
+
+            rankingLatestSub.textContent =
+              `of ${Number(
+                data.latest_test_total
+              )} participants`;
+
+          }
+
+        } else {
+
+          if (rankingLatest) {
+            rankingLatest.textContent =
+              "—";
+          }
+
+          if (rankingLatestSub) {
+
+            rankingLatestSub.textContent =
+              "No test ranking yet";
+
+          }
+
+        }
+
+      } catch (error) {
+
+        console.error(
+          "Unexpected ranking error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       LOAD TEST HISTORY + PERFORMANCE
+    ====================================================== */
+
     async function loadTestHistory(userId) {
 
       if (!activityContainer) {
@@ -3521,6 +4129,21 @@
 
         renderProgressReport(
           performance
+        );
+
+
+        /* ---------------------------------------------
+           LIVE COMPETITIVE RANKING
+        --------------------------------------------- */
+
+        const latestAttempt =
+          safeAttempts.length > 0
+            ? safeAttempts[0]
+            : null;
+
+        await loadStudentRanking(
+          userId,
+          latestAttempt?.test_id || null
         );
 
 
@@ -3863,4 +4486,4 @@
 
 </body>
 
-</html>
+</html>a

@@ -465,12 +465,20 @@ export const POST: APIRoute =
         );
 
 
+      const isOpenFreeMock =
+        testNumber === 21 ||
+        testNumber === 22;
+
+
       if (
-        !Number.isSafeInteger(
-          testNumber
-        ) ||
-        testNumber < 1 ||
-        testNumber > 20
+        !isOpenFreeMock &&
+        (
+          !Number.isSafeInteger(
+            testNumber
+          ) ||
+          testNumber < 1 ||
+          testNumber > 20
+        )
       ) {
 
         return jsonResponse(
@@ -498,16 +506,26 @@ export const POST: APIRoute =
        *   jpsc_prelims_20_test_series
        *
        * Coverage:
-       *   Tests 1Ã¢â‚¬â€œ20
+       *   Tests 1ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“20
        *
        * Login alone is never sufficient.
        */
 
       const access =
-        await checkTestAccess(
-          userId,
-          testNumber
-        );
+        isOpenFreeMock
+          ? {
+              allowed: true,
+              reason: "allowed" as const,
+              purchaseId: null,
+              productId: null,
+              paymentStatus: "free",
+              releaseAt: null,
+              testLive: null,
+            }
+          : await checkTestAccess(
+              userId,
+              testNumber
+            );
 
 
       if (!access.allowed) {

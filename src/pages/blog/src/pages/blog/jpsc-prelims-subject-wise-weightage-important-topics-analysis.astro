@@ -1,0 +1,1023 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Prelims Subject-Wise Weightage: Important Topics, PYQ Trend & Priority Strategy";
+const description =
+  "JPSC Prelims subject-wise weightage and topic-priority guide based on PYQ analysis. Learn how to prioritise History, Geography, Polity, Economy, Science, Environment, Current Affairs and Jharkhand-specific topics.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-prelims-subject-wise-weightage-important-topics-analysis/";
+
+const faqs = [
+  {
+    q: "Which subjects are most important for JPSC Prelims?",
+    a: "All subjects in the official syllabus matter, but PYQ analysis can help identify recurring themes and high-priority areas. Candidates should prioritise according to the latest syllabus, recent papers and their own error pattern rather than relying on a fixed permanent weightage.",
+  },
+  {
+    q: "Does JPSC have a fixed subject-wise weightage every year?",
+    a: "You should not assume a fixed permanent subject-wise distribution. Question composition can vary by examination cycle. Use previous papers to identify trends, but prepare according to the current official syllabus.",
+  },
+  {
+    q: "How can I identify high-weightage JPSC topics?",
+    a: "Analyse multiple previous papers, classify each question under a consistent syllabus taxonomy, count occurrences, and then combine frequency with recency, syllabus importance and your personal accuracy.",
+  },
+  {
+    q: "Should I skip low-frequency topics?",
+    a: "Generally, no. Low frequency does not mean impossible. Finish the high-priority core first, then cover lower-frequency syllabus areas so that your preparation is not exposed to avoidable gaps.",
+  },
+  {
+    q: "How can topic-wise PYQs help with JPSC weightage?",
+    a: "Topic-wise PYQs allow you to see question distribution at a finer level than a generic subject list. They also help you understand what JPSC actually tests inside a broad subject.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-17",
+  dateModified: "2026-08-17",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content="JPSC subject wise weightage, JPSC prelims weightage, JPSC important topics, JPSC subject wise questions, JPSC PYQ analysis, JPSC important subjects, JPSC prelims important topics, JPSC topic wise PYQ" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Weightage</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PRELIMS • PYQ ANALYSIS • WEIGHTAGE</div>
+          <h1>
+            Study Less Randomly.
+            <span>Prioritise Better.</span>
+          </h1>
+          <p class="hero-text">
+            A practical JPSC Prelims subject-wise and topic-wise priority guide:
+            use previous-year questions to identify recurring areas, combine
+            frequency with syllabus coverage, and build a smarter revision order.
+          </p>
+          <div class="meta">
+            <span>Updated: 17 August 2026</span><span>•</span>
+            <span>Habitat IAS</span><span>•</span><span>JPSC Prelims</span>
+          </div>
+          <div class="buttons">
+            <a class="btn yellow" href="#priority">See Priority Matrix ↓</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="notice">
+        <div class="container">
+          <div class="notice-box">
+            <strong>Important:</strong>
+            There is no permanent “fixed weightage” guarantee for every JPSC
+            cycle. The priority framework on this page is a PYQ-analysis method,
+            not a promise about the next paper. Always follow the latest official
+            JPSC syllabus and examination notification.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>01</b><span>Frequency</span><p>How often has the area appeared in analysed papers?</p></div>
+          <div><b>02</b><span>Recency</span><p>How recently has the area been tested?</p></div>
+          <div><b>03</b><span>Coverage</span><p>How much of the syllabus does the topic connect?</p></div>
+          <div><b>04</b><span>Accuracy</span><p>How strong are you in that topic?</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#meaning">What weightage means</a>
+            <a href="#subjects">Subject priority</a>
+            <a href="#history">History</a>
+            <a href="#geography">Geography</a>
+            <a href="#polity">Polity</a>
+            <a href="#economy">Economy</a>
+            <a href="#science">Science</a>
+            <a href="#environment">Environment</a>
+            <a href="#current">Current Affairs</a>
+            <a href="#jharkhand">Jharkhand</a>
+            <a href="#priority">Priority matrix</a>
+            <a href="#pyq">PYQ method</a>
+            <a href="#revision">Revision order</a>
+            <a href="#mock">Mock strategy</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              “Weightage” should not mean blindly predicting the next paper.
+              The useful interpretation is <strong>evidence-based priority</strong>:
+              where should you spend your limited preparation time first?
+            </p>
+
+            <h2 id="meaning">1. What Does JPSC Subject-Wise Weightage Actually Mean?</h2>
+            <p>
+              A previous paper can tell you how questions were distributed in a
+              particular cycle. Multiple papers can reveal a trend. But a trend
+              is not a guarantee. The best strategy is therefore to combine
+              historical frequency with the current syllabus and your own
+              performance.
+            </p>
+
+            <div class="formula">
+              <strong>Priority Score = Frequency + Recency + Syllabus Importance + Personal Weakness</strong>
+              <span>Use this to decide study order—not to eliminate syllabus areas.</span>
+            </div>
+
+            <h2 id="subjects">2. Subject-Wise Priority Framework</h2>
+
+            <div class="subjects">
+              <div><b>HISTORY</b><strong>High attention</strong><span>Build chronology, themes and PYQ-linked facts.</span></div>
+              <div><b>GEOGRAPHY</b><strong>High attention</strong><span>Combine concepts, maps, India and resource geography.</span></div>
+              <div><b>POLITY</b><strong>High attention</strong><span>Constitutional concepts plus application-based questions.</span></div>
+              <div><b>ECONOMY</b><strong>High attention</strong><span>Static concepts connected to current developments.</span></div>
+              <div><b>SCIENCE</b><strong>Broad coverage</strong><span>Prioritise recurring school-level concepts and applied science.</span></div>
+              <div><b>ENVIRONMENT</b><strong>Integrated</strong><span>Ecology, conservation, climate and current affairs.</span></div>
+              <div><b>CURRENT AFFAIRS</b><strong>Continuous</strong><span>Link events to static syllabus concepts.</span></div>
+              <div><b>JHARKHAND</b><strong>Dedicated</strong><span>Prepare state-specific topics systematically, not as random GK.</span></div>
+            </div>
+
+            <div class="tip">
+              <strong>Do not use this as a skip-list.</strong>
+              “High attention” means start earlier and revise more frequently.
+              It does not mean other syllabus areas can safely be ignored.
+            </div>
+
+            <h2 id="history">3. History: How to Prioritise</h2>
+
+            <div class="topic-grid">
+              <div><b>MODERN INDIA</b><span>National movement, colonial developments, organisations, personalities and chronology.</span></div>
+              <div><b>ANCIENT INDIA</b><span>Major civilisations, religions, culture, institutions and archaeological themes.</span></div>
+              <div><b>MEDIEVAL INDIA</b><span>Major political developments, culture, administration and regional developments.</span></div>
+              <div><b>JHARKHAND HISTORY</b><span>Regional history, resistance, movements and state formation.</span></div>
+            </div>
+
+            <p>
+              For history, frequency alone is insufficient. One broad theme can
+              generate several different question forms. Study the underlying
+              topic and then solve its PYQs.
+            </p>
+
+            <h2 id="geography">4. Geography: Map + Concept + PYQ</h2>
+
+            <div class="topic-grid">
+              <div><b>PHYSICAL</b><span>Landforms, climate, rivers, soils and natural processes.</span></div>
+              <div><b>INDIA</b><span>Resources, agriculture, industries, population and regional geography.</span></div>
+              <div><b>JHARKHAND</b><span>Plateaus, rivers, minerals, forests, districts and industries.</span></div>
+              <div><b>MAP WORK</b><span>Locations convert static knowledge into fast recall.</span></div>
+            </div>
+
+            <div class="tip">
+              <strong>Geography rule:</strong>
+              Whenever a PYQ contains a place, locate it on a map. The spatial
+              association often creates stronger long-term recall.
+            </div>
+
+            <h2 id="polity">5. Polity: Prioritise the Constitution, Not Just Facts</h2>
+
+            <div class="topic-grid">
+              <div><b>CONSTITUTION</b><span>Features, sources, amendments and constitutional architecture.</span></div>
+              <div><b>FUNDAMENTAL RIGHTS</b><span>Rights, restrictions and important constitutional concepts.</span></div>
+              <div><b>PARLIAMENT</b><span>Legislative procedure, privileges, committees and functioning.</span></div>
+              <div><b>EXECUTIVE</b><span>President, Vice-President, Council of Ministers and governance.</span></div>
+              <div><b>JUDICIARY</b><span>Supreme Court, High Courts, judicial review and related concepts.</span></div>
+              <div><b>FEDERALISM</b><span>Centre-state relations, institutions and constitutional mechanisms.</span></div>
+            </div>
+
+            <p>
+              Polity rewards conceptual understanding because a familiar
+              constitutional provision can be presented through an unfamiliar
+              statement or application.
+            </p>
+
+            <h2 id="economy">6. Economy: Static + Current Affairs</h2>
+
+            <div class="topic-grid">
+              <div><b>BASIC CONCEPTS</b><span>GDP, inflation, unemployment, fiscal policy and monetary policy.</span></div>
+              <div><b>BANKING</b><span>Money, credit, RBI functions and financial institutions.</span></div>
+              <div><b>PUBLIC FINANCE</b><span>Budget, taxation, expenditure and fiscal indicators.</span></div>
+              <div><b>DEVELOPMENT</b><span>Poverty, human development, infrastructure and inclusive growth.</span></div>
+              <div><b>AGRICULTURE</b><span>Markets, productivity, subsidies and rural economy.</span></div>
+              <div><b>CURRENT LINK</b><span>Use recent economic events to reinforce static concepts.</span></div>
+            </div>
+
+            <h2 id="science">7. Science & Technology: Don't Study Everything Equally</h2>
+
+            <div class="science">
+              <div><b>PHYSICS</b><span>Everyday applications, mechanics, optics, electricity, heat and sound.</span></div>
+              <div><b>CHEMISTRY</b><span>Basic chemistry, materials, reactions and everyday applications.</span></div>
+              <div><b>BIOLOGY</b><span>Human biology, diseases, genetics, ecology and life processes.</span></div>
+              <div><b>SPACE</b><span>Important missions, technologies and basic concepts.</span></div>
+              <div><b>DEFENCE TECH</b><span>Major technologies and developments relevant to current affairs.</span></div>
+              <div><b>COMPUTER / IT</b><span>Fundamentals, digital technologies and important contemporary developments.</span></div>
+            </div>
+
+            <h2 id="environment">8. Environment: An Integrated Subject</h2>
+
+            <div class="environment">
+              <div><b>ECOLOGY</b><span>Ecosystems, food chains, biodiversity and ecological relationships.</span></div>
+              <div><b>BIODIVERSITY</b><span>Species, conservation, protected areas and threats.</span></div>
+              <div><b>CLIMATE</b><span>Climate change, mitigation, adaptation and institutions.</span></div>
+              <div><b>POLLUTION</b><span>Air, water, soil, waste and control mechanisms.</span></div>
+              <div><b>JHARKHAND</b><span>Forests, wildlife, mining impacts and conservation issues.</span></div>
+            </div>
+
+            <h2 id="current">9. Current Affairs: Never Treat It as a Separate Island</h2>
+
+            <p>
+              The strongest current-affairs preparation connects a recent event
+              with the static concept behind it. For example, a new international
+              agreement can become an international-relations question; a new
+              conservation decision can connect environment with geography.
+            </p>
+
+            <div class="current">
+              <div><b>EVENT</b><span>What happened?</span></div>
+              <div><b>BACKGROUND</b><span>What static concept explains it?</span></div>
+              <div><b>INSTITUTION</b><span>Who is involved?</span></div>
+              <div><b>LOCATION</b><span>Where is it relevant?</span></div>
+              <div><b>IMPACT</b><span>Why does it matter?</span></div>
+              <div><b>PYQ LINK</b><span>Which syllabus topic can produce a question?</span></div>
+            </div>
+
+            <h2 id="jharkhand">10. Jharkhand-Specific Weightage: Build a Separate Priority List</h2>
+
+            <p>
+              Jharkhand should not be buried inside generic General Studies notes.
+              Maintain a separate state-specific priority sheet and update it
+              continuously.
+            </p>
+
+            <div class="jharkhand">
+              <div><b>HISTORY</b><span>Regional history and important developments.</span></div>
+              <div><b>MOVEMENT</b><span>Jharkhand Movement and state formation.</span></div>
+              <div><b>TRIBES</b><span>Communities, identity and society.</span></div>
+              <div><b>CULTURE</b><span>Literature, language, dance, music and festivals.</span></div>
+              <div><b>GEOGRAPHY</b><span>Districts, rivers, minerals and forests.</span></div>
+              <div><b>LAND LAWS</b><span>CNT, SPT and other syllabus-linked laws.</span></div>
+              <div><b>ECONOMY</b><span>Industries, development and policies.</span></div>
+              <div><b>SCHEMES</b><span>State government programmes.</span></div>
+              <div><b>ENVIRONMENT</b><span>Forests, wildlife and conservation.</span></div>
+              <div><b>DISASTER</b><span>State-specific disaster-management issues.</span></div>
+              <div><b>CURRENT</b><span>Recent Jharkhand developments.</span></div>
+              <div><b>MISC.</b><span>Education, sports, institutions and other syllabus areas.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JHARKHAND SPECIAL</span>
+                <h2>Turn Jharkhand into a scoring advantage.</h2>
+                <p>
+                  Study state-specific topics through the syllabus, PYQs and
+                  targeted mocks instead of scattered facts.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/blog/jpsc-prelims-paper-2-jharkhand-gk-syllabus-strategy-2026/">Paper 2 Guide →</a>
+                <a class="btn outline" href="/book/">PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2 id="priority">11. The JPSC Priority Matrix</h2>
+
+            <p>
+              This is more useful than a static “top 10 subjects” list because
+              it changes according to your performance.
+            </p>
+
+            <div class="matrix">
+              <div><b>HIGH FREQUENCY</b><strong>HIGH WEAKNESS</strong><span>Priority 1: study + revise + test.</span></div>
+              <div><b>HIGH FREQUENCY</b><strong>LOW WEAKNESS</strong><span>Priority 2: maintain through revision.</span></div>
+              <div><b>LOW FREQUENCY</b><strong>HIGH WEAKNESS</strong><span>Priority 3: cover after core areas.</span></div>
+              <div><b>LOW FREQUENCY</b><strong>LOW WEAKNESS</strong><span>Priority 4: periodic revision.</span></div>
+            </div>
+
+            <h2>12. Why “Most Important Topics” Lists Can Mislead You</h2>
+
+            <p>
+              Search engines are full of lists claiming that a particular topic
+              is guaranteed to appear. That is not a sound preparation model.
+              Historical frequency is useful evidence, but examination questions
+              can move across the syllabus.
+            </p>
+
+            <div class="myths">
+              <div><b>MYTH</b><span>“This topic appeared often, so it must appear again.”</span></div>
+              <div><b>REALITY</b><span>Frequency raises priority; it does not guarantee recurrence.</span></div>
+              <div><b>MYTH</b><span>“This topic appeared once, so it is unimportant.”</span></div>
+              <div><b>REALITY</b><span>Low frequency does not mean zero probability.</span></div>
+            </div>
+
+            <h2 id="pyq">13. How to Calculate Your Own Weightage</h2>
+
+            <p>
+              Instead of depending on someone else's chart, build your own
+              database from the papers you solve.
+            </p>
+
+            <div class="steps">
+              <div><b>01</b><span>Collect multiple JPSC Preliminary papers.</span></div>
+              <div><b>02</b><span>Create one consistent subject taxonomy.</span></div>
+              <div><b>03</b><span>Assign every question to one primary topic.</span></div>
+              <div><b>04</b><span>Count questions by subject and topic.</span></div>
+              <div><b>05</b><span>Separate recent from older papers.</span></div>
+              <div><b>06</b><span>Compare frequency with your accuracy.</span></div>
+              <div><b>07</b><span>Create Priority 1–4 groups.</span></div>
+              <div><b>08</b><span>Update the list after every new paper.</span></div>
+            </div>
+
+            <div class="formula">
+              <strong>Your own PYQ database beats a generic “important topics” list.</strong>
+              <span>It reflects both JPSC's historical questions and your personal gaps.</span>
+            </div>
+
+            <h2>14. Topic-Level Analysis Is Better Than Subject-Level Analysis</h2>
+
+            <p>
+              “History” is too broad to guide revision. A useful analysis might
+              separate modern history, constitutional development, regional
+              movements, ancient culture and so on. The same principle applies
+              to geography, science, economy and Jharkhand-specific material.
+            </p>
+
+            <div class="granular">
+              <div><b>SUBJECT</b><span>Geography</span></div>
+              <i>→</i>
+              <div><b>AREA</b><span>India Geography</span></div>
+              <i>→</i>
+              <div><b>TOPIC</b><span>Resources</span></div>
+              <i>→</i>
+              <div><b>CONCEPT</b><span>Mineral distribution</span></div>
+              <i>→</i>
+              <div><b>PYQ</b><span>Actual question</span></div>
+            </div>
+
+            <h2 id="revision">15. Priority-Based Revision Order</h2>
+
+            <div class="revision">
+              <div><span>RANK 1</span><strong>Core + Weak</strong><p>High-frequency areas where your accuracy is low.</p></div>
+              <div><span>RANK 2</span><strong>Core + Strong</strong><p>Maintain with spaced revision and PYQs.</p></div>
+              <div><span>RANK 3</span><strong>Peripheral + Weak</strong><p>Cover after the core syllabus is stable.</p></div>
+              <div><span>RANK 4</span><strong>Peripheral + Strong</strong><p>Use short periodic revision.</p></div>
+            </div>
+
+            <h2>16. A Weekly Study Distribution</h2>
+
+            <div class="week">
+              <div><b>MON</b><span>Polity + PYQ</span></div>
+              <div><b>TUE</b><span>History + PYQ</span></div>
+              <div><b>WED</b><span>Geography + Map</span></div>
+              <div><b>THU</b><span>Economy + Current</span></div>
+              <div><b>FRI</b><span>Science + Environment</span></div>
+              <div><b>SAT</b><span>Jharkhand Special</span></div>
+              <div><b>SUN</b><span>Mock + Analysis</span></div>
+            </div>
+
+            <p>
+              The exact daily hours should be adapted to your schedule. The key
+              principle is that every week should contain all three components:
+              <strong>learning, PYQs and testing.</strong>
+            </p>
+
+            <h2 id="mock">17. Use Mocks to Validate Your Weightage Strategy</h2>
+
+            <div class="mock">
+              <div><b>BEFORE MOCK</b><span>Choose topics based on your priority matrix.</span></div>
+              <div><b>ATTEMPT</b><span>Take the test under timed conditions.</span></div>
+              <div><b>ANALYSE</b><span>Find which “high-priority” topics are still weak.</span></div>
+              <div><b>UPDATE</b><span>Change your study allocation accordingly.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • MOCK TESTS</span>
+                <h2>Your score should change your study plan.</h2>
+                <p>
+                  Use mocks as diagnostic tools, not just scoreboards.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2>18. The 80/20 Trap in JPSC Preparation</h2>
+
+            <p>
+              A useful priority system is not the same thing as studying only
+              20% of the syllabus. Competitive examinations can punish gaps.
+              Use the high-priority areas to allocate extra time, but complete
+              the wider syllabus to maintain coverage.
+            </p>
+
+            <div class="balance">
+              <div><b>CORE</b><strong>Deep preparation</strong><span>Frequent PYQs, notes and mocks.</span></div>
+              <div><b>SUPPORT</b><strong>Regular preparation</strong><span>Standard notes + periodic testing.</span></div>
+              <div><b>LOW PRIORITY</b><strong>Coverage</strong><span>Basic understanding + revision.</span></div>
+            </div>
+
+            <h2>19. Topic-Wise PYQs Make Weightage Useful</h2>
+
+            <p>
+              Once questions are organised topic by topic, you can see not only
+              which subjects matter, but which parts of those subjects repeatedly
+              become questions. That is where PYQ decoding becomes a preparation
+              advantage.
+            </p>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC PRELIMS DECODED</span>
+                <h2>Stop searching for “important questions.” Find important topics.</h2>
+                <p>
+                  Habitat IAS's JPSC Prelims Decoded: Topic-Wise PYQs organises
+                  previous questions around subjects and topics, with explanations
+                  and analysis designed for targeted preparation.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">Explore the PYQ Book →</a>
+                <a class="btn outline" href="/book/#sample">View Sample →</a>
+              </div>
+            </div>
+
+            <h2>20. Final Priority Checklist</h2>
+
+            <div class="checklist">
+              <div><b>01</b><span>Current official syllabus checked.</span></div>
+              <div><b>02</b><span>Multiple previous papers collected.</span></div>
+              <div><b>03</b><span>Questions classified consistently.</span></div>
+              <div><b>04</b><span>Subject frequency calculated.</span></div>
+              <div><b>05</b><span>Topic frequency calculated.</span></div>
+              <div><b>06</b><span>Recent vs older trends compared.</span></div>
+              <div><b>07</b><span>Personal accuracy added to the priority decision.</span></div>
+              <div><b>08</b><span>High-priority topics revised more often.</span></div>
+              <div><b>09</b><span>Low-frequency topics not completely ignored.</span></div>
+              <div><b>10</b><span>PYQs solved under timed conditions.</span></div>
+              <div><b>11</b><span>Mocks used to validate the strategy.</span></div>
+              <div><b>12</b><span>Priority matrix updated after every major test.</span></div>
+            </div>
+
+            <h2>21. Final Strategy</h2>
+
+            <p>
+              The best answer to “Which subject has the highest weightage?” is
+              not a single permanent number. The better question is:
+              <strong>Which areas repeatedly matter, how recently were they
+              tested, how important are they in the current syllabus, and where
+              am I personally weak?</strong>
+            </p>
+
+            <div class="quote">
+              <strong>Don't prepare according to rumours about weightage.</strong>
+              <span>Prepare according to the syllabus, verify with PYQs, and let your mock-test errors decide the next revision.</span>
+            </div>
+
+            <div class="conversion final-cta">
+              <div>
+                <span>HABITAT IAS • JPSC</span>
+                <h2>Turn PYQ trends into a smarter preparation plan.</h2>
+                <p>
+                  Analyse → prioritise → study → test → repair → repeat.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Free Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PRELIMS</div>
+          <h2>Know the trend. Don't gamble on it.</h2>
+          <p>Use PYQs as evidence and mocks as diagnosis.</p>
+          <div class="buttons center">
+            <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+  }
+
+  .container { width: min(1180px, calc(100% - 48px)); margin: auto; }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+  h1 span { color: var(--yellow); }
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+  .center { justify-content: center; }
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline { color: white; border: 1px solid rgba(255,255,255,.48); }
+
+  .notice { padding-top: 25px; }
+  .notice-box, .tip {
+    padding: 19px 22px;
+    border: 1px solid #e0e7f2;
+    border-radius: 14px;
+    background: #f7f9fe;
+    color: #5a6d88;
+    line-height: 1.65;
+  }
+  .notice-box strong, .tip strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .stats-grid b { display: block; color: var(--blue); font-size: 28px; }
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+  article p { color: #4c617e; }
+
+  .subjects, .topic-grid, .science, .environment, .current,
+  .jharkhand, .matrix, .myths, .steps, .revision, .mock, .balance,
+  .checklist {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .subjects > div, .topic-grid > div, .science > div, .environment > div,
+  .current > div, .jharkhand > div, .matrix > div, .myths > div,
+  .steps > div, .revision > div, .mock > div, .balance > div,
+  .checklist > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .subjects { grid-template-columns: repeat(4,1fr); }
+  .topic-grid { grid-template-columns: repeat(4,1fr); }
+  .science { grid-template-columns: repeat(3,1fr); }
+  .environment { grid-template-columns: repeat(5,1fr); }
+  .current { grid-template-columns: repeat(6,1fr); }
+  .jharkhand { grid-template-columns: repeat(4,1fr); }
+  .matrix { grid-template-columns: repeat(4,1fr); }
+  .myths { grid-template-columns: repeat(2,1fr); }
+  .steps { grid-template-columns: repeat(4,1fr); }
+  .revision { grid-template-columns: repeat(4,1fr); }
+  .mock { grid-template-columns: repeat(4,1fr); }
+  .balance { grid-template-columns: repeat(3,1fr); }
+  .checklist { grid-template-columns: repeat(3,1fr); }
+
+  .subjects b, .topic-grid b, .science b, .environment b, .current b,
+  .jharkhand b, .matrix b, .myths b, .steps b, .revision span,
+  .mock b, .balance b, .checklist b {
+    display: block;
+    color: var(--dark);
+  }
+  .subjects strong, .matrix strong, .balance strong {
+    display: block;
+    margin-top: 7px;
+    color: var(--blue);
+  }
+  .subjects span, .topic-grid span, .science span, .environment span,
+  .current span, .jharkhand span, .matrix span, .myths span, .steps span,
+  .revision p, .mock span, .balance span, .checklist span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 20px;
+    align-items: center;
+    margin: 28px 0;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #526987;
+  }
+  .formula strong { color: var(--dark); }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .granular {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+  .granular > div {
+    min-width: 125px;
+    flex: 1;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+  .granular b {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .granular span {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 900;
+  }
+  .granular i {
+    color: #91a5c5;
+    font-style: normal;
+  }
+
+  .week {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 8px;
+    margin: 27px 0;
+  }
+  .week > div {
+    padding: 17px 10px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #f8faff;
+  }
+  .week b {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .week span {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .checklist > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+  }
+  .checklist b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .checklist span { margin: 0; }
+
+  .quote {
+    margin: 38px 0;
+    padding: 30px;
+    border-left: 5px solid var(--yellow);
+    border-radius: 0 15px 15px 0;
+    background: #f7f9fe;
+  }
+  .quote strong {
+    display: block;
+    color: var(--dark);
+    font-size: 24px;
+  }
+  .quote span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+  }
+
+  .faq { display: grid; gap: 9px; }
+  details { border: 1px solid var(--border); border-radius: 12px; }
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .stats-grid, .subjects, .topic-grid, .science, .environment, .current,
+    .jharkhand, .matrix, .myths, .steps, .revision, .mock, .balance,
+    .checklist {
+      grid-template-columns: repeat(2,1fr);
+    }
+    .week { grid-template-columns: repeat(4,1fr); }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid, .subjects, .topic-grid, .science, .environment, .current,
+    .jharkhand, .matrix, .myths, .steps, .revision, .mock, .balance,
+    .checklist, .week {
+      grid-template-columns: 1fr;
+    }
+
+    .conversion { flex-direction: column; align-items: stretch; }
+    .buttons, .cta-buttons { flex-direction: column; }
+    .btn { width: 100%; }
+  }
+</style>

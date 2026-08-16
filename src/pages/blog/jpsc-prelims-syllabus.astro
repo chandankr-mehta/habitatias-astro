@@ -1,0 +1,2499 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const pageUrl = "https://habitatias.com/blog/jpsc-prelims-syllabus/";
+const pageTitle =
+  "JPSC Prelims Syllabus 2027: Complete Paper 1 & Paper 2 Syllabus, Exam Pattern & Preparation Strategy";
+const pageDescription =
+  "JPSC Prelims Syllabus 2027 explained paper-wise with the latest published JPSC structure, marks, questions, subjects, Jharkhand-specific topics, PYQ strategy, mock-test strategy and preparation guidance.";
+
+const faqs = [
+  {
+    question: "How many papers are there in JPSC Prelims?",
+    answer:
+      "The Preliminary Examination consists of two compulsory papers: General Studies Paper-I and General Studies Paper-II. Each paper carries 200 marks.",
+  },
+  {
+    question: "How many questions are there in each JPSC Prelims paper?",
+    answer:
+      "The published JPSC scheme specifies 100 objective-type questions in each paper, with each question carrying 2 marks.",
+  },
+  {
+    question: "How much time is given for each JPSC Prelims paper?",
+    answer:
+      "The published JPSC scheme specifies 2 hours for each Preliminary paper.",
+  },
+  {
+    question: "Is there negative marking in JPSC Prelims?",
+    answer:
+      "The JPSC examination scheme states that there is no negative marking for an incorrect answer. If more than one option is marked for a question, no marks are awarded; an unanswered question carries no penalty.",
+  },
+  {
+    question: "Is Jharkhand-specific knowledge important for JPSC Prelims?",
+    answer:
+      "Yes. Jharkhand-specific content is a dedicated component of the Preliminary syllabus, and the second paper is heavily focused on Jharkhand-related subjects.",
+  },
+  {
+    question: "Should I solve JPSC previous year questions?",
+    answer:
+      "Yes. PYQs should be used to identify recurring topics, understand question framing and connect the official syllabus with actual examination questions.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: pageTitle,
+  description: pageDescription,
+  url: pageUrl,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{pageTitle} | Habitat IAS</title>
+
+    <meta name="description" content={pageDescription} />
+
+    <meta
+      name="keywords"
+      content="JPSC syllabus 2027, JPSC prelims syllabus 2027, JPSC syllabus, JPSC Paper 1 syllabus, JPSC Paper 2 syllabus, JPSC exam pattern, JPSC preparation, JPSC PYQ, Jharkhand GK, JPSC mock test"
+    />
+
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <!-- BREADCRUMB -->
+      <div class="breadcrumb-wrap">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <a href="/blog/">Blog</a>
+            <span>›</span>
+            <span>JPSC Prelims Syllabus</span>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ARTICLE HERO -->
+      <section class="article-hero">
+        <div class="container article-hero-inner">
+          <div class="article-category">JPSC PREPARATION</div>
+
+          <h1>
+            JPSC Prelims Syllabus 2027:
+            <span>Complete Paper 1 &amp; Paper 2 Guide</span>
+          </h1>
+
+          <p class="hero-description">
+            Understand the JPSC Preliminary Examination structure, marks,
+            subjects, Jharkhand-specific topics and the preparation approach
+            that connects syllabus, PYQs and mock-test practice.
+          </p>
+
+          <div class="article-meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Approx. 15 min read</span>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#syllabus" class="button button-yellow">
+              View Complete Syllabus ↓
+            </a>
+
+            <a href="/mock-tests/" class="button button-outline">
+              Try JPSC Mock Tests →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- IMPORTANT NOTICE -->
+      <section class="notice-section">
+        <div class="container">
+          <div class="notice">
+            <div class="notice-icon">!</div>
+            <div>
+              <strong>Important for 2027 aspirants</strong>
+              <p>
+                This guide is written for candidates preparing for the next
+                JPSC cycle and is based on the latest published JPSC syllabus
+                structure available to us. Always check the latest official
+                JPSC notification and syllabus before applying because the
+                Commission can amend examination details.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUICK FACTS -->
+      <section class="quick-section">
+        <div class="container">
+          <div class="section-heading compact">
+            <div class="eyebrow">AT A GLANCE</div>
+            <h2>JPSC Prelims <span>Quick Facts</span></h2>
+          </div>
+
+          <div class="quick-grid">
+            <div class="quick-card">
+              <strong>2</strong>
+              <span>Compulsory Papers</span>
+            </div>
+
+            <div class="quick-card">
+              <strong>400</strong>
+              <span>Total Marks</span>
+            </div>
+
+            <div class="quick-card">
+              <strong>100</strong>
+              <span>Questions / Paper</span>
+            </div>
+
+            <div class="quick-card">
+              <strong>200</strong>
+              <span>Marks / Paper</span>
+            </div>
+
+            <div class="quick-card">
+              <strong>2 hrs</strong>
+              <span>Time / Paper</span>
+            </div>
+
+            <div class="quick-card accent">
+              <strong>0</strong>
+              <span>Negative Marking</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOC + ARTICLE -->
+      <section class="content-section" id="syllabus">
+        <div class="container content-layout">
+          <aside class="toc">
+            <div class="toc-title">ON THIS PAGE</div>
+
+            <a href="#exam-pattern">1. Exam Pattern</a>
+            <a href="#paper-one">2. Paper-I Syllabus</a>
+            <a href="#paper-two">3. Paper-II Syllabus</a>
+            <a href="#jharkhand">4. Jharkhand Focus</a>
+            <a href="#pyq-strategy">5. PYQ Strategy</a>
+            <a href="#mock-strategy">6. Mock-Test Strategy</a>
+            <a href="#preparation">7. Preparation Plan</a>
+            <a href="#faq">8. FAQs</a>
+          </aside>
+
+          <article class="article">
+            <p class="lead">
+              The JPSC Preliminary Examination should be treated as more than
+              a list of subjects. A strong preparation plan connects the
+              official syllabus with previous year questions, revision and
+              timed mock-test practice.
+            </p>
+
+            <h2 id="exam-pattern">JPSC Prelims Exam Pattern</h2>
+
+            <p>
+              The published JPSC scheme provides for two compulsory objective
+              papers: General Studies Paper-I and General Studies Paper-II.
+              Each paper carries 200 marks and has a duration of two hours.
+              The published syllabus specifies 100 objective questions in
+              each paper, with each question carrying two marks.
+            </p>
+
+            <div class="source-note">
+              <strong>Official basis:</strong>
+              The JPSC Combined Civil Services examination advertisement
+              published by the Commission states that the Preliminary
+              Examination consists of two compulsory papers of 200 marks each.
+              Paper-I contains 100 objective questions of 2 marks each and a
+              2-hour duration.
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Paper</th>
+                    <th>Subject</th>
+                    <th>Questions</th>
+                    <th>Marks</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Paper-I</td>
+                    <td>General Studies-I</td>
+                    <td>100</td>
+                    <td>200</td>
+                    <td>2 hours</td>
+                  </tr>
+                  <tr>
+                    <td>Paper-II</td>
+                    <td>General Studies-II</td>
+                    <td>100</td>
+                    <td>200</td>
+                    <td>2 hours</td>
+                  </tr>
+                  <tr class="total-row">
+                    <td colspan="2">Total</td>
+                    <td>200</td>
+                    <td>400</td>
+                    <td>4 hours</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h3>Negative marking</h3>
+
+            <p>
+              The published JPSC examination scheme states that there is no
+              negative marking for an incorrect answer in the Preliminary
+              Examination. If a candidate marks more than one answer for a
+              question, no marks are awarded for that question. Leaving a
+              question blank carries no penalty.
+            </p>
+
+            <div class="strategy-box">
+              <div class="strategy-label">HABITAT IAS TIP</div>
+              <h3>No negative marking does not mean blind guessing.</h3>
+              <p>
+                Use elimination and probability intelligently. Your target
+                should still be high accuracy because time, uncertainty and
+                question quality matter even when there is no deduction.
+              </p>
+            </div>
+
+            <h2 id="paper-one">JPSC Prelims Paper-I Syllabus</h2>
+
+            <p>
+              General Studies Paper-I is the broad national and general-studies
+              component of the Preliminary Examination. The official 2024
+              JPSC syllabus gives the following question distribution for the
+              major listed areas.
+            </p>
+
+            <div class="weight-grid">
+              <div>
+                <strong>15</strong>
+                <span>History of India</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>Geography of India</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>Polity &amp; Governance</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>Economy &amp; Sustainable Development</span>
+              </div>
+              <div>
+                <strong>15</strong>
+                <span>Science &amp; Technology</span>
+              </div>
+              <div>
+                <strong>10</strong>
+                <span>Jharkhand Specific</span>
+              </div>
+              <div>
+                <strong>15</strong>
+                <span>National &amp; International Current Events</span>
+              </div>
+              <div>
+                <strong>15</strong>
+                <span>General Miscellaneous</span>
+              </div>
+            </div>
+
+            <p class="small-note">
+              The eight blocks above account for the 100-question Paper-I
+              structure. The Commission's published syllabus describes the
+              final 15 questions as general miscellaneous questions.
+            </p>
+
+            <h3>1. History of India — 15 Questions</h3>
+
+            <p>
+              History is divided into Ancient, Medieval and Modern India in
+              the published syllabus, with five questions allocated to each
+              period.
+            </p>
+
+            <div class="topic-columns">
+              <div>
+                <h4>Ancient India</h4>
+                <ul>
+                  <li>Indus Valley Civilization</li>
+                  <li>Vedic period</li>
+                  <li>Mahajanapadas</li>
+                  <li>Buddhism and Jainism</li>
+                  <li>Mauryan and Gupta periods</li>
+                  <li>Ancient culture and heritage</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>Medieval India</h4>
+                <ul>
+                  <li>Early medieval developments</li>
+                  <li>Delhi Sultanate</li>
+                  <li>Mughal Empire</li>
+                  <li>Administration and society</li>
+                  <li>Bhakti and Sufi traditions</li>
+                  <li>Medieval culture</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>Modern India</h4>
+                <ul>
+                  <li>British expansion and administration</li>
+                  <li>Revolt of 1857</li>
+                  <li>Socio-religious reform movements</li>
+                  <li>Indian nationalism</li>
+                  <li>Gandhian movements</li>
+                  <li>Constitutional developments and independence</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3>2. Geography of India — 10 Questions</h3>
+
+            <p>
+              The official distribution divides Geography of India into
+              General Geography, Physical Geography, Economic Geography and
+              Social &amp; Demographic Geography.
+            </p>
+
+            <div class="topic-list">
+              <div>
+                <strong>General Geography</strong>
+                <span>Location, regional patterns and basic geographic concepts.</span>
+              </div>
+
+              <div>
+                <strong>Physical Geography</strong>
+                <span>Physiography, climate, rivers, soils, vegetation and natural processes.</span>
+              </div>
+
+              <div>
+                <strong>Economic Geography</strong>
+                <span>Agriculture, minerals, industries, energy, transport and resources.</span>
+              </div>
+
+              <div>
+                <strong>Social &amp; Demographic Geography</strong>
+                <span>Population, distribution, migration, urbanization and demographic characteristics.</span>
+              </div>
+            </div>
+
+            <h3>3. Indian Polity &amp; Governance — 10 Questions</h3>
+
+            <p>
+              The official distribution covers the Constitution of India,
+              Public Administration and Good Governance, and decentralization
+              through Panchayats and Municipalities.
+            </p>
+
+            <ul class="check-list">
+              <li>Constitutional development and features</li>
+              <li>Fundamental Rights and Directive Principles</li>
+              <li>Fundamental Duties</li>
+              <li>President, Prime Minister and Council of Ministers</li>
+              <li>Parliament and legislative procedure</li>
+              <li>Supreme Court and High Courts</li>
+              <li>Constitutional and statutory bodies</li>
+              <li>Emergency provisions and amendments</li>
+              <li>Public administration and accountability</li>
+              <li>Panchayati Raj and municipalities</li>
+            </ul>
+
+            <h3>4. Economic &amp; Sustainable Development — 10 Questions</h3>
+
+            <p>
+              The published syllabus divides this area into the basic features
+              of the Indian economy, sustainable development and economic
+              issues, and economic reforms and globalization.
+            </p>
+
+            <div class="topic-columns two">
+              <div>
+                <h4>Indian Economy</h4>
+                <ul>
+                  <li>Growth and development</li>
+                  <li>Poverty and unemployment</li>
+                  <li>Inflation</li>
+                  <li>Agriculture and industry</li>
+                  <li>Banking and financial inclusion</li>
+                  <li>Fiscal and monetary policy</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4>Development</h4>
+                <ul>
+                  <li>Sustainable development</li>
+                  <li>Economic reforms</li>
+                  <li>Liberalization</li>
+                  <li>Privatization</li>
+                  <li>Globalization</li>
+                  <li>Development challenges</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3>5. Science &amp; Technology — 15 Questions</h3>
+
+            <p>
+              Science &amp; Technology carries 15 questions in the published
+              Paper-I distribution. The three listed components are General
+              Science, Agriculture &amp; Technology Development, and
+              Information &amp; Communication Technology.
+            </p>
+
+            <div class="topic-list">
+              <div>
+                <strong>General Science</strong>
+                <span>Basic Physics, Chemistry, Biology, health and everyday science.</span>
+              </div>
+
+              <div>
+                <strong>Agriculture &amp; Technology Development</strong>
+                <span>Modern agriculture, agricultural technology, biotechnology and related developments.</span>
+              </div>
+
+              <div>
+                <strong>Information &amp; Communication Technology</strong>
+                <span>Computers, internet, communication systems, digital technology and emerging technologies.</span>
+              </div>
+            </div>
+
+            <h3>6. Jharkhand-Specific Questions — 10 Questions</h3>
+
+            <p>
+              Paper-I contains a dedicated Jharkhand-specific component covering
+              general awareness of the state's history, society, culture and
+              heritage. This is one of the clearest points where national
+              preparation and state-specific preparation must meet.
+            </p>
+
+            <div class="jharkhand-box">
+              <h4>Build your Jharkhand notebook around these blocks</h4>
+
+              <div class="jharkhand-grid">
+                <span>Jharkhand History</span>
+                <span>Jharkhand Movement</span>
+                <span>Tribes &amp; Society</span>
+                <span>Culture &amp; Festivals</span>
+                <span>Folk Literature</span>
+                <span>Geography</span>
+                <span>Economy &amp; Industries</span>
+                <span>Land Laws</span>
+                <span>Environment</span>
+                <span>Government Schemes</span>
+                <span>Current Affairs</span>
+                <span>Important Personalities</span>
+              </div>
+            </div>
+
+            <h3>7. National &amp; International Current Events — 15 Questions</h3>
+
+            <p>
+              Current affairs receives 15 questions in the official Paper-I
+              distribution. Do not prepare current affairs as a disconnected
+              news diary. Convert important events into exam categories.
+            </p>
+
+            <div class="current-grid">
+              <div>
+                <strong>National</strong>
+                <ul>
+                  <li>Government schemes and policies</li>
+                  <li>Economy and reports</li>
+                  <li>Science and technology</li>
+                  <li>Environment</li>
+                  <li>Defence</li>
+                  <li>Awards and appointments</li>
+                  <li>Sports</li>
+                </ul>
+              </div>
+
+              <div>
+                <strong>International</strong>
+                <ul>
+                  <li>International organizations</li>
+                  <li>Summits and agreements</li>
+                  <li>Global conflicts and diplomacy</li>
+                  <li>Climate negotiations</li>
+                  <li>International reports</li>
+                  <li>India's international relations</li>
+                </ul>
+              </div>
+
+              <div>
+                <strong>Jharkhand Current Affairs</strong>
+                <ul>
+                  <li>State schemes</li>
+                  <li>Budget and economy</li>
+                  <li>Infrastructure</li>
+                  <li>Mining and industry</li>
+                  <li>Environment</li>
+                  <li>Appointments and awards</li>
+                </ul>
+              </div>
+            </div>
+
+            <h3>8. General Miscellaneous Questions — 15 Questions</h3>
+
+            <p>
+              The published syllabus also includes a miscellaneous component
+              of general nature that does not require subject specialization.
+              Published reproductions of the syllabus commonly organize this
+              area around themes such as human rights, environmental protection,
+              biodiversity and climate change, urbanization, sports, disaster
+              management, poverty and unemployment, awards, and the United
+              Nations and other international agencies.
+            </p>
+
+            <div class="tag-cloud">
+              <span>Human Rights</span>
+              <span>Environment</span>
+              <span>Biodiversity</span>
+              <span>Climate Change</span>
+              <span>Urbanization</span>
+              <span>Sports</span>
+              <span>Disaster Management</span>
+              <span>Poverty</span>
+              <span>Unemployment</span>
+              <span>Awards</span>
+              <span>UN &amp; International Agencies</span>
+            </div>
+
+            <h2 id="paper-two">JPSC Prelims Paper-II Syllabus</h2>
+
+            <p>
+              General Studies Paper-II is the strongly Jharkhand-focused part
+              of the Preliminary Examination. It carries 200 marks and
+              consists of 100 objective questions under the published
+              examination structure.
+            </p>
+
+            <div class="source-note">
+              <strong>Important:</strong>
+              The detailed Paper-II topic headings below follow the published
+              JPSC syllabus structure reproduced by established exam-reference
+              sources. Before the 2027 examination, cross-check the latest
+              Commission notification for any amendments.
+            </div>
+
+            <div class="paper-two-grid">
+              <div>
+                <span class="number">01</span>
+                <h3>History of Jharkhand</h3>
+                <p>
+                  Traditional systems of governance and administration,
+                  including Munda, Nagvanshi, Parha Panchayat, Manjhi-Pargana,
+                  Munda-Manki and related customary institutions.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">02</span>
+                <h3>Jharkhand Movement</h3>
+                <p>
+                  Tribal communities, freedom fighters, important leaders,
+                  organizations, phases of the movement and the formation of
+                  Jharkhand state.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">03</span>
+                <h3>Distinct Identity of Jharkhand</h3>
+                <p>
+                  Social, cultural, political, economic and religious
+                  characteristics that contribute to the identity of the state.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">04</span>
+                <h3>Culture of Jharkhand</h3>
+                <p>
+                  Folk literature, traditional art, folk dances, folk music,
+                  instruments, tourist places and tribal culture.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">05</span>
+                <h3>Jharkhand Literature &amp; Writers</h3>
+                <p>
+                  Major literary traditions, languages, writers and important
+                  contributions associated with Jharkhand.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">06</span>
+                <h3>Educational Institutions</h3>
+                <p>
+                  Major educational and research institutions located in the
+                  state and their significance.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">07</span>
+                <h3>Sports of Jharkhand</h3>
+                <p>
+                  Important players, sports achievements, institutions,
+                  events and sports-related facts connected with Jharkhand.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">08</span>
+                <h3>Land Laws</h3>
+                <p>
+                  Chotanagpur Tenancy Act, Santhal Pargana Tenancy Act and other
+                  relevant state land-law provisions.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">09</span>
+                <h3>Economic Development &amp; Geography</h3>
+                <p>
+                  Economic development after 1947, physical and human
+                  geography, resources and development patterns of Jharkhand.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">10</span>
+                <h3>Industrial &amp; Rehabilitation Policies</h3>
+                <p>
+                  Industrial policy, displacement, rehabilitation and other
+                  important state policies.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">11</span>
+                <h3>Major Industries &amp; Locations</h3>
+                <p>
+                  Major industries, industrial locations, mineral resources and
+                  industrial development in Jharkhand.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">12</span>
+                <h3>Major Schemes &amp; Sub-Plans</h3>
+                <p>
+                  Major state schemes, development programmes and sub-plans
+                  relevant to Jharkhand.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">13</span>
+                <h3>Forest &amp; Wildlife</h3>
+                <p>
+                  Forest management, wildlife conservation, protected areas and
+                  conservation initiatives.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">14</span>
+                <h3>Environment</h3>
+                <p>
+                  Environmental facts, environmental change, mitigation,
+                  adaptation and state-specific environmental issues.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">15</span>
+                <h3>Disaster Management</h3>
+                <p>
+                  Disaster risks in Jharkhand, preparedness, mitigation,
+                  response and management.
+                </p>
+              </div>
+
+              <div>
+                <span class="number">16</span>
+                <h3>Miscellaneous &amp; Current Affairs</h3>
+                <p>
+                  Important state facts and current events related to
+                  Jharkhand.
+                </p>
+              </div>
+            </div>
+
+            <h2 id="jharkhand">Why Jharkhand Should Be a Separate Preparation Track</h2>
+
+            <p>
+              JPSC is not simply a national General Studies examination with a
+              few Jharkhand questions added at the end. The Preliminary scheme
+              contains dedicated Jharkhand components, and Paper-II is
+              strongly state-focused.
+            </p>
+
+            <div class="funnel">
+              <div>
+                <span>01</span>
+                <strong>General Studies</strong>
+                <small>Build national foundation</small>
+              </div>
+              <i>→</i>
+              <div>
+                <span>02</span>
+                <strong>Jharkhand Core</strong>
+                <small>Build state-specific depth</small>
+              </div>
+              <i>→</i>
+              <div>
+                <span>03</span>
+                <strong>PYQs</strong>
+                <small>See how JPSC asks</small>
+              </div>
+              <i>→</i>
+              <div>
+                <span>04</span>
+                <strong>Mocks</strong>
+                <small>Measure performance</small>
+              </div>
+            </div>
+
+            <h2 id="pyq-strategy">How to Use JPSC PYQs With the Syllabus</h2>
+
+            <p>
+              Previous year questions should not be treated only as questions
+              to solve after finishing the syllabus. They are one of the best
+              tools for understanding how a broad syllabus becomes an actual
+              JPSC question.
+            </p>
+
+            <div class="process-grid">
+              <div>
+                <strong>1</strong>
+                <h3>Map the PYQ</h3>
+                <p>Identify its paper, subject, topic and subtopic.</p>
+              </div>
+
+              <div>
+                <strong>2</strong>
+                <h3>Classify it</h3>
+                <p>Decide whether it is factual, conceptual, analytical or current-affairs based.</p>
+              </div>
+
+              <div>
+                <strong>3</strong>
+                <h3>Study the concept</h3>
+                <p>Read around the question rather than memorizing only its answer.</p>
+              </div>
+
+              <div>
+                <strong>4</strong>
+                <h3>Track repetition</h3>
+                <p>Mark themes and concepts that appear repeatedly across papers.</p>
+              </div>
+            </div>
+
+            <div class="book-cta">
+              <div>
+                <div class="cta-label">JPSC PRELIMS PYQs</div>
+                <h3>Turn the syllabus into a question map.</h3>
+                <p>
+                  Habitat IAS's <strong>JPSC Prelims Decoded: Topic-Wise
+                  PYQs</strong> is designed to connect previous questions with
+                  topics and explanations.
+                </p>
+              </div>
+
+              <a href="/book/" class="button button-yellow">
+                Explore JPSC PYQ Book →
+              </a>
+            </div>
+
+            <h2 id="mock-strategy">How to Use Mock Tests for JPSC</h2>
+
+            <p>
+              A mock test is most useful when it produces information about
+              your preparation. The objective is not merely to collect a high
+              number of attempted tests.
+            </p>
+
+            <div class="analysis-grid">
+              <div>
+                <span class="analysis-icon">01</span>
+                <h3>Score</h3>
+                <p>Measure your current performance.</p>
+              </div>
+
+              <div>
+                <span class="analysis-icon">02</span>
+                <h3>Accuracy</h3>
+                <p>Find where you lose marks through incorrect answers.</p>
+              </div>
+
+              <div>
+                <span class="analysis-icon">03</span>
+                <h3>Weak Topics</h3>
+                <p>Identify subjects and topics requiring revision.</p>
+              </div>
+
+              <div>
+                <span class="analysis-icon">04</span>
+                <h3>Time</h3>
+                <p>Check whether you can complete the paper comfortably.</p>
+              </div>
+            </div>
+
+            <div class="free-mock-cta">
+              <div>
+                <div class="cta-label">FREE JPSC PRACTICE</div>
+                <h3>Don't just read the syllabus. Test it.</h3>
+                <p>
+                  Start with Habitat IAS's free Open Mocks and experience the
+                  examination interface before moving to the complete mock-test
+                  programme.
+                </p>
+              </div>
+
+              <div class="cta-actions">
+                <a href="/mock-tests/free-gs/" class="button button-yellow">
+                  Attempt Free GS Mock →
+                </a>
+
+                <a href="/mock-tests/free-jharkhand/" class="button button-outline">
+                  Attempt Jharkhand Mock →
+                </a>
+              </div>
+            </div>
+
+            <h2 id="preparation">JPSC Prelims Preparation Strategy</h2>
+
+            <p>
+              A practical preparation cycle can be organized into seven
+              stages. The order matters because each stage produces input for
+              the next one.
+            </p>
+
+            <div class="timeline">
+              <div class="timeline-item">
+                <span>01</span>
+                <div>
+                  <h3>Read the syllabus</h3>
+                  <p>
+                    Convert every broad syllabus heading into a checklist of
+                    concrete topics.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>02</span>
+                <div>
+                  <h3>Analyse PYQs</h3>
+                  <p>
+                    Identify recurring themes, question styles and areas that
+                    repeatedly demand attention.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>03</span>
+                <div>
+                  <h3>Build the static foundation</h3>
+                  <p>
+                    Study History, Geography, Polity, Economy, Science and
+                    Jharkhand-specific subjects systematically.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>04</span>
+                <div>
+                  <h3>Maintain current affairs</h3>
+                  <p>
+                    Separate national/international current affairs from
+                    Jharkhand current affairs so that state-specific revision
+                    remains visible.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>05</span>
+                <div>
+                  <h3>Revise repeatedly</h3>
+                  <p>
+                    Use short notes, topic checklists and error logs rather
+                    than repeatedly rereading complete books.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>06</span>
+                <div>
+                  <h3>Attempt mocks</h3>
+                  <p>
+                    Introduce timed tests before the final revision phase so
+                    that speed and accuracy can be improved early.
+                  </p>
+                </div>
+              </div>
+
+              <div class="timeline-item">
+                <span>07</span>
+                <div>
+                  <h3>Analyse every test</h3>
+                  <p>
+                    Record wrong answers, guessed answers, slow questions and
+                    weak topics, then revise those areas.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="formula">
+              <span>SYLLABUS</span>
+              <b>+</b>
+              <span>PYQs</span>
+              <b>+</b>
+              <span>REVISION</span>
+              <b>+</b>
+              <span>MOCKS</span>
+              <b>=</b>
+              <strong>EXAM-READY PREPARATION</strong>
+            </div>
+
+            <h2>JPSC Syllabus vs PYQs vs Mock Tests</h2>
+
+            <div class="comparison-table">
+              <div class="comparison-row comparison-head">
+                <span>Resource</span>
+                <span>What it tells you</span>
+                <span>How to use it</span>
+              </div>
+
+              <div class="comparison-row">
+                <strong>Syllabus</strong>
+                <span>What can be asked</span>
+                <span>Build your master checklist</span>
+              </div>
+
+              <div class="comparison-row">
+                <strong>PYQs</strong>
+                <span>What JPSC has actually asked</span>
+                <span>Find patterns and recurring themes</span>
+              </div>
+
+              <div class="comparison-row">
+                <strong>Mock Tests</strong>
+                <span>How prepared you are</span>
+                <span>Measure score, accuracy, time and weaknesses</span>
+              </div>
+            </div>
+
+            <h2>What Should You Study First?</h2>
+
+            <p>
+              Do not interpret question distribution as permission to ignore
+              lower-weight areas. Instead, use the official distribution to
+              create a priority order while still completing the complete
+              syllabus.
+            </p>
+
+            <div class="priority-grid">
+              <div class="priority-card high">
+                <span>HIGH PRIORITY</span>
+                <h3>History</h3>
+                <p>15 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card high">
+                <span>HIGH PRIORITY</span>
+                <h3>Science &amp; Technology</h3>
+                <p>15 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card high">
+                <span>HIGH PRIORITY</span>
+                <h3>Current Events</h3>
+                <p>15 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card medium">
+                <span>CORE</span>
+                <h3>Geography</h3>
+                <p>10 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card medium">
+                <span>CORE</span>
+                <h3>Polity</h3>
+                <p>10 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card medium">
+                <span>CORE</span>
+                <h3>Economy</h3>
+                <p>10 questions in the published Paper-I distribution.</p>
+              </div>
+
+              <div class="priority-card jh">
+                <span>JHARKHAND</span>
+                <h3>State-Specific</h3>
+                <p>Dedicated Paper-I component plus a separate Paper-II focus.</p>
+              </div>
+
+              <div class="priority-card all">
+                <span>COMPLETE</span>
+                <h3>Miscellaneous</h3>
+                <p>Complete the remaining Paper-I syllabus instead of leaving gaps.</p>
+              </div>
+            </div>
+
+            <h2>Final Takeaway</h2>
+
+            <p>
+              The JPSC Preliminary Examination rewards candidates who can
+              connect broad knowledge with the specific way the Commission
+              frames questions. The syllabus tells you the boundaries. PYQs
+              show the Commission's questioning pattern. Mock tests reveal
+              whether you can convert preparation into marks.
+            </p>
+
+            <div class="final-box">
+              <div class="final-step">
+                <span>01</span>
+                <strong>Understand the syllabus</strong>
+              </div>
+
+              <div class="arrow">↓</div>
+
+              <div class="final-step">
+                <span>02</span>
+                <strong>Analyse JPSC PYQs</strong>
+              </div>
+
+              <div class="arrow">↓</div>
+
+              <div class="final-step">
+                <span>03</span>
+                <strong>Build concepts &amp; notes</strong>
+              </div>
+
+              <div class="arrow">↓</div>
+
+              <div class="final-step">
+                <span>04</span>
+                <strong>Attempt mock tests</strong>
+              </div>
+
+              <div class="arrow">↓</div>
+
+              <div class="final-step final">
+                <span>05</span>
+                <strong>Analyse → Revise → Improve</strong>
+              </div>
+            </div>
+
+            <!-- CONVERSION CTA -->
+            <section class="conversion-box">
+              <div class="conversion-kicker">HABITAT IAS • JPSC PREPARATION</div>
+
+              <h2>
+                Now turn the syllabus into
+                <span>actual preparation.</span>
+              </h2>
+
+              <p>
+                Read the syllabus. Study the PYQs. Then test yourself. Habitat
+                IAS gives you a connected path from JPSC resources to practice,
+                performance and deeper preparation.
+              </p>
+
+              <div class="conversion-actions">
+                <a href="/mock-tests/free-gs/" class="button button-yellow">
+                  Start Free GS Mock →
+                </a>
+
+                <a href="/mock-tests/free-jharkhand/" class="button button-outline">
+                  Start Free Jharkhand Mock →
+                </a>
+
+                <a href="/book/" class="button button-outline">
+                  Explore PYQ Book →
+                </a>
+              </div>
+            </section>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq-list">
+              {faqs.map((faq) => (
+                <details>
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+
+            <div class="official-source">
+              <h3>Official source</h3>
+              <p>
+                For the authoritative examination structure and any future
+                amendments, always consult the Jharkhand Public Service
+                Commission.
+              </p>
+              <a
+                href="https://www.jpsc.gov.in/Syllabus.php"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Visit the official JPSC syllabus page →
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- RELATED RESOURCES -->
+      <section class="related-section">
+        <div class="container">
+          <div class="section-heading">
+            <div class="eyebrow">CONTINUE PREPARATION</div>
+            <h2>Next steps for your <span>JPSC preparation</span></h2>
+          </div>
+
+          <div class="related-grid">
+            <a href="/pyq/" class="related-card">
+              <span>01</span>
+              <h3>JPSC PYQs</h3>
+              <p>
+                Move from the syllabus to previous year questions and topic
+                analysis.
+              </p>
+              <strong>Explore PYQs →</strong>
+            </a>
+
+            <a href="/mock-tests/free-gs/" class="related-card">
+              <span>02</span>
+              <h3>Free GS Mock</h3>
+              <p>
+                Test your General Studies preparation with a free Open Mock.
+              </p>
+              <strong>Attempt Free Mock →</strong>
+            </a>
+
+            <a href="/mock-tests/free-jharkhand/" class="related-card">
+              <span>03</span>
+              <h3>Jharkhand Special Mock</h3>
+              <p>
+                Practise Jharkhand-focused questions in a free Open Mock.
+              </p>
+              <strong>Attempt Free Mock →</strong>
+            </a>
+
+            <a href="/book/" class="related-card">
+              <span>04</span>
+              <h3>JPSC PYQ Book</h3>
+              <p>
+                Explore Habitat IAS's topic-wise JPSC Prelims PYQ resource.
+              </p>
+              <strong>View Book →</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    color: #10264d;
+    background: #ffffff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+
+  :global(a) {
+    text-decoration: none;
+  }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2450;
+    --yellow: #ffd43b;
+    --light: #f4f7fd;
+    --lighter: #f8faff;
+    --border: #dce5f5;
+    --muted: #64748b;
+    --green: #14804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .breadcrumb-wrap {
+    border-bottom: 1px solid var(--border);
+    background: #ffffff;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    min-height: 58px;
+    align-items: center;
+    color: #7a8aa5;
+    font-size: 13px;
+  }
+
+  .breadcrumbs a {
+    color: var(--blue);
+    font-weight: 700;
+  }
+
+  .article-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 88% 15%, rgba(255, 212, 59, 0.16), transparent 25%),
+      linear-gradient(120deg, #0e357f, #1657d9 65%, #2e6de2);
+  }
+
+  .article-hero-inner {
+    padding: 78px 0 82px;
+    color: white;
+  }
+
+  .article-category,
+  .eyebrow,
+  .cta-label {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.35px;
+    text-transform: uppercase;
+  }
+
+  .article-category {
+    display: inline-flex;
+    padding: 9px 14px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    color: white;
+  }
+
+  .article-hero h1 {
+    max-width: 1000px;
+    margin: 27px 0 22px;
+    color: white;
+    font-size: clamp(46px, 6.3vw, 78px);
+    line-height: 0.98;
+    letter-spacing: -3.5px;
+  }
+
+  .article-hero h1 span {
+    color: var(--yellow);
+  }
+
+  .hero-description {
+    max-width: 820px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.83);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 13px;
+  }
+
+  .hero-actions,
+  .conversion-actions,
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .hero-actions {
+    margin-top: 30px;
+  }
+
+  .button {
+    display: inline-flex;
+    min-height: 51px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 21px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: 0.2s ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .button-yellow {
+    background: var(--yellow);
+    color: var(--dark);
+  }
+
+  .button-outline {
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: white;
+  }
+
+  .notice-section {
+    padding: 24px 0 0;
+    background: #fff;
+  }
+
+  .notice {
+    display: flex;
+    gap: 17px;
+    padding: 22px 25px;
+    border: 1px solid #e6d89a;
+    border-radius: 15px;
+    background: #fffbed;
+  }
+
+  .notice-icon {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .notice strong {
+    color: var(--dark);
+  }
+
+  .notice p {
+    margin: 6px 0 0;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .quick-section {
+    padding: 55px 0 30px;
+  }
+
+  .section-heading {
+    margin-bottom: 35px;
+  }
+
+  .section-heading.compact {
+    margin-bottom: 24px;
+  }
+
+  .section-heading h2 {
+    margin: 9px 0 0;
+    color: var(--dark);
+    font-size: clamp(35px, 4vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .section-heading h2 span {
+    color: var(--blue);
+  }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .quick-card {
+    min-height: 130px;
+    padding: 22px 17px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: var(--lighter);
+  }
+
+  .quick-card strong {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--blue);
+    font-size: 31px;
+  }
+
+  .quick-card span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .quick-card.accent strong {
+    color: var(--green);
+  }
+
+  .content-section {
+    padding: 65px 0 100px;
+  }
+
+  .content-layout {
+    display: grid;
+    grid-template-columns: 245px minmax(0, 1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 95px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc-title {
+    margin-bottom: 13px;
+    color: var(--dark);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 9px 0;
+    color: #516582;
+    border-bottom: 1px solid #e8edf6;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .toc a:hover {
+    color: var(--blue);
+  }
+
+  .article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .article .lead {
+    margin-top: 0;
+    color: #334b6e;
+    font-size: 20px;
+    line-height: 1.75;
+  }
+
+  .article h2 {
+    scroll-margin-top: 95px;
+    margin: 65px 0 18px;
+    color: var(--dark);
+    font-size: clamp(31px, 4vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -1.2px;
+  }
+
+  .article h3 {
+    margin: 39px 0 13px;
+    color: var(--dark);
+    font-size: 26px;
+    line-height: 1.25;
+  }
+
+  .article h4 {
+    margin: 0 0 9px;
+    color: var(--dark);
+    font-size: 18px;
+  }
+
+  .article p {
+    margin: 0 0 18px;
+    color: #455a78;
+  }
+
+  .article ul {
+    margin: 12px 0 23px;
+    padding-left: 24px;
+    color: #455a78;
+  }
+
+  .article li {
+    margin: 5px 0;
+  }
+
+  .source-note {
+    margin: 25px 0;
+    padding: 19px 21px;
+    border-left: 4px solid var(--blue);
+    border-radius: 0 12px 12px 0;
+    background: #eef4ff;
+    color: #4d6180;
+    line-height: 1.65;
+  }
+
+  .source-note strong {
+    color: var(--dark);
+  }
+
+  .small-note {
+    font-size: 14px !important;
+    color: #71819a !important;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  th,
+  td {
+    padding: 15px 16px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+  }
+
+  th {
+    background: #f2f6fd;
+    color: var(--dark);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  td {
+    color: #53657f;
+    font-size: 15px;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .total-row td {
+    background: #f8faff;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .strategy-box {
+    margin: 32px 0;
+    padding: 28px;
+    border-radius: 18px;
+    background: var(--dark);
+    color: white;
+  }
+
+  .strategy-label {
+    margin-bottom: 10px;
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .strategy-box h3 {
+    margin-top: 0;
+    color: white;
+  }
+
+  .strategy-box p {
+    margin-bottom: 0;
+    color: rgba(255, 255, 255, 0.74);
+  }
+
+  .weight-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 25px 0;
+  }
+
+  .weight-grid div {
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .weight-grid strong {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--blue);
+    font-size: 30px;
+  }
+
+  .weight-grid span {
+    color: #53657f;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .topic-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+  }
+
+  .topic-columns.two {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .topic-columns > div,
+  .current-grid > div {
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .topic-columns ul,
+  .current-grid ul {
+    margin-bottom: 0;
+  }
+
+  .topic-list {
+    display: grid;
+    gap: 10px;
+    margin: 22px 0;
+  }
+
+  .topic-list div {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 17px 19px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+  }
+
+  .topic-list strong {
+    color: var(--dark);
+  }
+
+  .topic-list span {
+    color: #5d6e87;
+  }
+
+  .check-list {
+    list-style: none;
+    padding-left: 0 !important;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 22px;
+  }
+
+  .check-list li {
+    position: relative;
+    padding-left: 26px;
+  }
+
+  .check-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+    font-weight: 900;
+  }
+
+  .jharkhand-box {
+    margin: 28px 0;
+    padding: 28px;
+    border-radius: 18px;
+    background: #f1f8f4;
+    border: 1px solid #d5eadd;
+  }
+
+  .jharkhand-box h4 {
+    margin-bottom: 18px;
+  }
+
+  .jharkhand-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+  }
+
+  .jharkhand-grid span {
+    padding: 11px 13px;
+    border-radius: 8px;
+    background: white;
+    color: #41634f;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .current-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 25px 0;
+  }
+
+  .current-grid strong {
+    color: var(--dark);
+    font-size: 19px;
+  }
+
+  .current-grid ul {
+    margin-top: 12px;
+  }
+
+  .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 20px 0 25px;
+  }
+
+  .tag-cloud span {
+    padding: 9px 13px;
+    border-radius: 20px;
+    background: #eef4ff;
+    color: #315d9d;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .paper-two-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin: 28px 0;
+  }
+
+  .paper-two-grid > div {
+    position: relative;
+    padding: 27px 25px 24px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #f8faff;
+  }
+
+  .paper-two-grid .number {
+    display: inline-flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border-radius: 9px;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .paper-two-grid h3 {
+    margin: 0 0 9px;
+    font-size: 20px;
+  }
+
+  .paper-two-grid p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .funnel {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 12px;
+    align-items: center;
+    margin: 30px 0;
+  }
+
+  .funnel > div {
+    min-height: 130px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #eef4ff;
+  }
+
+  .funnel span {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .funnel strong {
+    display: block;
+    color: var(--dark);
+  }
+
+  .funnel small {
+    display: block;
+    margin-top: 7px;
+    color: #6b7b94;
+    line-height: 1.4;
+  }
+
+  .funnel i {
+    color: var(--blue);
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+    margin: 28px 0;
+  }
+
+  .process-grid > div {
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: white;
+  }
+
+  .process-grid > div > strong {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--dark);
+  }
+
+  .process-grid h3 {
+    margin: 0 0 7px;
+    font-size: 19px;
+  }
+
+  .process-grid p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .book-cta,
+  .free-mock-cta,
+  .conversion-box {
+    margin: 38px 0;
+    padding: 32px;
+    border-radius: 20px;
+  }
+
+  .book-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: var(--dark);
+  }
+
+  .book-cta h3,
+  .free-mock-cta h3,
+  .conversion-box h2 {
+    margin: 7px 0 9px;
+    color: white;
+    font-size: 29px;
+    line-height: 1.2;
+  }
+
+  .book-cta p,
+  .free-mock-cta p,
+  .conversion-box p {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.74);
+    line-height: 1.65;
+  }
+
+  .book-cta strong {
+    color: white;
+  }
+
+  .book-cta .cta-label,
+  .free-mock-cta .cta-label,
+  .conversion-box .conversion-kicker {
+    color: var(--yellow);
+  }
+
+  .free-mock-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    background: linear-gradient(120deg, #123f9f, #2163dd);
+  }
+
+  .free-mock-cta .button-outline {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 13px;
+    margin: 27px 0;
+  }
+
+  .analysis-grid > div {
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .analysis-icon {
+    display: block;
+    margin-bottom: 17px;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .analysis-grid h3 {
+    margin: 0 0 7px;
+    font-size: 20px;
+  }
+
+  .analysis-grid p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 17px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .timeline-item > span {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .timeline-item h3 {
+    margin: 0 0 5px;
+    font-size: 20px;
+  }
+
+  .timeline-item p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 35px 0;
+    padding: 25px;
+    border-radius: 16px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.6px;
+    text-align: center;
+  }
+
+  .formula b {
+    color: #8aa1c6;
+    font-size: 20px;
+  }
+
+  .formula strong {
+    color: var(--dark);
+  }
+
+  .comparison-table {
+    margin: 27px 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+  }
+
+  .comparison-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr;
+    gap: 15px;
+    padding: 17px 19px;
+    border-bottom: 1px solid var(--border);
+    color: #53657f;
+    font-size: 14px;
+  }
+
+  .comparison-row:last-child {
+    border-bottom: 0;
+  }
+
+  .comparison-head {
+    background: #f2f6fd;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .comparison-row strong {
+    color: var(--dark);
+  }
+
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .priority-card {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .priority-card span {
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--blue);
+  }
+
+  .priority-card h3 {
+    margin: 11px 0 6px;
+    font-size: 20px;
+  }
+
+  .priority-card p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .priority-card.jh {
+    background: #f1f8f4;
+    border-color: #d5eadd;
+  }
+
+  .priority-card.jh span {
+    color: var(--green);
+  }
+
+  .final-box {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin: 35px 0;
+    padding: 30px;
+    border-radius: 18px;
+    background: #f5f8ff;
+  }
+
+  .final-step {
+    width: min(500px, 100%);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 14px 18px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+  }
+
+  .final-step span {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--blue);
+    color: white;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .final-step strong {
+    color: var(--dark);
+    font-size: 15px;
+  }
+
+  .final-step.final {
+    background: var(--dark);
+    border-color: var(--dark);
+  }
+
+  .final-step.final strong {
+    color: white;
+  }
+
+  .arrow {
+    color: var(--blue);
+    font-weight: 900;
+  }
+
+  .conversion-box {
+    padding: 42px;
+    background: linear-gradient(120deg, #123f9f, #2163dd);
+    color: white;
+  }
+
+  .conversion-kicker {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  .conversion-box h2 {
+    max-width: 800px;
+    margin-top: 10px;
+  }
+
+  .conversion-box h2 span {
+    color: var(--yellow);
+  }
+
+  .conversion-box p {
+    max-width: 820px;
+    margin-bottom: 25px;
+  }
+
+  .faq-list {
+    display: grid;
+    gap: 9px;
+    margin: 25px 0;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: white;
+  }
+
+  summary {
+    padding: 19px 21px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 21px 20px;
+    font-size: 15px;
+  }
+
+  .official-source {
+    margin-top: 35px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .official-source h3 {
+    margin-top: 0;
+  }
+
+  .official-source p {
+    font-size: 15px;
+  }
+
+  .official-source a {
+    color: var(--blue);
+    font-weight: 800;
+  }
+
+  .related-section {
+    padding: 80px 0;
+    background: #f5f8ff;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .related-card {
+    min-height: 220px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: white;
+    transition: 0.2s ease;
+  }
+
+  .related-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(16, 42, 97, 0.08);
+  }
+
+  .related-card > span {
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .related-card h3 {
+    margin: 30px 0 8px;
+    color: var(--dark);
+    font-size: 22px;
+  }
+
+  .related-card p {
+    min-height: 65px;
+    margin: 0 0 17px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .related-card strong {
+    color: var(--blue);
+    font-size: 14px;
+  }
+
+  @media (max-width: 1050px) {
+    .quick-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .content-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .toc {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0 15px;
+    }
+
+    .toc-title {
+      grid-column: 1 / -1;
+    }
+
+    .weight-grid,
+    .priority-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .related-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .container {
+      width: min(100% - 32px, 620px);
+    }
+
+    .article-hero-inner {
+      padding: 60px 0;
+    }
+
+    .article-hero h1 {
+      font-size: clamp(43px, 13vw, 65px);
+      letter-spacing: -2.5px;
+    }
+
+    .hero-actions,
+    .conversion-actions,
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .button {
+      width: 100%;
+    }
+
+    .quick-grid,
+    .weight-grid,
+    .topic-columns,
+    .topic-columns.two,
+    .current-grid,
+    .paper-two-grid,
+    .process-grid,
+    .analysis-grid,
+    .priority-grid,
+    .related-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .topic-list div {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .check-list {
+      grid-template-columns: 1fr;
+    }
+
+    .jharkhand-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .funnel {
+      grid-template-columns: 1fr;
+    }
+
+    .funnel i {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .book-cta,
+    .free-mock-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .comparison-row {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .comparison-head {
+      display: none;
+    }
+
+    .toc {
+      grid-template-columns: 1fr;
+    }
+
+    .notice {
+      align-items: flex-start;
+    }
+  }
+</style>

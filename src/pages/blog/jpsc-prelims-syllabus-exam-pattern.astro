@@ -1,0 +1,1838 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const pageTitle =
+  "JPSC Prelims Syllabus & Exam Pattern 2027: Papers, Marks, Subjects, Strategy & PYQ Plan";
+const pageDescription =
+  "JPSC Prelims syllabus and exam pattern guide covering General Studies Paper I and II, marks, duration, question structure, qualifying rules, syllabus areas, PYQ strategy, mock tests and preparation planning.";
+const pageUrl = "https://habitatias.com/blog/jpsc-prelims-syllabus-exam-pattern/";
+
+const faqs = [
+  {
+    question: "How many papers are there in JPSC Prelims?",
+    answer:
+      "The official Combined Civil Services framework provides two compulsory objective papers: General Studies Paper I and General Studies Paper II. Each paper carries 200 marks and has a duration of 2 hours.",
+  },
+  {
+    question: "How many marks are there in JPSC Prelims?",
+    answer:
+      "The two compulsory Preliminary papers carry 200 marks each, for a total of 400 marks.",
+  },
+  {
+    question: "Is there negative marking in JPSC Prelims?",
+    answer:
+      "The official JPSC Combined Civil Services examination framework cited in this guide states that there is no negative marking for incorrect answers in the Preliminary Examination.",
+  },
+  {
+    question: "Does JPSC Prelims have two General Studies papers?",
+    answer:
+      "Yes. The Preliminary Examination consists of General Studies Paper I and General Studies Paper II as the two compulsory objective papers.",
+  },
+  {
+    question: "How long is each JPSC Prelims paper?",
+    answer:
+      "Each Preliminary paper has a duration of 2 hours under the current official examination framework referenced here.",
+  },
+  {
+    question: "Do JPSC Prelims marks count in final merit?",
+    answer:
+      "The Preliminary Examination is a screening stage for admission to the Main Examination. The exact treatment of marks and qualifying standards should always be checked in the notification/rules applicable to the examination cycle.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: pageTitle,
+  description: pageDescription,
+  url: pageUrl,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+  },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer,
+    },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{pageTitle} | Habitat IAS</title>
+    <meta name="description" content={pageDescription} />
+    <meta
+      name="keywords"
+      content="JPSC syllabus 2027, JPSC Prelims syllabus, JPSC exam pattern, JPSC Prelims exam pattern, JPSC syllabus PDF, JPSC General Studies Paper 1, JPSC General Studies Paper 2, JPSC marks, JPSC preparation"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={pageUrl} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="breadcrumb-wrap">
+        <div class="container">
+          <nav class="breadcrumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a>
+            <span>›</span>
+            <a href="/blog/">Blog</a>
+            <span>›</span>
+            <span>JPSC Prelims Syllabus & Exam Pattern</span>
+          </nav>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container hero-inner">
+          <div class="pill">JPSC PRELIMS • SYLLABUS • EXAM PATTERN</div>
+
+          <h1>
+            JPSC Prelims Syllabus & Exam Pattern:
+            <span>Know the Paper Before You Prepare.</span>
+          </h1>
+
+          <p class="hero-copy">
+            A structured guide to the two-paper Preliminary stage, marks,
+            duration, subject areas, syllabus mapping, PYQ analysis and mock
+            test strategy — with the latest official JPSC framework as the
+            reference point.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Approx. 14 min read</span>
+          </div>
+
+          <div class="actions">
+            <a href="#pattern" class="btn yellow">See Exam Pattern ↓</a>
+            <a href="/mock-tests/free-gs/" class="btn outline">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="notice-section">
+        <div class="container">
+          <div class="notice">
+            <strong>Official-source note:</strong>
+            <p>
+              JPSC's website currently lists the Jharkhand Combined Civil
+              Services Examination syllabus and the 2025 recruitment cycle
+              (Advertisement No. 01/2026). This article uses the current
+              official framework available from JPSC and should be rechecked
+              against the notification for the specific cycle you apply for.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-section">
+        <div class="container">
+          <div class="heading">
+            <div class="eyebrow">AT A GLANCE</div>
+            <h2>JPSC Prelims is a <span>two-paper screening stage.</span></h2>
+          </div>
+
+          <div class="quick-grid">
+            <div><strong>02</strong><span>Compulsory Papers</span></div>
+            <div><strong>200</strong><span>Marks per Paper</span></div>
+            <div><strong>400</strong><span>Total Marks</span></div>
+            <div><strong>2h</strong><span>Per Paper</span></div>
+            <div><strong>GS-I</strong><span>General Studies I</span></div>
+            <div><strong>GS-II</strong><span>General Studies II</span></div>
+            <div><strong>MCQ</strong><span>Objective Type</span></div>
+            <div class="green"><strong>0</strong><span>Negative Marking</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section">
+        <div class="container layout">
+          <aside class="toc">
+            <div class="toc-title">ON THIS PAGE</div>
+            <a href="#pattern">Exam pattern</a>
+            <a href="#papers">Two Preliminary papers</a>
+            <a href="#paper1">General Studies Paper I</a>
+            <a href="#paper2">General Studies Paper II</a>
+            <a href="#qualifying">Selection & qualifying</a>
+            <a href="#strategy">How to read the syllabus</a>
+            <a href="#pyq">PYQ strategy</a>
+            <a href="#mock">Mock-test strategy</a>
+            <a href="#plan">Preparation plan</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article class="article">
+            <p class="lead">
+              Before buying books, joining a mock series or making a timetable,
+              understand the JPSC Preliminary Examination structure. The
+              official framework currently available from JPSC provides two
+              compulsory objective papers — General Studies I and General
+              Studies II — each carrying 200 marks and each having a 2-hour
+              duration. The two papers together carry 400 marks.
+            </p>
+
+            <h2 id="pattern">JPSC Prelims Exam Pattern</h2>
+
+            <div class="pattern-table">
+              <div class="table-head">
+                <span>Parameter</span>
+                <span>JPSC Prelims</span>
+              </div>
+
+              <div>
+                <strong>Stage</strong>
+                <span>Preliminary Examination</span>
+              </div>
+
+              <div>
+                <strong>Purpose</strong>
+                <span>Screening for admission to the Main Examination</span>
+              </div>
+
+              <div>
+                <strong>Number of papers</strong>
+                <span>2 compulsory papers</span>
+              </div>
+
+              <div>
+                <strong>Paper I</strong>
+                <span>General Studies – I</span>
+              </div>
+
+              <div>
+                <strong>Paper II</strong>
+                <span>General Studies – II</span>
+              </div>
+
+              <div>
+                <strong>Marks per paper</strong>
+                <span>200</span>
+              </div>
+
+              <div>
+                <strong>Total Preliminary marks</strong>
+                <span>400</span>
+              </div>
+
+              <div>
+                <strong>Duration</strong>
+                <span>2 hours per paper</span>
+              </div>
+
+              <div>
+                <strong>Question type</strong>
+                <span>Objective / Multiple Choice Questions</span>
+              </div>
+
+              <div>
+                <strong>Language</strong>
+                <span>Question papers are set in Hindi and English</span>
+              </div>
+
+              <div>
+                <strong>Negative marking</strong>
+                <span>No negative marking for incorrect answers under the cited official framework</span>
+              </div>
+            </div>
+
+            <div class="source-box">
+              <strong>Official basis:</strong>
+              JPSC's published Combined Civil Services framework states that
+              the Preliminary Examination has two compulsory 200-mark papers,
+              each of 2 hours, and that the question papers are objective type.
+              It also states that there is no negative marking for incorrect
+              answers. citeturn0search14turn0search12
+            </div>
+
+            <h2 id="papers">The Two Papers: Don't Treat Them as One Giant Subject</h2>
+
+            <div class="paper-cards">
+              <div class="paper-card">
+                <div class="number">I</div>
+                <span>GENERAL STUDIES</span>
+                <h3>Paper I</h3>
+                <p>
+                  The broad General Studies paper. Your preparation should be
+                  divided into individual syllabus domains instead of being
+                  studied as one continuous block.
+                </p>
+                <div class="card-stat">
+                  <strong>200 marks</strong>
+                  <span>2 hours</span>
+                </div>
+              </div>
+
+              <div class="paper-card second">
+                <div class="number">II</div>
+                <span>GENERAL STUDIES</span>
+                <h3>Paper II</h3>
+                <p>
+                  The second compulsory General Studies paper. Treat its
+                  syllabus as a separate preparation and testing track.
+                </p>
+                <div class="card-stat">
+                  <strong>200 marks</strong>
+                  <span>2 hours</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="important">
+              <strong>Important:</strong>
+              Do not assume that a subject is low priority merely because it
+              feels smaller in your notes. Your final preparation should cover
+              the applicable official syllabus and then use PYQs to decide
+              depth and revision priority.
+            </div>
+
+            <h2 id="paper1">General Studies Paper I — What to Prepare</h2>
+
+            <p>
+              The official syllabus should be your master checklist. Convert
+              each broad heading into a subject → topic → subtopic structure.
+              That makes revision and PYQ mapping much easier.
+            </p>
+
+            <div class="syllabus-grid">
+              <div>
+                <span>HISTORY</span>
+                <h3>History of India</h3>
+                <p>
+                  Ancient, Medieval and Modern India, including major historical
+                  developments and movements.
+                </p>
+              </div>
+
+              <div>
+                <span>GEOGRAPHY</span>
+                <h3>Geography of India</h3>
+                <p>
+                  General, physical, economic and social-demographic geography,
+                  along with important spatial relationships.
+                </p>
+              </div>
+
+              <div>
+                <span>POLITY</span>
+                <h3>Indian Polity & Governance</h3>
+                <p>
+                  Constitution, governance, public administration and
+                  decentralisation-related areas.
+                </p>
+              </div>
+
+              <div>
+                <span>ECONOMY</span>
+                <h3>Economic & Sustainable Development</h3>
+                <p>
+                  Indian economy, development, sustainability, economic issues,
+                  reforms and related contemporary dimensions.
+                </p>
+              </div>
+
+              <div>
+                <span>SCIENCE</span>
+                <h3>Science & Technology</h3>
+                <p>
+                  General science, agriculture and technology development,
+                  information and communication technology and related areas.
+                </p>
+              </div>
+
+              <div>
+                <span>STATE</span>
+                <h3>Jharkhand-specific areas</h3>
+                <p>
+                  Build a dedicated state file covering the applicable
+                  Jharkhand-specific history, geography, society, economy,
+                  culture, governance and current-affairs areas.
+                </p>
+              </div>
+            </div>
+
+            <div class="source-box">
+              <strong>Why the exact wording matters:</strong>
+              Older JPSC documents and historical syllabus proposals can differ
+              from the current Combined Civil Services framework. For example,
+              JPSC's current official syllabus page lists the Combined Civil
+              Services Examination separately, while older documents contain
+              different structures. Always use the current official syllabus
+              for your examination cycle. citeturn0search2turn0search13
+            </div>
+
+            <h2 id="paper2">General Studies Paper II — Build a Separate Tracker</h2>
+
+            <p>
+              Paper II should not disappear inside your Paper I preparation.
+              Create a separate tracker from the applicable official syllabus,
+              then record every PYQ and mock-test error against that tracker.
+            </p>
+
+            <div class="tracker">
+              <div>
+                <strong>SYLLABUS</strong>
+                <p>List every applicable Paper II domain.</p>
+              </div>
+              <div>
+                <strong>CONCEPT</strong>
+                <p>Record what each domain actually requires.</p>
+              </div>
+              <div>
+                <strong>PYQ</strong>
+                <p>Map previous questions to each domain.</p>
+              </div>
+              <div>
+                <strong>MOCK</strong>
+                <p>Track performance and recurring errors.</p>
+              </div>
+              <div>
+                <strong>REVISION</strong>
+                <p>Convert mistakes into short revision points.</p>
+              </div>
+            </div>
+
+            <h2 id="qualifying">How the Preliminary Stage Fits into Selection</h2>
+
+            <p>
+              The Preliminary Examination is the screening stage used for
+              selecting candidates for the Main Examination. The official
+              framework also describes preparation of the Main-selection list
+              using the combined marks of the two Preliminary papers, subject
+              to the applicable qualifying standards and rules. citeturn0search14
+            </p>
+
+            <div class="flow">
+              <div>
+                <span>STAGE 01</span>
+                <strong>Prelims</strong>
+                <small>Objective screening examination</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>STAGE 02</span>
+                <strong>Mains</strong>
+                <small>Written examination</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>STAGE 03</span>
+                <strong>Interview</strong>
+                <small>Personality assessment</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>FINAL</span>
+                <strong>Selection</strong>
+                <small>As per applicable rules</small>
+              </div>
+            </div>
+
+            <div class="important">
+              <strong>Don't confuse screening with low importance:</strong>
+              Even when Preliminary marks are not treated as final-merit
+              marks, the Prelims determines whether you progress to the next
+              stage. Your immediate objective is therefore to clear the
+              applicable Preliminary standard with a reliable margin.
+            </div>
+
+            <h2 id="strategy">How to Convert the Syllabus into a Study Plan</h2>
+
+            <p>
+              Reading the syllabus once is not enough. Turn it into a working
+              document that controls your books, PYQs, revision and mocks.
+            </p>
+
+            <div class="study-system">
+              <div>
+                <span>01</span>
+                <h3>Download / verify syllabus</h3>
+                <p>Start from the latest official JPSC document.</p>
+              </div>
+              <div>
+                <span>02</span>
+                <h3>Make topic buckets</h3>
+                <p>Break every broad heading into manageable topics.</p>
+              </div>
+              <div>
+                <span>03</span>
+                <h3>Attach resources</h3>
+                <p>Assign one main source and your notes to each bucket.</p>
+              </div>
+              <div>
+                <span>04</span>
+                <h3>Map PYQs</h3>
+                <p>Mark which topics have actually produced questions.</p>
+              </div>
+              <div>
+                <span>05</span>
+                <h3>Test</h3>
+                <p>Use sectional and full-length mocks.</p>
+              </div>
+              <div>
+                <span>06</span>
+                <h3>Revise weak areas</h3>
+                <p>Use your error log to determine the next study block.</p>
+              </div>
+            </div>
+
+            <h2>Use a 4-Level Syllabus Tracker</h2>
+
+            <div class="tracker-four">
+              <div class="not-started">
+                <strong>NOT STARTED</strong>
+                <span>Never studied</span>
+              </div>
+              <div class="learning">
+                <strong>LEARNING</strong>
+                <span>Currently studying</span>
+              </div>
+              <div class="revision">
+                <strong>REVISION</strong>
+                <span>Studied once, needs recall</span>
+              </div>
+              <div class="mastered">
+                <strong>TESTED</strong>
+                <span>Repeatedly tested and stable</span>
+              </div>
+            </div>
+
+            <h2 id="pyq">Why PYQs Should Be Placed Beside the Syllabus</h2>
+
+            <p>
+              PYQs are not merely an end-stage practice exercise. They help you
+              determine the depth at which a syllabus topic has historically
+              been tested.
+            </p>
+
+            <div class="pyq-flow">
+              <div>
+                <span>01</span>
+                <strong>Find the question</strong>
+                <small>Identify the exact PYQ.</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>02</span>
+                <strong>Map topic</strong>
+                <small>Attach it to the syllabus.</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>03</span>
+                <strong>Study concept</strong>
+                <small>Understand the tested idea.</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>04</span>
+                <strong>Record pattern</strong>
+                <small>Note recurring themes.</small>
+              </div>
+              <b>→</b>
+              <div>
+                <span>05</span>
+                <strong>Revise</strong>
+                <small>Convert it into recall material.</small>
+              </div>
+            </div>
+
+            <div class="book-cta">
+              <div>
+                <span>HABITAT IAS</span>
+                <h3>JPSC Prelims Decoded: Topic-Wise PYQs</h3>
+                <p>
+                  Use topic-wise and subject-wise previous questions with
+                  explanations to connect the official syllabus with actual
+                  examination questions.
+                </p>
+              </div>
+              <a class="btn yellow" href="/book/">View PYQ Book →</a>
+            </div>
+
+            <h2 id="mock">How Mock Tests Should Follow the Syllabus</h2>
+
+            <p>
+              Do not take mocks randomly and record only the score. A useful
+              mock system tells you which syllabus areas are weak and what to
+              revise next.
+            </p>
+
+            <div class="mock-grid">
+              <div>
+                <strong>Score</strong>
+                <p>Track total performance.</p>
+              </div>
+              <div>
+                <strong>Accuracy</strong>
+                <p>Measure how reliably you answer attempted questions.</p>
+              </div>
+              <div>
+                <strong>Topic</strong>
+                <p>Identify weak syllabus domains.</p>
+              </div>
+              <div>
+                <strong>Error type</strong>
+                <p>Knowledge, confusion, careless error or guess.</p>
+              </div>
+              <div>
+                <strong>Revision action</strong>
+                <p>Decide exactly what to study next.</p>
+              </div>
+              <div>
+                <strong>Retest</strong>
+                <p>Check whether the weakness has actually improved.</p>
+              </div>
+            </div>
+
+            <div class="mock-cta">
+              <div>
+                <span>HABITAT IAS MOCKS</span>
+                <h3>Don't just know the syllabus. Test it.</h3>
+                <p>
+                  Start with an open mock, analyse your mistakes and use the
+                  result to update your study plan.
+                </p>
+              </div>
+
+              <div class="cta-actions">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Free GS Mock →</a>
+                <a class="btn outline" href="/mock-tests/free-jharkhand/">Free Jharkhand Mock →</a>
+              </div>
+            </div>
+
+            <h2>JPSC Prelims Time-Management Logic</h2>
+
+            <p>
+              Because each Preliminary paper has a 2-hour duration, practise
+              answering under a fixed time limit. Do not wait until the final
+              weeks to discover that your reading speed and decision-making
+              speed are incompatible with the paper.
+            </p>
+
+            <div class="time-grid">
+              <div>
+                <strong>PHASE 1</strong>
+                <h3>Build knowledge</h3>
+                <p>Learn concepts without obsessing over speed.</p>
+              </div>
+              <div>
+                <strong>PHASE 2</strong>
+                <h3>Add timed sections</h3>
+                <p>Introduce short timed question sets.</p>
+              </div>
+              <div>
+                <strong>PHASE 3</strong>
+                <h3>Full-paper simulation</h3>
+                <p>Practise complete papers under the actual time limit.</p>
+              </div>
+              <div>
+                <strong>PHASE 4</strong>
+                <h3>Optimise decisions</h3>
+                <p>Review where time was lost and why.</p>
+              </div>
+            </div>
+
+            <h2>What "No Negative Marking" Does — and Does Not — Mean</h2>
+
+            <p>
+              The cited official framework states there is no negative marking
+              for an incorrect answer. However, candidates should still
+              distinguish between an unanswered question and multiple answers:
+              the official framework states that giving more than one answer is
+              treated as wrong and receives no marks. citeturn0search12
+            </p>
+
+            <div class="decision-box">
+              <div>
+                <span>INCORRECT</span>
+                <strong>No negative-mark penalty under the cited framework.</strong>
+              </div>
+              <div>
+                <span>BLANK</span>
+                <strong>No penalty for leaving the question unanswered.</strong>
+              </div>
+              <div>
+                <span>MULTIPLE ANSWERS</span>
+                <strong>Treated as wrong; no marks awarded.</strong>
+              </div>
+            </div>
+
+            <h2>Build Your JPSC Preparation Around Four Documents</h2>
+
+            <div class="documents">
+              <div>
+                <span>A</span>
+                <h3>Syllabus</h3>
+                <p>Your master checklist.</p>
+              </div>
+              <div>
+                <span>B</span>
+                <h3>PYQ Tracker</h3>
+                <p>What the examination actually asked.</p>
+              </div>
+              <div>
+                <span>C</span>
+                <h3>Revision Notes</h3>
+                <p>What you need to remember quickly.</p>
+              </div>
+              <div>
+                <span>D</span>
+                <h3>Error Log</h3>
+                <p>What you keep getting wrong.</p>
+              </div>
+            </div>
+
+            <h2 id="plan">A Practical 30-Day Syllabus-Completion Framework</h2>
+
+            <p>
+              This is a flexible framework rather than a claim about the exact
+              number of days required by every candidate. Adapt the sequence
+              according to your existing preparation.
+            </p>
+
+            <div class="thirty">
+              <div>
+                <strong>Days 1–4</strong>
+                <span>Syllabus audit + History</span>
+              </div>
+              <div>
+                <strong>Days 5–8</strong>
+                <span>Geography + maps</span>
+              </div>
+              <div>
+                <strong>Days 9–12</strong>
+                <span>Polity + governance</span>
+              </div>
+              <div>
+                <strong>Days 13–16</strong>
+                <span>Economy + development</span>
+              </div>
+              <div>
+                <strong>Days 17–20</strong>
+                <span>Science + technology</span>
+              </div>
+              <div>
+                <strong>Days 21–23</strong>
+                <span>Jharkhand-specific preparation</span>
+              </div>
+              <div>
+                <strong>Days 24–26</strong>
+                <span>Current affairs + weak areas</span>
+              </div>
+              <div>
+                <strong>Days 27–28</strong>
+                <span>PYQs + error log</span>
+              </div>
+              <div class="final">
+                <strong>Days 29–30</strong>
+                <span>Full mock + analysis + revision</span>
+              </div>
+            </div>
+
+            <h2>How to Use the Syllabus on Every Study Day</h2>
+
+            <div class="daily">
+              <div>
+                <span>BEFORE STUDY</span>
+                <strong>Choose one syllabus topic.</strong>
+              </div>
+              <div>
+                <span>DURING STUDY</span>
+                <strong>Study only the required depth.</strong>
+              </div>
+              <div>
+                <span>AFTER STUDY</span>
+                <strong>Solve related PYQs.</strong>
+              </div>
+              <div>
+                <span>WEEKLY</span>
+                <strong>Test and update the error log.</strong>
+              </div>
+            </div>
+
+            <h2 id="mistakes">10 Common JPSC Syllabus Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Using an old syllabus without checking the current official document.</span></div>
+              <div><b>02</b><span>Reading the syllabus once and never using it again.</span></div>
+              <div><b>03</b><span>Buying books before mapping the syllabus.</span></div>
+              <div><b>04</b><span>Ignoring Paper II until late preparation.</span></div>
+              <div><b>05</b><span>Studying topics without connecting them to PYQs.</span></div>
+              <div><b>06</b><span>Taking mocks without analysing errors.</span></div>
+              <div><b>07</b><span>Assuming every topic needs the same depth.</span></div>
+              <div><b>08</b><span>Ignoring Jharkhand-specific preparation.</span></div>
+              <div><b>09</b><span>Collecting current-affairs sources instead of revising one system.</span></div>
+              <div><b>10</b><span>Confusing completion of a book with completion of the syllabus.</span></div>
+            </div>
+
+            <h2>Final JPSC Prelims Formula</h2>
+
+            <div class="formula big">
+              <span>OFFICIAL SYLLABUS</span>
+              <b>+</b>
+              <span>CORE SOURCES</span>
+              <b>+</b>
+              <span>PYQs</span>
+              <b>+</b>
+              <span>REVISION</span>
+              <b>+</b>
+              <span>MOCKS</span>
+              <b>+</b>
+              <strong>ERROR CORRECTION</strong>
+            </div>
+
+            <div class="conversion">
+              <span>HABITAT IAS • JPSC PREPARATION</span>
+              <h2>Now turn the syllabus into questions.</h2>
+              <p>
+                Read the syllabus, map the PYQs, revise the weak areas and test
+                yourself under time pressure. Your preparation should move
+                continuously from knowledge to application.
+              </p>
+
+              <div class="conversion-actions">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Start Free GS Mock →</a>
+                <a class="btn outline" href="/book/">Explore PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/">Explore Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((faq) => (
+                <details>
+                  <summary>{faq.question}</summary>
+                  <p>{faq.answer}</p>
+                </details>
+              ))}
+            </div>
+
+            <div class="official-source">
+              <h3>Official JPSC sources</h3>
+              <p>
+                Use the Commission's current syllabus page and examination
+                documents to verify the syllabus and rules applicable to your
+                recruitment cycle.
+              </p>
+
+              <a
+                href="https://www.jpsc.gov.in/Syllabus.php"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Official JPSC syllabus page →
+              </a>
+
+              <a
+                href="https://www.jpsc.gov.in/exam_files.php?id=13039"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                JPSC current examination documents →
+              </a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="related-section">
+        <div class="container">
+          <div class="heading">
+            <div class="eyebrow">CONTINUE JPSC PREPARATION</div>
+            <h2>From syllabus to <span>actual preparation</span></h2>
+          </div>
+
+          <div class="related-grid">
+            <a href="/blog/jpsc-prelims-preparation-strategy/" class="related-card">
+              <span>01</span>
+              <h3>Preparation Strategy</h3>
+              <p>Turn the syllabus into a study and revision system.</p>
+              <strong>Read strategy →</strong>
+            </a>
+
+            <a href="/blog/jpsc-previous-year-question-papers/" class="related-card">
+              <span>02</span>
+              <h3>JPSC PYQ Strategy</h3>
+              <p>Learn how to decode previous year questions.</p>
+              <strong>Read PYQ guide →</strong>
+            </a>
+
+            <a href="/blog/jpsc-jharkhand-gk-preparation/" class="related-card">
+              <span>03</span>
+              <h3>Jharkhand GK</h3>
+              <p>Build the state-specific part of your preparation.</p>
+              <strong>Read Jharkhand guide →</strong>
+            </a>
+
+            <a href="/mock-tests/free-gs/" class="related-card">
+              <span>04</span>
+              <h3>Free JPSC Mock</h3>
+              <p>Test your preparation after studying the syllabus.</p>
+              <strong>Attempt mock →</strong>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #10264d;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2450;
+    --yellow: #ffd43b;
+    --border: #dce5f5;
+    --muted: #64748b;
+    --green: #14804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .breadcrumb-wrap { border-bottom: 1px solid var(--border); }
+
+  .breadcrumbs {
+    min-height: 58px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+    color: #7a8aa5;
+    font-size: 13px;
+  }
+
+  .breadcrumbs a {
+    color: var(--blue);
+    font-weight: 800;
+  }
+
+  .hero {
+    background:
+      radial-gradient(circle at 88% 12%, rgba(255,212,59,.17), transparent 25%),
+      linear-gradient(120deg, #0e357f, #1657d9 68%, #2e6ee4);
+  }
+
+  .hero-inner {
+    padding: 78px 0 82px;
+    color: #fff;
+  }
+
+  .pill {
+    display: inline-flex;
+    padding: 9px 14px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .hero h1 {
+    max-width: 1050px;
+    margin: 27px 0 22px;
+    color: #fff;
+    font-size: clamp(43px, 6vw, 76px);
+    line-height: .99;
+    letter-spacing: -3.2px;
+  }
+
+  .hero h1 span { color: var(--yellow); }
+
+  .hero-copy {
+    max-width: 850px;
+    color: rgba(255,255,255,.83);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 23px;
+    color: rgba(255,255,255,.68);
+    font-size: 13px;
+  }
+
+  .actions,
+  .conversion-actions,
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .actions { margin-top: 30px; }
+
+  .btn {
+    display: inline-flex;
+    min-height: 51px;
+    align-items: center;
+    justify-content: center;
+    padding: 0 21px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s ease;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+
+  .outline {
+    border: 1px solid rgba(255,255,255,.48);
+    color: #fff;
+  }
+
+  .notice-section { padding: 25px 0 0; }
+
+  .notice {
+    padding: 20px 23px;
+    border: 1px solid #e4d899;
+    border-radius: 15px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .notice strong { color: var(--dark); }
+  .notice p { display: inline; margin: 0; }
+
+  .quick-section { padding: 55px 0 30px; }
+
+  .heading { margin-bottom: 30px; }
+
+  .eyebrow {
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .heading h2 {
+    margin: 9px 0 0;
+    color: var(--dark);
+    font-size: clamp(34px,4vw,51px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .heading h2 span { color: var(--blue); }
+
+  .quick-grid {
+    display: grid;
+    grid-template-columns: repeat(8,1fr);
+    gap: 10px;
+  }
+
+  .quick-grid > div {
+    min-height: 120px;
+    padding: 20px 14px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .quick-grid strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 26px;
+  }
+
+  .quick-grid span {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .quick-grid .green strong { color: var(--green); }
+
+  .content-section { padding: 65px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 240px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 95px;
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc-title {
+    margin-bottom: 12px;
+    color: var(--dark);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf6;
+    color: #516582;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  .article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #334b6e;
+    font-size: 20px;
+  }
+
+  .article h2 {
+    scroll-margin-top: 95px;
+    margin: 65px 0 18px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,44px);
+    line-height: 1.1;
+    letter-spacing: -1.2px;
+  }
+
+  .article h3 {
+    margin: 0 0 9px;
+    color: var(--dark);
+    font-size: 21px;
+    line-height: 1.25;
+  }
+
+  .article p { color: #455a78; }
+
+  .pattern-table {
+    overflow: hidden;
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+  }
+
+  .pattern-table > div {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 18px;
+    padding: 17px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .pattern-table > div:last-child { border-bottom: 0; }
+
+  .table-head {
+    background: #f2f6fd;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .pattern-table strong { color: var(--dark); }
+  .pattern-table span { color: #53657f; font-size: 14px; }
+
+  .source-box,
+  .important,
+  .tip {
+    margin: 27px 0;
+    padding: 20px 22px;
+    border-radius: 12px;
+    background: #eef4ff;
+    color: #53657f;
+  }
+
+  .source-box strong,
+  .important strong,
+  .tip strong { color: var(--dark); }
+
+  .paper-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 28px 0;
+  }
+
+  .paper-card {
+    padding: 29px;
+    border-radius: 18px;
+    background: var(--dark);
+    color: #fff;
+  }
+
+  .paper-card.second {
+    background: linear-gradient(130deg,#1657d9,#2d70e6);
+  }
+
+  .paper-card .number {
+    display: flex;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 19px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--dark);
+    font-size: 19px;
+    font-weight: 900;
+  }
+
+  .paper-card > span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .paper-card h3 {
+    margin: 8px 0 10px;
+    color: #fff;
+    font-size: 31px;
+  }
+
+  .paper-card p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .card-stat {
+    display: flex;
+    gap: 25px;
+    margin-top: 23px;
+    padding-top: 17px;
+    border-top: 1px solid rgba(255,255,255,.17);
+  }
+
+  .card-stat strong {
+    color: #fff;
+    font-size: 17px;
+  }
+
+  .card-stat span {
+    color: rgba(255,255,255,.63);
+    font-size: 13px;
+  }
+
+  .syllabus-grid,
+  .tracker,
+  .study-system,
+  .mock-grid,
+  .time-grid,
+  .documents {
+    display: grid;
+    gap: 13px;
+    margin: 28px 0;
+  }
+
+  .syllabus-grid,
+  .tracker,
+  .study-system,
+  .mock-grid,
+  .time-grid,
+  .documents {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .syllabus-grid > div,
+  .tracker > div,
+  .study-system > div,
+  .mock-grid > div,
+  .time-grid > div,
+  .documents > div {
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .syllabus-grid span,
+  .study-system span,
+  .time-grid strong {
+    display: block;
+    margin-bottom: 11px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.1px;
+  }
+
+  .syllabus-grid p,
+  .tracker p,
+  .study-system p,
+  .mock-grid p,
+  .time-grid p,
+  .documents p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .tracker strong {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--dark);
+  }
+
+  .flow,
+  .pyq-flow {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin: 30px 0;
+  }
+
+  .flow > div,
+  .pyq-flow > div {
+    min-height: 90px;
+    padding: 17px;
+    border-radius: 13px;
+    background: #eef4ff;
+  }
+
+  .flow span,
+  .pyq-flow span {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .flow strong,
+  .pyq-flow strong {
+    display: block;
+    color: var(--dark);
+    font-size: 15px;
+  }
+
+  .flow small,
+  .pyq-flow small {
+    display: block;
+    margin-top: 5px;
+    color: #667894;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .flow > b,
+  .pyq-flow > b {
+    color: var(--blue);
+    font-size: 20px;
+  }
+
+  .tracker-four {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    margin: 27px 0;
+  }
+
+  .tracker-four > div {
+    padding: 20px;
+    border-radius: 13px;
+    border: 1px solid var(--border);
+  }
+
+  .tracker-four strong {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 11px;
+    letter-spacing: .8px;
+  }
+
+  .tracker-four span {
+    color: #53657f;
+    font-size: 13px;
+  }
+
+  .not-started { background: #f5f6f8; }
+  .learning { background: #fffbed; }
+  .revision { background: #eef4ff; }
+  .mastered { background: #f1f8f4; }
+
+  .not-started strong { color: #687487; }
+  .learning strong { color: #8a7121; }
+  .revision strong { color: var(--blue); }
+  .mastered strong { color: var(--green); }
+
+  .book-cta,
+  .mock-cta,
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 27px;
+    margin: 38px 0;
+    padding: 32px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#123f9f,#2163dd);
+  }
+
+  .book-cta span,
+  .mock-cta span,
+  .conversion > span {
+    color: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .book-cta h3,
+  .mock-cta h3 {
+    margin: 8px 0;
+    color: #fff;
+    font-size: 28px;
+  }
+
+  .book-cta p,
+  .mock-cta p {
+    margin: 0;
+    color: rgba(255,255,255,.73);
+    line-height: 1.6;
+  }
+
+  .decision-box {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .decision-box > div {
+    padding: 22px;
+    border-radius: 14px;
+    background: #f8faff;
+    border: 1px solid var(--border);
+  }
+
+  .decision-box span {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .decision-box strong {
+    color: var(--dark);
+    font-size: 15px;
+    line-height: 1.45;
+  }
+
+  .documents > div {
+    text-align: center;
+  }
+
+  .documents span {
+    display: flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 13px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .documents h3 { font-size: 19px; }
+
+  .thirty {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
+    margin: 27px 0;
+  }
+
+  .thirty > div {
+    min-height: 100px;
+    padding: 19px;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #f8faff;
+  }
+
+  .thirty strong {
+    display: block;
+    margin-bottom: 7px;
+    color: var(--blue);
+  }
+
+  .thirty span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .thirty .final {
+    background: var(--dark);
+    border-color: var(--dark);
+  }
+
+  .thirty .final strong,
+  .thirty .final span { color: #fff; }
+
+  .daily {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 10px;
+    margin: 28px 0;
+  }
+
+  .daily > div {
+    padding: 20px;
+    border-left: 4px solid var(--blue);
+    border-radius: 11px;
+    background: #f8faff;
+  }
+
+  .daily span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .daily strong {
+    color: var(--dark);
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 13px;
+    margin: 27px 0;
+  }
+
+  .mistakes > div {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    padding: 15px 17px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    background: #fff;
+  }
+
+  .mistakes b {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+  }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    margin: 30px 0;
+    padding: 27px;
+    border-radius: 16px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+    text-align: center;
+  }
+
+  .formula b {
+    color: #8aa1c6;
+    font-size: 19px;
+  }
+
+  .formula strong { color: var(--dark); }
+
+  .formula.big { padding: 32px; }
+
+  .conversion {
+    display: block;
+    padding: 40px;
+    background: linear-gradient(120deg,#0d2f76,#2163dd);
+  }
+
+  .conversion h2 {
+    margin: 9px 0 8px;
+    color: #fff;
+    font-size: 33px;
+  }
+
+  .conversion p {
+    max-width: 800px;
+    margin: 0 0 25px;
+    color: rgba(255,255,255,.74);
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+    margin: 25px 0;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: #fff;
+  }
+
+  summary {
+    padding: 18px 20px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 20px 19px;
+    font-size: 15px;
+  }
+
+  .official-source {
+    margin-top: 35px;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .official-source h3 { margin-top: 0; }
+  .official-source p { font-size: 15px; }
+
+  .official-source a {
+    display: inline-block;
+    margin: 4px 18px 0 0;
+    color: var(--blue);
+    font-size: 14px;
+    font-weight: 900;
+  }
+
+  .related-section {
+    padding: 78px 0;
+    background: #f5f8ff;
+  }
+
+  .related-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 14px;
+  }
+
+  .related-card {
+    min-height: 205px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #fff;
+    transition: .2s ease;
+  }
+
+  .related-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 15px 30px rgba(16,42,97,.08);
+  }
+
+  .related-card > span {
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .related-card h3 {
+    margin: 28px 0 7px;
+    color: var(--dark);
+    font-size: 21px;
+  }
+
+  .related-card p {
+    min-height: 55px;
+    margin: 0 0 15px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .related-card strong {
+    color: var(--blue);
+    font-size: 14px;
+  }
+
+  @media (max-width:1050px) {
+    .quick-grid { grid-template-columns: repeat(4,1fr); }
+    .layout { grid-template-columns: 1fr; }
+
+    .toc {
+      position: static;
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 0 15px;
+    }
+
+    .toc-title { grid-column: 1/-1; }
+
+    .syllabus-grid,
+    .tracker,
+    .study-system,
+    .mock-grid,
+    .time-grid,
+    .documents,
+    .daily {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .tracker-four,
+    .related-grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+
+    .hero-inner { padding: 60px 0; }
+
+    .hero h1 {
+      font-size: clamp(42px,12.5vw,63px);
+      letter-spacing: -2.5px;
+    }
+
+    .actions,
+    .conversion-actions,
+    .cta-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn { width: 100%; }
+
+    .quick-grid,
+    .syllabus-grid,
+    .tracker,
+    .study-system,
+    .mock-grid,
+    .time-grid,
+    .documents,
+    .daily,
+    .tracker-four,
+    .related-grid,
+    .paper-cards,
+    .decision-box,
+    .thirty {
+      grid-template-columns: 1fr;
+    }
+
+    .pattern-table > div {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+
+    .table-head { display: none !important; }
+
+    .flow,
+    .pyq-flow {
+      grid-template-columns: 1fr;
+    }
+
+    .flow > b,
+    .pyq-flow > b {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .book-cta,
+    .mock-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .toc { grid-template-columns: 1fr; }
+    .mistakes { grid-template-columns: 1fr; }
+  }
+</style>

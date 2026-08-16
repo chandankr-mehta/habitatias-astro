@@ -1,14 +1,856 @@
 ---
+import { createClient } from "@supabase/supabase-js";
+
+export const prerender = false;
+
+/* =========================================================
+   HABITAT IAS — TEST RESULT
+   SERVER-SIDE RESULT LOADING
+
+   IMPORTANT:
+   Questions are loaded using the server-side service-role
+   client so RLS on mock_questions cannot break the result
+   page.
+
+   Security:
+   - User must be authenticated.
+   - Attempt must belong to the authenticated user.
+   - Questions are loaded only for the attempt's test.
+========================================================= */
+
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
+
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
+
+if (!supabaseUrl) {
+  throw new Error(
+    "PUBLIC_SUPABASE_URL is missing."
+  );
+}
+
+if (!serviceRoleKey) {
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is missing."
+  );
+}
+
+const supabaseAdmin =
+  createClient(
+    supabaseUrl,
+    serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+
+
+/* =========================================================
+   GET ACCESS TOKEN
+
+   The project already creates:
+   habitat-access-token
+
+   after successful login.
+========================================================= */
+
+function getAccessToken(): string | null {
+
+  const cookieHeader =
+    Astro.request.headers.get("cookie");
+
+  if (!cookieHeader) {
+    return null;
+  }
+
+  const parts =
+    cookieHeader.split(";");
+
+  for (const part of parts) {
+
+    const separator =
+      part.indexOf("=");
+
+    if (separator === -1) {
+      continue;
+    }
+
+    const name =
+      part
+        .slice(0, separator)
+        .trim();
+
+    const value =
+      part
+        .slice(separator + 1)
+        .trim();
+
+    if (
+      name ===
+      "habitat-access-token"
+    ) {
+      return value || null;
+    }
+  }
+
+  return null;
+}
+
+
+/* =========================================================
+   RESULT DATA
+========================================================= */
+
+let pageError = "";
+
+let attempt: any = null;
+let test: any = null;
+let questions: any[] = [];
+let answers: any[] = [];
+
+const url =
+  new URL(
+    Astro.request.url
+  );
+
+const attemptId =
+  url.searchParams.get(
+    "attempt_id"
+  );
+
+
+/* =========================================================
+   AUTHENTICATE USER
+========================================================= */
+
+const accessToken =
+  getAccessToken();
+
+let user: any = null;
+
+if (!accessToken) {
+
+  pageError =
+    "Your login session has expired. Please login again.";
+
+} else {
+
+  const {
+    data: userData,
+    error: userError,
+  } =
+    await supabaseAdmin.auth.getUser(
+      accessToken
+    );
+
+  if (
+    userError ||
+    !userData?.user
+  ) {
+
+    pageError =
+      "Your login session has expired. Please login again.";
+
+  } else {
+
+    user =
+      userData.user;
+  }
+}
+
+
+/* =========================================================
+   LOAD ATTEMPT
+========================================================= */
+
+if (
+  !pageError &&
+  !attemptId
+) {
+
+  pageError =
+    "No test attempt was specified. Please open the result from the Results page.";
+
+}
+
+
+if (
+  !pageError &&
+  user &&
+  attemptId
+) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAdmin
+      .from("mock_attempts")
+      .select(`
+        id,
+        user_id,
+        test_id,
+        started_at,
+        submitted_at,
+        score,
+        correct_count,
+        incorrect_count,
+        unanswered_count,
+        time_taken_seconds,
+        status
+      `)
+      .eq(
+        "id",
+        attemptId
+      )
+      .eq(
+        "user_id",
+        user.id
+      )
+      .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "[Habitat IAS] ATTEMPT ERROR:",
+      error
+    );
+
+    pageError =
+      "Unable to load your test result.";
+
+  } else if (!data) {
+
+    pageError =
+      "Test result not found or you do not have permission to view it.";
+
+  } else {
+
+    attempt =
+      data;
+  }
+}
+
+
+/* =========================================================
+   LOAD TEST
+========================================================= */
+
+if (
+  !pageError &&
+  attempt
+) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAdmin
+      .from("mock_tests")
+      .select(`
+        id,
+        test_number,
+        title,
+        question_count
+      `)
+      .eq(
+        "id",
+        attempt.test_id
+      )
+      .maybeSingle();
+
+  if (error) {
+
+    console.error(
+      "[Habitat IAS] TEST ERROR:",
+      error
+    );
+
+    pageError =
+      "Unable to load the mock test.";
+
+  } else {
+
+    test =
+      data;
+
+    if (!test) {
+
+      pageError =
+        "The mock test associated with this attempt was not found.";
+    }
+  }
+}
+
+
+/* =========================================================
+   LOAD ALL QUESTIONS
+
+   IMPORTANT FIX:
+   This uses supabaseAdmin on the SERVER.
+
+   The normal browser Supabase client was causing the
+   "Unable to load the questions for this test" error.
+========================================================= */
+
+if (
+  !pageError &&
+  attempt
+) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAdmin
+      .from("mock_questions")
+      .select(`
+        id,
+        test_id,
+        question_number,
+        question_text,
+        option_a,
+        option_b,
+        option_c,
+        option_d,
+        correct_option,
+        explanation,
+        subject,
+        topic,
+        difficulty,
+        marks,
+        negative_marks
+      `)
+      .eq(
+        "test_id",
+        attempt.test_id
+      )
+      .order(
+        "question_number",
+        {
+          ascending: true
+        }
+      );
+
+  if (error) {
+
+    console.error(
+      "[Habitat IAS] QUESTIONS ERROR:",
+      error
+    );
+
+    pageError =
+      "Unable to load the questions for this test.";
+
+  } else {
+
+    questions =
+      data || [];
+  }
+}
+
+
+/* =========================================================
+   LOAD SUBMITTED ANSWERS
+========================================================= */
+
+if (
+  !pageError &&
+  attempt
+) {
+
+  const {
+    data,
+    error
+  } =
+    await supabaseAdmin
+      .from("mock_answers")
+      .select(`
+        id,
+        attempt_id,
+        question_id,
+        selected_option,
+        is_correct,
+        answered_at
+      `)
+      .eq(
+        "attempt_id",
+        attempt.id
+      );
+
+  if (error) {
+
+    console.error(
+      "[Habitat IAS] ANSWERS ERROR:",
+      error
+    );
+
+    pageError =
+      "Unable to load your submitted answers.";
+
+  } else {
+
+    answers =
+      data || [];
+  }
+}
+
+
+/* =========================================================
+   BUILD QUESTION-WISE RESULT DATA
+========================================================= */
+
+let reviewAnswers: any[] = [];
+
+if (
+  !pageError
+) {
+
+  const answerMap =
+    new Map();
+
+  for (
+    const answer of answers
+  ) {
+
+    answerMap.set(
+      String(
+        answer.question_id
+      ),
+      answer
+    );
+  }
+
+
+  reviewAnswers =
+    questions.map(
+      (
+        question,
+        index
+      ) => {
+
+        const savedAnswer =
+          answerMap.get(
+            String(
+              question.id
+            )
+          );
+
+        return {
+
+          question_id:
+            question.id,
+
+          question_number:
+            question.question_number ||
+            index + 1,
+
+          question_text:
+            question.question_text,
+
+          option_a:
+            question.option_a,
+
+          option_b:
+            question.option_b,
+
+          option_c:
+            question.option_c,
+
+          option_d:
+            question.option_d,
+
+          correct_option:
+            question.correct_option,
+
+          explanation:
+            question.explanation,
+
+          subject:
+            question.subject,
+
+          topic:
+            question.topic,
+
+          difficulty:
+            question.difficulty,
+
+          marks:
+            question.marks,
+
+          negative_marks:
+            question.negative_marks,
+
+          selected_option:
+            savedAnswer
+              ? savedAnswer.selected_option
+              : null,
+
+          is_correct:
+            savedAnswer
+              ? Boolean(
+                  savedAnswer.is_correct
+                )
+              : false,
+
+          answered_at:
+            savedAnswer
+              ? savedAnswer.answered_at
+              : null
+        };
+      }
+    );
+}
+
+
+/* =========================================================
+   SCORE
+
+   NO NEGATIVE MARKING
+   2 marks per correct answer.
+========================================================= */
+
+const correct =
+  Number(
+    attempt?.correct_count || 0
+  );
+
+const incorrect =
+  Number(
+    attempt?.incorrect_count || 0
+  );
+
+const unanswered =
+  Number(
+    attempt?.unanswered_count || 0
+  );
+
+const totalQuestions =
+  reviewAnswers.length ||
+  correct +
+  incorrect +
+  unanswered;
+
+const maximumMarks =
+  totalQuestions * 2;
+
+const score =
+  correct * 2;
+
+const percentage =
+  maximumMarks > 0
+    ? (
+        score /
+        maximumMarks
+      ) * 100
+    : 0;
+
+const attempted =
+  correct +
+  incorrect;
+
+const accuracy =
+  attempted > 0
+    ? (
+        correct /
+        attempted
+      ) * 100
+    : 0;
+
+const attemptRate =
+  totalQuestions > 0
+    ? (
+        attempted /
+        totalQuestions
+      ) * 100
+    : 0;
+
+const scoreEfficiency =
+  maximumMarks > 0
+    ? (
+        score /
+        maximumMarks
+      ) * 100
+    : 0;
+
+/* =========================================================
+   LIVE BEST-ATTEMPT RANKING
+
+   Ranking is calculated among UNIQUE students who have
+   submitted the SAME mock test.
+
+   If a student has multiple submissions, only that
+   student's BEST score is used.
+========================================================= */
+
+let testRank = 0;
+let totalParticipants = 0;
+let topScore = 0;
+let averageBestScore = 0;
+let percentile = 0;
+let currentBestScore = score;
+
+if (
+  !pageError &&
+  attempt?.test_id &&
+  attempt?.user_id
+) {
+  const {
+    data: rankingAttempts,
+    error: rankingError
+  } = await supabaseAdmin
+    .from("mock_attempts")
+    .select(`
+      user_id,
+      score,
+      status
+    `)
+    .eq(
+      "test_id",
+      attempt.test_id
+    )
+    .eq(
+      "status",
+      "submitted"
+    );
+
+  if (rankingError) {
+    console.error(
+      "[Habitat IAS] RANKING ERROR:",
+      rankingError
+    );
+  } else {
+    const bestScoresByStudent =
+      new Map<string, number>();
+
+    for (
+      const row
+      of rankingAttempts || []
+    ) {
+      const studentId =
+        row.user_id;
+
+      const studentScore =
+        Number(
+          row.score || 0
+        );
+
+      if (!studentId) {
+        continue;
+      }
+
+      const previousBest =
+        bestScoresByStudent.get(
+          studentId
+        );
+
+      if (
+        previousBest === undefined ||
+        studentScore > previousBest
+      ) {
+        bestScoresByStudent.set(
+          studentId,
+          studentScore
+        );
+      }
+    }
+
+    const bestScores =
+      Array.from(
+        bestScoresByStudent.values()
+      ).sort(
+        (a, b) => b - a
+      );
+
+    totalParticipants =
+      bestScores.length;
+
+    topScore =
+      bestScores.length > 0
+        ? bestScores[0]
+        : 0;
+
+    averageBestScore =
+      bestScores.length > 0
+        ? bestScores.reduce(
+            (sum, value) =>
+              sum + value,
+            0
+          ) /
+          bestScores.length
+        : 0;
+
+    const currentStudentBest =
+      bestScoresByStudent.get(
+        attempt.user_id
+      ) ?? score;
+
+    currentBestScore =
+      currentStudentBest;
+
+    const higherScores =
+      bestScores.filter(
+        value =>
+          value >
+          currentStudentBest
+      ).length;
+
+    testRank =
+      totalParticipants > 0
+        ? higherScores + 1
+        : 1;
+
+    const lowerScores =
+      bestScores.filter(
+        value =>
+          value <
+          currentStudentBest
+      ).length;
+
+    percentile =
+      totalParticipants > 0
+        ? (
+            lowerScores /
+            totalParticipants
+          ) * 100
+        : 0;
+  }
+}
+
+const timeUsed =
+  Number(
+    attempt?.time_taken_seconds || 0
+  );
+
+const averageTime =
+  totalQuestions > 0
+    ? Math.round(
+        timeUsed /
+        totalQuestions
+      )
+    : 0;
+
+
+/* =========================================================
+   SAFE JSON FOR CLIENT
+========================================================= */
+
+const clientResult = {
+
+  attempt: {
+    id:
+      attempt?.id ?? null,
+
+    status:
+      attempt?.status ?? "submitted",
+
+    submitted_at:
+      attempt?.submitted_at ?? null,
+
+    time_taken_seconds:
+      timeUsed,
+
+    correct_count:
+      correct,
+
+    incorrect_count:
+      incorrect,
+
+    unanswered_count:
+      unanswered
+  },
+
+  test: {
+    id:
+      test?.id ?? null,
+
+    test_number:
+      test?.test_number ?? null,
+
+    title:
+      test?.title ??
+      "Mock Test",
+
+    question_count:
+      test?.question_count ??
+      totalQuestions
+  },
+
+  score,
+  maximumMarks,
+  percentage,
+
+  correct,
+  incorrect,
+  unanswered,
+
+  totalQuestions,
+
+  accuracy,
+  attemptRate,
+  averageTime,
+  scoreEfficiency,
+
+  testRank,
+  totalParticipants,
+  topScore,
+  averageBestScore,
+  percentile,
+  currentBestScore,
+
+  reviewAnswers
+};
+
+
+/* =========================================================
+   REDIRECT IF SESSION INVALID
+========================================================= */
+
+if (
+  pageError &&
+  (
+    pageError.includes(
+      "session"
+    ) ||
+    pageError.includes(
+      "login"
+    )
+  )
+) {
+
+  Astro.redirect(
+    `/login?redirect=${encodeURIComponent(
+      Astro.url.pathname +
+      Astro.url.search
+    )}`
+  );
+}
+
 ---
 
 <!doctype html>
+
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Test Result | Habitat IAS</title>
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>
+    Test Result | Habitat IAS
+  </title>
 
   <style is:global>
+
     :root {
       --navy:#082b61;
       --blue:#2563eb;
@@ -24,20 +866,30 @@
       --white:#fff;
     }
 
-    * { box-sizing:border-box; }
+    * {
+      box-sizing:border-box;
+    }
 
-    html { scroll-behavior:smooth; }
+    html {
+      scroll-behavior:smooth;
+    }
 
     body {
       margin:0;
-      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,
-        "Segoe UI",sans-serif;
+      font-family:Inter,system-ui,-apple-system,
+        BlinkMacSystemFont,"Segoe UI",sans-serif;
       background:var(--bg);
       color:#0f172a;
     }
 
-    button,a { font-family:inherit; }
-    button { cursor:pointer; }
+    button,
+    a {
+      font-family:inherit;
+    }
+
+    button {
+      cursor:pointer;
+    }
 
     .page {
       min-height:100vh;
@@ -116,10 +968,17 @@
       box-shadow:0 8px 25px rgba(15,23,42,.06);
     }
 
-    .loading { color:var(--gray); }
-    .error { color:var(--red); }
+    .loading {
+      color:var(--gray);
+    }
 
-    .content { display:none; }
+    .error {
+      color:var(--red);
+    }
+
+    .content {
+      display:none;
+    }
 
     .summary-grid {
       display:grid;
@@ -135,7 +994,9 @@
       box-shadow:0 8px 25px rgba(15,23,42,.05);
     }
 
-    .score-card { padding:25px; }
+    .score-card {
+      padding:25px;
+    }
 
     .label {
       color:var(--gray);
@@ -170,7 +1031,9 @@
       font-weight:800;
     }
 
-    .stat-card { padding:20px; }
+    .stat-card {
+      padding:20px;
+    }
 
     .stat-number {
       margin-top:7px;
@@ -178,9 +1041,74 @@
       font-weight:900;
     }
 
-    .stat-number.correct { color:var(--green); }
-    .stat-number.incorrect { color:var(--red); }
-    .stat-number.unanswered { color:var(--gray); }
+    .stat-number.correct {
+      color:var(--green);
+    }
+
+    .stat-number.incorrect {
+      color:var(--red);
+    }
+
+    .stat-number.unanswered {
+      color:var(--gray);
+    }
+
+    .rank-section {
+      display:grid;
+      grid-template-columns:repeat(5,1fr);
+      gap:14px;
+      margin-bottom:18px;
+    }
+
+    .rank-card {
+      padding:20px;
+    }
+
+    .rank-value {
+      margin-top:7px;
+      color:var(--blue);
+      font-size:30px;
+      font-weight:900;
+    }
+
+    .rank-subtitle {
+      margin-top:5px;
+      color:var(--gray);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .rank-highlight {
+      background:#eff6ff;
+      border-color:#bfdbfe;
+    }
+
+    .rank-summary-card {
+      padding:20px;
+      margin-bottom:18px;
+    }
+
+    .rank-summary-inner {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+    }
+
+    .rank-summary-value {
+      margin-top:5px;
+      color:var(--navy);
+      font-size:22px;
+      font-weight:900;
+    }
+
+    .rank-summary-text {
+      max-width:620px;
+      color:var(--gray);
+      font-size:12px;
+      line-height:1.6;
+      font-weight:700;
+    }
 
     .info-grid {
       display:grid;
@@ -189,7 +1117,9 @@
       margin-bottom:18px;
     }
 
-    .info-card { padding:21px; }
+    .info-card {
+      padding:21px;
+    }
 
     .info-title {
       margin:0 0 12px;
@@ -207,8 +1137,14 @@
       font-size:13px;
     }
 
-    .info-row:last-child { border-bottom:none; }
-    .info-row span:first-child { color:var(--gray); }
+    .info-row:last-child {
+      border-bottom:none;
+    }
+
+    .info-row span:first-child {
+      color:var(--gray);
+    }
+
     .info-row span:last-child {
       text-align:right;
       font-weight:800;
@@ -290,9 +1226,17 @@
       transition:width .3s ease;
     }
 
-    .bar-fill.correct { background:var(--green); }
-    .bar-fill.incorrect { background:var(--red); }
-    .bar-fill.unanswered { background:#94a3b8; }
+    .bar-fill.correct {
+      background:var(--green);
+    }
+
+    .bar-fill.incorrect {
+      background:var(--red);
+    }
+
+    .bar-fill.unanswered {
+      background:#94a3b8;
+    }
 
     .analysis-note {
       padding:12px 14px;
@@ -354,7 +1298,9 @@
       box-shadow:0 5px 18px rgba(15,23,42,.04);
     }
 
-    .question-card:last-child { margin-bottom:0; }
+    .question-card:last-child {
+      margin-bottom:0;
+    }
 
     .question-top {
       display:flex;
@@ -398,7 +1344,9 @@
       border:1px solid var(--border);
     }
 
-    .question-body { padding:20px; }
+    .question-body {
+      padding:20px;
+    }
 
     .question-text {
       margin-bottom:15px;
@@ -586,1216 +1534,1549 @@
     }
 
     @media (max-width:900px) {
-      .summary-grid { grid-template-columns:1fr 1fr; }
-      .metrics { grid-template-columns:1fr 1fr; }
+
+      .rank-section {
+        grid-template-columns:1fr 1fr;
+      }
+
+      .rank-summary-inner {
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .summary-grid {
+        grid-template-columns:1fr 1fr;
+      }
+
+      .metrics {
+        grid-template-columns:1fr 1fr;
+      }
+
     }
 
     @media (max-width:700px) {
-      .page { padding:18px 12px 40px; }
-      .header { padding:22px; }
+
+      .page {
+        padding:18px 12px 40px;
+      }
+
+      .header {
+        padding:22px;
+      }
 
       .header-top {
         align-items:flex-start;
         flex-direction:column;
       }
 
-      .header-actions { justify-content:flex-start; }
+      .header-actions {
+        justify-content:flex-start;
+      }
 
       .summary-grid,
+      .rank-section,
       .info-grid,
       .metrics {
         grid-template-columns:1fr;
       }
 
-      .answer-grid { grid-template-columns:1fr; }
+      .answer-grid {
+        grid-template-columns:1fr;
+      }
 
       .question-top {
         align-items:flex-start;
         flex-direction:column;
       }
 
-      .actions { flex-direction:column; }
-      .action-btn { width:100%; }
+      .actions {
+        flex-direction:column;
+      }
+
+      .action-btn {
+        width:100%;
+      }
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <main class="page">
+
     <div class="container">
 
       <header class="header">
+
         <div class="header-top">
+
           <div>
-            <div class="brand">Habitat IAS • JPSC Mock Test</div>
-            <h1 id="resultTitle">Test Result</h1>
-            <p>Detailed performance and question-wise analysis.</p>
+
+            <div class="brand">
+              Habitat IAS • JPSC Mock Test
+            </div>
+
+            <h1 id="resultTitle">
+              Test Result
+            </h1>
+
+            <p>
+              Detailed performance and question-wise analysis.
+            </p>
+
           </div>
 
           <div class="header-actions">
-            <a href="/results" class="header-btn">← All Results</a>
-            <a href="/dashboard" class="header-btn">Dashboard</a>
+
+            <a
+              href="/results"
+              class="header-btn"
+            >
+              ← All Results
+            </a>
+
+            <a
+              href="/dashboard"
+              class="header-btn"
+            >
+              Dashboard
+            </a>
+
           </div>
+
         </div>
+
       </header>
 
-      <div id="loading" class="loading">
-        Loading your test result…
-      </div>
 
-      <div id="errorBox" class="error" style="display:none;"></div>
+      {
+        pageError ? (
 
-      <div id="resultContent" class="content">
-
-        <section class="summary-grid">
-
-          <div class="card score-card">
-            <div class="label">Score</div>
-            <div class="score" id="scoreEl">0</div>
-            <div class="percentage" id="percentageEl">0%</div>
-            <div class="rule">
-              No negative marking • 2 marks for every correct answer
-            </div>
+          <div class="error">
+            {pageError}
           </div>
 
-          <div class="card stat-card">
-            <div class="label">Correct</div>
-            <div class="stat-number correct" id="correctEl">0</div>
-          </div>
+        ) : (
 
-          <div class="card stat-card">
-            <div class="label">Incorrect</div>
-            <div class="stat-number incorrect" id="incorrectEl">0</div>
-          </div>
+          <div
+            id="resultContent"
+            class="content"
+            style="display:block;"
+          >
 
-          <div class="card stat-card">
-            <div class="label">Unanswered</div>
-            <div class="stat-number unanswered" id="unansweredEl">0</div>
-          </div>
+            <!-- =================================================
+                 SUMMARY
+            ================================================= -->
 
-        </section>
+            <section class="summary-grid">
 
-        <section class="info-grid">
+              <div class="card score-card">
 
-          <div class="card info-card">
-            <h2 class="info-title">Attempt Information</h2>
-
-            <div class="info-row">
-              <span>Status</span>
-              <span id="statusEl">Submitted</span>
-            </div>
-
-            <div class="info-row">
-              <span>Time Taken</span>
-              <span id="timeUsedEl">00:00</span>
-            </div>
-
-            <div class="info-row">
-              <span>Submitted At</span>
-              <span id="submittedAtEl">—</span>
-            </div>
-
-            <div class="info-row">
-              <span>Attempt ID</span>
-              <span id="attemptIdEl">—</span>
-            </div>
-          </div>
-
-          <div class="card info-card">
-            <h2 class="info-title">Test Information</h2>
-
-            <div class="info-row">
-              <span>Test</span>
-              <span id="testTitleEl">—</span>
-            </div>
-
-            <div class="info-row">
-              <span>Total Questions</span>
-              <span id="totalQuestionsEl">—</span>
-            </div>
-
-            <div class="info-row">
-              <span>Maximum Marks</span>
-              <span id="totalMarksEl">—</span>
-            </div>
-
-            <div class="info-row">
-              <span>Marks Per Question</span>
-              <span>2</span>
-            </div>
-          </div>
-
-        </section>
-
-        <section class="card analysis-card">
-          <h2 class="section-title">Performance Analysis</h2>
-          <p class="section-subtitle">
-            Understand your accuracy, attempt rate, time usage and score efficiency.
-          </p>
-
-          <div class="metrics">
-            <div class="metric">
-              <div class="metric-label">Accuracy</div>
-              <div class="metric-value" id="analysisAccuracyEl">0%</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Attempt Rate</div>
-              <div class="metric-value" id="analysisAttemptRateEl">0%</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Avg. Time / Question</div>
-              <div class="metric-value" id="analysisAvgTimeEl">00:00</div>
-            </div>
-
-            <div class="metric">
-              <div class="metric-label">Score Efficiency</div>
-              <div class="metric-value" id="analysisScoreEfficiencyEl">0%</div>
-            </div>
-          </div>
-
-          <div class="bars">
-            <div>
-              <div class="bar-label">
-                <span>Correct</span>
-                <span id="analysisCorrectLabelEl">0 (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div id="analysisCorrectBarEl" class="bar-fill correct" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="bar-label">
-                <span>Incorrect</span>
-                <span id="analysisIncorrectLabelEl">0 (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div id="analysisIncorrectBarEl" class="bar-fill incorrect" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="bar-label">
-                <span>Unanswered</span>
-                <span id="analysisUnansweredLabelEl">0 (0%)</span>
-              </div>
-              <div class="bar-track">
-                <div id="analysisUnansweredBarEl" class="bar-fill unanswered" style="width:0%"></div>
-              </div>
-            </div>
-          </div>
-
-          <div class="analysis-note" id="analysisNoteEl">
-            Analysis will appear here.
-          </div>
-        </section>
-
-        <section class="card review-card">
-          <div class="review-header">
-            <h2 class="section-title">Question-wise Review</h2>
-            <p class="section-subtitle">
-              Every question from the test is shown. Unanswered questions are also retained.
-            </p>
-          </div>
-
-          <div class="filters">
-            <button class="filter-btn active" data-filter="all">
-              All
-            </button>
-            <button class="filter-btn" data-filter="correct">
-              ✓ Correct
-            </button>
-            <button class="filter-btn" data-filter="incorrect">
-              ✕ Incorrect
-            </button>
-            <button class="filter-btn" data-filter="unanswered">
-              ○ Unanswered
-            </button>
-          </div>
-
-          <div id="reviewList" class="review-list">
-            <div class="empty-review">
-              Loading questions…
-            </div>
-          </div>
-        </section>
-
-        <section class="card actions">
-          <a href="/results" class="action-btn action-secondary">
-            ← Back to Results
-          </a>
-
-          <a href="/mock-tests" class="action-btn action-primary">
-            ← Back to Mock Tests
-          </a>
-        </section>
-
-      </div>
-    </div>
-  </main>
-
-  <script>
-    import { supabase } from "../lib/supabase";
-
-    const loading =
-      document.getElementById("loading");
-
-    const errorBox =
-      document.getElementById("errorBox");
-
-    const resultContent =
-      document.getElementById("resultContent");
-
-    const resultTitleEl =
-      document.getElementById("resultTitle");
-
-    const scoreEl =
-      document.getElementById("scoreEl");
-
-    const percentageEl =
-      document.getElementById("percentageEl");
-
-    const correctEl =
-      document.getElementById("correctEl");
-
-    const incorrectEl =
-      document.getElementById("incorrectEl");
-
-    const unansweredEl =
-      document.getElementById("unansweredEl");
-
-    const statusEl =
-      document.getElementById("statusEl");
-
-    const timeUsedEl =
-      document.getElementById("timeUsedEl");
-
-    const submittedAtEl =
-      document.getElementById("submittedAtEl");
-
-    const attemptIdEl =
-      document.getElementById("attemptIdEl");
-
-    const testTitleEl =
-      document.getElementById("testTitleEl");
-
-    const totalQuestionsEl =
-      document.getElementById("totalQuestionsEl");
-
-    const totalMarksEl =
-      document.getElementById("totalMarksEl");
-
-    const analysisAccuracyEl =
-      document.getElementById("analysisAccuracyEl");
-
-    const analysisAttemptRateEl =
-      document.getElementById("analysisAttemptRateEl");
-
-    const analysisAvgTimeEl =
-      document.getElementById("analysisAvgTimeEl");
-
-    const analysisScoreEfficiencyEl =
-      document.getElementById("analysisScoreEfficiencyEl");
-
-    const analysisCorrectLabelEl =
-      document.getElementById("analysisCorrectLabelEl");
-
-    const analysisIncorrectLabelEl =
-      document.getElementById("analysisIncorrectLabelEl");
-
-    const analysisUnansweredLabelEl =
-      document.getElementById("analysisUnansweredLabelEl");
-
-    const analysisCorrectBarEl =
-      document.getElementById("analysisCorrectBarEl");
-
-    const analysisIncorrectBarEl =
-      document.getElementById("analysisIncorrectBarEl");
-
-    const analysisUnansweredBarEl =
-      document.getElementById("analysisUnansweredBarEl");
-
-    const analysisNoteEl =
-      document.getElementById("analysisNoteEl");
-
-    const reviewList =
-      document.getElementById("reviewList");
-
-    let reviewAnswers = [];
-    let currentFilter = "all";
-
-    function escapeHtml(value) {
-      return String(value ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function formatDate(value) {
-      if (!value) return "—";
-
-      const date = new Date(value);
-
-      if (Number.isNaN(date.getTime())) {
-        return "—";
-      }
-
-      return date.toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-    }
-
-    function formatTime(seconds) {
-      const total =
-        Math.max(0, Number(seconds || 0));
-
-      const hours =
-        Math.floor(total / 3600);
-
-      const minutes =
-        Math.floor((total % 3600) / 60);
-
-      const secs =
-        total % 60;
-
-      if (hours > 0) {
-        return (
-          String(hours).padStart(2, "0") +
-          ":" +
-          String(minutes).padStart(2, "0") +
-          ":" +
-          String(secs).padStart(2, "0")
-        );
-      }
-
-      return (
-        String(minutes).padStart(2, "0") +
-        ":" +
-        String(secs).padStart(2, "0")
-      );
-    }
-
-    function formatPercent(value) {
-      return (
-        Number(value || 0).toFixed(1) +
-        "%"
-      );
-    }
-
-    function getAnswerStatus(answer) {
-      if (!answer.selected_option) {
-        return "unanswered";
-      }
-
-      return answer.is_correct
-        ? "correct"
-        : "incorrect";
-    }
-
-    function getOptionText(question, option) {
-      if (!option) {
-        return "Not Answered";
-      }
-
-      const key =
-        String(option).toLowerCase();
-
-      if (key === "a") {
-        return "A. " + (question.option_a || "");
-      }
-
-      if (key === "b") {
-        return "B. " + (question.option_b || "");
-      }
-
-      if (key === "c") {
-        return "C. " + (question.option_c || "");
-      }
-
-      if (key === "d") {
-        return "D. " + (question.option_d || "");
-      }
-
-      return String(option).toUpperCase();
-    }
-
-    function showError(message) {
-      loading.style.display = "none";
-      resultContent.style.display = "none";
-      errorBox.textContent = message;
-      errorBox.style.display = "block";
-    }
-
-    function renderPerformance(attempt, answers) {
-      const correct =
-        Number(attempt.correct_count || 0);
-
-      const incorrect =
-        Number(attempt.incorrect_count || 0);
-
-      const unanswered =
-        Number(attempt.unanswered_count || 0);
-
-      const totalQuestions =
-        correct + incorrect + unanswered;
-
-      const attempted =
-        correct + incorrect;
-
-      const timeUsed =
-        Number(attempt.time_taken_seconds || 0);
-
-      /*
-       * NO NEGATIVE MARKING.
-       * Score is always 2 marks per correct answer.
-       */
-      const score =
-        correct * 2;
-
-      const maximumMarks =
-        totalQuestions * 2;
-
-      const accuracy =
-        attempted > 0
-          ? (correct / attempted) * 100
-          : 0;
-
-      const attemptRate =
-        totalQuestions > 0
-          ? (attempted / totalQuestions) * 100
-          : 0;
-
-      const scoreEfficiency =
-        maximumMarks > 0
-          ? (score / maximumMarks) * 100
-          : 0;
-
-      const averageTime =
-        totalQuestions > 0
-          ? Math.round(
-              timeUsed / totalQuestions
-            )
-          : 0;
-
-      scoreEl.textContent = score;
-      totalMarksEl.textContent = maximumMarks;
-      percentageEl.textContent =
-        formatPercent(scoreEfficiency);
-
-      correctEl.textContent = correct;
-      incorrectEl.textContent = incorrect;
-      unansweredEl.textContent = unanswered;
-
-      analysisAccuracyEl.textContent =
-        formatPercent(accuracy);
-
-      analysisAttemptRateEl.textContent =
-        formatPercent(attemptRate);
-
-      analysisAvgTimeEl.textContent =
-        formatTime(averageTime);
-
-      analysisScoreEfficiencyEl.textContent =
-        formatPercent(scoreEfficiency);
-
-      analysisCorrectLabelEl.textContent =
-        correct +
-        " (" +
-        formatPercent(
-          totalQuestions > 0
-            ? (correct / totalQuestions) * 100
-            : 0
-        ) +
-        ")";
-
-      analysisIncorrectLabelEl.textContent =
-        incorrect +
-        " (" +
-        formatPercent(
-          totalQuestions > 0
-            ? (incorrect / totalQuestions) * 100
-            : 0
-        ) +
-        ")";
-
-      analysisUnansweredLabelEl.textContent =
-        unanswered +
-        " (" +
-        formatPercent(
-          totalQuestions > 0
-            ? (unanswered / totalQuestions) * 100
-            : 0
-        ) +
-        ")";
-
-      analysisCorrectBarEl.style.width =
-        totalQuestions > 0
-          ? (correct / totalQuestions) * 100 + "%"
-          : "0%";
-
-      analysisIncorrectBarEl.style.width =
-        totalQuestions > 0
-          ? (incorrect / totalQuestions) * 100 + "%"
-          : "0%";
-
-      analysisUnansweredBarEl.style.width =
-        totalQuestions > 0
-          ? (unanswered / totalQuestions) * 100 + "%"
-          : "0%";
-
-      if (accuracy >= 80) {
-        analysisNoteEl.textContent =
-          "Excellent accuracy. Focus on maintaining speed and continue reviewing difficult questions.";
-      } else if (accuracy >= 60) {
-        analysisNoteEl.textContent =
-          "Good foundation. Review incorrect answers carefully and revise the topics where mistakes are concentrated.";
-      } else if (accuracy > 0) {
-        analysisNoteEl.textContent =
-          "Accuracy needs improvement. Prioritize concept revision and analyze every incorrect answer before your next attempt.";
-      } else {
-        analysisNoteEl.textContent =
-          "No questions were answered. Review the syllabus and attempt the test again when ready.";
-      }
-    }
-
-    function renderReview() {
-      const filtered =
-        reviewAnswers.filter(answer => {
-          const status =
-            getAnswerStatus(answer);
-
-          return (
-            currentFilter === "all" ||
-            status === currentFilter
-          );
-        });
-
-      if (filtered.length === 0) {
-        reviewList.innerHTML = `
-          <div class="empty-review">
-            No questions found in this category.
-          </div>
-        `;
-        return;
-      }
-
-      reviewList.innerHTML =
-        filtered.map(answer => {
-          const status =
-            getAnswerStatus(answer);
-
-          const selectedOption =
-            answer.selected_option
-              ? String(
-                  answer.selected_option
-                ).toLowerCase()
-              : "";
-
-          const correctOption =
-            answer.correct_option
-              ? String(
-                  answer.correct_option
-                ).toLowerCase()
-              : "";
-
-          const selectedText =
-            selectedOption
-              ? getOptionText(
-                  answer,
-                  selectedOption
-                )
-              : "Not Answered";
-
-          const correctText =
-            getOptionText(
-              answer,
-              correctOption
-            );
-
-          const selectedBoxClass =
-            status === "correct"
-              ? "selected-correct"
-              : status === "incorrect"
-                ? "selected-wrong"
-                : "";
-
-          function optionClass(key) {
-            const isCorrect =
-              correctOption === key;
-
-            const isSelected =
-              selectedOption === key;
-
-            if (isSelected && isCorrect) {
-              return "correct-option";
-            }
-
-            if (isSelected && !isCorrect) {
-              return "selected-wrong-option";
-            }
-
-            if (isCorrect) {
-              return "correct-option";
-            }
-
-            return "";
-          }
-
-          const resultText =
-            status === "correct"
-              ? "✓ Correct — 2 marks"
-              : status === "incorrect"
-                ? "✕ Incorrect — 0 marks"
-                : "○ Not answered — 0 marks";
-
-          return `
-            <article class="question-card">
-
-              <div class="question-top">
-                <div class="question-number">
-                  Question ${escapeHtml(
-                    answer.question_number
-                  )}
+                <div class="label">
+                  Score
                 </div>
 
-                <div class="status-badge ${status}">
-                  ${
-                    status === "correct"
-                      ? "✓ Correct"
-                      : status === "incorrect"
-                        ? "✕ Incorrect"
-                        : "○ Unanswered"
-                  }
+                <div
+                  class="score"
+                  id="scoreEl"
+                >
+                  {score}
                 </div>
+
+                <div
+                  class="percentage"
+                  id="percentageEl"
+                >
+                  {percentage.toFixed(2)}%
+                </div>
+
+                <div class="rule">
+                  No negative marking • 2 marks for every correct answer
+                </div>
+
               </div>
 
-              <div class="question-body">
 
-                <div class="section-label">
-                  Question
+              <div class="card stat-card">
+
+                <div class="label">
+                  Correct
                 </div>
 
-                <div class="question-text">
-                  ${escapeHtml(
-                    answer.question_text
-                  )}
+                <div class="stat-number correct">
+                  {correct}
                 </div>
 
-                <div class="section-label">
-                  Options
+              </div>
+
+
+              <div class="card stat-card">
+
+                <div class="label">
+                  Incorrect
                 </div>
 
-                <div class="options">
+                <div class="stat-number incorrect">
+                  {incorrect}
+                </div>
 
-                  <div class="option ${optionClass("a")}">
-                    <span class="option-key">A</span>
-                    <span>${escapeHtml(answer.option_a)}</span>
+              </div>
+
+
+              <div class="card stat-card">
+
+                <div class="label">
+                  Unanswered
+                </div>
+
+                <div class="stat-number unanswered">
+                  {unanswered}
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 LIVE PERFORMANCE / BEST-ATTEMPT RANKING
+            ================================================= -->
+
+            <section class="rank-section">
+
+              <div class="card rank-card rank-highlight">
+
+                <div class="label">
+                  Your Rank
+                </div>
+
+                <div class="rank-value">
+                  #{testRank || "—"}
+                </div>
+
+                <div class="rank-subtitle">
+                  Among {totalParticipants}
+                  participants
+                </div>
+
+              </div>
+
+
+              <div class="card rank-card">
+
+                <div class="label">
+                  Participants
+                </div>
+
+                <div class="rank-value">
+                  {totalParticipants || 0}
+                </div>
+
+                <div class="rank-subtitle">
+                  Unique students
+                </div>
+
+              </div>
+
+
+              <div class="card rank-card">
+
+                <div class="label">
+                  Your Best Score
+                </div>
+
+                <div class="rank-value">
+                  {currentBestScore}
+                </div>
+
+                <div class="rank-subtitle">
+                  Highest submitted score
+                </div>
+
+              </div>
+
+
+              <div class="card rank-card">
+
+                <div class="label">
+                  Top Score
+                </div>
+
+                <div class="rank-value">
+                  {topScore || 0}
+                </div>
+
+                <div class="rank-subtitle">
+                  Best score in this mock
+                </div>
+
+              </div>
+
+
+              <div class="card rank-card">
+
+                <div class="label">
+                  Percentile
+                </div>
+
+                <div class="rank-value">
+                  {percentile.toFixed(2)}%
+                </div>
+
+                <div class="rank-subtitle">
+                  Based on your best score
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <section class="card rank-summary-card">
+
+              <div class="rank-summary-inner">
+
+                <div>
+
+                  <div class="label">
+                    Average Best Score
                   </div>
 
-                  <div class="option ${optionClass("b")}">
-                    <span class="option-key">B</span>
-                    <span>${escapeHtml(answer.option_b)}</span>
-                  </div>
-
-                  <div class="option ${optionClass("c")}">
-                    <span class="option-key">C</span>
-                    <span>${escapeHtml(answer.option_c)}</span>
-                  </div>
-
-                  <div class="option ${optionClass("d")}">
-                    <span class="option-key">D</span>
-                    <span>${escapeHtml(answer.option_d)}</span>
+                  <div class="rank-summary-value">
+                    {averageBestScore.toFixed(1)}
+                    / {maximumMarks}
                   </div>
 
                 </div>
 
-                <div class="answer-grid">
+                <div class="rank-summary-text">
 
-                  <div class="answer-box ${selectedBoxClass}">
-                    <div class="answer-label">
-                      Your Answer
-                    </div>
-                    <div class="answer-value">
-                      ${escapeHtml(selectedText)}
-                    </div>
-                  </div>
+                  Ranking uses each student's
+                  highest submitted score for
+                  this mock test.
 
-                  <div class="answer-box">
-                    <div class="answer-label">
-                      Correct Answer
-                    </div>
-                    <div class="answer-value">
-                      ${escapeHtml(correctText)}
-                    </div>
-                  </div>
-
-                  <div class="answer-box">
-                    <div class="answer-label">
-                      Result
-                    </div>
-                    <div class="answer-value">
-                      ${escapeHtml(resultText)}
-                    </div>
-                  </div>
+                  Retakes do not create
+                  additional leaderboard positions.
 
                 </div>
 
-                ${
-                  answer.explanation
-                    ? `
-                      <div class="explanation">
-                        <div class="explanation-title">
-                          Explanation
-                        </div>
+              </div>
 
-                        <div class="explanation-text">
-                          ${escapeHtml(
-                            answer.explanation
-                          )}
-                        </div>
-                      </div>
-                    `
-                    : ""
-                }
+            </section>
 
-                <div class="meta">
 
-                  ${
-                    answer.subject
-                      ? `
-                        <span class="chip">
-                          Subject: ${escapeHtml(answer.subject)}
-                        </span>
-                      `
-                      : ""
-                  }
+            <!-- =================================================
+                 INFORMATION
+            ================================================= -->
 
-                  ${
-                    answer.topic
-                      ? `
-                        <span class="chip">
-                          Topic: ${escapeHtml(answer.topic)}
-                        </span>
-                      `
-                      : ""
-                  }
+            <section class="info-grid">
 
-                  ${
-                    answer.difficulty
-                      ? `
-                        <span class="chip">
-                          Difficulty: ${escapeHtml(answer.difficulty)}
-                        </span>
-                      `
-                      : ""
-                  }
+              <div class="card info-card">
 
-                  <span class="chip">
-                    Question ID: ${escapeHtml(answer.question_id)}
+                <h2 class="info-title">
+                  Attempt Information
+                </h2>
+
+                <div class="info-row">
+
+                  <span>
+                    Status
+                  </span>
+
+                  <span>
+                    {attempt?.status || "submitted"}
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Time Taken
+                  </span>
+
+                  <span id="timeUsedEl">
+                    —
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Submitted At
+                  </span>
+
+                  <span>
+                    {attempt?.submitted_at
+                      ? new Date(
+                          attempt.submitted_at
+                        ).toLocaleString(
+                          "en-IN",
+                          {
+                            day:"2-digit",
+                            month:"short",
+                            year:"numeric",
+                            hour:"2-digit",
+                            minute:"2-digit"
+                          }
+                        )
+                      : "—"}
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Attempt ID
+                  </span>
+
+                  <span>
+                    {attempt?.id}
                   </span>
 
                 </div>
 
               </div>
-            </article>
-          `;
-        }).join("");
-    }
 
-    document
-      .querySelectorAll(".filter-btn")
-      .forEach(button => {
-        button.addEventListener("click", () => {
 
-          currentFilter =
-            button.dataset.filter || "all";
+              <div class="card info-card">
 
-          document
-            .querySelectorAll(".filter-btn")
-            .forEach(btn =>
-              btn.classList.remove("active")
+                <h2 class="info-title">
+                  Test Information
+                </h2>
+
+                <div class="info-row">
+
+                  <span>
+                    Test
+                  </span>
+
+                  <span>
+                    {test?.title || "Mock Test"}
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Total Questions
+                  </span>
+
+                  <span>
+                    {totalQuestions}
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Maximum Marks
+                  </span>
+
+                  <span>
+                    {maximumMarks}
+                  </span>
+
+                </div>
+
+                <div class="info-row">
+
+                  <span>
+                    Marks Per Question
+                  </span>
+
+                  <span>
+                    2
+                  </span>
+
+                </div>
+
+              </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 PERFORMANCE
+            ================================================= -->
+
+            <section class="card analysis-card">
+
+              <h2 class="section-title">
+                Performance Analysis
+              </h2>
+
+              <p class="section-subtitle">
+                Understand your accuracy, attempt rate, time usage and score efficiency.
+              </p>
+
+
+              <div class="metrics">
+
+                <div class="metric">
+
+                  <div class="metric-label">
+                    Accuracy
+                  </div>
+
+                  <div class="metric-value">
+                    {accuracy.toFixed(1)}%
+                  </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                  <div class="metric-label">
+                    Attempt Rate
+                  </div>
+
+                  <div class="metric-value">
+                    {attemptRate.toFixed(1)}%
+                  </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                  <div class="metric-label">
+                    Avg. Time / Question
+                  </div>
+
+                  <div
+                    class="metric-value"
+                    id="averageTimeEl"
+                  >
+                    —
+                  </div>
+
+                </div>
+
+
+                <div class="metric">
+
+                  <div class="metric-label">
+                    Score Efficiency
+                  </div>
+
+                  <div class="metric-value">
+                    {scoreEfficiency.toFixed(1)}%
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="bars">
+
+                <div>
+
+                  <div class="bar-label">
+
+                    <span>
+                      Correct
+                    </span>
+
+                    <span>
+                      {correct}
+                      ({(
+                        totalQuestions > 0
+                          ? correct / totalQuestions * 100
+                          : 0
+                      ).toFixed(1)}%)
+                    </span>
+
+                  </div>
+
+                  <div class="bar-track">
+
+                    <div
+                      class="bar-fill correct"
+                      style={`width:${
+                        totalQuestions > 0
+                          ? correct / totalQuestions * 100
+                          : 0
+                      }%`}
+                    ></div>
+
+                  </div>
+
+                </div>
+
+
+                <div>
+
+                  <div class="bar-label">
+
+                    <span>
+                      Incorrect
+                    </span>
+
+                    <span>
+                      {incorrect}
+                      ({(
+                        totalQuestions > 0
+                          ? incorrect / totalQuestions * 100
+                          : 0
+                      ).toFixed(1)}%)
+                    </span>
+
+                  </div>
+
+                  <div class="bar-track">
+
+                    <div
+                      class="bar-fill incorrect"
+                      style={`width:${
+                        totalQuestions > 0
+                          ? incorrect / totalQuestions * 100
+                          : 0
+                      }%`}
+                    ></div>
+
+                  </div>
+
+                </div>
+
+
+                <div>
+
+                  <div class="bar-label">
+
+                    <span>
+                      Unanswered
+                    </span>
+
+                    <span>
+                      {unanswered}
+                      ({(
+                        totalQuestions > 0
+                          ? unanswered / totalQuestions * 100
+                          : 0
+                      ).toFixed(1)}%)
+                    </span>
+
+                  </div>
+
+                  <div class="bar-track">
+
+                    <div
+                      class="bar-fill unanswered"
+                      style={`width:${
+                        totalQuestions > 0
+                          ? unanswered / totalQuestions * 100
+                          : 0
+                      }%`}
+                    ></div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="analysis-note">
+
+                {
+                  accuracy >= 80
+                    ? "Excellent accuracy. Focus on maintaining speed and continue reviewing difficult questions."
+                    : accuracy >= 60
+                      ? "Good foundation. Review incorrect answers carefully and revise the topics where mistakes are concentrated."
+                      : accuracy > 0
+                        ? "Accuracy needs improvement. Prioritize concept revision and analyze every incorrect answer before your next attempt."
+                        : "No questions were answered. Review the syllabus and attempt the test again when ready."
+                }
+
+              </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 QUESTION REVIEW
+            ================================================= -->
+
+            <section class="card review-card">
+
+              <div class="review-header">
+
+                <h2 class="section-title">
+                  Question-wise Review
+                </h2>
+
+                <p class="section-subtitle">
+                  Every question from the test is shown. Unanswered questions are also retained.
+                </p>
+
+              </div>
+
+
+              <div class="filters">
+
+                <button
+                  class="filter-btn active"
+                  data-filter="all"
+                >
+                  All
+                </button>
+
+                <button
+                  class="filter-btn"
+                  data-filter="correct"
+                >
+                  ✓ Correct
+                </button>
+
+                <button
+                  class="filter-btn"
+                  data-filter="incorrect"
+                >
+                  ✕ Incorrect
+                </button>
+
+                <button
+                  class="filter-btn"
+                  data-filter="unanswered"
+                >
+                  ○ Unanswered
+                </button>
+
+              </div>
+
+
+              <div
+                id="reviewList"
+                class="review-list"
+              ></div>
+
+            </section>
+
+
+            <!-- =================================================
+                 ACTIONS
+            ================================================= -->
+
+            <section class="card actions">
+
+              <a
+                href="/results"
+                class="action-btn action-secondary"
+              >
+                ← Back to Results
+              </a>
+
+              <a
+                href="/mock-tests"
+                class="action-btn action-primary"
+              >
+                ← Back to Mock Tests
+              </a>
+
+            </section>
+
+          </div>
+
+        )
+      }
+
+    </div>
+
+  </main>
+
+
+  <!-- =======================================================
+       SERVER DATA → CLIENT
+  ======================================================== -->
+
+  {
+    !pageError && (
+
+      <script
+        type="application/json"
+        id="resultData"
+        set:html={JSON.stringify(clientResult)}
+      ></script>
+
+    )
+  }
+
+
+  <script>
+
+    /* =====================================================
+       CLIENT RESULT RENDERING
+    ===================================================== */
+
+    const resultDataElement =
+      document.getElementById(
+        "resultData"
+      );
+
+    if (!resultDataElement) {
+      console.error(
+        "[Habitat IAS] Result data element missing."
+      );
+    } else {
+
+      let resultData;
+
+      try {
+
+        resultData =
+          JSON.parse(
+            resultDataElement.textContent || "{}"
+          );
+
+      } catch (error) {
+
+        console.error(
+          "[Habitat IAS] RESULT DATA PARSE ERROR:",
+          error
+        );
+
+        resultData = null;
+      }
+
+
+      if (resultData) {
+
+        const reviewAnswers =
+          resultData.reviewAnswers || [];
+
+        let currentFilter =
+          "all";
+
+
+        /* =================================================
+           HELPERS
+        ================================================= */
+
+        function escapeHtml(value) {
+
+          return String(
+            value ?? ""
+          )
+            .replace(
+              /&/g,
+              "&amp;"
+            )
+            .replace(
+              /</g,
+              "&lt;"
+            )
+            .replace(
+              />/g,
+              "&gt;"
+            )
+            .replace(
+              /"/g,
+              "&quot;"
+            )
+            .replace(
+              /'/g,
+              "&#039;"
             );
 
-          button.classList.add("active");
-
-          renderReview();
-        });
-      });
-
-    async function loadResult() {
-      try {
-        const params =
-          new URLSearchParams(
-            window.location.search
-          );
-
-        const attemptId =
-          params.get("attempt_id");
-
-        if (!attemptId) {
-          showError(
-            "No test attempt was specified. Please open the result from the Results page."
-          );
-          return;
         }
 
-        const {
-          data: userData,
-          error: userError,
-        } = await supabase.auth.getUser();
 
-        if (
-          userError ||
-          !userData?.user
+        function formatTime(
+          seconds
         ) {
-          window.location.href =
-            "/login?redirect=/test-result?attempt_id=" +
-            encodeURIComponent(attemptId);
 
-          return;
+          const total =
+            Math.max(
+              0,
+              Number(
+                seconds || 0
+              )
+            );
+
+          const hours =
+            Math.floor(
+              total / 3600
+            );
+
+          const minutes =
+            Math.floor(
+              (total % 3600) / 60
+            );
+
+          const secs =
+            total % 60;
+
+
+          if (hours > 0) {
+
+            return (
+              String(hours)
+                .padStart(2, "0") +
+              ":" +
+              String(minutes)
+                .padStart(2, "0") +
+              ":" +
+              String(secs)
+                .padStart(2, "0")
+            );
+
+          }
+
+
+          return (
+            String(minutes)
+              .padStart(2, "0") +
+            ":" +
+            String(secs)
+              .padStart(2, "0")
+          );
+
         }
 
-        const userId =
-          userData.user.id;
 
-        const {
-          data: attempt,
-          error: attemptError,
-        } = await supabase
-          .from("mock_attempts")
-          .select(`
-            id,
-            user_id,
-            test_id,
-            started_at,
-            submitted_at,
-            score,
-            correct_count,
-            incorrect_count,
-            unanswered_count,
-            time_taken_seconds,
-            status
-          `)
-          .eq("id", attemptId)
-          .eq("user_id", userId)
-          .maybeSingle();
+        function getAnswerStatus(
+          answer
+        ) {
 
-        if (attemptError) {
-          console.error(
-            "[Habitat IAS] ATTEMPT ERROR:",
-            attemptError
-          );
+          if (
+            !answer.selected_option
+          ) {
 
-          showError(
-            "Unable to load your test result."
-          );
+            return "unanswered";
+          }
 
-          return;
+
+          return answer.is_correct
+            ? "correct"
+            : "incorrect";
+
         }
 
-        if (!attempt) {
-          showError(
-            "Test result not found or you do not have permission to view it."
-          );
 
-          return;
+        function getOptionText(
+          question,
+          option
+        ) {
+
+          if (!option) {
+            return "Not Answered";
+          }
+
+
+          const key =
+            String(option)
+              .toLowerCase();
+
+
+          if (key === "a") {
+            return (
+              "A. " +
+              (question.option_a || "")
+            );
+          }
+
+
+          if (key === "b") {
+            return (
+              "B. " +
+              (question.option_b || "")
+            );
+          }
+
+
+          if (key === "c") {
+            return (
+              "C. " +
+              (question.option_c || "")
+            );
+          }
+
+
+          if (key === "d") {
+            return (
+              "D. " +
+              (question.option_d || "")
+            );
+          }
+
+
+          return String(
+            option
+          ).toUpperCase();
+
         }
 
-        const {
-          data: test,
-        } = await supabase
-          .from("mock_tests")
-          .select(`
-            id,
-            test_number,
-            title,
-            question_count
-          `)
-          .eq("id", attempt.test_id)
-          .maybeSingle();
 
-        const {
-          data: questions,
-          error: questionsError,
-        } = await supabase
-          .from("mock_questions")
-          .select(`
-            id,
-            test_id,
-            question_number,
-            question_text,
-            option_a,
-            option_b,
-            option_c,
-            option_d,
-            correct_option,
-            explanation,
-            subject,
-            topic,
-            difficulty,
-            marks,
-            negative_marks
-          `)
-          .eq("test_id", attempt.test_id)
-          .order("question_number", {
-            ascending:true
-          });
+        /* =================================================
+           TIME
+        ================================================= */
 
-        if (questionsError) {
-          console.error(
-            "[Habitat IAS] QUESTIONS ERROR:",
-            questionsError
+        const timeUsedEl =
+          document.getElementById(
+            "timeUsedEl"
           );
 
-          showError(
-            "Unable to load the questions for this test."
-          );
+        if (timeUsedEl) {
 
-          return;
+          timeUsedEl.textContent =
+            formatTime(
+              resultData.attempt
+                ?.time_taken_seconds
+            );
+
         }
 
-        const {
-          data: answers,
-          error: answersError,
-        } = await supabase
-          .from("mock_answers")
-          .select(`
-            id,
-            attempt_id,
-            question_id,
-            selected_option,
-            is_correct,
-            answered_at
-          `)
-          .eq("attempt_id", attempt.id);
 
-        if (answersError) {
-          console.error(
-            "[Habitat IAS] ANSWERS ERROR:",
-            answersError
+        const averageTimeEl =
+          document.getElementById(
+            "averageTimeEl"
           );
 
-          showError(
-            "Unable to load your submitted answers."
-          );
+        if (averageTimeEl) {
 
-          return;
+          averageTimeEl.textContent =
+            formatTime(
+              resultData.averageTime
+            );
+
         }
 
-        const answerMap =
-          new Map();
 
-        (answers || []).forEach(answer => {
-          answerMap.set(
-            String(answer.question_id),
-            answer
-          );
-        });
+        /* =================================================
+           RENDER REVIEW
+        ================================================= */
 
-        reviewAnswers =
-          (questions || []).map(
-            (question, index) => {
+        function renderReview() {
 
-              const savedAnswer =
-                answerMap.get(
-                  String(question.id)
+          const reviewList =
+            document.getElementById(
+              "reviewList"
+            );
+
+          if (!reviewList) {
+            return;
+          }
+
+
+          const filtered =
+            reviewAnswers.filter(
+              answer => {
+
+                const status =
+                  getAnswerStatus(
+                    answer
+                  );
+
+                return (
+                  currentFilter ===
+                    "all" ||
+                  status ===
+                    currentFilter
                 );
 
-              return {
-                question_id:
-                  question.id,
+              }
+            );
 
-                question_number:
-                  question.question_number ||
-                  index + 1,
 
-                question_text:
-                  question.question_text,
+          if (
+            filtered.length === 0
+          ) {
 
-                option_a:
-                  question.option_a,
+            reviewList.innerHTML = `
+              <div class="empty-review">
+                No questions found in this category.
+              </div>
+            `;
 
-                option_b:
-                  question.option_b,
+            return;
+          }
 
-                option_c:
-                  question.option_c,
 
-                option_d:
-                  question.option_d,
+          reviewList.innerHTML =
+            filtered
+              .map(
+                answer => {
 
-                correct_option:
-                  question.correct_option,
+                  const status =
+                    getAnswerStatus(
+                      answer
+                    );
 
-                explanation:
-                  question.explanation,
 
-                subject:
-                  question.subject,
+                  const selectedOption =
+                    answer.selected_option
+                      ? String(
+                          answer.selected_option
+                        ).toLowerCase()
+                      : "";
 
-                topic:
-                  question.topic,
 
-                difficulty:
-                  question.difficulty,
+                  const correctOption =
+                    answer.correct_option
+                      ? String(
+                          answer.correct_option
+                        ).toLowerCase()
+                      : "";
 
-                marks:
-                  question.marks,
 
-                negative_marks:
-                  question.negative_marks,
+                  const selectedText =
+                    selectedOption
+                      ? getOptionText(
+                          answer,
+                          selectedOption
+                        )
+                      : "Not Answered";
 
-                selected_option:
-                  savedAnswer
-                    ? savedAnswer.selected_option
-                    : null,
 
-                is_correct:
-                  savedAnswer
-                    ? Boolean(
-                        savedAnswer.is_correct
-                      )
-                    : false,
+                  const correctText =
+                    getOptionText(
+                      answer,
+                      correctOption
+                    );
 
-                answered_at:
-                  savedAnswer
-                    ? savedAnswer.answered_at
-                    : null,
-              };
+
+                  const selectedBoxClass =
+                    status ===
+                    "correct"
+                      ? "selected-correct"
+                      : status ===
+                          "incorrect"
+                        ? "selected-wrong"
+                        : "";
+
+
+                  function optionClass(
+                    key
+                  ) {
+
+                    const isCorrect =
+                      correctOption ===
+                      key;
+
+                    const isSelected =
+                      selectedOption ===
+                      key;
+
+
+                    if (
+                      isSelected &&
+                      isCorrect
+                    ) {
+
+                      return "correct-option";
+                    }
+
+
+                    if (
+                      isSelected &&
+                      !isCorrect
+                    ) {
+
+                      return "selected-wrong-option";
+                    }
+
+
+                    if (isCorrect) {
+
+                      return "correct-option";
+                    }
+
+
+                    return "";
+                  }
+
+
+                  const resultText =
+                    status ===
+                    "correct"
+                      ? "✓ Correct — 2 marks"
+                      : status ===
+                          "incorrect"
+                        ? "✕ Incorrect — 0 marks"
+                        : "○ Not answered — 0 marks";
+
+
+                  return `
+
+                    <article class="question-card">
+
+                      <div class="question-top">
+
+                        <div class="question-number">
+
+                          Question
+                          ${escapeHtml(
+                            answer.question_number
+                          )}
+
+                        </div>
+
+
+                        <div
+                          class="status-badge ${status}"
+                        >
+
+                          ${
+                            status ===
+                            "correct"
+                              ? "✓ Correct"
+                              : status ===
+                                  "incorrect"
+                                ? "✕ Incorrect"
+                                : "○ Unanswered"
+                          }
+
+                        </div>
+
+                      </div>
+
+
+                      <div class="question-body">
+
+                        <div class="section-label">
+                          Question
+                        </div>
+
+                        <div class="question-text">
+
+                          ${escapeHtml(
+                            answer.question_text
+                          )}
+
+                        </div>
+
+
+                        <div class="section-label">
+                          Options
+                        </div>
+
+
+                        <div class="options">
+
+                          <div
+                            class="option ${optionClass("a")}"
+                          >
+
+                            <span class="option-key">
+                              A
+                            </span>
+
+                            <span>
+                              ${escapeHtml(
+                                answer.option_a
+                              )}
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            class="option ${optionClass("b")}"
+                          >
+
+                            <span class="option-key">
+                              B
+                            </span>
+
+                            <span>
+                              ${escapeHtml(
+                                answer.option_b
+                              )}
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            class="option ${optionClass("c")}"
+                          >
+
+                            <span class="option-key">
+                              C
+                            </span>
+
+                            <span>
+                              ${escapeHtml(
+                                answer.option_c
+                              )}
+                            </span>
+
+                          </div>
+
+
+                          <div
+                            class="option ${optionClass("d")}"
+                          >
+
+                            <span class="option-key">
+                              D
+                            </span>
+
+                            <span>
+                              ${escapeHtml(
+                                answer.option_d
+                              )}
+                            </span>
+
+                          </div>
+
+                        </div>
+
+
+                        <div class="answer-grid">
+
+                          <div
+                            class="answer-box ${selectedBoxClass}"
+                          >
+
+                            <div class="answer-label">
+                              Your Answer
+                            </div>
+
+                            <div class="answer-value">
+                              ${escapeHtml(
+                                selectedText
+                              )}
+                            </div>
+
+                          </div>
+
+
+                          <div class="answer-box">
+
+                            <div class="answer-label">
+                              Correct Answer
+                            </div>
+
+                            <div class="answer-value">
+                              ${escapeHtml(
+                                correctText
+                              )}
+                            </div>
+
+                          </div>
+
+
+                          <div class="answer-box">
+
+                            <div class="answer-label">
+                              Result
+                            </div>
+
+                            <div class="answer-value">
+                              ${escapeHtml(
+                                resultText
+                              )}
+                            </div>
+
+                          </div>
+
+                        </div>
+
+
+                        ${
+                          answer.explanation
+                            ? `
+
+                              <div class="explanation">
+
+                                <div class="explanation-title">
+                                  Explanation
+                                </div>
+
+                                <div class="explanation-text">
+
+                                  ${escapeHtml(
+                                    answer.explanation
+                                  )}
+
+                                </div>
+
+                              </div>
+
+                            `
+                            : ""
+                        }
+
+
+                        <div class="meta">
+
+                          ${
+                            answer.subject
+                              ? `
+
+                                <span class="chip">
+
+                                  Subject:
+                                  ${escapeHtml(
+                                    answer.subject
+                                  )}
+
+                                </span>
+
+                              `
+                              : ""
+                          }
+
+
+                          ${
+                            answer.topic
+                              ? `
+
+                                <span class="chip">
+
+                                  Topic:
+                                  ${escapeHtml(
+                                    answer.topic
+                                  )}
+
+                                </span>
+
+                              `
+                              : ""
+                          }
+
+
+                          ${
+                            answer.difficulty
+                              ? `
+
+                                <span class="chip">
+
+                                  Difficulty:
+                                  ${escapeHtml(
+                                    answer.difficulty
+                                  )}
+
+                                </span>
+
+                              `
+                              : ""
+                          }
+
+
+                          <span class="chip">
+
+                            Question ID:
+                            ${escapeHtml(
+                              answer.question_id
+                            )}
+
+                          </span>
+
+                        </div>
+
+                      </div>
+
+                    </article>
+
+                  `;
+
+                }
+              )
+              .join("");
+
+        }
+
+
+        /* =================================================
+           FILTER BUTTONS
+        ================================================= */
+
+        document
+          .querySelectorAll(
+            ".filter-btn"
+          )
+          .forEach(
+            button => {
+
+              button.addEventListener(
+                "click",
+                () => {
+
+                  currentFilter =
+                    button.dataset.filter ||
+                    "all";
+
+
+                  document
+                    .querySelectorAll(
+                      ".filter-btn"
+                    )
+                    .forEach(
+                      btn =>
+                        btn.classList.remove(
+                          "active"
+                        )
+                    );
+
+
+                  button.classList.add(
+                    "active"
+                  );
+
+
+                  renderReview();
+
+                }
+              );
+
             }
           );
 
-        const correct =
-          Number(
-            attempt.correct_count || 0
-          );
 
-        const incorrect =
-          Number(
-            attempt.incorrect_count || 0
-          );
-
-        const unanswered =
-          Number(
-            attempt.unanswered_count || 0
-          );
-
-        const totalQuestions =
-          reviewAnswers.length ||
-          correct +
-          incorrect +
-          unanswered;
-
-        const maximumMarks =
-          totalQuestions * 2;
-
-        const score =
-          correct * 2;
-
-        const percentage =
-          maximumMarks > 0
-            ? (score / maximumMarks) * 100
-            : 0;
-
-        resultTitleEl.textContent =
-          test?.title ||
-          "Test Result";
-
-        testTitleEl.textContent =
-          test?.title ||
-          "Mock Test";
-
-        scoreEl.textContent =
-          score;
-
-        totalMarksEl.textContent =
-          maximumMarks;
-
-        percentageEl.textContent =
-          percentage.toFixed(2) + "%";
-
-        correctEl.textContent =
-          correct;
-
-        incorrectEl.textContent =
-          incorrect;
-
-        unansweredEl.textContent =
-          unanswered;
-
-        statusEl.textContent =
-          attempt.status ||
-          "submitted";
-
-        timeUsedEl.textContent =
-          formatTime(
-            attempt.time_taken_seconds
-          );
-
-        submittedAtEl.textContent =
-          formatDate(
-            attempt.submitted_at
-          );
-
-        attemptIdEl.textContent =
-          attempt.id;
-
-        totalQuestionsEl.textContent =
-          totalQuestions;
-
-        renderPerformance(
-          attempt,
-          reviewAnswers
-        );
+        /* =================================================
+           INITIAL RENDER
+        ================================================= */
 
         renderReview();
 
-        loading.style.display =
-          "none";
-
-        errorBox.style.display =
-          "none";
-
-        resultContent.style.display =
-          "block";
 
         console.log(
           "[Habitat IAS] TEST RESULT LOADED",
           {
-            attemptId:attempt.id,
-            testId:attempt.test_id,
-            correct,
-            incorrect,
-            unanswered,
-            score,
-            totalQuestions,
-            maximumMarks,
-            questionRecords:
-              reviewAnswers.length
+            attemptId:
+              resultData.attempt?.id,
+
+            testId:
+              resultData.test?.id,
+
+            questionCount:
+              reviewAnswers.length,
+
+            correct:
+              resultData.correct,
+
+            incorrect:
+              resultData.incorrect,
+
+            unanswered:
+              resultData.unanswered,
+
+            score:
+              resultData.score,
+
+            maximumMarks:
+              resultData.maximumMarks
           }
         );
 
-      } catch (error) {
-        console.error(
-          "[Habitat IAS] RESULT EXCEPTION:",
-          error
-        );
-
-        showError(
-          "Unexpected error while loading the result."
-        );
       }
+
     }
 
-    loadResult();
   </script>
+
 </body>
+
 </html>

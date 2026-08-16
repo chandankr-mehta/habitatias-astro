@@ -1,0 +1,1181 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Cut Off Marks: Prelims, Mains, Category-Wise & Service-Wise Cutoff Analysis";
+const description =
+  "JPSC cutoff guide covering Prelims and Mains cutoff, category-wise and service-wise cutoff, how the cutoff is determined, previous official cutoff data, safe-score strategy and mock-test planning.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-cutoff-marks-prelims-mains-analysis/";
+
+const faqs = [
+  {
+    q: "What is the JPSC cutoff?",
+    a: "The cutoff is the mark used for selection or qualification at a particular stage. The applicable cutoff depends on the examination stage, vacancies, category, rules and candidate performance.",
+  },
+  {
+    q: "Is JPSC Prelims cutoff fixed every year?",
+    a: "No. A future cutoff cannot be known in advance. It can change with the examination, vacancies, difficulty, candidate performance and the applicable selection rules.",
+  },
+  {
+    q: "How does JPSC select candidates for Mains?",
+    a: "Under the JPSC Combined Civil Services examination advertisement cited in this article, the Preliminary selection list is prepared on the basis of the two compulsory papers, with candidates arranged by merit and an initial selection list of approximately 15 times the advertised vacancies, subject to the applicable minimum qualifying standard and category provisions.",
+  },
+  {
+    q: "What was the official JPSC Mains cutoff for the 2023 examination?",
+    a: "For the Combined Civil Services Examination-2023, Advt. No. 01/2024, JPSC published a Main Written Examination category-wise cutoff on 3 September 2025. The published Unreserved cutoff was 579.25, ST 514.50, SC 539.00, BC-I 574.75, BC-II 566.50, EWS 546.00 and Primitive Tribe 505.00.",
+  },
+  {
+    q: "What was the service-wise final cutoff in JPSC 2023?",
+    a: "JPSC published service-wise final cutoff marks on 3 September 2025. For example, the Unreserved final cutoff listed for Jharkhand State Police Service was 674.50 and for Jharkhand Administrative Service 663.75. These are historical official figures, not guaranteed cutoffs for a future examination.",
+  },
+  {
+    q: "How many marks should I target in JPSC Prelims?",
+    a: "Do not prepare for a guessed cutoff alone. Build a safety margin by analysing official previous cutoffs, your category, the current rules and your mock-test performance. A target should be comfortably above your estimated competitive threshold rather than equal to it.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC cutoff, JPSC cutoff marks, JPSC prelims cutoff, JPSC mains cutoff, JPSC cutoff 2026, JPSC previous year cutoff, JPSC category wise cutoff, JPSC service wise cutoff, JPSC expected cutoff"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Cutoff</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC CUTOFF • DATA • STRATEGY</div>
+
+          <h1>
+            JPSC Cut Off Marks:
+            <span>Know the Number. Beat the Number.</span>
+          </h1>
+
+          <p class="hero-text">
+            Understand how JPSC cutoff works, what the official previous
+            cutoff data tells you, why service-wise cutoffs differ and how to
+            convert cutoff analysis into a safer mock-test target.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Cutoff Analysis</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#official-data">See Official Data ↓</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            A cutoff is an outcome, not a permanent qualifying mark. Historical
+            cutoff figures below are official JPSC figures for identified
+            examinations. They must not be presented as the guaranteed cutoff
+            for the next examination.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>01</b><span>Prelims</span><p>Used to shortlist candidates for the Main examination.</p></div>
+          <div><b>02</b><span>Mains</span><p>Written performance determines the next stage under the applicable rules.</p></div>
+          <div><b>03</b><span>Category</span><p>Cutoffs can differ by vertical and horizontal reservation provisions.</p></div>
+          <div><b>04</b><span>Service</span><p>Final service allotment can produce different service-wise thresholds.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#meaning">What is cutoff?</a>
+            <a href="#prelims">Prelims cutoff</a>
+            <a href="#mains">Mains cutoff</a>
+            <a href="#official-data">Official 2023 data</a>
+            <a href="#service">Service-wise cutoff</a>
+            <a href="#factors">Factors affecting cutoff</a>
+            <a href="#safe-score">Safe-score strategy</a>
+            <a href="#mock">Mock-test targets</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#plan">Cutoff-based plan</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              “What is the JPSC cutoff?” is a useful question. But
+              <strong>“How far above the cutoff should I prepare?”</strong>
+              is the question that actually changes your preparation.
+            </p>
+
+            <p>
+              JPSC cutoff analysis has to be separated into Prelims, Mains,
+              category-wise thresholds and, where published, service-wise final
+              cutoffs. Treating all of them as one number leads to bad
+              preparation decisions.
+            </p>
+
+            <h2 id="meaning">1. What Does JPSC Cutoff Mean?</h2>
+
+            <p>
+              A cutoff is the mark associated with selection or qualification
+              at a particular stage. It is not necessarily the same thing as a
+              minimum qualifying mark prescribed by a rule.
+            </p>
+
+            <div class="four">
+              <div><span>QUALIFYING STANDARD</span><strong>Rule-based minimum</strong><p>A minimum standard may apply independently of the competitive cutoff.</p></div>
+              <div><span>CUTOFF</span><strong>Competitive threshold</strong><p>The mark associated with the relevant selection list or category.</p></div>
+              <div><span>SERVICE CUTOFF</span><strong>Allotment threshold</strong><p>Different services can have different final thresholds.</p></div>
+              <div><span>SAFE SCORE</span><strong>Your target</strong><p>A preparation target should provide a margin above a guessed threshold.</p></div>
+            </div>
+
+            <h2 id="prelims">2. JPSC Prelims Cutoff</h2>
+
+            <p>
+              The JPSC Combined Civil Services advertisement states that the
+              Preliminary Examination has two compulsory objective papers:
+              General Studies-I and General Studies-II, each carrying 200
+              marks. It also states that the Main selection list is prepared
+              from the combined marks of both papers, subject to the applicable
+              minimum qualifying standard. citeturn1search14
+            </p>
+
+            <div class="exam-card">
+              <div><span>PAPER I</span><strong>General Studies – I</strong><b>200 marks</b></div>
+              <div><span>PAPER II</span><strong>General Studies – II</strong><b>200 marks</b></div>
+              <div><span>TOTAL</span><strong>Prelims written score</strong><b>400 marks</b></div>
+            </div>
+
+            <p>
+              The same advertisement says candidates are arranged by merit and
+              that the initial selection list contains approximately 15 times
+              the total advertised vacancies, with category provisions applied
+              where required. citeturn1search14
+            </p>
+
+            <div class="process">
+              <span>PRELIMS SCORE</span><b>→</b><span>MERIT ORDER</span><b>→</b>
+              <span>CATEGORY / RULES</span><b>→</b><strong>MAIN SELECTION LIST</strong>
+            </div>
+
+            <h2 id="mains">3. JPSC Mains Cutoff</h2>
+
+            <p>
+              Mains cutoff is a different question. The Main Written Examination
+              has its own competitive threshold, and the Commission publishes
+              official cutoff documents for completed examinations.
+            </p>
+
+            <p>
+              JPSC's examination page for Combined Civil Services Examination
+              2023 (Advt. No. 01/2024) lists the Main Written Result, Final
+              Result, Main Written cutoff and service-wise final cutoff documents
+              published on 3 September 2025. citeturn1search0
+            </p>
+
+            <h2 id="official-data">4. Official JPSC Mains Cutoff: Examination-2023</h2>
+
+            <p>
+              The following figures come directly from JPSC's official
+              “Cuttoff Marks” document for the Combined Civil Services Main
+              (Written) Examination, Advt. No. 01/2024. They are historical
+              results, not an expected cutoff for a future cycle.
+              citeturn1search13
+            </p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Category</th>
+                    <th>Official Mains cutoff</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Unreserved</td><td>579.25</td></tr>
+                  <tr><td>ST</td><td>514.50</td></tr>
+                  <tr><td>SC</td><td>539.00</td></tr>
+                  <tr><td>BC-I</td><td>574.75</td></tr>
+                  <tr><td>BC-II</td><td>566.50</td></tr>
+                  <tr><td>EWS</td><td>546.00</td></tr>
+                  <tr><td>Primitive Tribe</td><td>505.00</td></tr>
+                  <tr><td>Sports</td><td>485.75</td></tr>
+                  <tr><td>PWD-Blind</td><td>516.75</td></tr>
+                  <tr><td>PWD-Locomotive</td><td>516.50</td></tr>
+                  <tr><td>PWD-Deaf and Dumb</td><td>504.00</td></tr>
+                  <tr><td>Autism and Multiple Disability</td><td>426.25</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="source-note">
+              <strong>Source:</strong>
+              JPSC, Combined Civil Services Main (Written) Examination,
+              Advt. No. 01/2024, cutoff document dated 03 September 2025.
+              citeturn1search13
+            </div>
+
+            <h2 id="service">5. Service-Wise Final Cutoff</h2>
+
+            <p>
+              Service-wise final cutoff is even more useful for understanding
+              competitiveness because candidates can have different final
+              thresholds depending on the service allotted.
+            </p>
+
+            <p>
+              JPSC's official service-wise cutoff document for Combined Civil
+              Services Examination-2023 lists the following Unreserved final
+              cutoffs among the services shown below. citeturn1search15
+            </p>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>UNR final cutoff</th>
+                    <th>ST</th>
+                    <th>SC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Jharkhand Administrative Service</td><td>663.75</td><td>602.00</td><td>631.50</td></tr>
+                  <tr><td>Jharkhand State Police Service</td><td>674.50</td><td>617.50</td><td>635.75</td></tr>
+                  <tr><td>Jharkhand Finance Service</td><td>657.00</td><td>597.00</td><td>625.75</td></tr>
+                  <tr><td>Jharkhand Jail Service</td><td>658.50</td><td>—</td><td>624.25</td></tr>
+                  <tr><td>Jharkhand Education Service Class-II</td><td>660.25</td><td>617.00</td><td>—</td></tr>
+                  <tr><td>Jharkhand Co-operative Service</td><td>653.00</td><td>596.00</td><td>—</td></tr>
+                  <tr><td>Jharkhand Labour Service</td><td>653.75</td><td>596.00</td><td>624.25</td></tr>
+                  <tr><td>Jharkhand Probation Service</td><td>652.00</td><td>595.50</td><td>623.75</td></tr>
+                  <tr><td>Jharkhand Excise Service</td><td>653.00</td><td>—</td><td>—</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="source-note">
+              These figures are the official service-wise final cutoff data for
+              the identified examination. Missing category cells mean that the
+              published table did not show a value for that category/service
+              combination. citeturn1search15
+            </div>
+
+            <h2 id="factors">6. What Changes the JPSC Cutoff?</h2>
+
+            <div class="factor-grid">
+              <div><b>Vacancies</b><p>A larger or smaller vacancy pool can affect the competitive threshold.</p></div>
+              <div><b>Difficulty</b><p>An unusually easy or difficult paper changes the distribution of marks.</p></div>
+              <div><b>Candidate performance</b><p>Cutoff is relative to how candidates perform.</p></div>
+              <div><b>Category rules</b><p>Vertical and horizontal reservation provisions can affect selection lists.</p></div>
+              <div><b>Selection stage</b><p>Prelims, Mains and final service allotment are different calculations.</p></div>
+              <div><b>Preference & service</b><p>Final service-wise thresholds can differ.</p></div>
+            </div>
+
+            <h2>7. Why “Expected Cutoff” Is Dangerous</h2>
+
+            <p>
+              Coaching websites often publish an expected cutoff immediately
+              after an examination. Such estimates can be useful as rough
+              discussion, but they are not official results.
+            </p>
+
+            <div class="danger">
+              <div><strong>Expected cutoff</strong><span>Prediction based on assumptions.</span></div>
+              <div><strong>Official cutoff</strong><span>Published by JPSC after the relevant selection stage.</span></div>
+              <div><strong>Your target</strong><span>A preparation number designed to create a safety margin.</span></div>
+            </div>
+
+            <h2 id="safe-score">8. What Is a “Safe Score”?</h2>
+
+            <p>
+              A safe score is not an official JPSC term. It is a preparation
+              concept: you aim above your estimated competitive threshold so
+              that normal uncertainty in paper difficulty, evaluation and
+              cutoff movement does not leave you sitting exactly on the line.
+            </p>
+
+            <div class="safe">
+              <span>BAD TARGET</span>
+              <strong>“I only need to cross the predicted cutoff.”</strong>
+              <p>This leaves almost no margin for uncertainty.</p>
+            </div>
+
+            <div class="safe good">
+              <span>BETTER TARGET</span>
+              <strong>“I want my mock performance consistently above my competitive target.”</strong>
+              <p>Consistency matters more than one lucky high score.</p>
+            </div>
+
+            <h2 id="mock">9. Convert Cutoff Analysis Into Mock-Test Targets</h2>
+
+            <p>
+              This is where cutoff research becomes useful. Instead of checking
+              the cutoff once, use it to build a performance dashboard.
+            </p>
+
+            <div class="mock-grid">
+              <div><span>LEVEL 1</span><strong>Below competitive zone</strong><p>Focus on syllabus coverage and basic accuracy.</p></div>
+              <div><span>LEVEL 2</span><strong>Near competitive zone</strong><p>Analyse errors and improve weak subjects.</p></div>
+              <div><span>LEVEL 3</span><strong>Above competitive zone</strong><p>Work on consistency, speed and difficult questions.</p></div>
+              <div><span>LEVEL 4</span><strong>Consistently strong</strong><p>Maintain revision while testing under exam conditions.</p></div>
+            </div>
+
+            <div class="loop">
+              <span>MOCK</span><b>→</b><span>ANALYSE</span><b>→</b>
+              <span>REVISE</span><b>→</b><span>RETEST</span><b>→</b><strong>IMPROVE</strong>
+            </div>
+
+            <h2>10. Don't Compare Your Raw Score Without Context</h2>
+
+            <p>
+              A mock score has meaning only when you know the paper difficulty,
+              question quality, negative-marking rules if applicable, time
+              pressure and the benchmark being used. Your own platform should
+              therefore show more than a single score.
+            </p>
+
+            <div class="dashboard">
+              <div><b>Score</b><span>Total marks</span></div>
+              <div><b>Accuracy</b><span>Correct vs attempted</span></div>
+              <div><b>Attempt</b><span>Questions attempted</span></div>
+              <div><b>Time</b><span>Time management</span></div>
+              <div><b>Subject</b><span>Weak areas</span></div>
+              <div><b>Trend</b><span>Progress over mocks</span></div>
+            </div>
+
+            <h2 id="mistakes">11. Common JPSC Cutoff Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Treating an expected cutoff as an official cutoff.</span></div>
+              <div><b>02</b><span>Using a cutoff from a different examination cycle without checking the context.</span></div>
+              <div><b>03</b><span>Confusing minimum qualifying marks with the competitive cutoff.</span></div>
+              <div><b>04</b><span>Ignoring category-specific selection provisions.</span></div>
+              <div><b>05</b><span>Assuming the final service-wise cutoff equals the Prelims cutoff.</span></div>
+              <div><b>06</b><span>Preparing exactly to the previous cutoff instead of building a margin.</span></div>
+              <div><b>07</b><span>Judging preparation from one mock score.</span></div>
+              <div><b>08</b><span>Ignoring PYQs while chasing predicted cutoff numbers.</span></div>
+            </div>
+
+            <h2 id="plan">12. A Practical Cutoff-Based Preparation Plan</h2>
+
+            <div class="plan">
+              <div><span>WEEK 1</span><strong>Baseline mock</strong><p>Take a full mock without changing your preparation.</p></div>
+              <div><span>WEEK 2</span><strong>Error analysis</strong><p>Separate knowledge, interpretation and silly mistakes.</p></div>
+              <div><span>WEEK 3</span><strong>PYQ revision</strong><p>Study recurring concepts through previous questions.</p></div>
+              <div><span>WEEK 4</span><strong>Retest</strong><p>Take another mock and compare the complete performance profile.</p></div>
+            </div>
+
+            <div class="book-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Don't chase cutoff. Build a score that gives you margin.</h2>
+                <p>
+                  Combine topic-wise PYQs, revision and repeated mock analysis
+                  to turn your preparation into measurable performance.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/book/">Explore PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2>13. Official JPSC Sources</h2>
+
+            <p>
+              JPSC's official examination page for Advt. No. 01/2024 contains
+              the Preliminary result, Main result, final result and cutoff
+              documents, making it a better source for historical cutoff
+              research than third-party lists. citeturn1search0
+            </p>
+
+            <div class="official">
+              <a href="https://www.jpsc.gov.in/exam_files.php?id=13022" target="_blank" rel="noopener noreferrer">
+                JPSC Combined Civil Services Examination-2023 documents →
+              </a>
+              <a href="https://www.jpsc.gov.in/data/Cuttoff_Marks_dated_03_09_2025.pdf" target="_blank" rel="noopener noreferrer">
+                Official Main Written Cutoff PDF →
+              </a>
+              <a href="https://www.jpsc.gov.in/data/Service_Wise_Cuttoff_Marks_01_21_dated_03_09_2025.pdf" target="_blank" rel="noopener noreferrer">
+                Official Service-Wise Final Cutoff PDF →
+              </a>
+            </div>
+
+            <h2>14. What This Means for a Serious Aspirant</h2>
+
+            <div class="final-grid">
+              <div><b>Don't predict.</b><span>Use official historical data.</span></div>
+              <div><b>Don't target the line.</b><span>Build a safety margin.</span></div>
+              <div><b>Don't rely on one mock.</b><span>Track your trend.</span></div>
+              <div><b>Don't skip PYQs.</b><span>Study the actual examination pattern.</span></div>
+            </div>
+
+            <p>
+              JPSC's 2026 examination calendar itself describes the listed
+              dates as tentative and liable to alteration, reinforcing the
+              broader rule: always verify current examination information from
+              the Commission. citeturn0search0
+            </p>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Know the cutoff. Then prepare above it.</h2>
+          <p>
+            Use official data, PYQs and repeated mock-test analysis instead of
+            relying on a predicted cutoff alone.
+          </p>
+          <div class="buttons center">
+            <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free GS Mock →</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article p { color: #4c617e; }
+
+  .four,
+  .factor-grid,
+  .mock-grid,
+  .dashboard,
+  .plan,
+  .final-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .four > div,
+  .factor-grid > div,
+  .mock-grid > div,
+  .dashboard > div,
+  .plan > div,
+  .final-grid > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .four span,
+  .mock-grid span,
+  .plan span {
+    display: block;
+    margin-bottom: 9px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .four strong,
+  .factor-grid b,
+  .mock-grid strong,
+  .plan strong,
+  .final-grid b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .four p,
+  .factor-grid p,
+  .mock-grid p,
+  .plan p {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .exam-card {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 28px 0;
+  }
+
+  .exam-card > div {
+    padding: 26px;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--blue);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .exam-card span {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+  }
+
+  .exam-card strong {
+    display: block;
+    margin: 7px 0;
+    color: var(--dark);
+  }
+
+  .exam-card b { color: #5c7394; }
+
+  .process,
+  .loop {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 28px 0;
+    padding: 26px;
+    border-radius: 15px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .process b,
+  .loop b { color: #91a5c5; }
+
+  .process strong,
+  .loop strong { color: var(--green); }
+
+  .table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    margin: 28px 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 560px;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  th, td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #e8edf5;
+    text-align: left;
+    font-size: 14px;
+  }
+
+  th {
+    background: #eef4ff;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  td { color: #50647f; }
+
+  tr:last-child td { border-bottom: 0; }
+
+  td:last-child,
+  th:last-child { font-weight: 900; }
+
+  .source-note {
+    padding: 15px 18px;
+    border-radius: 11px;
+    background: #f7f9fe;
+    color: #687b95;
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .danger {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .danger > div {
+    padding: 22px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .danger strong,
+  .danger span {
+    display: block;
+  }
+
+  .danger strong { color: var(--dark); }
+  .danger span {
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .safe {
+    margin: 12px 0;
+    padding: 22px;
+    border-left: 5px solid #c25b5b;
+    border-radius: 0 13px 13px 0;
+    background: #fff4f4;
+  }
+
+  .safe.good {
+    border-color: var(--green);
+    background: #f1f8f4;
+  }
+
+  .safe span {
+    display: block;
+    color: #a34949;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .safe.good span { color: var(--green); }
+
+  .safe strong {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+  }
+
+  .safe p { margin: 0; font-size: 14px; }
+
+  .mock-grid { grid-template-columns: repeat(4,1fr); }
+
+  .dashboard {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .dashboard > div {
+    text-align: center;
+    background: white;
+  }
+
+  .dashboard b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .dashboard span {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .plan { grid-template-columns: repeat(4,1fr); }
+
+  .book-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .book-cta span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .book-cta h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .book-cta p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 22px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .final-grid { grid-template-columns: repeat(4,1fr); }
+
+  .final-grid span {
+    display: block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .four,
+    .factor-grid,
+    .mock-grid,
+    .plan,
+    .final-grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .four,
+    .exam-card,
+    .factor-grid,
+    .danger,
+    .mock-grid,
+    .dashboard,
+    .plan,
+    .final-grid,
+    .mistakes {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .book-cta {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .process,
+    .loop {
+      flex-direction: column;
+    }
+
+    .process b,
+    .loop b {
+      transform: rotate(90deg);
+    }
+  }
+</style>

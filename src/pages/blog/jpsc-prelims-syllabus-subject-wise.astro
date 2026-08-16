@@ -1,0 +1,1396 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Prelims Syllabus 2026: Subject-Wise Topics, Paper Pattern, Marks & Preparation Strategy";
+const description =
+  "Complete JPSC Prelims syllabus guide with subject-wise topics, paper pattern, marks, qualifying rules, preparation priorities, PYQ strategy and mock-test approach.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-prelims-syllabus-subject-wise/";
+
+const faqs = [
+  {
+    q: "What is the JPSC Prelims syllabus?",
+    a: "JPSC Prelims consists of General Studies-I and General Studies-II under the Combined Civil Services examination framework. The exact syllabus and pattern must be checked against the current official notification.",
+  },
+  {
+    q: "How many papers are there in JPSC Prelims?",
+    a: "The Combined Civil Services Preliminary Examination has two General Studies papers. Candidates should verify the latest notification for the exact marks, duration and qualifying provisions applicable to their recruitment.",
+  },
+  {
+    q: "Does JPSC Prelims have negative marking?",
+    a: "For the Habitat IAS mock-test project, the JPSC mock format follows the user's specified no-negative-marking model. For the actual examination, candidates should always follow the current official JPSC notification.",
+  },
+  {
+    q: "Which subjects are important for JPSC Prelims?",
+    a: "The syllabus spans Indian history, geography, polity, economy, science and technology, environment, current affairs and Jharkhand-specific topics. Priority should be determined using the official syllabus together with previous-year question analysis.",
+  },
+  {
+    q: "Is Jharkhand GK important in JPSC Prelims?",
+    a: "Yes. Jharkhand-specific history, geography, polity, economy, culture, society, movements, schemes and current affairs form an important part of JPSC-oriented preparation.",
+  },
+  {
+    q: "How should I start JPSC Prelims preparation?",
+    a: "Start with the official syllabus, map each topic, analyse previous-year questions, build subject notes, revise repeatedly and use timed mock tests to identify weak areas.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC Prelims syllabus, JPSC syllabus 2026, JPSC syllabus subject wise, JPSC prelims syllabus PDF, JPSC GS syllabus, JPSC General Studies syllabus, JPSC Jharkhand syllabus, JPSC preparation"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Prelims Syllabus</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PRELIMS • SYLLABUS GUIDE</div>
+
+          <h1>
+            JPSC Prelims Syllabus:
+            <span>Know What to Study.</span>
+          </h1>
+
+          <p class="hero-text">
+            A subject-wise roadmap covering General Studies, Jharkhand-specific
+            preparation, current affairs, PYQ analysis, revision and mock-test
+            strategy—so your preparation follows the syllabus instead of
+            becoming an unlimited reading list.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Prelims Strategy</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#syllabus">View Syllabus ↓</a>
+            <a
+              class="btn outline"
+              href="https://www.jpsc.gov.in/Syllabus.php"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Official JPSC Syllabus →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            JPSC can modify examination structure, syllabus and instructions
+            through a new advertisement, amendment or corrigendum. Use the
+            current official JPSC notification as the final authority. This
+            article is designed as a preparation roadmap and should be read
+            alongside the official syllabus.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>02</b><span>Prelims papers</span><p>General Studies-I and General Studies-II under the CCE framework.</p></div>
+          <div><b>GS-I</b><span>Core General Studies</span><p>National and state-oriented general studies areas.</p></div>
+          <div><b>GS-II</b><span>Aptitude / language-oriented areas</span><p>Follow the current official syllabus for exact components.</p></div>
+          <div><b>PYQ</b><span>Your reality check</span><p>Use previous questions to identify what deserves priority.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#overview">Exam overview</a>
+            <a href="#syllabus">Subject-wise syllabus</a>
+            <a href="#history">History</a>
+            <a href="#geography">Geography</a>
+            <a href="#polity">Polity</a>
+            <a href="#economy">Economy</a>
+            <a href="#science">Science & Technology</a>
+            <a href="#environment">Environment</a>
+            <a href="#current">Current affairs</a>
+            <a href="#jharkhand">Jharkhand</a>
+            <a href="#pyq">PYQ strategy</a>
+            <a href="#mock">Mock strategy</a>
+            <a href="#plan">Preparation plan</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              The biggest JPSC preparation mistake is treating the syllabus as
+              a list to read once. <strong>The syllabus should become your
+              master index for notes, PYQs, revision and mock-test
+              analysis.</strong>
+            </p>
+
+            <p>
+              JPSC publishes its examination syllabi through its official
+              website. Before each examination cycle, compare your preparation
+              list with the latest official document and any subsequent
+              corrigendum or notice.
+            </p>
+
+            <h2 id="overview">1. JPSC Prelims: The Basic Structure</h2>
+
+            <div class="overview">
+              <div>
+                <span>PAPER 1</span>
+                <h3>General Studies-I</h3>
+                <p>Broad general studies areas, including history, geography, polity, economy, science, environment, current affairs and Jharkhand-related knowledge.</p>
+              </div>
+              <div>
+                <span>PAPER 2</span>
+                <h3>General Studies-II</h3>
+                <p>Preparation should follow the exact aptitude, language and other components prescribed in the current official syllabus.</p>
+              </div>
+            </div>
+
+            <div class="rule">
+              <strong>Important distinction:</strong>
+              Do not confuse the syllabus with the marks distribution found in
+              an old coaching chart. The official notification controls the
+              current paper structure, marks, duration and qualifying rules.
+            </div>
+
+            <h2 id="syllabus">2. JPSC Prelims Syllabus — Subject-Wise Master Map</h2>
+
+            <div class="master-map">
+              <div><b>01</b><span>Current Affairs</span><small>National, international and Jharkhand</small></div>
+              <div><b>02</b><span>History</span><small>Ancient, medieval, modern & freedom movement</small></div>
+              <div><b>03</b><span>Geography</span><small>World, India & Jharkhand</small></div>
+              <div><b>04</b><span>Polity</span><small>Constitution, institutions & governance</small></div>
+              <div><b>05</b><span>Economy</span><small>Indian economy & development</small></div>
+              <div><b>06</b><span>Science</span><small>Physics, chemistry, biology & technology</small></div>
+              <div><b>07</b><span>Environment</span><small>Ecology, biodiversity & conservation</small></div>
+              <div><b>08</b><span>Jharkhand</span><small>History, geography, society, economy & culture</small></div>
+            </div>
+
+            <h2 id="history">3. History — What to Cover</h2>
+
+            <div class="topic-grid">
+              <div>
+                <span>ANCIENT</span>
+                <strong>Early India</strong>
+                <ul>
+                  <li>Prehistoric and archaeological cultures</li>
+                  <li>Indus Valley Civilization</li>
+                  <li>Vedic period</li>
+                  <li>Mahajanapadas</li>
+                  <li>Buddhism and Jainism</li>
+                  <li>Mauryan and Gupta periods</li>
+                  <li>Art, architecture, literature and culture</li>
+                </ul>
+              </div>
+              <div>
+                <span>MEDIEVAL</span>
+                <strong>Medieval India</strong>
+                <ul>
+                  <li>Delhi Sultanate</li>
+                  <li>Mughal administration and culture</li>
+                  <li>Bhakti and Sufi traditions</li>
+                  <li>Regional kingdoms</li>
+                  <li>Economy and society</li>
+                  <li>Architecture and literature</li>
+                </ul>
+              </div>
+              <div>
+                <span>MODERN</span>
+                <strong>Modern India</strong>
+                <ul>
+                  <li>European expansion</li>
+                  <li>British administration</li>
+                  <li>Economic impact of colonialism</li>
+                  <li>Social and religious reform</li>
+                  <li>1857 and subsequent resistance</li>
+                  <li>National movement</li>
+                  <li>Constitutional developments</li>
+                </ul>
+              </div>
+              <div>
+                <span>JHARKHAND</span>
+                <strong>Regional history</strong>
+                <ul>
+                  <li>Tribal resistance</li>
+                  <li>Birsa movement</li>
+                  <li>Kol and Santhal movements</li>
+                  <li>Jharkhand movement</li>
+                  <li>Regional political and social developments</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="study-tip">
+              <strong>JPSC approach:</strong>
+              Do not study modern Indian history independently of Jharkhand
+              history. Build a parallel regional timeline so national events
+              and Jharkhand's developments can be connected.
+            </div>
+
+            <h2 id="geography">4. Geography — India, World & Jharkhand</h2>
+
+            <div class="topic-grid four">
+              <div>
+                <span>PHYSICAL</span>
+                <strong>Physical Geography</strong>
+                <ul>
+                  <li>Earth structure</li>
+                  <li>Geomorphology</li>
+                  <li>Climatology</li>
+                  <li>Oceanography</li>
+                  <li>Rocks and soils</li>
+                </ul>
+              </div>
+              <div>
+                <span>INDIA</span>
+                <strong>Indian Geography</strong>
+                <ul>
+                  <li>Physiographic divisions</li>
+                  <li>Rivers and drainage</li>
+                  <li>Climate and monsoon</li>
+                  <li>Soils and agriculture</li>
+                  <li>Mineral and energy resources</li>
+                </ul>
+              </div>
+              <div>
+                <span>ECONOMIC</span>
+                <strong>Resources & Industry</strong>
+                <ul>
+                  <li>Mineral resources</li>
+                  <li>Industrial regions</li>
+                  <li>Transport</li>
+                  <li>Population</li>
+                  <li>Urbanisation</li>
+                </ul>
+              </div>
+              <div>
+                <span>JHARKHAND</span>
+                <strong>State Geography</strong>
+                <ul>
+                  <li>Physiography</li>
+                  <li>Drainage</li>
+                  <li>Climate</li>
+                  <li>Forests</li>
+                  <li>Minerals and industries</li>
+                  <li>District geography</li>
+                </ul>
+              </div>
+            </div>
+
+            <h2 id="polity">5. Indian Polity & Governance</h2>
+
+            <p>
+              Build polity from the Constitution outward. Start with
+              constitutional foundations and then move to institutions,
+              rights, governance and contemporary constitutional issues.
+            </p>
+
+            <div class="polity-grid">
+              <div><b>CONSTITUTION</b><span>Historical background, making, features, amendments and schedules.</span></div>
+              <div><b>RIGHTS</b><span>Fundamental Rights, DPSP, Fundamental Duties and constitutional remedies.</span></div>
+              <div><b>UNION</b><span>President, Vice-President, Parliament, Council of Ministers and Supreme Court.</span></div>
+              <div><b>STATE</b><span>Governor, Chief Minister, State Legislature, High Court and state administration.</span></div>
+              <div><b>FEDERALISM</b><span>Centre-State relations, finance and constitutional mechanisms.</span></div>
+              <div><b>LOCAL GOVT.</b><span>Panchayati Raj, municipalities and grassroots governance.</span></div>
+              <div><b>INSTITUTIONS</b><span>Election Commission, CAG, UPSC/JPSC and other constitutional/statutory bodies.</span></div>
+              <div><b>GOVERNANCE</b><span>Transparency, accountability, welfare, citizen-centric administration and contemporary issues.</span></div>
+            </div>
+
+            <h2 id="economy">6. Indian Economy</h2>
+
+            <div class="economy-grid">
+              <div><span>FOUNDATIONS</span><strong>Basic concepts</strong><p>GDP, national income, inflation, unemployment, growth and development.</p></div>
+              <div><span>PUBLIC FINANCE</span><strong>Government finances</strong><p>Budget, taxation, fiscal deficit, public expenditure and public debt.</p></div>
+              <div><span>MONETARY</span><strong>Banking & RBI</strong><p>Money, banking, monetary policy and financial institutions.</p></div>
+              <div><span>SECTORS</span><strong>Primary to tertiary</strong><p>Agriculture, industry, services, infrastructure and employment.</p></div>
+              <div><span>DEVELOPMENT</span><strong>Inclusive growth</strong><p>Poverty, inequality, human development and social-sector programmes.</p></div>
+              <div><span>JHARKHAND</span><strong>State economy</strong><p>Minerals, industries, agriculture, infrastructure, revenue and development.</p></div>
+            </div>
+
+            <h2 id="science">7. General Science & Technology</h2>
+
+            <p>
+              JPSC science preparation should focus on conceptual understanding
+              plus everyday applications. You do not need to approach every
+              topic like an engineering or medical entrance examination.
+            </p>
+
+            <div class="science-grid">
+              <div><b>PHYSICS</b><span>Mechanics, heat, light, sound, electricity, magnetism, measurements and everyday applications.</span></div>
+              <div><b>CHEMISTRY</b><span>Basic chemistry, matter, reactions, acids/bases, metals, carbon compounds and applications.</span></div>
+              <div><b>BIOLOGY</b><span>Cell, genetics, human physiology, diseases, nutrition, ecology and biodiversity.</span></div>
+              <div><b>SPACE</b><span>Indian space programme, satellites, launch systems and major developments.</span></div>
+              <div><b>DEFENCE</b><span>Defence technology, missiles, platforms and important indigenous systems.</span></div>
+              <div><b>IT</b><span>Computers, digital technology, communication, cybersecurity and emerging technologies.</span></div>
+            </div>
+
+            <h2 id="environment">8. Environment & Ecology</h2>
+
+            <div class="environment-grid">
+              <div><b>ECOLOGY</b><span>Ecosystem, food chain, energy flow and ecological relationships.</span></div>
+              <div><b>BIODIVERSITY</b><span>Species, habitats, hotspots and conservation.</span></div>
+              <div><b>PROTECTED AREAS</b><span>National parks, sanctuaries, biosphere reserves and conservation programmes.</span></div>
+              <div><b>CLIMATE</b><span>Climate change, greenhouse gases, adaptation and mitigation.</span></div>
+              <div><b>POLLUTION</b><span>Air, water, soil, noise and waste-management issues.</span></div>
+              <div><b>JHARKHAND</b><span>Forests, wildlife, mining-environment interface and state conservation issues.</span></div>
+            </div>
+
+            <h2 id="current">9. Current Affairs — How to Study Without Drowning</h2>
+
+            <p>
+              Current affairs should not become a separate universe of random
+              facts. Connect every important current event to a static syllabus
+              topic.
+            </p>
+
+            <div class="current-flow">
+              <div><span>NEWS</span><strong>Event</strong><p>What happened?</p></div>
+              <b>→</b>
+              <div><span>CONTEXT</span><strong>Background</strong><p>Why does it matter?</p></div>
+              <b>→</b>
+              <div><span>SYLLABUS</span><strong>Topic</strong><p>Which subject does it belong to?</p></div>
+              <b>→</b>
+              <div><span>PYQ</span><strong>Question</strong><p>How can JPSC test it?</p></div>
+            </div>
+
+            <div class="current-grid">
+              <div><b>National</b><span>Government policies, institutions, economy, science, environment and major events.</span></div>
+              <div><b>International</b><span>Organisations, groupings, treaties, conflicts, summits and India's relations.</span></div>
+              <div><b>Jharkhand</b><span>State schemes, appointments, projects, geography, economy, environment and culture.</span></div>
+              <div><b>Reports & indices</b><span>Understand publisher, indicator, India/Jharkhand position and major findings.</span></div>
+            </div>
+
+            <h2 id="jharkhand">10. Jharkhand-Specific Syllabus: Your Competitive Edge</h2>
+
+            <p>
+              JPSC preparation becomes inefficient when Jharkhand is postponed
+              until the final month. Treat state-specific content as a permanent
+              parallel track.
+            </p>
+
+            <div class="jharkhand-grid">
+              <div><b>HISTORY</b><span>Tribal movements, regional kingdoms, colonial period, resistance and Jharkhand movement.</span></div>
+              <div><b>CULTURE</b><span>Tribes, languages, folk traditions, festivals, literature, art and music.</span></div>
+              <div><b>GEOGRAPHY</b><span>Districts, rivers, plateaus, forests, minerals, climate and resources.</span></div>
+              <div><b>ECONOMY</b><span>Mining, industry, agriculture, infrastructure, employment and state development.</span></div>
+              <div><b>POLITY</b><span>State government, local government, institutions and Jharkhand-specific laws.</span></div>
+              <div><b>SCHEMES</b><span>Major state welfare and development schemes and their target groups.</span></div>
+              <div><b>ENVIRONMENT</b><span>Forests, wildlife, protected areas, mining impacts and conservation.</span></div>
+              <div><b>CURRENT</b><span>Contemporary state events linked with static Jharkhand knowledge.</span></div>
+            </div>
+
+            <div class="study-tip">
+              <strong>High-value method:</strong>
+              Make one Jharkhand notebook with eight permanent sections:
+              history, movement, culture, geography, economy, polity, schemes
+              and environment. Add current affairs to the relevant section
+              instead of maintaining an unstructured news dump.
+            </div>
+
+            <h2>11. International Relations</h2>
+
+            <div class="ir-grid">
+              <div><b>UN & ORGANISATIONS</b><span>UN system and major international organisations.</span></div>
+              <div><b>GROUPINGS</b><span>Regional and global groupings relevant to India.</span></div>
+              <div><b>NEIGHBOURS</b><span>India's relations with neighbouring countries.</span></div>
+              <div><b>GLOBAL ISSUES</b><span>Major international developments connected with India's interests.</span></div>
+            </div>
+
+            <h2>12. Disaster Management & Contemporary Issues</h2>
+
+            <p>
+              JPSC-oriented preparation should also connect disasters and
+              contemporary issues with geography, environment, governance and
+              Jharkhand-specific vulnerability.
+            </p>
+
+            <div class="disaster">
+              <div><b>HAZARD</b><span>Flood, drought, heat, landslide, cyclone, earthquake and other hazards.</span></div>
+              <div><b>RISK</b><span>Exposure, vulnerability and capacity.</span></div>
+              <div><b>MANAGEMENT</b><span>Preparedness, mitigation, response and recovery.</span></div>
+              <div><b>JHARKHAND</b><span>State-specific disaster patterns and institutional responses.</span></div>
+            </div>
+
+            <h2 id="pyq">13. Why PYQs Should Come Before Endless Books</h2>
+
+            <p>
+              A syllabus tells you what can be studied. Previous-year questions
+              tell you how the examination has actually converted that syllabus
+              into questions.
+            </p>
+
+            <div class="pyq-method">
+              <div><span>01</span><strong>Read syllabus</strong><p>Define the boundaries.</p></div>
+              <div><span>02</span><strong>Map PYQs</strong><p>Connect questions to topics.</p></div>
+              <div><span>03</span><strong>Find patterns</strong><p>Identify recurring areas.</p></div>
+              <div><span>04</span><strong>Study</strong><p>Read only after knowing the target.</p></div>
+              <div><span>05</span><strong>Revise</strong><p>Convert knowledge into recall.</p></div>
+            </div>
+
+            <div class="conversion small">
+              <div>
+                <span>HABITAT IAS • JPSC PREVIOUS YEAR QUESTIONS</span>
+                <h2>Don't just read the syllabus. Decode the questions.</h2>
+                <p>
+                  Use topic-wise PYQs to identify recurring concepts, important
+                  areas and the way JPSC frames questions.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2 id="mock">14. How to Use Mock Tests With the Syllabus</h2>
+
+            <p>
+              A mock test should not be treated only as a score generator.
+              Convert every mock into a syllabus audit.
+            </p>
+
+            <div class="mock-cycle">
+              <div><b>ATTEMPT</b><span>Take the test under exam conditions.</span></div>
+              <b>→</b>
+              <div><b>ANALYSE</b><span>Separate knowledge errors from silly errors.</span></div>
+              <b>→</b>
+              <div><b>MAP</b><span>Attach every mistake to a syllabus topic.</span></div>
+              <b>→</b>
+              <div><b>REVISE</b><span>Repair the weak topic.</span></div>
+              <b>→</b>
+              <div><b>RETEST</b><span>Check whether the weakness has improved.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC MOCK TEST</span>
+                <h2>Know your syllabus. Now know your score.</h2>
+                <p>
+                  Attempt the free mock and use your result as a preparation
+                  diagnostic.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2 id="plan">15. A Practical JPSC Prelims Preparation Plan</h2>
+
+            <div class="plan">
+              <div>
+                <span>PHASE 1</span>
+                <h3>Syllabus + PYQ</h3>
+                <p>Map every subject and understand the question pattern.</p>
+              </div>
+              <div>
+                <span>PHASE 2</span>
+                <h3>Foundation</h3>
+                <p>Build concepts in polity, history, geography, economy and science.</p>
+              </div>
+              <div>
+                <span>PHASE 3</span>
+                <h3>Jharkhand</h3>
+                <p>Build a strong state-specific knowledge base.</p>
+              </div>
+              <div>
+                <span>PHASE 4</span>
+                <h3>Current Affairs</h3>
+                <p>Integrate current events with static topics.</p>
+              </div>
+              <div>
+                <span>PHASE 5</span>
+                <h3>Mocks + Revision</h3>
+                <p>Shift from input-heavy study to recall, testing and correction.</p>
+              </div>
+            </div>
+
+            <h2>16. What Not to Do</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Collect ten books for the same subject.</span></div>
+              <div><b>02</b><span>Read current affairs without linking them to the syllabus.</span></div>
+              <div><b>03</b><span>Ignore Jharkhand until the last month.</span></div>
+              <div><b>04</b><span>Take mocks without analysing mistakes.</span></div>
+              <div><b>05</b><span>Study PYQs only after completing everything else.</span></div>
+              <div><b>06</b><span>Memorise facts without understanding the underlying concept.</span></div>
+              <div><b>07</b><span>Use an old syllabus as if it were the current notification.</span></div>
+              <div><b>08</b><span>Measure preparation only by hours studied.</span></div>
+            </div>
+
+            <h2>17. Your One-Page Syllabus System</h2>
+
+            <div class="system">
+              <div><strong>SYLLABUS</strong><span>Master topic list</span></div>
+              <div><strong>PYQ</strong><span>Question mapping</span></div>
+              <div><strong>NOTES</strong><span>Targeted study</span></div>
+              <div><strong>REVISION</strong><span>Active recall</span></div>
+              <div><strong>MOCK</strong><span>Performance test</span></div>
+              <div><strong>ERROR LOG</strong><span>Weakness correction</span></div>
+            </div>
+
+            <p>
+              If these six elements are connected, your preparation becomes a
+              closed learning loop instead of an endless search for new
+              material.
+            </p>
+
+            <h2>18. Official JPSC Resources</h2>
+
+            <p>
+              Always compare your preparation with the latest official JPSC
+              syllabus and recruitment notice before making final decisions.
+            </p>
+
+            <div class="official">
+              <a
+                href="https://www.jpsc.gov.in/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                JPSC Official Website →
+              </a>
+              <a
+                href="https://www.jpsc.gov.in/Syllabus.php"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                JPSC Official Syllabus Page →
+              </a>
+              <a
+                href="https://www.jpsc.gov.in/exam_files.php?id=13039"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Combined Civil Services Documents →
+              </a>
+            </div>
+
+            <h2>19. Final Takeaway</h2>
+
+            <div class="final">
+              <div><b>SYLLABUS</b><span>Know the boundaries.</span></div>
+              <div><b>PYQs</b><span>Know the pattern.</span></div>
+              <div><b>JHARKHAND</b><span>Know your state.</span></div>
+              <div><b>CURRENT</b><span>Know what changed.</span></div>
+              <div><b>MOCKS</b><span>Know your score.</span></div>
+            </div>
+
+            <p>
+              The objective is not to study everything. The objective is to
+              cover the syllabus systematically, understand how JPSC asks
+              questions, revise repeatedly and use mock tests to close the
+              gaps.
+            </p>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Turn the syllabus into a preparation system.</h2>
+          <p>
+            Study the syllabus, decode PYQs, revise intelligently and test
+            yourself regularly.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article h3 {
+    margin: 8px 0;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+
+  article p { color: #4c617e; }
+
+  .overview,
+  .master-map,
+  .topic-grid,
+  .polity-grid,
+  .economy-grid,
+  .science-grid,
+  .environment-grid,
+  .current-grid,
+  .jharkhand-grid,
+  .ir-grid,
+  .disaster,
+  .plan,
+  .system,
+  .final {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .overview {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .overview > div {
+    padding: 27px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: #f8faff;
+  }
+
+  .overview span,
+  .topic-grid span,
+  .economy-grid span,
+  .pyq-method span,
+  .current-flow span,
+  .plan span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .overview h3 {
+    font-size: 24px;
+  }
+
+  .overview p {
+    margin-bottom: 0;
+    font-size: 14px;
+  }
+
+  .master-map {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .master-map > div {
+    min-height: 125px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: white;
+  }
+
+  .master-map b {
+    display: block;
+    color: var(--blue);
+    font-size: 22px;
+  }
+
+  .master-map span,
+  .master-map small {
+    display: block;
+  }
+
+  .master-map span {
+    margin-top: 8px;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .master-map small {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+  }
+
+  .topic-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .topic-grid > div,
+  .polity-grid > div,
+  .economy-grid > div,
+  .science-grid > div,
+  .environment-grid > div,
+  .current-grid > div,
+  .jharkhand-grid > div,
+  .ir-grid > div,
+  .disaster > div,
+  .plan > div,
+  .system > div,
+  .final > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .topic-grid strong,
+  .economy-grid strong {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+  }
+
+  .topic-grid ul {
+    margin: 11px 0 0;
+    padding-left: 18px;
+    color: #526780;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .topic-grid.four { grid-template-columns: repeat(4,1fr); }
+
+  .study-tip {
+    margin: 27px 0;
+    padding: 21px 23px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #536987;
+  }
+
+  .study-tip strong { color: var(--dark); }
+
+  .polity-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .polity-grid b,
+  .science-grid b,
+  .environment-grid b,
+  .current-grid b,
+  .jharkhand-grid b,
+  .ir-grid b,
+  .disaster b,
+  .system strong,
+  .final b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .polity-grid span,
+  .science-grid span,
+  .environment-grid span,
+  .current-grid span,
+  .jharkhand-grid span,
+  .ir-grid span,
+  .disaster span,
+  .system span,
+  .final span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .economy-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .science-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .environment-grid {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .current-flow,
+  .mock-cycle,
+  .pyq-method,
+  .logic {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 10px;
+    align-items: center;
+    margin: 28px 0;
+  }
+
+  .current-flow > div,
+  .mock-cycle > div,
+  .pyq-method > div,
+  .logic > div {
+    min-height: 120px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .current-flow strong,
+  .mock-cycle b,
+  .pyq-method strong,
+  .logic strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+  }
+
+  .current-flow p {
+    margin: 6px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .current-flow > b,
+  .mock-cycle > b,
+  .pyq-method > b,
+  .logic > b {
+    color: #91a5c5;
+  }
+
+  .current-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .jharkhand-grid {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .ir-grid,
+  .disaster {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .pyq-method > div {
+    text-align: center;
+    min-height: 145px;
+  }
+
+  .pyq-method span {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .plan {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .plan h3 {
+    margin-top: 8px;
+  }
+
+  .plan p {
+    margin-bottom: 0;
+    font-size: 13px;
+  }
+
+  .system {
+    grid-template-columns: repeat(6,1fr);
+  }
+
+  .system > div {
+    text-align: center;
+    background: white;
+  }
+
+  .system strong {
+    font-size: 13px;
+  }
+
+  .system span {
+    font-size: 11px;
+  }
+
+  .final {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .final > div {
+    text-align: center;
+    background: white;
+  }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .master-map,
+    .topic-grid,
+    .topic-grid.four,
+    .polity-grid,
+    .economy-grid,
+    .science-grid,
+    .environment-grid,
+    .current-grid,
+    .jharkhand-grid,
+    .ir-grid,
+    .disaster,
+    .plan,
+    .system,
+    .final {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .overview {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .master-map,
+    .topic-grid,
+    .topic-grid.four,
+    .polity-grid,
+    .economy-grid,
+    .science-grid,
+    .environment-grid,
+    .current-grid,
+    .jharkhand-grid,
+    .ir-grid,
+    .disaster,
+    .plan,
+    .system,
+    .final {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .current-flow,
+    .mock-cycle,
+    .pyq-method,
+    .logic {
+      grid-template-columns: 1fr;
+    }
+
+    .current-flow > b,
+    .mock-cycle > b,
+    .pyq-method > b,
+    .logic > b {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .official {
+      flex-direction: column;
+    }
+  }
+</style>

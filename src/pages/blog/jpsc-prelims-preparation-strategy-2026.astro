@@ -1,0 +1,1345 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "How to Prepare for JPSC Prelims 2026: Complete Strategy, Timetable, Books, PYQs & Mock Tests";
+const description =
+  "A practical JPSC Prelims preparation strategy covering syllabus mapping, subject-wise study, PYQs, current affairs, Jharkhand GK, revision, mock tests, time management and a 6-month roadmap.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-prelims-preparation-strategy-2026/";
+
+const faqs = [
+  {
+    q: "How should a beginner start JPSC Prelims preparation?",
+    a: "Start with the current official syllabus and examination pattern. Divide the syllabus into subjects and topics, collect reliable study material, solve previous-year questions early, and create a realistic daily study and revision routine.",
+  },
+  {
+    q: "How important are JPSC PYQs?",
+    a: "Very important. PYQs show how JPSC converts syllabus areas into objective questions and help you identify recurring concepts, question styles, factual areas and preparation gaps.",
+  },
+  {
+    q: "How should I prepare Jharkhand-specific topics?",
+    a: "Maintain a separate Jharkhand notebook covering history, movements, geography, society, culture, heritage, economy, schemes and current affairs. Connect every current event to its static background.",
+  },
+  {
+    q: "How much current affairs should I study for JPSC?",
+    a: "Prioritise relevance over volume. Follow major national, international and Jharkhand developments and connect them with the static syllabus. Avoid trying to memorise every daily news item.",
+  },
+  {
+    q: "When should I start mock tests?",
+    a: "Start with topic-wise and sectional tests early, then introduce full-length timed mocks after you have built enough syllabus coverage. The key is to analyse every test rather than simply collecting scores.",
+  },
+  {
+    q: "Is six months enough for JPSC Prelims?",
+    a: "Six months can be a workable preparation window when the syllabus is divided systematically and study, PYQs, revision and mock testing are maintained consistently. The exact time required depends on your starting level and available study hours.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC preparation strategy, JPSC Prelims preparation, how to prepare for JPSC, JPSC 2026 preparation strategy, JPSC study plan, JPSC books, JPSC PYQ, JPSC mock test, Jharkhand GK preparation"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Preparation Strategy</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PRELIMS • PREPARATION STRATEGY</div>
+
+          <h1>
+            How to Prepare for JPSC:
+            <span>Build a System, Not a Pile of Books.</span>
+          </h1>
+
+          <p class="hero-text">
+            A complete, practical preparation framework for JPSC Prelims:
+            understand the pattern, break the syllabus into topics, use PYQs,
+            prepare Jharkhand-specific content, revise systematically and use
+            mock tests to measure progress.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Prelims Strategy</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#roadmap">See Strategy ↓</a>
+            <a class="btn outline" href="/blog/jpsc-prelims-syllabus-subject-wise/">
+              Read JPSC Syllabus →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>First step:</strong>
+            Before following any timetable, download and read the latest official
+            JPSC syllabus and recruitment notification. JPSC's published
+            Combined Civil Services framework specifies two compulsory
+            Preliminary papers of 200 marks each, with 100 objective questions
+            and two hours per paper in the published scheme. The latest
+            notification remains the final authority for your examination cycle.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>01</b><span>Know the syllabus</span><p>Turn the official syllabus into a topic checklist.</p></div>
+          <div><b>02</b><span>Study smart</span><p>Prioritise concepts, recurring areas and Jharkhand.</p></div>
+          <div><b>03</b><span>Solve PYQs</span><p>Use actual questions to understand demand.</p></div>
+          <div><b>04</b><span>Test + revise</span><p>Mocks identify what your study has not fixed.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#reality">Reality of preparation</a>
+            <a href="#roadmap">Complete roadmap</a>
+            <a href="#syllabus">Syllabus mapping</a>
+            <a href="#subjects">Subject strategy</a>
+            <a href="#jharkhand">Jharkhand strategy</a>
+            <a href="#current">Current affairs</a>
+            <a href="#pyq">PYQ strategy</a>
+            <a href="#books">Book strategy</a>
+            <a href="#revision">Revision system</a>
+            <a href="#mock">Mock strategy</a>
+            <a href="#timetable">Daily timetable</a>
+            <a href="#sixmonth">6-month plan</a>
+            <a href="#mistakes">Mistakes</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              <strong>JPSC preparation is a management problem as much as a
+              knowledge problem.</strong> The syllabus is broad, time is limited,
+              and the candidate has to balance static subjects, Jharkhand,
+              current affairs, PYQs, revision and test practice.
+            </p>
+
+            <h2 id="reality">1. First Understand What You Are Preparing For</h2>
+
+            <p>
+              The published JPSC Preliminary syllabus has two compulsory papers.
+              The official 2024 advertisement describes Paper-I as a 200-mark
+              paper with 100 objective questions and two hours, covering areas
+              such as Indian history, geography, polity and governance, economic
+              and sustainable development, science and technology, Jharkhand
+              specific awareness, current events and general knowledge.
+            </p>
+
+            <p>
+              That breadth creates the first major preparation rule:
+              <strong>do not study every subject with the same method.</strong>
+              History requires chronology and themes; geography needs maps and
+              concepts; polity needs constitutional structure; current affairs
+              needs filtering; and Jharkhand needs dedicated state-specific
+              revision.
+            </p>
+
+            <div class="formula">
+              <strong>Good JPSC preparation = Syllabus + Concepts + PYQs + Revision + Mocks</strong>
+              <span>Remove any one of these and the preparation becomes weaker.</span>
+            </div>
+
+            <h2 id="roadmap">2. The Complete JPSC Preparation Roadmap</h2>
+
+            <div class="roadmap">
+              <div><b>01</b><strong>Understand</strong><span>Pattern + syllabus</span></div>
+              <i>→</i>
+              <div><b>02</b><strong>Map</strong><span>Subjects + topics</span></div>
+              <i>→</i>
+              <div><b>03</b><strong>Learn</strong><span>Concepts + facts</span></div>
+              <i>→</i>
+              <div><b>04</b><strong>Decode</strong><span>PYQs</span></div>
+              <i>→</i>
+              <div><b>05</b><strong>Revise</strong><span>Active recall</span></div>
+              <i>→</i>
+              <div><b>06</b><strong>Test</strong><span>Mocks</span></div>
+              <i>→</i>
+              <div><b>07</b><strong>Repair</strong><span>Error log</span></div>
+            </div>
+
+            <h2 id="syllabus">3. Step One: Convert the Syllabus Into a Checklist</h2>
+
+            <p>
+              Do not keep the syllabus as a PDF that you read once. Convert it
+              into a working checklist. Every topic should have a status such as
+              <strong>Not Started → Learning → PYQ Done → Revised → Tested →
+              Strong</strong>.
+            </p>
+
+            <div class="status">
+              <div><b>NOT STARTED</b><span>No preparation.</span></div>
+              <div><b>LEARNING</b><span>First reading underway.</span></div>
+              <div><b>PYQ DONE</b><span>Actual questions mapped.</span></div>
+              <div><b>REVISED</b><span>First revision completed.</span></div>
+              <div><b>TESTED</b><span>Performed in a timed test.</span></div>
+              <div><b>STRONG</b><span>Repeatedly accurate.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>RELATED HABITAT IAS GUIDE</span>
+                <h2>Start with the JPSC syllabus.</h2>
+                <p>
+                  Understand the subjects and topics before deciding which books
+                  and notes you actually need.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/blog/jpsc-prelims-syllabus-subject-wise/">
+                  JPSC Syllabus →
+                </a>
+              </div>
+            </div>
+
+            <h2 id="subjects">4. Subject-Wise JPSC Preparation Strategy</h2>
+
+            <div class="subjects">
+              <div>
+                <span>HISTORY</span>
+                <strong>Build a timeline</strong>
+                <p>Study ancient, medieval and modern history through chronology, themes, movements, personalities and causes-consequences. Then solve PYQs.</p>
+              </div>
+              <div>
+                <span>GEOGRAPHY</span>
+                <strong>Think spatially</strong>
+                <p>Combine physical geography with India and Jharkhand geography. Use maps, diagrams, locations, resources, rivers, climate and agriculture.</p>
+              </div>
+              <div>
+                <span>POLITY</span>
+                <strong>Understand the Constitution</strong>
+                <p>Study constitutional provisions, institutions, governance, local government and important concepts instead of memorising isolated Articles.</p>
+              </div>
+              <div>
+                <span>ECONOMY</span>
+                <strong>Static + current</strong>
+                <p>Learn basic concepts first, then connect them to development, reforms, schemes, budget-related issues and current events.</p>
+              </div>
+              <div>
+                <span>SCIENCE</span>
+                <strong>Concept + application</strong>
+                <p>Build school-level fundamentals and connect science and technology with agriculture, ICT and contemporary developments.</p>
+              </div>
+              <div>
+                <span>ENVIRONMENT</span>
+                <strong>Connect systems</strong>
+                <p>Study ecology, biodiversity, conservation, climate and environmental institutions alongside current developments.</p>
+              </div>
+              <div>
+                <span>CURRENT AFFAIRS</span>
+                <strong>Filter aggressively</strong>
+                <p>Do not collect everything. Keep only material connected to JPSC-relevant national, international and Jharkhand developments.</p>
+              </div>
+              <div>
+                <span>JHARKHAND</span>
+                <strong>Separate notebook</strong>
+                <p>Maintain a dedicated state file for history, geography, society, culture, heritage, economy, schemes and current affairs.</p>
+              </div>
+            </div>
+
+            <h2>5. The 80/20 Principle for JPSC</h2>
+
+            <p>
+              The goal is not to predict exactly which questions will appear.
+              Instead, use PYQs and the syllabus to identify areas that deserve
+              repeated attention. High-priority topics should receive deeper
+              study, more PYQ practice and more revision.
+            </p>
+
+            <div class="priority">
+              <div><b>A — HIGH PRIORITY</b><span>Core syllabus + recurring PYQ evidence + strong conceptual relevance.</span></div>
+              <div><b>B — MEDIUM</b><span>Important syllabus area with moderate historical attention.</span></div>
+              <div><b>C — LOW</b><span>Peripheral areas that should not consume disproportionate time.</span></div>
+            </div>
+
+            <div class="warning-box">
+              <strong>Never interpret priority as prediction.</strong>
+              A topic appearing repeatedly in previous papers does not guarantee
+              that it will appear again. Use the classification to allocate
+              preparation time, not to gamble on the next paper.
+            </div>
+
+            <h2 id="jharkhand">6. How to Prepare Jharkhand-Specific Topics</h2>
+
+            <p>
+              Jharkhand should have a dedicated preparation system. Keep static
+              state knowledge and state current affairs connected instead of
+              maintaining two completely separate worlds.
+            </p>
+
+            <div class="jharkhand">
+              <div><b>HISTORY</b><span>Tribal resistance, movements, personalities, colonial and post-independence developments.</span></div>
+              <div><b>GEOGRAPHY</b><span>Districts, rivers, plateau, forests, soils, minerals, industries and agriculture.</span></div>
+              <div><b>SOCIETY</b><span>Tribes, communities, demographic characteristics and social development.</span></div>
+              <div><b>CULTURE</b><span>Languages, literature, festivals, art, music, traditions and heritage.</span></div>
+              <div><b>ECONOMY</b><span>Mining, industry, agriculture, infrastructure, development and state economy.</span></div>
+              <div><b>CURRENT</b><span>State schemes, appointments, projects, awards, institutions, environment and major events.</span></div>
+            </div>
+
+            <p>
+              A useful rule is:
+              <strong>static first → current connection → PYQ → revision.</strong>
+            </p>
+
+            <h2 id="current">7. Current Affairs: Study Less, Remember More</h2>
+
+            <p>
+              Current affairs becomes inefficient when preparation turns into
+              collecting PDFs. Instead, use a filtering framework.
+            </p>
+
+            <div class="current">
+              <div><b>EVENT</b><span>What happened?</span></div>
+              <div><b>WHY</b><span>Why is it important?</span></div>
+              <div><b>WHERE</b><span>Country / state / institution?</span></div>
+              <div><b>STATIC LINK</b><span>Which syllabus concept connects?</span></div>
+              <div><b>EXAM ANGLE</b><span>What could become an MCQ?</span></div>
+            </div>
+
+            <p>
+              For example, if a current event concerns a protected area, do not
+              memorise only the news headline. Revise its location, ecosystem,
+              state, important species, legal status and related environmental
+              concepts.
+            </p>
+
+            <h2 id="pyq">8. Start PYQs Earlier Than Most Students Do</h2>
+
+            <p>
+              You do not have to complete the syllabus before seeing previous
+              questions. Early PYQ exposure prevents unfocused study and tells
+              you how broad textbook material becomes an actual JPSC MCQ.
+            </p>
+
+            <div class="pyq">
+              <div><b>ATTEMPT</b><span>Try without help.</span></div>
+              <div><b>CHECK</b><span>Verify the answer.</span></div>
+              <div><b>MAP</b><span>Assign subject + topic.</span></div>
+              <div><b>EXPAND</b><span>Study the underlying concept.</span></div>
+              <div><b>RECORD</b><span>Log the error.</span></div>
+              <div><b>RETEST</b><span>Return later without notes.</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>RELATED HABITAT IAS RESOURCE</span>
+                <h2>Decode JPSC through topic-wise PYQs.</h2>
+                <p>
+                  Grouping previous questions by subject and topic makes it
+                  easier to see recurring concepts and revise targeted areas.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+                <a class="btn outline" href="/blog/jpsc-previous-year-question-papers-pyq-analysis/">
+                  Read PYQ Guide →
+                </a>
+              </div>
+            </div>
+
+            <h2 id="books">9. How Many Books Do You Need?</h2>
+
+            <p>
+              More books do not automatically mean better preparation. A better
+              system is one reliable core source per subject, one PYQ resource,
+              selected current-affairs material and test practice.
+            </p>
+
+            <div class="books">
+              <div><b>CORE SOURCE</b><span>One dependable primary book/resource for the subject.</span></div>
+              <div><b>REFERENCE</b><span>Additional material only when a concept remains unclear.</span></div>
+              <div><b>PYQ</b><span>Actual JPSC questions for pattern and topic analysis.</span></div>
+              <div><b>NOTES</b><span>Your condensed revision material.</span></div>
+              <div><b>MOCK</b><span>Timed practice and performance diagnosis.</span></div>
+            </div>
+
+            <div class="rule">
+              <strong>Book rule:</strong>
+              If a new book does not solve a specific weakness, do not add it
+              merely because another aspirant recommends it.
+            </div>
+
+            <h2 id="revision">10. Build a Revision System From Day One</h2>
+
+            <p>
+              First reading creates familiarity. Revision creates retrieval.
+              For competitive exams, the second is what matters at the moment of
+              the question.
+            </p>
+
+            <div class="revision">
+              <div><b>R1</b><span>Quick review after first study.</span></div>
+              <div><b>R2</b><span>Revision after a few days.</span></div>
+              <div><b>R3</b><span>Revision after another study cycle.</span></div>
+              <div><b>R4</b><span>Final high-frequency revision before the exam.</span></div>
+            </div>
+
+            <p>
+              Do not revise every page equally. Your revision list should grow
+              out of PYQ errors, mock errors, difficult concepts and frequently
+              forgotten facts.
+            </p>
+
+            <h2>11. Make an Error Notebook</h2>
+
+            <div class="errors">
+              <div><b>KNOWLEDGE GAP</b><span>I never knew the fact.</span></div>
+              <div><b>CONCEPT GAP</b><span>I knew the words but misunderstood the concept.</span></div>
+              <div><b>MEMORY GAP</b><span>I studied it but could not recall it.</span></div>
+              <div><b>CARELESS ERROR</b><span>I knew it but read or marked incorrectly.</span></div>
+              <div><b>ELIMINATION ERROR</b><span>I failed to use available clues.</span></div>
+              <div><b>TIME ERROR</b><span>I spent too long on one question.</span></div>
+            </div>
+
+            <p>
+              Your error notebook should answer one question:
+              <strong>“What must I do differently next time?”</strong>
+            </p>
+
+            <h2 id="mock">12. Mock Tests: Use Them as Diagnostics</h2>
+
+            <p>
+              A mock score is useful only when it changes what you study next.
+              After every test, classify your mistakes and identify the exact
+              syllabus areas responsible for the lost marks.
+            </p>
+
+            <div class="mock-cycle">
+              <div><b>TEST</b><span>Timed attempt</span></div>
+              <i>→</i>
+              <div><b>SCORE</b><span>Measure performance</span></div>
+              <i>→</i>
+              <div><b>ANALYSE</b><span>Classify errors</span></div>
+              <i>→</i>
+              <div><b>REPAIR</b><span>Study weak topics</span></div>
+              <i>→</i>
+              <div><b>RETEST</b><span>Check improvement</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC MOCKS</span>
+                <h2>Turn preparation into measurable performance.</h2>
+                <p>
+                  Start with the free mock, analyse your result and use the
+                  weak-topic diagnosis to plan the next revision cycle.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2>13. Daily Study Timetable</h2>
+
+            <p>
+              There is no magic number of hours. A sustainable schedule that is
+              followed for months is more valuable than an extreme schedule that
+              collapses after a week.
+            </p>
+
+            <div class="daily">
+              <div><span>SESSION 1</span><b>Core subject</b><p>Deep study of a difficult subject.</p></div>
+              <div><span>SESSION 2</span><b>Second subject</b><p>Another syllabus area or revision.</p></div>
+              <div><span>SESSION 3</span><b>PYQ / MCQ</b><p>Actual questions and error analysis.</p></div>
+              <div><span>SESSION 4</span><b>Current affairs</b><p>Filtered national + Jharkhand updates.</p></div>
+              <div><span>SESSION 5</span><b>Revision</b><p>Active recall of what was studied earlier.</p></div>
+            </div>
+
+            <h3>Example 8-Hour Study Day</h3>
+
+            <div class="hours">
+              <div><b>2.5 h</b><span>Primary subject</span></div>
+              <div><b>2 h</b><span>Secondary subject</span></div>
+              <div><b>1.5 h</b><span>PYQ / MCQ</span></div>
+              <div><b>1 h</b><span>Current affairs</span></div>
+              <div><b>1 h</b><span>Revision</span></div>
+            </div>
+
+            <p>
+              If you have fewer available hours, preserve the structure and
+              reduce each block proportionally. Do not eliminate revision and
+              PYQ practice simply to increase first-reading hours.
+            </p>
+
+            <h2 id="timetable">14. Weekly Study Structure</h2>
+
+            <div class="week">
+              <div><b>MON</b><span>History + PYQ</span></div>
+              <div><b>TUE</b><span>Geography + PYQ</span></div>
+              <div><b>WED</b><span>Polity + PYQ</span></div>
+              <div><b>THU</b><span>Economy + PYQ</span></div>
+              <div><b>FRI</b><span>Science + Environment</span></div>
+              <div><b>SAT</b><span>Jharkhand + Current Affairs</span></div>
+              <div><b>SUN</b><span>Revision + Full/Sectional Test</span></div>
+            </div>
+
+            <p>
+              This is a template, not a compulsory timetable. Reallocate days
+              according to your weak subjects and the current examination
+              schedule.
+            </p>
+
+            <h2 id="sixmonth">15. Six-Month JPSC Prelims Roadmap</h2>
+
+            <div class="months">
+              <div>
+                <span>MONTH 1</span>
+                <strong>Foundation</strong>
+                <p>Pattern, syllabus, core books and initial PYQ exposure.</p>
+              </div>
+              <div>
+                <span>MONTH 2</span>
+                <strong>Static GS I</strong>
+                <p>History, geography and polity with topic-wise MCQs.</p>
+              </div>
+              <div>
+                <span>MONTH 3</span>
+                <strong>Economy + Science</strong>
+                <p>Build concepts and continue PYQ analysis.</p>
+              </div>
+              <div>
+                <span>MONTH 4</span>
+                <strong>Jharkhand + Environment</strong>
+                <p>Dedicated state preparation and current-affairs integration.</p>
+              </div>
+              <div>
+                <span>MONTH 5</span>
+                <strong>Revision + Tests</strong>
+                <p>Increase full-length tests and repair recurring weaknesses.</p>
+              </div>
+              <div>
+                <span>MONTH 6</span>
+                <strong>Exam mode</strong>
+                <p>Timed papers, rapid revision, error log and high-priority topics.</p>
+              </div>
+            </div>
+
+            <h2>16. Three-Month Intensive Version</h2>
+
+            <div class="three-month">
+              <div><b>MONTH 1</b><span>Complete first-pass coverage + daily MCQs + PYQs.</span></div>
+              <div><b>MONTH 2</b><span>Finish remaining syllabus + revision + sectional tests.</span></div>
+              <div><b>MONTH 3</b><span>Full mocks + error repair + repeated revision.</span></div>
+            </div>
+
+            <h2>17. What to Do if You Are Starting Late</h2>
+
+            <p>
+              Do not attempt to read every source from page one. Start with the
+              official syllabus, use PYQs to identify the highest-value areas,
+              build core coverage, and introduce tests quickly.
+            </p>
+
+            <div class="late">
+              <div><b>DAY 1</b><span>Download current pattern + syllabus.</span></div>
+              <div><b>DAY 2</b><span>Map previous questions.</span></div>
+              <div><b>DAY 3</b><span>Identify weak/high-value topics.</span></div>
+              <div><b>DAY 4+</b><span>Study → PYQ → revise → test continuously.</span></div>
+            </div>
+
+            <h2>18. What to Do if Your Mock Score Is Low</h2>
+
+            <p>
+              A low score is a diagnostic signal, not a verdict. First determine
+              which component is responsible.
+            </p>
+
+            <div class="score">
+              <div><b>LOW KNOWLEDGE</b><span>Increase targeted study.</span></div>
+              <div><b>LOW ACCURACY</b><span>Improve concept clarity and option analysis.</span></div>
+              <div><b>LOW SPEED</b><span>Practise timed MCQs.</span></div>
+              <div><b>LOW RETENTION</b><span>Strengthen revision frequency.</span></div>
+              <div><b>CARELESS ERRORS</b><span>Improve reading and marking discipline.</span></div>
+            </div>
+
+            <h2 id="mistakes">19. Biggest JPSC Preparation Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Starting with books instead of the official syllabus.</span></div>
+              <div><b>02</b><span>Collecting too many sources and finishing none.</span></div>
+              <div><b>03</b><span>Ignoring PYQs until the final month.</span></div>
+              <div><b>04</b><span>Treating Jharkhand GK as an optional extra.</span></div>
+              <div><b>05</b><span>Reading current affairs without filtering or revision.</span></div>
+              <div><b>06</b><span>Taking mocks without analysing mistakes.</span></div>
+              <div><b>07</b><span>Revising only before the examination.</span></div>
+              <div><b>08</b><span>Using an old exam pattern without checking the current notice.</span></div>
+              <div><b>09</b><span>Trying to predict exact questions from PYQ repetition.</span></div>
+              <div><b>10</b><span>Measuring preparation by study hours instead of retained knowledge and test performance.</span></div>
+            </div>
+
+            <h2>20. Your JPSC Preparation Dashboard</h2>
+
+            <div class="dashboard">
+              <div><b>SYLLABUS</b><span>% topics covered</span></div>
+              <div><b>PYQ</b><span>% questions analysed</span></div>
+              <div><b>REVISION</b><span>Topics revised</span></div>
+              <div><b>MOCKS</b><span>Tests completed</span></div>
+              <div><b>ACCURACY</b><span>Correct-answer rate</span></div>
+              <div><b>ERRORS</b><span>Open weaknesses</span></div>
+            </div>
+
+            <p>
+              Review this dashboard once a week. If the number of hours is
+              increasing but accuracy and revision are not improving, change
+              the method rather than simply adding more study time.
+            </p>
+
+            <h2>21. The Best Preparation Loop</h2>
+
+            <div class="loop">
+              <div><b>LEARN</b><span>Understand the topic.</span></div>
+              <i>→</i>
+              <div><b>SOLVE</b><span>Attempt PYQs/MCQs.</span></div>
+              <i>→</i>
+              <div><b>ANALYSE</b><span>Find the reason for errors.</span></div>
+              <i>→</i>
+              <div><b>REVISE</b><span>Repair the concept.</span></div>
+              <i>→</i>
+              <div><b>TEST</b><span>Apply under time pressure.</span></div>
+              <i>→</i>
+              <div><b>REPEAT</b><span>Close remaining gaps.</span></div>
+            </div>
+
+            <h2>22. Final Strategy in One Page</h2>
+
+            <div class="final">
+              <div><b>SYLLABUS</b><span>Know what to study.</span></div>
+              <div><b>PYQs</b><span>Know how JPSC asks.</span></div>
+              <div><b>NOTES</b><span>Condense what matters.</span></div>
+              <div><b>REVISION</b><span>Make it retrievable.</span></div>
+              <div><b>MOCKS</b><span>Measure performance.</span></div>
+            </div>
+
+            <p>
+              The most reliable JPSC strategy is not a secret booklist or a
+              perfect timetable. It is a feedback loop:
+              <strong>study → solve → analyse → revise → test → repair</strong>.
+              Keep that loop running for months and your preparation becomes
+              progressively more targeted.
+            </p>
+
+            <div class="conversion final-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Study the syllabus. Decode the PYQs. Test the preparation.</h2>
+                <p>
+                  Continue with the Habitat IAS JPSC PYQ resource and use the
+                  free mock as a diagnostic step.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Free JPSC Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Don't study harder without a system.</h2>
+          <p>
+            Build the syllabus map, decode PYQs, revise deliberately and use
+            mocks to find the next weakness.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1050px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+  .warning, .warning-box, .official-box {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+  .warning strong, .warning-box strong, .official-box strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .stats-grid b { display: block; color: var(--blue); font-size: 28px; }
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+  article h3 {
+    margin-top: 38px;
+    color: var(--dark);
+    font-size: 25px;
+  }
+  article p { color: #4c617e; }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 20px;
+    align-items: center;
+    margin: 28px 0;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #526987;
+  }
+  .formula strong { color: var(--dark); }
+
+  .roadmap {
+    display: flex;
+    align-items: stretch;
+    gap: 9px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+  .roadmap > div {
+    min-width: 125px;
+    flex: 1;
+    padding: 19px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+  .roadmap b {
+    display: inline-flex;
+    width: 30px;
+    height: 30px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .roadmap strong {
+    display: block;
+    margin-top: 8px;
+    color: var(--dark);
+  }
+  .roadmap span {
+    display: block;
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+  .roadmap i {
+    align-self: center;
+    color: #91a5c5;
+    font-style: normal;
+  }
+
+  .status, .subjects, .priority, .jharkhand, .current, .pyq, .books,
+  .revision, .errors, .daily, .months, .three-month, .late, .score, .dashboard, .final {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .status { grid-template-columns: repeat(6,1fr); }
+  .status > div, .subjects > div, .priority > div, .jharkhand > div,
+  .current > div, .pyq > div, .books > div, .revision > div, .errors > div,
+  .daily > div, .months > div, .three-month > div, .late > div, .score > div,
+  .dashboard > div, .final > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .status b, .priority b, .current b, .pyq b, .books b, .revision b,
+  .errors b, .months strong, .three-month b, .late b, .score b, .dashboard b,
+  .final b {
+    display: block;
+    color: var(--dark);
+    font-size: 12px;
+  }
+  .status span, .priority span, .current span, .pyq span, .books span,
+  .revision span, .errors span, .daily p, .months p, .three-month span,
+  .late span, .score span, .dashboard span, .final span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .subjects { grid-template-columns: repeat(4,1fr); }
+  .subjects span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+  .subjects strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+  }
+  .subjects p {
+    margin-bottom: 0;
+    font-size: 13px;
+  }
+
+  .priority { grid-template-columns: repeat(3,1fr); }
+  .priority > div:first-child { background: #eef8f2; }
+  .priority > div:nth-child(2) { background: #f8faff; }
+  .priority > div:last-child { background: #fffaf0; }
+
+  .jharkhand { grid-template-columns: repeat(3,1fr); }
+  .current { grid-template-columns: repeat(5,1fr); }
+  .pyq { grid-template-columns: repeat(6,1fr); }
+  .books { grid-template-columns: repeat(5,1fr); }
+  .revision { grid-template-columns: repeat(4,1fr); }
+  .errors { grid-template-columns: repeat(3,1fr); }
+  .daily { grid-template-columns: repeat(5,1fr); }
+  .months { grid-template-columns: repeat(3,1fr); }
+  .three-month { grid-template-columns: repeat(3,1fr); }
+  .late { grid-template-columns: repeat(4,1fr); }
+  .score { grid-template-columns: repeat(5,1fr); }
+  .dashboard { grid-template-columns: repeat(3,1fr); }
+  .final { grid-template-columns: repeat(5,1fr); }
+
+  .daily span, .months span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+  .daily b, .months strong {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+  }
+
+  .mock-cycle, .loop {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+  .mock-cycle > div, .loop > div {
+    min-width: 135px;
+    flex: 1;
+    padding: 19px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+  .mock-cycle b, .loop b {
+    display: block;
+    color: var(--blue);
+    font-size: 11px;
+  }
+  .mock-cycle span, .loop span {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 800;
+  }
+  .mock-cycle i, .loop i {
+    color: #91a5c5;
+    font-style: normal;
+  }
+
+  .hours, .week {
+    display: grid;
+    gap: 10px;
+    margin: 25px 0;
+  }
+  .hours { grid-template-columns: repeat(5,1fr); }
+  .hours > div, .week > div {
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    background: #f8faff;
+  }
+  .hours b {
+    display: block;
+    color: var(--blue);
+    font-size: 22px;
+  }
+  .hours span {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .week {
+    grid-template-columns: repeat(7,1fr);
+  }
+  .week b {
+    display: block;
+    color: var(--blue);
+    font-size: 11px;
+  }
+  .week span {
+    display: block;
+    margin-top: 7px;
+    color: var(--dark);
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .faq { display: grid; gap: 9px; }
+  details { border: 1px solid var(--border); border-radius: 12px; }
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .subjects,
+    .status,
+    .priority,
+    .jharkhand,
+    .current,
+    .pyq,
+    .books,
+    .revision,
+    .errors,
+    .daily,
+    .months,
+    .three-month,
+    .late,
+    .score,
+    .dashboard,
+    .final,
+    .hours,
+    .week {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .subjects,
+    .status,
+    .priority,
+    .jharkhand,
+    .current,
+    .pyq,
+    .books,
+    .revision,
+    .errors,
+    .daily,
+    .months,
+    .three-month,
+    .late,
+    .score,
+    .dashboard,
+    .final,
+    .hours,
+    .week {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons, .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .btn { width: 100%; }
+    .cta-buttons { flex-direction: column; }
+    .official { flex-direction: column; }
+  }
+</style>

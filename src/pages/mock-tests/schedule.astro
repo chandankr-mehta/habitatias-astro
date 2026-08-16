@@ -1,0 +1,1011 @@
+---
+import Header from "../../components/Header.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>JPSC Mock Test Schedule | Habitat IAS</title>
+    <meta
+      name="description"
+      content="JPSC Prelims 20-Test Series schedule by Habitat IAS. View test dates, subjects, topics, marks, duration and preparation phases."
+    />
+
+    <style>
+      :global(*) {
+        box-sizing: border-box;
+      }
+
+      :global(body) {
+        margin: 0;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: #092b63;
+        background: #f4f8ff;
+      }
+
+      .page {
+        min-height: 100vh;
+      }
+
+      /* HERO */
+      .hero {
+        background: linear-gradient(135deg, #06265c 0%, #0756a8 55%, #1598c8 100%);
+        color: white;
+        padding: 72px 24px 64px;
+      }
+
+      .hero-inner {
+        max-width: 1250px;
+        margin: 0 auto;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        padding: 9px 16px;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        margin-bottom: 22px;
+      }
+
+      .hero h1 {
+        margin: 0;
+        max-width: 900px;
+        font-size: clamp(42px, 6vw, 76px);
+        line-height: 0.98;
+        letter-spacing: -3px;
+        font-weight: 900;
+      }
+
+      .hero h1 span {
+        color: #ffd83d;
+      }
+
+      .hero p {
+        max-width: 850px;
+        margin: 25px 0 0;
+        font-size: 19px;
+        line-height: 1.7;
+        color: #dcecff;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-top: 42px;
+        max-width: 1000px;
+      }
+
+      .hero-stat {
+        padding: 20px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.11);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+      }
+
+      .hero-stat strong {
+        display: block;
+        font-size: 28px;
+        color: white;
+        margin-bottom: 5px;
+      }
+
+      .hero-stat small {
+        color: #d5e8ff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      /* MAIN */
+      .container {
+        max-width: 1250px;
+        margin: 0 auto;
+        padding: 60px 24px 90px;
+      }
+
+      .section-heading {
+        margin-bottom: 30px;
+      }
+
+      .section-label {
+        color: #1260d6;
+        font-size: 13px;
+        font-weight: 900;
+        letter-spacing: 1.7px;
+        text-transform: uppercase;
+      }
+
+      .section-heading h2 {
+        margin: 10px 0 10px;
+        font-size: clamp(32px, 4vw, 50px);
+        line-height: 1.05;
+        letter-spacing: -1.8px;
+        color: #092b63;
+      }
+
+      .section-heading p {
+        margin: 0;
+        max-width: 780px;
+        color: #58739b;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      /* PHASE CARDS */
+      .phases {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 16px;
+        margin-bottom: 55px;
+      }
+
+      .phase {
+        background: white;
+        border: 1px solid #d9e5f5;
+        border-radius: 18px;
+        padding: 22px;
+        box-shadow: 0 10px 30px rgba(22, 65, 120, 0.06);
+      }
+
+      .phase-number {
+        font-size: 13px;
+        font-weight: 900;
+        color: #1260d6;
+        margin-bottom: 18px;
+      }
+
+      .phase h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+
+      .phase p {
+        margin: 0;
+        color: #617b9f;
+        line-height: 1.5;
+        font-size: 14px;
+      }
+
+      /* TABLE */
+      .schedule-wrapper {
+        background: white;
+        border: 1px solid #d7e4f4;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 15px 45px rgba(18, 62, 115, 0.08);
+      }
+
+      .table-top {
+        padding: 25px 28px;
+        background: #f8fbff;
+        border-bottom: 1px solid #dce7f5;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+
+      .table-top h3 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .table-top p {
+        margin: 5px 0 0;
+        color: #66809f;
+        font-size: 14px;
+      }
+
+      .badge {
+        flex-shrink: 0;
+        background: #e7f1ff;
+        color: #0758c9;
+        padding: 10px 15px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        min-width: 1050px;
+        border-collapse: collapse;
+      }
+
+      th {
+        background: #092b63;
+        color: white;
+        text-align: left;
+        padding: 16px 14px;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+
+      td {
+        padding: 18px 14px;
+        border-bottom: 1px solid #e6edf6;
+        font-size: 14px;
+        vertical-align: top;
+      }
+
+      tbody tr:hover {
+        background: #f7fbff;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      .test-number {
+        font-size: 19px;
+        font-weight: 900;
+        color: #075bd1;
+      }
+
+      .test-title {
+        font-weight: 800;
+        color: #092b63;
+        line-height: 1.4;
+      }
+
+      .topic {
+        max-width: 300px;
+        color: #536f94;
+        line-height: 1.5;
+      }
+
+      .phase-tag {
+        display: inline-block;
+        padding: 6px 9px;
+        border-radius: 7px;
+        font-size: 11px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .gs {
+        background: #e5f2ff;
+        color: #075dc9;
+      }
+
+      .jharkhand {
+        background: #fff0df;
+        color: #b85a00;
+      }
+
+      .paper1 {
+        background: #eeeaff;
+        color: #6242b5;
+      }
+
+      .paper2 {
+        background: #ffe9ef;
+        color: #b72f57;
+      }
+
+      .date {
+        font-weight: 800;
+        color: #193f70;
+        white-space: nowrap;
+      }
+
+      .status {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eef8f1;
+        color: #267a45;
+        font-size: 11px;
+        font-weight: 900;
+        white-space: nowrap;
+      }
+
+      .status.upcoming {
+        background: #fff6df;
+        color: #a76a00;
+      }
+
+      .status.planned {
+        background: #eef2f7;
+        color: #62758e;
+      }
+
+      /* INFO BOX */
+      .info-grid {
+        display: grid;
+        grid-template-columns: 1.3fr 1fr;
+        gap: 22px;
+        margin-top: 35px;
+      }
+
+      .info-card {
+        padding: 28px;
+        border-radius: 20px;
+        background: white;
+        border: 1px solid #d9e5f5;
+      }
+
+      .info-card.dark {
+        background: #092b63;
+        color: white;
+        border-color: #092b63;
+      }
+
+      .info-card h3 {
+        margin: 0 0 12px;
+        font-size: 22px;
+      }
+
+      .info-card p {
+        margin: 0;
+        line-height: 1.7;
+        color: #607a9d;
+      }
+
+      .info-card.dark p {
+        color: #d6e6fa;
+      }
+
+      .info-list {
+        margin: 17px 0 0;
+        padding-left: 20px;
+      }
+
+      .info-list li {
+        margin: 9px 0;
+        line-height: 1.5;
+      }
+
+      /* CTA */
+      .cta {
+        margin-top: 55px;
+        padding: 45px;
+        border-radius: 25px;
+        background: linear-gradient(135deg, #0a3270, #1269d5);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .cta h2 {
+        margin: 0 0 10px;
+        font-size: 34px;
+      }
+
+      .cta p {
+        margin: 0;
+        color: #dbeaff;
+        line-height: 1.6;
+      }
+
+      .cta a {
+        display: inline-block;
+        flex-shrink: 0;
+        background: #ffd43b;
+        color: #092b63;
+        text-decoration: none;
+        padding: 15px 23px;
+        border-radius: 10px;
+        font-weight: 900;
+      }
+
+      /* MOBILE */
+      @media (max-width: 900px) {
+        .hero-stats,
+        .phases {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .info-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .cta {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .hero {
+          padding: 48px 18px;
+        }
+
+        .container {
+          padding: 45px 16px 70px;
+        }
+
+        .hero-stats,
+        .phases {
+          grid-template-columns: 1fr;
+        }
+
+        .hero h1 {
+          letter-spacing: -2px;
+        }
+
+        .table-top {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .cta {
+          padding: 30px 24px;
+        }
+
+        .cta h2 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <Header />
+
+    <main class="page">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="eyebrow">
+            HABITAT IAS • JPSC PRELIMS
+          </div>
+
+          <h1>
+            JPSC Mock Test
+            <span>Schedule.</span>
+          </h1>
+
+          <p>
+            Follow the complete 20-test preparation roadmap. Track every test,
+            its examination phase, scheduled date, subject coverage, marks and
+            preparation focus before attempting the Core Test Series.
+          </p>
+
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <strong>20</strong>
+              <small>CORE TESTS</small>
+            </div>
+
+            <div class="hero-stat">
+              <strong>2,000+</strong>
+              <small>QUESTIONS</small>
+            </div>
+
+            <div class="hero-stat">
+              <strong>200</strong>
+              <small>MARKS / TEST</small>
+            </div>
+
+            <div class="hero-stat">
+              <strong>120</strong>
+              <small>MINUTES / TEST</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN CONTENT -->
+      <section class="container">
+
+        <div class="section-heading">
+          <div class="section-label">
+            YOUR PREPARATION ROADMAP
+          </div>
+
+          <h2>
+            20 Tests. One structured plan.
+          </h2>
+
+          <p>
+            The Core 20 Test Series is divided into four stages: General
+            Studies sectional preparation, Jharkhand-specific preparation,
+            Paper-I full-length simulation and Paper-II full-length
+            simulation.
+          </p>
+        </div>
+
+        <!-- PHASES -->
+        <div class="phases">
+
+          <div class="phase">
+            <div class="phase-number">01</div>
+            <h3>GS Sectionals</h3>
+            <p>
+              Tests 01–05. Build command over the major General Studies areas.
+            </p>
+          </div>
+
+          <div class="phase">
+            <div class="phase-number">02</div>
+            <h3>Jharkhand Sectionals</h3>
+            <p>
+              Tests 06–10. Focus on Jharkhand-specific examination content.
+            </p>
+          </div>
+
+          <div class="phase">
+            <div class="phase-number">03</div>
+            <h3>Paper-I Full Length</h3>
+            <p>
+              Tests 11–15. Simulate the complete JPSC Paper-I examination.
+            </p>
+          </div>
+
+          <div class="phase">
+            <div class="phase-number">04</div>
+            <h3>Paper-II Full Length</h3>
+            <p>
+              Tests 16–20. Full-length Jharkhand Special Paper-II simulation.
+            </p>
+          </div>
+
+        </div>
+
+        <!-- SCHEDULE -->
+        <div class="schedule-wrapper">
+
+          <div class="table-top">
+            <div>
+              <h3>Core 20 Test Schedule</h3>
+              <p>
+                Test-wise schedule, coverage and examination structure.
+              </p>
+            </div>
+
+            <div class="badge">
+              20 CORE TESTS
+            </div>
+          </div>
+
+          <div class="table-scroll">
+
+            <table>
+              <thead>
+                <tr>
+                  <th>Test</th>
+                  <th>Phase</th>
+                  <th>Scheduled Date</th>
+                  <th>Test / Focus</th>
+                  <th>Topic Coverage</th>
+                  <th>Questions</th>
+                  <th>Marks</th>
+                  <th>Duration</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+
+                <!-- GS SECTIONALS -->
+
+                <tr>
+                  <td><div class="test-number">01</div></td>
+                  <td><span class="phase-tag gs">GS SECTIONAL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Indian History</div></td>
+                  <td>
+                    <div class="topic">
+                      Ancient India, Medieval India and Modern India.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">02</div></td>
+                  <td><span class="phase-tag gs">GS SECTIONAL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Indian Geography</div></td>
+                  <td>
+                    <div class="topic">
+                      Physical geography, Indian geography, resources,
+                      agriculture and mapping-based concepts.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">03</div></td>
+                  <td><span class="phase-tag gs">GS SECTIONAL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Polity, Governance & Economy</div></td>
+                  <td>
+                    <div class="topic">
+                      Indian Constitution, polity, governance, institutions,
+                      Indian economy and development.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">04</div></td>
+                  <td><span class="phase-tag gs">GS SECTIONAL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Science, Technology & Agriculture</div></td>
+                  <td>
+                    <div class="topic">
+                      General science, science & technology, agriculture and
+                      application-oriented questions.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">05</div></td>
+                  <td><span class="phase-tag gs">GS SECTIONAL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Environment & Current Affairs</div></td>
+                  <td>
+                    <div class="topic">
+                      Environment, biodiversity, disaster-related themes,
+                      sports, awards, international organisations and current
+                      affairs.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <!-- JHARKHAND -->
+
+                <tr>
+                  <td><div class="test-number">06</div></td>
+                  <td><span class="phase-tag jharkhand">JHARKHAND</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand History</div></td>
+                  <td>
+                    <div class="topic">
+                      History of Jharkhand, tribes, movements and important
+                      historical developments.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">07</div></td>
+                  <td><span class="phase-tag jharkhand">JHARKHAND</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Geography</div></td>
+                  <td>
+                    <div class="topic">
+                      Physical geography, rivers, climate, soils, minerals,
+                      forests and regional geography.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">08</div></td>
+                  <td><span class="phase-tag jharkhand">JHARKHAND</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Economy & Development</div></td>
+                  <td>
+                    <div class="topic">
+                      Industries, agriculture, development, policies,
+                      schemes and economic characteristics of Jharkhand.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">09</div></td>
+                  <td><span class="phase-tag jharkhand">JHARKHAND</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Culture & Society</div></td>
+                  <td>
+                    <div class="topic">
+                      Tribes, languages, literature, folk culture, festivals,
+                      personalities, institutions and social development.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">10</div></td>
+                  <td><span class="phase-tag jharkhand">JHARKHAND</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Integrated Revision</div></td>
+                  <td>
+                    <div class="topic">
+                      Integrated Jharkhand Special revision covering history,
+                      geography, polity, economy, culture and current affairs.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <!-- PAPER I FULL LENGTH -->
+
+                <tr>
+                  <td><div class="test-number">11</div></td>
+                  <td><span class="phase-tag paper1">PAPER-I FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Full Length Test 01</div></td>
+                  <td>
+                    <div class="topic">
+                      Complete General Studies Paper-I simulation.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status upcoming">Upcoming</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">12</div></td>
+                  <td><span class="phase-tag paper1">PAPER-I FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Full Length Test 02</div></td>
+                  <td>
+                    <div class="topic">
+                      Complete General Studies Paper-I simulation with
+                      integrated current affairs.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">13</div></td>
+                  <td><span class="phase-tag paper1">PAPER-I FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Full Length Test 03</div></td>
+                  <td>
+                    <div class="topic">
+                      Full Paper-I examination simulation with balanced
+                      subject distribution.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">14</div></td>
+                  <td><span class="phase-tag paper1">PAPER-I FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Full Length Test 04</div></td>
+                  <td>
+                    <div class="topic">
+                      Full Paper-I simulation with higher-level analytical and
+                      elimination-based questions.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">15</div></td>
+                  <td><span class="phase-tag paper1">PAPER-I FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Full Length Test 05</div></td>
+                  <td>
+                    <div class="topic">
+                      Complete Paper-I final revision and examination
+                      simulation.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <!-- PAPER II FULL LENGTH -->
+
+                <tr>
+                  <td><div class="test-number">16</div></td>
+                  <td><span class="phase-tag paper2">PAPER-II FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Special Full Test 01</div></td>
+                  <td>
+                    <div class="topic">
+                      Complete Jharkhand Special Paper-II simulation.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">17</div></td>
+                  <td><span class="phase-tag paper2">PAPER-II FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Special Full Test 02</div></td>
+                  <td>
+                    <div class="topic">
+                      Full Paper-II simulation covering the complete
+                      Jharkhand-specific syllabus.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">18</div></td>
+                  <td><span class="phase-tag paper2">PAPER-II FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Special Full Test 03</div></td>
+                  <td>
+                    <div class="topic">
+                      Integrated Paper-II examination simulation with
+                      analytical questions.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">19</div></td>
+                  <td><span class="phase-tag paper2">PAPER-II FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Special Full Test 04</div></td>
+                  <td>
+                    <div class="topic">
+                      Advanced Paper-II revision and complete examination
+                      simulation.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+                <tr>
+                  <td><div class="test-number">20</div></td>
+                  <td><span class="phase-tag paper2">PAPER-II FULL</span></td>
+                  <td><div class="date">To be announced</div></td>
+                  <td><div class="test-title">Jharkhand Special Full Test 05</div></td>
+                  <td>
+                    <div class="topic">
+                      Final Paper-II examination simulation and complete
+                      Jharkhand Special revision.
+                    </div>
+                  </td>
+                  <td>100</td>
+                  <td>200</td>
+                  <td>120 min</td>
+                  <td><span class="status planned">Planned</span></td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+        </div>
+
+        <!-- INFORMATION -->
+        <div class="info-grid">
+
+          <div class="info-card">
+            <h3>How to use this schedule</h3>
+
+            <p>
+              The schedule is designed to help aspirants plan their
+              preparation before attempting each Core Test.
+            </p>
+
+            <ul class="info-list">
+              <li>Complete the relevant syllabus before attempting the test.</li>
+              <li>Attempt each test under the prescribed time limit.</li>
+              <li>Analyse incorrect and unanswered questions after submission.</li>
+              <li>Revise weak areas before moving to the next test.</li>
+              <li>Use the full-length tests as examination simulations.</li>
+            </ul>
+          </div>
+
+          <div class="info-card dark">
+            <h3>Core Test Series</h3>
+
+            <p>
+              The 20 Core Tests are separate from the free open mocks.
+              Access to the Core Test Series will require purchase.
+            </p>
+
+            <ul class="info-list">
+              <li>5 GS Sectional Tests</li>
+              <li>5 Jharkhand Sectional Tests</li>
+              <li>5 Paper-I Full-Length Tests</li>
+              <li>5 Paper-II Full-Length Tests</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+          <div>
+            <h2>Ready to practise?</h2>
+            <p>
+              Explore the available JPSC mock tests and begin your
+              examination-oriented preparation.
+            </p>
+          </div>
+
+          <a href="/mock-tests">
+            Explore Mock Tests →
+          </a>
+        </div>
+
+      </section>
+
+    </main>
+  </body>
+</html>

@@ -1,0 +1,1452 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Prelims Exam Pattern 2026: Papers, Marks, Duration, Questions & Qualifying Rules";
+const description =
+  "Complete JPSC Prelims exam pattern guide covering the two-paper structure, marks, questions, duration, screening role, marking rules and how to prepare using PYQs and mocks.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-prelims-exam-pattern-2026/";
+
+const faqs = [
+  {
+    q: "How many papers are there in JPSC Prelims?",
+    a: "The JPSC Combined Civil Services Preliminary Examination has two compulsory General Studies papers under the current published framework: General Studies Paper-I and General Studies Paper-II.",
+  },
+  {
+    q: "How many marks is JPSC Prelims?",
+    a: "The current published JPSC framework specifies two Preliminary papers of 200 marks each, for 400 marks in total.",
+  },
+  {
+    q: "How many questions are there in JPSC Prelims?",
+    a: "The published scheme specifies 100 objective-type questions in each Preliminary paper, with each question carrying 2 marks.",
+  },
+  {
+    q: "How much time is given for each JPSC Prelims paper?",
+    a: "The published scheme provides 2 hours for each Preliminary paper.",
+  },
+  {
+    q: "Do JPSC Prelims marks count in final merit?",
+    a: "The 2021 rules describe the Preliminary Examination as a screening test and state that Preliminary marks of candidates qualified for the Main Examination are not counted for final merit. Candidates should verify the rules applicable to their current recruitment.",
+  },
+  {
+    q: "Is there negative marking in JPSC Prelims?",
+    a: "The 2021 rules state that there is no negative marking for an incorrect answer and no penalty for leaving a question blank, while selecting more than one answer is treated as wrong. Always check the current advertisement and rules before the examination.",
+  },
+  {
+    q: "What is the best way to prepare according to the JPSC exam pattern?",
+    a: "Use the official syllabus as the master list, analyse previous-year questions topic-wise, practise full papers under the applicable time limit, maintain an error log and use mocks to improve accuracy and speed.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC Prelims exam pattern, JPSC exam pattern 2026, JPSC Prelims pattern, JPSC marks, JPSC Prelims questions, JPSC paper pattern, JPSC General Studies paper, JPSC negative marking"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Prelims Exam Pattern</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC PRELIMS • EXAM PATTERN</div>
+
+          <h1>
+            JPSC Prelims Exam Pattern:
+            <span>Know the Paper Before You Prepare.</span>
+          </h1>
+
+          <p class="hero-text">
+            A clear guide to the JPSC Combined Civil Services Preliminary
+            Examination structure—papers, marks, questions, duration, screening
+            role, marking rules and the preparation strategy that follows from
+            the pattern.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Prelims Strategy</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#pattern">See Pattern ↓</a>
+            <a
+              class="btn outline"
+              href="https://www.jpsc.gov.in/Syllabus.php"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Official JPSC Syllabus →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Current-cycle note:</strong>
+            JPSC's official website currently lists the Combined Civil Services
+            Examination-2025 under Advertisement No. 01/2026 and separately
+            publishes the Combined Civil Services syllabus. This article uses
+            the currently published framework and historical official rules
+            where stated. Always check the latest advertisement, amendment and
+            notice before the examination. citeturn0search6turn0search9
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container stats-grid">
+          <div><b>02</b><span>Prelims papers</span><p>Two compulsory General Studies papers.</p></div>
+          <div><b>400</b><span>Total marks</span><p>200 marks per paper under the published scheme.</p></div>
+          <div><b>100</b><span>Questions / paper</span><p>Objective-type questions in each paper.</p></div>
+          <div><b>2 HRS</b><span>Per paper</span><p>Time specified for each Preliminary paper.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#pattern">Exam pattern</a>
+            <a href="#table">Pattern at a glance</a>
+            <a href="#paper1">Paper I</a>
+            <a href="#paper2">Paper II</a>
+            <a href="#marking">Marking rules</a>
+            <a href="#screening">Screening & merit</a>
+            <a href="#syllabus">Syllabus connection</a>
+            <a href="#time">Time management</a>
+            <a href="#pyq">PYQ strategy</a>
+            <a href="#mock">Mock strategy</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#plan">Preparation plan</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              Before collecting books, current-affairs PDFs and test series,
+              understand the <strong>architecture of the examination</strong>.
+              Your study plan should be designed around the actual paper
+              structure, not around the number of books you can finish.
+            </p>
+
+            <h2 id="pattern">1. JPSC Prelims Exam Pattern at a Glance</h2>
+
+            <p>
+              JPSC's published Combined Civil Services framework specifies two
+              compulsory Preliminary papers: <strong>General Studies
+              Paper-I</strong> and <strong>General Studies Paper-II</strong>.
+              Each paper carries 200 marks and has a two-hour duration. The
+              published scheme specifies 100 objective-type questions in each
+              paper, with each question carrying 2 marks. citeturn0search12turn0search13
+            </p>
+
+            <div class="pattern-cards">
+              <div>
+                <span>PAPER I</span>
+                <strong>General Studies-I</strong>
+                <b>200 marks</b>
+                <small>100 objective questions • 2 hours</small>
+              </div>
+              <div>
+                <span>PAPER II</span>
+                <strong>General Studies-II</strong>
+                <b>200 marks</b>
+                <small>100 objective questions • 2 hours</small>
+              </div>
+              <div>
+                <span>TOTAL</span>
+                <strong>Prelims</strong>
+                <b>400 marks</b>
+                <small>Two compulsory papers</small>
+              </div>
+            </div>
+
+            <div class="formula">
+              <strong>100 questions × 2 marks = 200 marks per paper</strong>
+              <span>Two papers × 200 marks = 400 marks in the Preliminary Examination.</span>
+            </div>
+
+            <h2 id="table">2. JPSC Prelims Pattern — Quick Table</h2>
+
+            <div class="table">
+              <div class="head"><span>Parameter</span><span>Published framework</span></div>
+              <div><b>Stage</b><span>Preliminary Examination</span></div>
+              <div><b>Number of papers</b><span>2 compulsory papers</span></div>
+              <div><b>Paper I</b><span>General Studies Paper-I</span></div>
+              <div><b>Paper II</b><span>General Studies Paper-II</span></div>
+              <div><b>Marks per paper</b><span>200</span></div>
+              <div><b>Total Preliminary marks</b><span>400</span></div>
+              <div><b>Questions per paper</b><span>100 objective-type questions</span></div>
+              <div><b>Marks per question</b><span>2</span></div>
+              <div><b>Time per paper</b><span>2 hours</span></div>
+              <div><b>Purpose</b><span>Screening test</span></div>
+            </div>
+
+            <p class="source-note">
+              The table above follows the official JPSC 2024 advertisement and
+              the 2021 examination rules published by JPSC. citeturn0search12turn0search13
+            </p>
+
+            <h2 id="paper1">3. General Studies Paper-I</h2>
+
+            <p>
+              The 2024 JPSC advertisement gives Paper-I a 200-mark, two-hour
+              structure with 100 objective questions. It lists questions from
+              History of India, Geography of India, Indian Polity and
+              Governance, Economic and Sustainable Development, Science &
+              Technology, Jharkhand-specific general awareness, national &
+              international current events and General Knowledge. citeturn0search12
+            </p>
+
+            <div class="subject-map">
+              <div><b>HISTORY</b><span>15 questions in the published 2024 advertisement.</span></div>
+              <div><b>GEOGRAPHY</b><span>10 questions in the published 2024 advertisement.</span></div>
+              <div><b>POLITY</b><span>10 questions in the published 2024 advertisement.</span></div>
+              <div><b>ECONOMY</b><span>10 questions in the published 2024 advertisement.</span></div>
+              <div><b>SCIENCE & TECH</b><span>15 questions in the published 2024 advertisement.</span></div>
+              <div><b>JHARKHAND</b><span>10 questions in the published 2024 advertisement.</span></div>
+              <div><b>CURRENT EVENTS</b><span>15 questions in the published 2024 advertisement.</span></div>
+              <div><b>GENERAL KNOWLEDGE</b><span>15 questions in the published 2024 advertisement.</span></div>
+            </div>
+
+            <div class="rule">
+              <strong>Important:</strong>
+              These subject counts are from the published 2024 advertisement
+              and should not automatically be treated as a guaranteed fixed
+              distribution for every future cycle. The latest notification
+              controls.
+            </div>
+
+            <h2 id="paper2">4. General Studies Paper-II</h2>
+
+            <p>
+              Paper-II is also a compulsory 200-mark Preliminary paper under the
+              published framework. The 2021 official rules specify 100
+              objective-type questions of 2 marks each and a two-hour duration
+              for each Preliminary paper. citeturn0search13
+            </p>
+
+            <p>
+              For preparation, do not rely on an old coaching summary for the
+              exact Paper-II components. Open the current JPSC syllabus and
+              advertisement and build your Paper-II checklist directly from the
+              official document.
+            </p>
+
+            <div class="official-box">
+              <strong>Best practice:</strong>
+              Keep a saved copy of the latest official syllabus and notification
+              in your study folder. If JPSC publishes an amendment or
+              corrigendum, update your checklist immediately.
+            </div>
+
+            <h2 id="marking">5. JPSC Prelims Marking Rules</h2>
+
+            <p>
+              The official 2021 Combined Civil Services Examination Rules state
+              that there is <strong>no negative marking for incorrect
+              answers</strong>. They also state that if a candidate gives more
+              than one answer to a question, it is treated as wrong and no marks
+              are awarded; a blank question has no penalty. citeturn0search13
+            </p>
+
+            <div class="marking">
+              <div class="positive"><b>✓</b><strong>Correct answer</strong><span>Marks awarded according to the applicable paper scheme.</span></div>
+              <div><b>×</b><strong>Incorrect answer</strong><span>2021 rules: no negative marking.</span></div>
+              <div><b>—</b><strong>Blank</strong><span>2021 rules: no penalty.</span></div>
+              <div><b>!</b><strong>Multiple answers</strong><span>2021 rules: treated as wrong; no marks.</span></div>
+            </div>
+
+            <div class="warning-box">
+              <strong>Do not blindly carry forward an old rule.</strong>
+              Marking rules can be changed by the Commission. For the actual
+              examination, follow the current advertisement and applicable
+              rules.
+            </div>
+
+            <h2 id="screening">6. Is JPSC Prelims Used for Final Merit?</h2>
+
+            <p>
+              Under the 2021 rules, the Preliminary Examination is a
+              <strong>screening test</strong>. The rules state that Preliminary
+              marks of candidates who qualify for the Main Examination are not
+              counted for determining final merit. citeturn0search13
+            </p>
+
+            <div class="screening">
+              <div>
+                <span>PRELIMS</span>
+                <strong>Screening</strong>
+                <p>Clear the Preliminary stage according to the applicable qualification criteria.</p>
+              </div>
+              <b>→</b>
+              <div>
+                <span>MAINS</span>
+                <strong>Written Examination</strong>
+                <p>Prepare for the papers that contribute to the subsequent selection process.</p>
+              </div>
+              <b>→</b>
+              <div>
+                <span>INTERVIEW</span>
+                <strong>Final process</strong>
+                <p>Follow the current recruitment rules for the complete selection framework.</p>
+              </div>
+            </div>
+
+            <h2 id="syllabus">7. Exam Pattern + Syllabus = Your Real Study Blueprint</h2>
+
+            <p>
+              Exam pattern tells you <strong>how the test is delivered</strong>.
+              Syllabus tells you <strong>what can be tested</strong>. PYQs tell
+              you <strong>how JPSC has actually tested it</strong>.
+            </p>
+
+            <div class="three">
+              <div><b>EXAM PATTERN</b><span>Papers • marks • questions • time</span></div>
+              <div><b>SYLLABUS</b><span>Subjects • topics • boundaries</span></div>
+              <div><b>PYQs</b><span>Actual questions • trends • framing</span></div>
+            </div>
+
+            <div class="formula">
+              <strong>Pattern + Syllabus + PYQ = Practical JPSC Preparation Map</strong>
+            </div>
+
+            <h2>8. Why the Number of Questions Matters</h2>
+
+            <p>
+              When a paper contains 100 objective questions in two hours, you
+              have an average of about <strong>72 seconds per question</strong>
+              if the entire two-hour window is converted into question-solving
+              time. citeturn0search12
+            </p>
+
+            <div class="time">
+              <div><b>120 MINUTES</b><span>2 hours</span></div>
+              <div><b>100 QUESTIONS</b><span>Published paper size</span></div>
+              <div><b>≈72 SEC</b><span>Average time/question</span></div>
+              <div><b>DECISION</b><span>Not every question deserves equal time.</span></div>
+            </div>
+
+            <p>
+              This is only an average. In a real examination, some questions
+              will take 15–30 seconds while difficult questions may take much
+              longer. Therefore, your preparation should include question
+              selection, option elimination and time discipline.
+            </p>
+
+            <h2 id="time">9. Time Management Strategy From the Pattern</h2>
+
+            <div class="time-strategy">
+              <div>
+                <span>ROUND 1</span>
+                <strong>Direct questions</strong>
+                <p>Answer questions you can solve confidently and quickly.</p>
+              </div>
+              <div>
+                <span>ROUND 2</span>
+                <strong>Reasoning / elimination</strong>
+                <p>Return to questions where two or more options can be evaluated.</p>
+              </div>
+              <div>
+                <span>ROUND 3</span>
+                <strong>Difficult questions</strong>
+                <p>Use remaining time for questions requiring deeper thought.</p>
+              </div>
+              <div>
+                <span>FINAL</span>
+                <strong>Review</strong>
+                <p>Check marked questions and ensure no accidental multiple selection.</p>
+              </div>
+            </div>
+
+            <h2>10. Accuracy vs Attempt Strategy</h2>
+
+            <p>
+              Do not build your strategy around a generic “attempt X questions”
+              rule. Your ideal attempt count depends on the current marking
+              rules, question difficulty, your accuracy and the nature of the
+              paper.
+            </p>
+
+            <div class="decision">
+              <div><b>KNOW IT</b><span>Answer confidently.</span></div>
+              <div><b>CAN ELIMINATE</b><span>Use evidence and option logic.</span></div>
+              <div><b>UNCERTAIN</b><span>Apply the current marking rule before deciding.</span></div>
+              <div><b>NO BASIS</b><span>Do not turn every question into a random gamble.</span></div>
+            </div>
+
+            <h2>11. How the Pattern Changes Your Preparation</h2>
+
+            <div class="changes">
+              <div><b>Objective paper</b><span>Concept recall must become fast recognition.</span></div>
+              <div><b>Two papers</b><span>Prepare both instead of treating one as optional.</span></div>
+              <div><b>100 questions</b><span>Practise sustained MCQ decision-making.</span></div>
+              <div><b>Two hours</b><span>Train under timed conditions.</span></div>
+              <div><b>Broad GS</b><span>Build breadth without abandoning conceptual clarity.</span></div>
+              <div><b>Jharkhand focus</b><span>Maintain a dedicated state-specific revision system.</span></div>
+            </div>
+
+            <h2 id="pyq">12. Use PYQs to Understand the Pattern</h2>
+
+            <p>
+              A paper pattern becomes useful only when you see how questions
+              behave inside it. Solve previous papers under timed conditions,
+              then classify every question by subject, topic, difficulty and
+              error type.
+            </p>
+
+            <div class="pyq-cycle">
+              <div><b>1</b><span>Attempt</span></div>
+              <i>→</i>
+              <div><b>2</b><span>Check</span></div>
+              <i>→</i>
+              <div><b>3</b><span>Map topic</span></div>
+              <i>→</i>
+              <div><b>4</b><span>Analyse error</span></div>
+              <i>→</i>
+              <div><b>5</b><span>Revise</span></div>
+              <i>→</i>
+              <div><b>6</b><span>Retest</span></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC PYQ</span>
+                <h2>Understand the pattern through actual questions.</h2>
+                <p>
+                  Use topic-wise PYQs to see which parts of the syllabus turn
+                  into questions and how they are framed.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2 id="mock">13. Use Mock Tests to Reproduce the Pattern</h2>
+
+            <p>
+              After studying the syllabus and PYQs, full-length mocks should
+              reproduce the practical conditions of the applicable examination:
+              fixed time, objective questions, rapid decision-making and
+              post-test analysis.
+            </p>
+
+            <div class="mock">
+              <div><span>BEFORE</span><strong>Set timer</strong><p>Replicate the applicable paper duration.</p></div>
+              <div><span>DURING</span><strong>Attempt strategically</strong><p>Practise question selection and time control.</p></div>
+              <div><span>AFTER</span><strong>Analyse</strong><p>Find knowledge, concept and careless errors.</p></div>
+              <div><span>THEN</span><strong>Revise</strong><p>Repair the weak syllabus topics.</p></div>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS • JPSC MOCK TEST</span>
+                <h2>Now test your preparation.</h2>
+                <p>
+                  Attempt the free mock and use the result as a diagnostic,
+                  rather than treating the score as the end of preparation.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+                <a class="btn outline" href="/mock-tests/">View Mock Tests →</a>
+              </div>
+            </div>
+
+            <h2>14. JPSC Exam Pattern and Jharkhand-Specific Preparation</h2>
+
+            <p>
+              Paper-I includes a Jharkhand-specific component in the published
+              2024 advertisement. That means your preparation should not treat
+              Jharkhand as a last-minute appendix to general studies. citeturn0search12
+            </p>
+
+            <div class="jharkhand">
+              <div><b>HISTORY</b><span>Movements, resistance, regional developments and personalities.</span></div>
+              <div><b>GEOGRAPHY</b><span>Districts, rivers, plateau, forests, minerals and industries.</span></div>
+              <div><b>SOCIETY</b><span>Tribes, communities and social characteristics.</span></div>
+              <div><b>CULTURE</b><span>Languages, literature, festivals, art, music and heritage.</span></div>
+              <div><b>ECONOMY</b><span>Mining, industry, agriculture, infrastructure and development.</span></div>
+              <div><b>CURRENT</b><span>Recent state developments linked with static knowledge.</span></div>
+            </div>
+
+            <h2>15. Common Mistakes About the Exam Pattern</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Using a coaching website's old pattern as the final authority.</span></div>
+              <div><b>02</b><span>Ignoring the second Preliminary paper.</span></div>
+              <div><b>03</b><span>Memorising marks without checking the latest notice.</span></div>
+              <div><b>04</b><span>Practising untimed MCQs only.</span></div>
+              <div><b>05</b><span>Using an old negative-marking assumption without verification.</span></div>
+              <div><b>06</b><span>Studying subjects but never practising complete papers.</span></div>
+              <div><b>07</b><span>Ignoring Jharkhand-specific preparation.</span></div>
+              <div><b>08</b><span>Focusing only on question count instead of accuracy and decision-making.</span></div>
+            </div>
+
+            <h2>16. A Better JPSC Preparation Formula</h2>
+
+            <div class="formula-large">
+              <div><b>OFFICIAL PATTERN</b><span>Know the rules</span></div>
+              <strong>+</strong>
+              <div><b>SYLLABUS</b><span>Know the boundaries</span></div>
+              <strong>+</strong>
+              <div><b>PYQs</b><span>Know the demand</span></div>
+              <strong>+</strong>
+              <div><b>MOCKS</b><span>Know your performance</span></div>
+              <strong>=</strong>
+              <div><b>EXAM READINESS</b><span>Close the gaps</span></div>
+            </div>
+
+            <h2 id="plan">17. 30-Day Pattern-Based Preparation Plan</h2>
+
+            <div class="plan">
+              <div>
+                <span>DAYS 1–5</span>
+                <strong>Pattern + syllabus</strong>
+                <p>Read the official documents and create your master checklist.</p>
+              </div>
+              <div>
+                <span>DAYS 6–12</span>
+                <strong>PYQs</strong>
+                <p>Map previous questions subject-wise and topic-wise.</p>
+              </div>
+              <div>
+                <span>DAYS 13–19</span>
+                <strong>Concept repair</strong>
+                <p>Study weak topics revealed by PYQ analysis.</p>
+              </div>
+              <div>
+                <span>DAYS 20–25</span>
+                <strong>Timed papers</strong>
+                <p>Practise complete papers under the applicable time limit.</p>
+              </div>
+              <div>
+                <span>DAYS 26–30</span>
+                <strong>Mocks + revision</strong>
+                <p>Test, analyse, revise and retest.</p>
+              </div>
+            </div>
+
+            <h2>18. Official JPSC Sources</h2>
+
+            <p>
+              JPSC's official syllabus page currently lists the Combined Civil
+              Services Examination syllabus. The Commission's recruitment
+              records also list the 2025 Combined Civil Services Examination
+              under Advt. No. 01/2026, along with the relevant examination rules
+              and notices. citeturn0search9turn0search6
+            </p>
+
+            <div class="official">
+              <a href="https://www.jpsc.gov.in/" target="_blank" rel="noopener noreferrer">
+                JPSC Official Website →
+              </a>
+              <a href="https://www.jpsc.gov.in/Syllabus.php" target="_blank" rel="noopener noreferrer">
+                JPSC Official Syllabus →
+              </a>
+              <a href="https://www.jpsc.gov.in/exam_files.php?id=13039" target="_blank" rel="noopener noreferrer">
+                JPSC 2025 Examination Documents →
+              </a>
+            </div>
+
+            <h2>19. Final Takeaway</h2>
+
+            <div class="final">
+              <div><b>2 PAPERS</b><span>Prepare both.</span></div>
+              <div><b>200 + 200</b><span>Know the marks.</span></div>
+              <div><b>100 + 100</b><span>Train for MCQs.</span></div>
+              <div><b>2 + 2 HOURS</b><span>Practise under time.</span></div>
+              <div><b>PYQ + MOCK</b><span>Convert knowledge into performance.</span></div>
+            </div>
+
+            <p>
+              The exam pattern should not be a fact you memorise once. It should
+              determine how you study, how you practise, how you manage time and
+              how you analyse your mocks. Keep the official notification as your
+              final authority, then use PYQs and mocks to turn that pattern into
+              exam-ready performance.
+            </p>
+
+            <div class="conversion final-cta">
+              <div>
+                <span>HABITAT IAS • JPSC PREPARATION</span>
+                <h2>Know the pattern. Decode the PYQs. Test yourself.</h2>
+                <p>
+                  Continue your preparation with the Habitat IAS JPSC PYQ
+                  resource and free mock test.
+                </p>
+              </div>
+              <div class="cta-buttons">
+                <a class="btn yellow" href="/book/">JPSC PYQ Book →</a>
+                <a class="btn outline" href="/mock-tests/free-gs/">Free JPSC Mock →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>Understand the paper before you fight the paper.</h2>
+          <p>
+            Pattern → syllabus → PYQs → mocks → analysis → improvement.
+          </p>
+
+          <div class="buttons center">
+            <a class="btn yellow" href="/book/">Explore JPSC PYQ Book →</a>
+            <a class="btn outline" href="/mock-tests/free-gs/">Attempt Free Mock →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb { border-bottom: 1px solid var(--border); }
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+  .crumb a { color: var(--blue); font-weight: 800; }
+
+  .hero {
+    background:
+      radial-gradient(circle at 86% 15%, rgba(255,212,59,.2), transparent 27%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container { padding: 78px 0 82px; }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1050px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .center { justify-content: center; }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning,
+  .warning-box,
+  .official-box {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong,
+  .warning-box strong,
+  .official-box strong { color: var(--dark); }
+
+  .stats { padding: 48px 0 20px; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .stats-grid > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .stats-grid b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .stats-grid span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .stats-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article p { color: #4c617e; }
+
+  .pattern-cards,
+  .subject-map,
+  .marking,
+  .screening,
+  .three,
+  .time,
+  .time-strategy,
+  .decision,
+  .changes,
+  .mock,
+  .jharkhand,
+  .plan,
+  .final {
+    display: grid;
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .pattern-cards {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .pattern-cards > div {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #f8faff;
+  }
+
+  .pattern-cards span {
+    display: block;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .pattern-cards strong {
+    display: block;
+    margin: 10px 0;
+    color: var(--dark);
+    font-size: 22px;
+  }
+
+  .pattern-cards b {
+    display: block;
+    color: var(--blue);
+    font-size: 27px;
+  }
+
+  .pattern-cards small {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+  }
+
+  .formula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 20px;
+    align-items: center;
+    margin: 28px 0;
+    padding: 22px 24px;
+    border-radius: 14px;
+    background: #eef4ff;
+    border: 1px solid #d5e3ff;
+    color: #526987;
+  }
+
+  .formula strong { color: var(--dark); }
+
+  .table {
+    margin: 28px 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .table > div {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    border-bottom: 1px solid #e8edf5;
+  }
+
+  .table > div:last-child { border-bottom: 0; }
+
+  .table > div > * {
+    margin: 0;
+    padding: 14px 17px;
+    font-size: 14px;
+  }
+
+  .table .head {
+    background: #eef4ff;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .table b { color: var(--dark); }
+  .table span { color: #526780; }
+
+  .source-note {
+    font-size: 13px;
+    color: #7788a1;
+  }
+
+  .subject-map {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .subject-map > div,
+  .marking > div,
+  .screening > div,
+  .three > div,
+  .time > div,
+  .time-strategy > div,
+  .decision > div,
+  .changes > div,
+  .mock > div,
+  .jharkhand > div,
+  .plan > div,
+  .final > div {
+    padding: 21px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .subject-map b,
+  .marking strong,
+  .screening strong,
+  .three b,
+  .time b,
+  .time-strategy strong,
+  .decision b,
+  .changes b,
+  .mock strong,
+  .jharkhand b,
+  .plan strong,
+  .final b {
+    display: block;
+    color: var(--dark);
+  }
+
+  .subject-map span,
+  .marking span,
+  .screening p,
+  .three span,
+  .time span,
+  .time-strategy p,
+  .decision span,
+  .changes span,
+  .mock p,
+  .jharkhand span,
+  .plan p,
+  .final span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .marking {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .marking > div {
+    min-height: 145px;
+  }
+
+  .marking b {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+  }
+
+  .marking .positive b {
+    background: #eaf8f0;
+    color: var(--green);
+  }
+
+  .marking strong {
+    margin-top: 10px;
+  }
+
+  .screening {
+    grid-template-columns: 1fr auto 1fr auto 1fr;
+    align-items: center;
+  }
+
+  .screening > b {
+    color: #91a5c5;
+  }
+
+  .screening > div span,
+  .time-strategy span,
+  .mock span,
+  .plan span {
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .three {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .three > div {
+    min-height: 120px;
+    text-align: center;
+  }
+
+  .time {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .time > div {
+    text-align: center;
+  }
+
+  .time b {
+    color: var(--blue);
+    font-size: 22px;
+  }
+
+  .time-strategy {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .time-strategy strong,
+  .mock strong,
+  .plan strong {
+    margin-top: 7px;
+  }
+
+  .decision,
+  .changes {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .changes {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .mock {
+    grid-template-columns: repeat(4,1fr);
+  }
+
+  .jharkhand {
+    grid-template-columns: repeat(3,1fr);
+  }
+
+  .pyq-cycle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+
+  .pyq-cycle > div {
+    min-width: 125px;
+    padding: 18px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .pyq-cycle b {
+    display: block;
+    color: var(--blue);
+    font-size: 20px;
+  }
+
+  .pyq-cycle span {
+    display: block;
+    margin-top: 6px;
+    color: var(--dark);
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .pyq-cycle i {
+    color: #91a5c5;
+    font-style: normal;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 42px 0;
+    padding: 34px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .conversion > div:first-child span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 29px;
+  }
+
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .cta-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .formula-large {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin: 28px 0;
+    overflow-x: auto;
+  }
+
+  .formula-large > div {
+    min-width: 155px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .formula-large b {
+    display: block;
+    color: var(--dark);
+    font-size: 11px;
+  }
+
+  .formula-large span {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 12px;
+  }
+
+  .formula-large > strong {
+    align-self: center;
+    color: var(--blue);
+  }
+
+  .plan {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .plan strong { font-size: 16px; }
+
+  .official {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px 25px;
+    margin: 28px 0;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .official a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .final {
+    grid-template-columns: repeat(5,1fr);
+  }
+
+  .final > div {
+    text-align: center;
+    background: white;
+  }
+
+  .final b { font-size: 14px; }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 850px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 730px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+
+    .stats-grid,
+    .subject-map,
+    .marking,
+    .three,
+    .time,
+    .time-strategy,
+    .decision,
+    .changes,
+    .mock,
+    .jharkhand,
+    .plan,
+    .final {
+      grid-template-columns: repeat(2,1fr);
+    }
+
+    .pattern-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+
+    h1 {
+      font-size: clamp(43px,12vw,65px);
+      letter-spacing: -2.5px;
+    }
+
+    .stats-grid,
+    .subject-map,
+    .marking,
+    .three,
+    .time,
+    .time-strategy,
+    .decision,
+    .changes,
+    .mock,
+    .jharkhand,
+    .plan,
+    .final {
+      grid-template-columns: 1fr;
+    }
+
+    .screening {
+      grid-template-columns: 1fr;
+    }
+
+    .screening > b {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .buttons,
+    .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .cta-buttons {
+      flex-direction: column;
+    }
+
+    .table {
+      overflow-x: auto;
+    }
+
+    .table > div {
+      min-width: 580px;
+    }
+
+    .formula-large {
+      flex-direction: column;
+    }
+
+    .formula-large > strong {
+      text-align: center;
+      transform: rotate(90deg);
+    }
+
+    .official {
+      flex-direction: column;
+    }
+  }
+</style>

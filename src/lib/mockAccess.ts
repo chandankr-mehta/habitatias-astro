@@ -60,13 +60,13 @@ const supabaseAdmin =
  * PAID ACCESS
  *        OR
  * MANUAL ACCESS
- *        ↓
+ *        â†“
  * PACKAGE ACCESS
- *        ↓
+ *        â†“
  * TEST PUBLISHED?
- *        ↓
+ *        â†“
  * RELEASE DATE PASSED?
- *        ↓
+ *        â†“
  * ALLOW TEST
  */
 
@@ -212,16 +212,16 @@ function emptyAccessResult(
  * Therefore:
  *
  * PAID STUDENT
- *     → purchases table
+ *     â†’ purchases table
  *
  * MANUAL STUDENT
- *     → manual_series_access table
+ *     â†’ manual_series_access table
  *
  * PAID + MANUAL
- *     → either source is sufficient
+ *     â†’ either source is sufficient
  *
  * NO ACCESS
- *     → neither source exists
+ *     â†’ neither source exists
  */
 
 export async function checkMockAccess(
@@ -753,39 +753,52 @@ export async function checkTestAccess(
      1. INVALID TEST NUMBER
   ======================================================= */
 
-  if (
-    !isTestCoveredByProduct(
-      testNumber
-    )
-  ) {
+  const isFreeMock =
+    testNumber === 21 ||
+    testNumber === 22;
 
-    return emptyAccessResult(
-      "test_not_found"
-    );
+  /* =======================================================
+     1. TEST NUMBER VALIDATION
+  ======================================================= */
+
+  if (!isFreeMock && !isTestCoveredByProduct(testNumber)) {
+    return emptyAccessResult("test_not_found");
+  }
+
+  /* =======================================================
+     2. CHECK ACCESS TYPE
+  ======================================================= */
+
+  let packageAccess: MockAccessResult;
+
+  if (isFreeMock) {
+
+    if (!userId) {
+      return emptyAccessResult("not_logged_in");
+    }
+
+    packageAccess = {
+      allowed: true,
+      reason: "allowed",
+      purchaseId: null,
+      productId: null,
+      paymentStatus: "free",
+      releaseAt: null,
+      testLive: null,
+    };
+
+  } else {
+
+    packageAccess = await checkMockAccess(userId);
 
   }
 
-
   /* =======================================================
-     2. CHECK PACKAGE ACCESS
+     3. LOGIN / PAYMENT / ACCESS CHECK
   ======================================================= */
 
-  const packageAccess =
-    await checkMockAccess(
-      userId
-    );
-
-
-  /* =======================================================
-     3. LOGIN / PAYMENT / MANUAL ACCESS CHECK
-  ======================================================= */
-
-  if (
-    !packageAccess.allowed
-  ) {
-
+  if (!packageAccess.allowed) {
     return packageAccess;
-
   }
 
 
@@ -1046,4 +1059,82 @@ export async function checkTestAccess(
 
   };
 
+}
+/* =========================================================
+   FREE OPEN MOCK ACCESS
+========================================================= */
+
+/*
+ * FREE MOCKS ARE SEPARATE FROM THE PAID 20-TEST SERIES.
+ *
+ * FREE GS MOCK
+ *      â†“
+ * LOGIN REQUIRED
+ *      â†“
+ * NO PAYMENT REQUIRED
+ *
+ * FREE JHARKHAND MOCK
+ *      â†“
+ * LOGIN REQUIRED
+ *      â†“
+ * NO PAYMENT REQUIRED
+ */
+
+export type FreeMockType =
+  | "free-gs"
+  | "free-jharkhand";
+
+
+export interface FreeMockAccessResult {
+  allowed: boolean;
+
+  reason:
+    | "allowed"
+    | "not_logged_in";
+
+  mockType: FreeMockType | null;
+}
+
+
+/* =========================================================
+   CHECK FREE MOCK ACCESS
+========================================================= */
+
+export function checkFreeMockAccess(
+  userId:
+    | string
+    | null
+    | undefined,
+
+  mockType: FreeMockType
+): FreeMockAccessResult {
+
+  /* -------------------------------------------------------
+     LOGIN REQUIRED
+  ------------------------------------------------------- */
+
+  if (!userId) {
+    return {
+      allowed: false,
+      reason: "not_logged_in",
+      mockType,
+    };
+  }
+
+
+  /* -------------------------------------------------------
+     FREE MOCK ACCESS GRANTED
+     
+     IMPORTANT:
+     NO PURCHASE CHECK HERE.
+     
+     These tests are completely separate from
+     the paid JPSC 20-test package.
+  ------------------------------------------------------- */
+
+  return {
+    allowed: true,
+    reason: "allowed",
+    mockType,
+  };
 }

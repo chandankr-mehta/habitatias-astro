@@ -1,6 +1,6 @@
 ---
 const sampleBook =
-  "https://drive.google.com/file/d/1gy_Im2Qs9Z7pwpYGUn7QSH0lJ4cwO5a5/view?usp=sharing";
+  "https://drive.google.com/file/d/1qy_Im2Qs9Z7pwpYGUn7QSHOlJ4cwO5a5/view?usp=sharing";
 
 const bookTitle = "JPSC Prelims Decoded: Topic-Wise PYQs";
 
@@ -13,3108 +13,2125 @@ const englishPrice = 299;
 
 <!doctype html>
 <html lang="en">
-
-<head>
-
-  <meta charset="UTF-8" />
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-
-  <title>
-    {bookTitle} | Habitat IAS
-  </title>
-
-  <meta
-    name="description"
-    content={bookDescription}
-  />
-
-  <meta
-    name="keywords"
-    content="JPSC PYQ, JPSC Prelims PYQ, JPSC previous year questions, JPSC book, JPSC preparation, Jharkhand PSC, Habitat IAS"
-  />
-
-  <meta
-    name="author"
-    content="Habitat IAS"
-  />
-
-  <meta
-    name="robots"
-    content="index, follow"
-  />
-
-  <link
-    rel="canonical"
-    href="/book/"
-  />
-
-  <meta
-    property="og:type"
-    content="book"
-  />
-
-  <meta
-    property="og:title"
-    content={bookTitle}
-  />
-
-  <meta
-    property="og:description"
-    content={bookDescription}
-  />
-
-  <meta
-    property="og:image"
-    content="/book-cover.jpg"
-  />
-
-  <meta
-    property="og:url"
-    content="/book/"
-  />
-
-  <meta
-    property="og:site_name"
-    content="Habitat IAS"
-  />
-
-  <meta
-    name="twitter:card"
-    content="summary_large_image"
-  />
-
-  <meta
-    name="twitter:title"
-    content={bookTitle}
-  />
-
-  <meta
-    name="twitter:description"
-    content={bookDescription}
-  />
-
-  <meta
-    name="twitter:image"
-    content="/book-cover.jpg"
-  />
-
-  <link
-    rel="icon"
-    href="/favicon.ico"
-  />
-
-
-  <style>
-
-    :root {
-      --blue: #1557d6;
-      --blue-dark: #0d3f9f;
-      --blue-light: #eef4ff;
-      --yellow: #ffd43b;
-      --text: #13213c;
-      --muted: #667085;
-      --border: #e5eaf2;
-      --white: #ffffff;
-      --bg: #f7f9fc;
-      --green: #159447;
-      --green-light: #eaf8ef;
-      --shadow: 0 18px 50px rgba(15, 39, 83, 0.1);
-      --radius: 20px;
-    }
-
-
-    * {
-      box-sizing: border-box;
-    }
-
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-
-    body {
-      margin: 0;
-
-      font-family:
-        Inter,
-        ui-sans-serif,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-    }
-
-
-    body.modal-open {
-      overflow: hidden;
-    }
-
-
-    img {
-      display: block;
-      max-width: 100%;
-    }
-
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-
-    button {
-      font: inherit;
-      cursor: pointer;
-    }
-
-
-    /* =========================
-       HEADER
-    ========================== */
-
-    .site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-
-      background: rgba(255, 255, 255, 0.96);
-
-      border-bottom:
-        1px solid var(--border);
-
-      backdrop-filter: blur(12px);
-    }
-
-
-    .nav {
-      width:
-        min(
-          1200px,
-          calc(100% - 40px)
-        );
-
-      min-height: 76px;
-
-      margin: 0 auto;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: space-between;
-
-      gap: 24px;
-    }
-
-
-    .brand {
-      display: inline-flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      font-size: 25px;
-
-      font-weight: 800;
-
-      color: var(--blue);
-
-      white-space: nowrap;
-    }
-
-
-    .brand-mark {
-      width: 44px;
-      height: 44px;
-
-      border-radius: 13px;
-
-      display: grid;
-
-      place-items: center;
-
-      color: white;
-
-      background: var(--blue);
-
-      font-weight: 900;
-
-      box-shadow:
-        0 8px 20px
-        rgba(21, 87, 214, 0.22);
-    }
-
-
-    .nav-links {
-      display: flex;
-
-      align-items: center;
-
-      justify-content: flex-end;
-
-      gap: 20px;
-
-      font-size: 14px;
-
-      font-weight: 700;
-
-      color: #3f4d68;
-    }
-
-
-    .nav-links a:hover {
-      color: var(--blue);
-    }
-
-
-    .nav-cta {
-      padding: 12px 20px;
-
-      border-radius: 12px;
-
-      color: white !important;
-
-      background: var(--blue);
-
-      border: 0;
-    }
-
-
-    .mobile-menu {
-      display: none;
-
-      width: 44px;
-      height: 44px;
-
-      border: 0;
-
-      border-radius: 12px;
-
-      color: white;
-
-      background: var(--blue);
-
-      font-size: 23px;
-    }
-
-
-    /* =========================
-       COMMON BUTTONS
-    ========================== */
-
-    .btn {
-      min-height: 48px;
-
-      display: inline-flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 12px 21px;
-
-      border-radius: 12px;
-
-      border:
-        1px solid transparent;
-
-      font-size: 15px;
-
-      font-weight: 800;
-
-      transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-
-    .btn:hover {
-      transform: translateY(-2px);
-    }
-
-
-    .btn-primary {
-      background: var(--yellow);
-
-      color: #17233a;
-
-      box-shadow:
-        0 10px 25px
-        rgba(0, 0, 0, 0.13);
-    }
-
-
-    .btn-blue {
-      background: var(--blue);
-
-      color: white;
-
-      box-shadow:
-        0 10px 25px
-        rgba(21, 87, 214, 0.18);
-    }
-
-
-    .btn-light {
-      border-color:
-        rgba(255, 255, 255, 0.5);
-
-      color: white;
-
-      background:
-        rgba(255, 255, 255, 0.08);
-    }
-
-
-    .btn-outline {
-      border-color: var(--border);
-
-      color: var(--blue);
-
-      background: white;
-    }
-
-
-    .hero-actions {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 13px;
-
-      margin-top: 30px;
-    }
-
-
-    /* =========================
-       HERO
-    ========================== */
-
-    .hero {
-      background:
-        radial-gradient(
-          circle at 90% 10%,
-          rgba(255, 255, 255, 0.16),
-          transparent 28%
-        ),
-        linear-gradient(
-          135deg,
-          #1145ad,
-          #2164e2
-        );
-
-      color: white;
-
-      padding:
-        82px 0 90px;
-    }
-
-
-    .hero-inner {
-      width:
-        min(
-          1200px,
-          calc(100% - 40px)
-        );
-
-      margin: 0 auto;
-
-      display: grid;
-
-      grid-template-columns:
-        minmax(0, 1.08fr)
-        minmax(330px, 0.92fr);
-
-      gap: 70px;
-
-      align-items: center;
-    }
-
-
-    .eyebrow {
-      display: inline-flex;
-
-      padding: 8px 15px;
-
-      border:
-        1px solid
-        rgba(255, 255, 255, 0.45);
-
-      border-radius: 999px;
-
-      font-size: 12px;
-
-      font-weight: 800;
-
-      letter-spacing: 1.3px;
-
-      text-transform: uppercase;
-    }
-
-
-    .hero h1 {
-      margin: 25px 0 18px;
-
-      max-width: 700px;
-
-      font-size:
-        clamp(42px, 6vw, 72px);
-
-      line-height: 0.98;
-
-      letter-spacing: -3px;
-    }
-
-
-    .hero h1 span {
-      color: var(--yellow);
-    }
-
-
-    .hero-text {
-      max-width: 650px;
-
-      margin: 0;
-
-      color:
-        rgba(255, 255, 255, 0.9);
-
-      font-size: 18px;
-    }
-
-
-    .hero-card {
-      padding: 30px;
-
-      border-radius: 26px;
-
-      color: var(--text);
-
-      background: white;
-
-      box-shadow:
-        0 25px 60px
-        rgba(4, 22, 61, 0.2);
-    }
-
-
-    .hero-card-label {
-      margin-bottom: 10px;
-
-      color: var(--blue);
-
-      font-size: 12px;
-
-      font-weight: 900;
-
-      letter-spacing: 1.5px;
-
-      text-transform: uppercase;
-    }
-
-
-    .hero-card h2 {
-      margin: 0 0 20px;
-
-      font-size: 30px;
-
-      line-height: 1.15;
-    }
-
-
-    .check-list {
-      display: grid;
-
-      gap: 13px;
-
-      margin: 0;
-
-      padding: 0;
-
-      list-style: none;
-    }
-
-
-    .check-list li {
-      display: flex;
-
-      gap: 10px;
-
-      align-items: flex-start;
-
-      color: #46536b;
-
-      font-size: 15px;
-    }
-
-
-    .check {
-      flex:
-        0 0 auto;
-
-      width: 23px;
-      height: 23px;
-
-      display: grid;
-
-      place-items: center;
-
-      border-radius: 50%;
-
-      color: var(--blue);
-
-      background: #eaf1ff;
-
-      font-size: 13px;
-
-      font-weight: 900;
-    }
-
-
-    /* =========================
-       SECTIONS
-    ========================== */
-
-    .section {
-      width:
-        min(
-          1100px,
-          calc(100% - 40px)
-        );
-
-      margin: 0 auto;
-
-      padding: 82px 0;
-    }
-
-
-    .section-header {
-      max-width: 760px;
-
-      margin:
-        0 auto 42px;
-
-      text-align: center;
-    }
-
-
-    .section-label {
-      color: var(--blue);
-
-      font-size: 12px;
-
-      font-weight: 900;
-
-      letter-spacing: 1.5px;
-
-      text-transform: uppercase;
-    }
-
-
-    .section-header h2 {
-      margin:
-        8px 0 12px;
-
-      font-size:
-        clamp(30px, 4vw, 44px);
-
-      line-height: 1.1;
-    }
-
-
-    .section-header p {
-      margin: 0;
-
-      color: var(--muted);
-    }
-
-
-    /* =========================
-       BOOK
-    ========================== */
-
-    .book-layout {
-      display: grid;
-
-      grid-template-columns:
-        minmax(280px, 380px)
-        minmax(0, 1fr);
-
-      gap: 65px;
-
-      align-items: center;
-    }
-
-
-    .book-cover-wrap {
-      width:
-        min(100%, 360px);
-
-      margin: 0 auto;
-
-      overflow: hidden;
-
-      border-radius: 16px;
-
-      background: white;
-
-      box-shadow: var(--shadow);
-    }
-
-
-    .book-cover-image {
-      width: 100%;
-
-      height: auto;
-
-      aspect-ratio: 2 / 3;
-
-      object-fit: cover;
-    }
-
-
-    .book-content h2 {
-      margin:
-        0 0 15px;
-
-      font-size: 38px;
-
-      line-height: 1.15;
-    }
-
-
-    .book-content > p {
-      margin:
-        0 0 22px;
-
-      color: var(--muted);
-
-      font-size: 16px;
-    }
-
-
-    /* =========================
-       PRICE OPTIONS
-    ========================== */
-
-    .edition-prices {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 14px;
-
-      margin: 24px 0;
-    }
-
-
-    .edition-mini {
-      padding: 18px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 16px;
-
-      background: white;
-    }
-
-
-    .edition-mini strong {
-      display: block;
-
-      margin-bottom: 4px;
-
-      font-size: 15px;
-    }
-
-
-    .edition-mini .mini-price {
-      color: var(--blue);
-
-      font-size: 25px;
-
-      font-weight: 900;
-    }
-
-
-    .edition-mini small {
-      display: block;
-
-      margin-top: 2px;
-
-      color: var(--muted);
-
-      font-size: 12px;
-    }
-
-
-    .license-notice {
-      margin: 18px 0;
-
-      padding: 14px 16px;
-
-      border:
-        1px solid #dce8ff;
-
-      border-radius: 13px;
-
-      background: #f3f7ff;
-
-      color: #53627c;
-
-      font-size: 12px;
-    }
-
-
-    .license-notice strong {
-      color: var(--blue);
-    }
-
-
-    /* =========================
-       FEATURES
-    ========================== */
-
-    .analysis {
-      background: white;
-    }
-
-
-    .feature-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap: 18px;
-    }
-
-
-    .feature-card {
-      padding: 27px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: var(--radius);
-
-      background: white;
-
-      box-shadow:
-        0 8px 25px
-        rgba(17, 39, 77, 0.04);
-    }
-
-
-    .feature-number {
-      width: 42px;
-      height: 42px;
-
-      display: grid;
-
-      place-items: center;
-
-      margin-bottom: 17px;
-
-      border-radius: 12px;
-
-      color: var(--blue);
-
-      background: var(--blue-light);
-
-      font-weight: 900;
-    }
-
-
-    .feature-card h3 {
-      margin: 0 0 8px;
-
-      font-size: 19px;
-    }
-
-
-    .feature-card p {
-      margin: 0;
-
-      color: var(--muted);
-
-      font-size: 14px;
-    }
-
-
-    /* =========================
-       ANALYSIS
-    ========================== */
-
-    .analysis-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 20px;
-    }
-
-
-    .analysis-card {
-      padding: 28px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: var(--radius);
-
-      background: #fbfcff;
-    }
-
-
-    .analysis-card h3 {
-      margin: 0 0 8px;
-
-      font-size: 20px;
-    }
-
-
-    .analysis-card p {
-      margin: 0;
-
-      color: var(--muted);
-
-      font-size: 15px;
-    }
-
-
-    .topics {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 14px;
-
-      margin-top: 30px;
-    }
-
-
-    .topic {
-      display: flex;
-
-      align-items: center;
-
-      gap: 12px;
-
-      padding: 15px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 14px;
-
-      background: white;
-    }
-
-
-    .topic-dot {
-      width: 9px;
-      height: 9px;
-
-      flex: 0 0 auto;
-
-      border-radius: 50%;
-
-      background: var(--blue);
-    }
-
-
-    .topic span {
-      font-size: 14px;
-
-      font-weight: 700;
-    }
-
-
-    /* =========================
-       SAMPLE
-    ========================== */
-
-    .sample-box {
-      display: grid;
-
-      grid-template-columns:
-        1fr auto;
-
-      gap: 25px;
-
-      align-items: center;
-
-      padding: 35px;
-
-      border-radius: 24px;
-
-      color: white;
-
-      background:
-        linear-gradient(
-          135deg,
-          #123f9d,
-          #1d62da
-        );
-
-      box-shadow: var(--shadow);
-    }
-
-
-    .sample-box h2 {
-      margin: 0 0 8px;
-
-      font-size: 30px;
-    }
-
-
-    .sample-box p {
-      margin: 0;
-
-      max-width: 700px;
-
-      color:
-        rgba(255, 255, 255, 0.84);
-    }
-
-
-    .sample-actions {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 10px;
-    }
-
-
-    /* =========================
-       FAQ
-    ========================== */
-
-    .faq-list {
-      max-width: 850px;
-
-      margin: 0 auto;
-
-      display: grid;
-
-      gap: 13px;
-    }
-
-
-    .faq {
-      padding: 21px 23px;
-
-      border:
-        1px solid var(--border);
-
-      border-radius: 15px;
-
-      background: white;
-    }
-
-
-    .faq h3 {
-      margin:
-        0 0 7px;
-
-      font-size: 17px;
-    }
-
-
-    .faq p {
-      margin: 0;
-
-      color: var(--muted);
-
-      font-size: 14px;
-    }
-
-
-    /* =========================
-       FINAL CTA
-    ========================== */
-
-    .final-cta {
-      padding: 82px 20px;
-
-      text-align: center;
-
-      color: white;
-
-      background: #102f73;
-    }
-
-
-    .final-cta h2 {
-      margin:
-        0 0 12px;
-
-      font-size:
-        clamp(30px, 4vw, 45px);
-    }
-
-
-    .final-cta p {
-      max-width: 650px;
-
-      margin:
-        0 auto 25px;
-
-      color:
-        rgba(255, 255, 255, 0.82);
-    }
-
-
-    /* =========================
-       FOOTER
-    ========================== */
-
-    .site-footer {
-      color: #c6d0e5;
-
-      background: #091a3b;
-    }
-
-
-    .footer-inner {
-      width:
-        min(
-          1100px,
-          calc(100% - 40px)
-        );
-
-      margin: 0 auto;
-
-      padding:
-        45px 0 25px;
-    }
-
-
-    .footer-main {
-      display: flex;
-
-      justify-content:
-        space-between;
-
-      gap: 40px;
-    }
-
-
-    .footer-brand {
-      color: white;
-
-      font-size: 23px;
-
-      font-weight: 800;
-    }
-
-
-    .footer-description {
-      max-width: 420px;
-
-      margin:
-        10px 0 0;
-
-      color: #9eabc5;
-
-      font-size: 14px;
-    }
-
-
-    .footer-links {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 18px;
-
-      align-content: flex-start;
-    }
-
-
-    .footer-links a {
-      color: #d5dced;
-
-      font-size: 14px;
-    }
-
-
-    .footer-bottom {
-      margin-top: 35px;
-
-      padding-top: 20px;
-
-      border-top:
-        1px solid
-        rgba(255, 255, 255, 0.1);
-
-      color: #8d9ab4;
-
-      font-size: 13px;
-    }
-
-
-    /* =========================
-       PURCHASE MODAL
-    ========================== */
-
-    .modal-backdrop {
-      position: fixed;
-
-      inset: 0;
-
-      z-index: 5000;
-
-      display: none;
-
-      align-items: center;
-
-      justify-content: center;
-
-      padding: 20px;
-
-      background:
-        rgba(4, 15, 35, 0.72);
-
-      backdrop-filter: blur(5px);
-    }
-
-
-    .modal-backdrop.active {
-      display: flex;
-    }
-
-
-    .purchase-modal {
-      width:
-        min(
-          680px,
-          100%
-        );
-
-      max-height:
-        calc(100vh - 40px);
-
-      overflow-y: auto;
-
-      position: relative;
-
-      padding: 34px;
-
-      border-radius: 24px;
-
-      background: white;
-
-      box-shadow:
-        0 30px 90px
-        rgba(0, 0, 0, 0.3);
-
-      animation:
-        modalIn 0.2s ease;
-    }
-
-
-    @keyframes modalIn {
-
-      from {
-        opacity: 0;
-
-        transform:
-          translateY(12px)
-          scale(0.98);
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <title>{bookTitle} | Habitat IAS</title>
+
+    <meta
+      name="description"
+      content={bookDescription}
+    />
+
+    <meta
+      name="keywords"
+      content="JPSC PYQ, JPSC Prelims PYQ, JPSC previous year questions, JPSC book, JPSC preparation, Jharkhand PSC, Habitat IAS"
+    />
+
+    <meta name="author" content="Habitat IAS" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="canonical" href="/book/" />
+
+    <meta property="og:type" content="book" />
+    <meta property="og:title" content={bookTitle} />
+    <meta property="og:description" content={bookDescription} />
+    <meta property="og:image" content="/book-cover.jpg" />
+    <meta property="og:url" content="/book/" />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={bookTitle} />
+    <meta name="twitter:description" content={bookDescription} />
+    <meta name="twitter:image" content="/book-cover.jpg" />
+
+    <link rel="icon" href="/favicon.ico" />
+
+    <style>
+      :root {
+        --blue: #1557d6;
+        --blue-dark: #0d3f9f;
+        --blue-light: #eef4ff;
+        --yellow: #ffd43b;
+        --text: #13213c;
+        --muted: #667085;
+        --border: #e5eaf2;
+        --white: #ffffff;
+        --bg: #f7f9fc;
+        --green: #159447;
+        --green-light: #eaf8ef;
+        --shadow: 0 18px 50px rgba(15, 39, 83, 0.1);
+        --radius: 20px;
       }
 
-      to {
-        opacity: 1;
-
-        transform:
-          translateY(0)
-          scale(1);
+      * {
+        box-sizing: border-box;
       }
 
-    }
-
-
-    .modal-close {
-      position: absolute;
-
-      top: 15px;
-      right: 15px;
-
-      width: 40px;
-      height: 40px;
-
-      border: 0;
-
-      border-radius: 50%;
-
-      background: #f1f4f8;
-
-      color: #44516a;
-
-      font-size: 22px;
-    }
-
-
-    .modal-label {
-      color: var(--blue);
-
-      font-size: 11px;
-
-      font-weight: 900;
-
-      letter-spacing: 1.3px;
-
-      text-transform: uppercase;
-    }
-
-
-    .purchase-modal h2 {
-      margin:
-        7px 45px 8px 0;
-
-      font-size: 30px;
-
-      line-height: 1.2;
-    }
-
-
-    .modal-description {
-      margin:
-        0 0 25px;
-
-      color: var(--muted);
-
-      font-size: 14px;
-    }
-
-
-    .edition-options {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 16px;
-    }
-
-
-    .edition-card {
-      position: relative;
-
-      padding: 22px;
-
-      border:
-        2px solid var(--border);
-
-      border-radius: 18px;
-
-      background: white;
-
-      transition:
-        border-color 0.2s ease,
-        transform 0.2s ease,
-        box-shadow 0.2s ease;
-    }
-
-
-    .edition-card:hover {
-      transform:
-        translateY(-3px);
-
-      border-color:
-        var(--blue);
-
-      box-shadow:
-        0 12px 30px
-        rgba(21, 87, 214, 0.1);
-    }
-
-
-    .edition-flag {
-      font-size: 30px;
-    }
-
-
-    .edition-card h3 {
-      margin:
-        10px 0 3px;
-
-      font-size: 20px;
-    }
-
-
-    .edition-price {
-      margin-bottom: 10px;
-
-      color: var(--blue);
-
-      font-size: 30px;
-
-      font-weight: 950;
-    }
-
-
-    .edition-card p {
-      min-height: 65px;
-
-      margin:
-        0 0 17px;
-
-      color: var(--muted);
-
-      font-size: 12px;
-    }
-
-
-    .edition-card .btn {
-      width: 100%;
-    }
-
-
-    .modal-notice {
-      margin-top: 20px;
-
-      padding: 14px;
-
-      border-radius: 13px;
-
-      background: #f5f7fb;
-
-      color: #667085;
-
-      font-size: 11px;
-
-      line-height: 1.55;
-    }
-
-
-    .modal-notice strong {
-      color: #344054;
-    }
-
-
-    /* =========================
-       MOBILE NAV
-    ========================== */
-
-    @media (max-width: 900px) {
-
-      .nav-links {
-        display: none;
-
-        position: absolute;
-
-        left: 14px;
-        right: 14px;
-
-        top: 70px;
-
-        padding: 18px;
-
-        flex-direction: column;
-
-        align-items: stretch;
-
-        gap: 0;
-
-        border:
-          1px solid var(--border);
-
-        border-radius: 16px;
-
-        background: white;
-
-        box-shadow: var(--shadow);
+      html {
+        scroll-behavior: smooth;
       }
 
-
-      .nav-links.mobile-open {
-        display: flex;
+      body {
+        margin: 0;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: var(--text);
+        background: var(--bg);
+        line-height: 1.6;
       }
 
-
-      .nav-links a {
-        padding: 12px 8px;
+      body.modal-open {
+        overflow: hidden;
       }
 
-
-      .mobile-menu {
-        display: grid;
-
-        place-items: center;
+      img {
+        display: block;
+        max-width: 100%;
       }
 
-
-      .hero-inner {
-        grid-template-columns: 1fr;
-
-        gap: 40px;
+      a {
+        color: inherit;
+        text-decoration: none;
       }
 
-
-      .book-layout {
-        grid-template-columns: 1fr;
-
-        gap: 40px;
+      button {
+        font: inherit;
+        cursor: pointer;
       }
 
+      /* =========================
+         HEADER
+      ========================== */
 
-      .book-content {
-        text-align: center;
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid var(--border);
+        backdrop-filter: blur(12px);
       }
-
-
-      .book-content .check-list {
-        text-align: left;
-
-        max-width: 500px;
-
-        margin: 0 auto;
-      }
-
-
-      .hero-actions {
-        justify-content: center;
-      }
-
-
-      .feature-grid {
-        grid-template-columns:
-          repeat(2, 1fr);
-      }
-
-
-      .sample-box {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-
-    @media (max-width: 620px) {
 
       .nav {
-        width:
-          calc(100% - 28px);
-
-        min-height: 64px;
+        width: min(1200px, calc(100% - 40px));
+        min-height: 76px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
       }
-
 
       .brand {
-        font-size: 20px;
-
-        gap: 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 25px;
+        font-weight: 800;
+        color: var(--blue);
+        white-space: nowrap;
       }
-
 
       .brand-mark {
-        width: 38px;
-        height: 38px;
-
-        border-radius: 11px;
+        width: 44px;
+        height: 44px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        color: white;
+        background: var(--blue);
+        font-weight: 900;
+        box-shadow: 0 8px 20px rgba(21, 87, 214, 0.22);
       }
 
+      .nav-links {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 20px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #3f4d68;
+      }
+
+      .nav-links a:hover {
+        color: var(--blue);
+      }
+
+      .nav-cta {
+        padding: 12px 20px;
+        border-radius: 12px;
+        color: white !important;
+        background: var(--blue);
+      }
+
+      .mobile-menu {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border: 0;
+        border-radius: 12px;
+        color: white;
+        background: var(--blue);
+        font-size: 23px;
+      }
+
+      /* =========================
+         COMMON BUTTONS
+      ========================== */
+
+      .btn {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 21px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-size: 15px;
+        font-weight: 800;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn-primary {
+        background: var(--yellow);
+        color: #17233a;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.13);
+      }
+
+      .btn-blue {
+        background: var(--blue);
+        color: white;
+        box-shadow: 0 10px 25px rgba(21, 87, 214, 0.18);
+      }
+
+      .btn-light {
+        border-color: rgba(255, 255, 255, 0.5);
+        color: white;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .btn-outline {
+        border-color: var(--border);
+        color: var(--blue);
+        background: white;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 13px;
+        margin-top: 30px;
+      }
+
+      /* =========================
+         HERO
+      ========================== */
 
       .hero {
-        padding:
-          52px 0 60px;
+        background:
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(255, 255, 255, 0.16),
+            transparent 28%
+          ),
+          linear-gradient(135deg, #1145ad, #2164e2);
+        color: white;
+        padding: 82px 0 90px;
       }
 
-
-      .hero-inner,
-      .section {
-        width:
-          calc(100% - 28px);
+      .hero-inner {
+        width: min(1200px, calc(100% - 40px));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.92fr);
+        gap: 70px;
+        align-items: center;
       }
 
+      .eyebrow {
+        display: inline-flex;
+        padding: 8px 15px;
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+      }
 
       .hero h1 {
-        margin-top: 20px;
-
-        font-size: 43px;
-
-        letter-spacing: -2px;
+        margin: 25px 0 18px;
+        max-width: 700px;
+        font-size: clamp(42px, 6vw, 72px);
+        line-height: 0.98;
+        letter-spacing: -3px;
       }
 
+      .hero h1 span {
+        color: var(--yellow);
+      }
 
       .hero-text {
+        max-width: 650px;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 18px;
+      }
+
+      .hero-card {
+        padding: 30px;
+        border-radius: 26px;
+        color: var(--text);
+        background: white;
+        box-shadow: 0 25px 60px rgba(4, 22, 61, 0.2);
+      }
+
+      .hero-card-label {
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
+
+      .hero-card h2 {
+        margin: 0 0 20px;
+        font-size: 30px;
+        line-height: 1.15;
+      }
+
+      .check-list {
+        display: grid;
+        gap: 13px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .check-list li {
+        display: flex;
+        gap: 10px;
+        align-items: flex-start;
+        color: #46536b;
         font-size: 15px;
       }
 
-
-      .hero-card {
-        padding: 23px;
-
-        border-radius: 20px;
+      .check {
+        flex: 0 0 auto;
+        width: 23px;
+        height: 23px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        color: var(--blue);
+        background: #eaf1ff;
+        font-size: 13px;
+        font-weight: 900;
       }
 
-
-      .hero-card h2 {
-        font-size: 25px;
-      }
-
+      /* =========================
+         SECTIONS
+      ========================== */
 
       .section {
-        padding: 58px 0;
+        width: min(1100px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 82px 0;
       }
-
 
       .section-header {
-        margin-bottom: 28px;
+        max-width: 760px;
+        margin: 0 auto 42px;
+        text-align: center;
       }
 
+      .section-label {
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+      }
 
       .section-header h2 {
-        font-size: 31px;
+        margin: 8px 0 12px;
+        font-size: clamp(30px, 4vw, 44px);
+        line-height: 1.1;
       }
 
+      .section-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      /* =========================
+         BOOK
+      ========================== */
+
+      .book-layout {
+        display: grid;
+        grid-template-columns: minmax(280px, 380px) minmax(0, 1fr);
+        gap: 65px;
+        align-items: center;
+      }
+
+      .book-cover-wrap {
+        width: min(100%, 360px);
+        margin: 0 auto;
+        overflow: hidden;
+        border-radius: 16px;
+        background: white;
+        box-shadow: var(--shadow);
+      }
+
+      .book-cover-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 2 / 3;
+        object-fit: cover;
+      }
 
       .book-content h2 {
-        font-size: 31px;
+        margin: 0 0 15px;
+        font-size: 38px;
+        line-height: 1.15;
       }
 
-
-      .feature-grid,
-      .analysis-grid,
-      .topics,
-      .edition-prices,
-      .edition-options {
-        grid-template-columns: 1fr;
+      .book-content > p {
+        margin: 0 0 22px;
+        color: var(--muted);
+        font-size: 16px;
       }
 
+      /* =========================
+         PRICE OPTIONS
+      ========================== */
+
+      .edition-prices {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin: 24px 0;
+      }
+
+      .edition-mini {
+        padding: 18px;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: white;
+      }
+
+      .edition-mini strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 15px;
+      }
+
+      .edition-mini .mini-price {
+        color: var(--blue);
+        font-size: 25px;
+        font-weight: 900;
+      }
+
+      .edition-mini small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .license-notice {
+        margin: 18px 0;
+        padding: 14px 16px;
+        border: 1px solid #dce8ff;
+        border-radius: 13px;
+        background: #f3f7ff;
+        color: #53627c;
+        font-size: 12px;
+      }
+
+      .license-notice strong {
+        color: var(--blue);
+      }
+
+      /* =========================
+         FEATURES
+      ========================== */
+
+      .analysis {
+        background: white;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
 
       .feature-card {
-        padding: 22px;
+        padding: 27px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: white;
+        box-shadow: 0 8px 25px rgba(17, 39, 77, 0.04);
       }
 
+      .feature-number {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        margin-bottom: 17px;
+        border-radius: 12px;
+        color: var(--blue);
+        background: var(--blue-light);
+        font-weight: 900;
+      }
+
+      .feature-card h3 {
+        margin: 0 0 8px;
+        font-size: 19px;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* =========================
+         ANALYSIS
+      ========================== */
+
+      .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .analysis-card {
+        padding: 28px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        background: #fbfcff;
+      }
+
+      .analysis-card h3 {
+        margin: 0 0 8px;
+        font-size: 20px;
+      }
+
+      .analysis-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+
+      .topics {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        margin-top: 30px;
+      }
+
+      .topic {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: white;
+      }
+
+      .topic-dot {
+        width: 9px;
+        height: 9px;
+        flex: 0 0 auto;
+        border-radius: 50%;
+        background: var(--blue);
+      }
+
+      .topic span {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      /* =========================
+         SAMPLE
+      ========================== */
 
       .sample-box {
-        padding: 25px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 25px;
+        align-items: center;
+        padding: 35px;
+        border-radius: 24px;
+        color: white;
+        background: linear-gradient(135deg, #123f9d, #1d62da);
+        box-shadow: var(--shadow);
       }
-
 
       .sample-box h2 {
-        font-size: 25px;
+        margin: 0 0 8px;
+        font-size: 30px;
       }
 
+      .sample-box p {
+        margin: 0;
+        max-width: 700px;
+        color: rgba(255, 255, 255, 0.84);
+      }
 
       .sample-actions {
-        flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
+      /* =========================
+         FAQ
+      ========================== */
 
-      .sample-actions .btn {
+      .faq-list {
+        max-width: 850px;
+        margin: 0 auto;
+        display: grid;
+        gap: 13px;
+      }
+
+      .faq {
+        padding: 21px 23px;
+        border: 1px solid var(--border);
+        border-radius: 15px;
+        background: white;
+      }
+
+      .faq h3 {
+        margin: 0 0 7px;
+        font-size: 17px;
+      }
+
+      .faq p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* =========================
+         FINAL CTA
+      ========================== */
+
+      .final-cta {
+        padding: 82px 20px;
+        text-align: center;
+        color: white;
+        background: #102f73;
+      }
+
+      .final-cta h2 {
+        margin: 0 0 12px;
+        font-size: clamp(30px, 4vw, 45px);
+      }
+
+      .final-cta p {
+        max-width: 650px;
+        margin: 0 auto 25px;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      /* =========================
+         FOOTER
+      ========================== */
+
+      .site-footer {
+        color: #c6d0e5;
+        background: #091a3b;
+      }
+
+      .footer-inner {
+        width: min(1100px, calc(100% - 40px));
+        margin: 0 auto;
+        padding: 45px 0 25px;
+      }
+
+      .footer-main {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+      }
+
+      .footer-brand {
+        color: white;
+        font-size: 23px;
+        font-weight: 800;
+      }
+
+      .footer-description {
+        max-width: 420px;
+        margin: 10px 0 0;
+        color: #9eabc5;
+        font-size: 14px;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        align-content: flex-start;
+      }
+
+      .footer-links a {
+        color: #d5dced;
+        font-size: 14px;
+      }
+
+      .footer-bottom {
+        margin-top: 35px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #8d9ab4;
+        font-size: 13px;
+      }
+
+      /* =========================
+         PURCHASE MODAL
+      ========================== */
+
+      .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 5000;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: rgba(4, 15, 35, 0.72);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-backdrop.active {
+        display: flex;
+      }
+
+      .purchase-modal {
+        width: min(680px, 100%);
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+        position: relative;
+        padding: 34px;
+        border-radius: 24px;
+        background: white;
+        box-shadow: 0 30px 90px rgba(0, 0, 0, 0.3);
+        animation: modalIn 0.2s ease;
+      }
+
+      @keyframes modalIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.98);
+        }
+
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: 50%;
+        background: #f1f4f8;
+        color: #44516a;
+        font-size: 22px;
+      }
+
+      .modal-label {
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 900;
+        letter-spacing: 1.3px;
+        text-transform: uppercase;
+      }
+
+      .purchase-modal h2 {
+        margin: 7px 45px 8px 0;
+        font-size: 30px;
+        line-height: 1.2;
+      }
+
+      .modal-description {
+        margin: 0 0 25px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .edition-options {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .edition-card {
+        position: relative;
+        padding: 22px;
+        border: 2px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        transition:
+          border-color 0.2s ease,
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .edition-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--blue);
+        box-shadow: 0 12px 30px rgba(21, 87, 214, 0.1);
+      }
+
+      .edition-flag {
+        font-size: 30px;
+      }
+
+      .edition-card h3 {
+        margin: 10px 0 3px;
+        font-size: 20px;
+      }
+
+      .edition-price {
+        margin-bottom: 10px;
+        color: var(--blue);
+        font-size: 30px;
+        font-weight: 950;
+      }
+
+      .edition-card p {
+        min-height: 65px;
+        margin: 0 0 17px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .edition-card .btn {
         width: 100%;
       }
 
-
-      .footer-main {
-        flex-direction: column;
-
-        gap: 25px;
+      .modal-notice {
+        margin-top: 20px;
+        padding: 14px;
+        border-radius: 13px;
+        background: #f5f7fb;
+        color: #667085;
+        font-size: 11px;
+        line-height: 1.55;
       }
 
-
-      .footer-inner {
-        width:
-          calc(100% - 28px);
+      .modal-notice strong {
+        color: #344054;
       }
 
+      /* =========================
+         MOBILE NAV
+      ========================== */
 
-      .purchase-modal {
-        padding:
-          26px 20px;
+      @media (max-width: 900px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          left: 14px;
+          right: 14px;
+          top: 70px;
+          padding: 18px;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          background: white;
+          box-shadow: var(--shadow);
+        }
+
+        .nav-links.mobile-open {
+          display: flex;
+        }
+
+        .nav-links a {
+          padding: 12px 8px;
+        }
+
+        .mobile-menu {
+          display: grid;
+          place-items: center;
+        }
+
+        .hero-inner {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .book-layout {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .book-content {
+          text-align: center;
+        }
+
+        .book-content .check-list {
+          text-align: left;
+          max-width: 500px;
+          margin: 0 auto;
+        }
+
+        .hero-actions {
+          justify-content: center;
+        }
+
+        .feature-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .sample-box {
+          grid-template-columns: 1fr;
+        }
       }
 
+      @media (max-width: 620px) {
+        .nav {
+          width: calc(100% - 28px);
+          min-height: 64px;
+        }
 
-      .purchase-modal h2 {
-        font-size: 26px;
+        .brand {
+          font-size: 20px;
+          gap: 8px;
+        }
+
+        .brand-mark {
+          width: 38px;
+          height: 38px;
+          border-radius: 11px;
+        }
+
+        .hero {
+          padding: 52px 0 60px;
+        }
+
+        .hero-inner,
+        .section {
+          width: calc(100% - 28px);
+        }
+
+        .hero h1 {
+          margin-top: 20px;
+          font-size: 43px;
+          letter-spacing: -2px;
+        }
+
+        .hero-text {
+          font-size: 15px;
+        }
+
+        .hero-card {
+          padding: 23px;
+          border-radius: 20px;
+        }
+
+        .hero-card h2 {
+          font-size: 25px;
+        }
+
+        .section {
+          padding: 58px 0;
+        }
+
+        .section-header {
+          margin-bottom: 28px;
+        }
+
+        .section-header h2 {
+          font-size: 31px;
+        }
+
+        .book-content h2 {
+          font-size: 31px;
+        }
+
+        .feature-grid,
+        .analysis-grid,
+        .topics,
+        .edition-prices,
+        .edition-options {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-card {
+          padding: 22px;
+        }
+
+        .sample-box {
+          padding: 25px;
+        }
+
+        .sample-box h2 {
+          font-size: 25px;
+        }
+
+        .sample-actions {
+          flex-direction: column;
+        }
+
+        .sample-actions .btn {
+          width: 100%;
+        }
+
+        .footer-main {
+          flex-direction: column;
+          gap: 25px;
+        }
+
+        .footer-inner {
+          width: calc(100% - 28px);
+        }
+
+        .purchase-modal {
+          padding: 26px 20px;
+        }
+
+        .purchase-modal h2 {
+          font-size: 26px;
+        }
+
+        .edition-card p {
+          min-height: auto;
+        }
       }
+    </style>
+  </head>
 
-
-      .edition-card p {
-        min-height: auto;
-      }
-
-    }
-
-  </style>
-
-</head>
-
-
-<body>
-
-
-  <!-- =========================
-       HEADER
-  ========================== -->
-
-  <header class="site-header">
-
-    <nav
-      class="nav"
-      aria-label="Main navigation"
-    >
-
-      <a
-        class="brand"
-        href="/"
-        aria-label="Habitat IAS Home"
-      >
-
-        <span class="brand-mark">
-          H
-        </span>
-
-        <span>
-          Habitat IAS
-        </span>
-
-      </a>
-
-
-      <div class="nav-links">
-
-        <a href="/">
-          Home
-        </a>
-
-        <a href="/#jpsc">
-          JPSC
-        </a>
-
-        <a href="/#upsc">
-          UPSC
-        </a>
-
-        <a href="/book/">
-          Book
-        </a>
-
-        <a href="/guidance/">
-          Guidance
-        </a>
-
-        <a href="/trends/">
-          Trends
-        </a>
-
-        <a href="/mock-tests/">
-          Mock Tests
-        </a>
-
-        <a href="/resources/">
-          Resources
-        </a>
-
-        <a href="/contact/">
-          Contact
-        </a>
-
-
-        <button
-          class="nav-cta"
-          type="button"
-          data-open-purchase
-        >
-          Get the Book
-        </button>
-
-      </div>
-
-
-      <button
-        class="mobile-menu"
-        type="button"
-        aria-label="Open navigation menu"
-        aria-expanded="false"
-      >
-        ☰
-      </button>
-
-    </nav>
-
-  </header>
-
-
-  <main>
-
+  <body>
 
     <!-- =========================
-         HERO
+         HEADER
     ========================== -->
 
-    <section class="hero">
-
-      <div class="hero-inner">
-
-
-        <div>
-
-          <span class="eyebrow">
-            Habitat IAS • JPSC Prelims Preparation
-          </span>
-
-
-          <h1>
-
-            Understand
-
-            <span>
-              the Exam.
-            </span>
-
-          </h1>
-
-
-          <p class="hero-text">
-
-            A structured PYQ-based approach to understand what JPSC
-            actually asks, how topics repeat and where your preparation
-            should focus.
-
-          </p>
-
-
-          <div class="hero-actions">
-
-            <button
-              class="btn btn-primary"
-              type="button"
-              data-open-purchase
-            >
-              Buy the Book
-            </button>
-
-
-            <a
-              class="btn btn-light"
-              href={sampleBook}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              View Sample
-            </a>
-
-          </div>
-
-        </div>
-
-
-        <aside class="hero-card">
-
-          <div class="hero-card-label">
-            Why this book?
-          </div>
-
-
-          <h2>
-            Preparation built around the actual examination.
-          </h2>
-
-
-          <ul class="check-list">
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Study previous year questions systematically.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Understand recurring topics and examination patterns.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Identify high-priority areas before the examination.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Use explanations to connect questions with concepts.
-              </span>
-            </li>
-
-          </ul>
-
-        </aside>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         BOOK
-    ========================== -->
-
-    <section
-      class="section"
-      id="book"
-    >
-
-      <div class="section-header">
-
-        <div class="section-label">
-          The Book
-        </div>
-
-
-        <h2>
-          {bookTitle}
-        </h2>
-
-
-        <p>
-          Decode the JPSC Prelims examination through previous year
-          questions, topic classification and structured analysis.
-        </p>
-
-      </div>
-
-
-      <div class="book-layout">
-
-
-        <div class="book-cover-wrap">
-
-          <img
-            src="/book-cover.jpg"
-            alt="JPSC Prelims Decoded - Topic-Wise PYQs book cover"
-            class="book-cover-image"
-            width="1024"
-            height="1536"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-          />
-
-        </div>
-
-
-        <div class="book-content">
-
-
-          <h2>
-            JPSC PYQs, decoded topic by topic.
-          </h2>
-
-
-          <p>
-
-            This book organizes JPSC Prelims previous year questions into
-            meaningful topics so that aspirants can move beyond simply
-            solving questions and understand the pattern behind them.
-
-          </p>
-
-
-          <ul class="check-list">
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Topic-wise PYQs for systematic revision.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Subject-wise organization for focused preparation.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Detailed explanations for conceptual understanding.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Question distribution and trend-based analysis.
-              </span>
-            </li>
-
-
-            <li>
-              <span class="check">
-                ✓
-              </span>
-
-              <span>
-                Designed specifically around JPSC Prelims preparation.
-              </span>
-            </li>
-
-          </ul>
-
-
-          <!-- PRICE OPTIONS -->
-
-          <div class="edition-prices">
-
-
-            <div class="edition-mini">
-
-              <strong>
-                🇮🇳 Hindi Edition
-              </strong>
-
-              <div class="mini-price">
-                ₹{hindiPrice}
-              </div>
-
-              <small>
-                Digital PDF • Personalized copy
-              </small>
-
-            </div>
-
-
-            <div class="edition-mini">
-
-              <strong>
-                🇬🇧 English Edition
-              </strong>
-
-              <div class="mini-price">
-                ₹{englishPrice}
-              </div>
-
-              <small>
-                Digital PDF • Personalized copy
-              </small>
-
-            </div>
-
-          </div>
-
-
-          <div class="license-notice">
-
-            <strong>
-              Personalized Digital Copy:
-            </strong>
-
-            After payment, your purchased PDF will be individually
-            personalized with your name, email and unique license/order
-            information to help protect the book against unauthorized
-            redistribution.
-
-          </div>
-
-
-          <div class="hero-actions">
-
-            <button
-              class="btn btn-blue"
-              type="button"
-              data-open-purchase
-            >
-              Buy Now
-            </button>
-
-
-            <a
-              class="btn btn-outline"
-              href={sampleBook}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Read Sample
-            </a>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         FEATURES
-    ========================== -->
-
-    <section
-      class="section analysis"
-      id="features"
-    >
-
-      <div class="section-header">
-
-        <div class="section-label">
-          Inside the Book
-        </div>
-
-        <h2>
-          More than a collection of PYQs
-        </h2>
-
-        <p>
-          The objective is to convert previous year questions into a
-          practical preparation tool.
-        </p>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            01
-          </div>
-
-          <h3>
-            Topic-Wise PYQs
-          </h3>
-
-          <p>
-            Questions are organized according to their underlying topics,
-            making revision more focused and efficient.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            02
-          </div>
-
-          <h3>
-            Subject-Wise Coverage
-          </h3>
-
-          <p>
-            Major areas of the JPSC Prelims syllabus are brought together
-            in a structured format.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            03
-          </div>
-
-          <h3>
-            Detailed Explanations
-          </h3>
-
-          <p>
-            Explanations are designed to help aspirants understand the
-            concept behind the question.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            04
-          </div>
-
-          <h3>
-            Trend Analysis
-          </h3>
-
-          <p>
-            Previous questions are examined to identify recurring areas
-            and patterns in question distribution.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            05
-          </div>
-
-          <h3>
-            Graphical Analysis
-          </h3>
-
-          <p>
-            Data-driven presentation makes question distribution easier
-            to understand and revise.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            06
-          </div>
-
-          <h3>
-            Exam-Oriented Approach
-          </h3>
-
-          <p>
-            The material is designed to support prioritization, revision
-            and practical Prelims preparation.
-          </p>
-
-        </article>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         ANALYSIS
-    ========================== -->
-
-    <section
-      class="section"
-      id="analysis"
-    >
-
-      <div class="section-header">
-
-        <div class="section-label">
-          Question Analysis
-        </div>
-
-        <h2>
-          Know where the questions come from
-        </h2>
-
-        <p>
-          Instead of treating every chapter equally, use previous year
-          questions to understand the relative importance of topics.
-        </p>
-
-      </div>
-
-
-      <div class="analysis-grid">
-
-
-        <article class="analysis-card">
-
-          <h3>
-            Question Distribution
-          </h3>
-
-          <p>
-            Study how questions have been distributed across different
-            topics and subjects.
-          </p>
-
-        </article>
-
-
-        <article class="analysis-card">
-
-          <h3>
-            Recurring Themes
-          </h3>
-
-          <p>
-            Identify areas that repeatedly appear in JPSC Prelims and
-            deserve greater attention.
-          </p>
-
-        </article>
-
-
-        <article class="analysis-card">
-
-          <h3>
-            Priority Areas
-          </h3>
-
-          <p>
-            Use historical question patterns to build a more rational
-            revision strategy.
-          </p>
-
-        </article>
-
-
-        <article class="analysis-card">
-
-          <h3>
-            Conceptual Connections
-          </h3>
-
-          <p>
-            Connect individual questions with broader syllabus concepts
-            instead of memorizing isolated facts.
-          </p>
-
-        </article>
-
-
-      </div>
-
-
-      <div class="topics">
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Current Affairs</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Indian Polity</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>History</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Geography</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Economy</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Science & Technology</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Environment</span>
-        </div>
-
-
-        <div class="topic">
-          <span class="topic-dot"></span>
-          <span>Jharkhand Specific Topics</span>
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         PURCHASE BENEFITS
-    ========================== -->
-
-    <section class="section">
-
-      <div class="section-header">
-
-        <div class="section-label">
-          Digital Edition
-        </div>
-
-        <h2>
-          What you receive after purchase
-        </h2>
-
-        <p>
-          Your selected edition will be delivered as a personalized
-          digital PDF after successful payment.
-        </p>
-
-      </div>
-
-
-      <div class="feature-grid">
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            01
-          </div>
-
-          <h3>
-            Choose Your Language
-          </h3>
-
-          <p>
-            Select the Hindi edition for ₹249 or English edition for ₹299.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            02
-          </div>
-
-          <h3>
-            Personalized Copy
-          </h3>
-
-          <p>
-            Your name, email and unique license information can be
-            incorporated into the delivered PDF.
-          </p>
-
-        </article>
-
-
-        <article class="feature-card">
-
-          <div class="feature-number">
-            03
-          </div>
-
-          <h3>
-            Digital Delivery
-          </h3>
-
-          <p>
-            After successful payment, your personalized digital copy will
-            be prepared for secure delivery.
-          </p>
-
-        </article>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- =========================
-         SAMPLE
-    ========================== -->
-
-    <section class="section">
-
-      <div class="sample-box">
-
-
-        <div>
-
-          <h2>
-            Want to see the book first?
-          </h2>
-
-          <p>
-            Read the available sample and understand the structure,
-            presentation and PYQ-based approach before purchasing.
-          </p>
-
-        </div>
-
-
-        <div class="sample-actions">
-
-          <a
-            class="btn btn-primary"
-            href={sampleBook}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            📖 View Sample PDF
-          </a>
-
+    <header class="site-header">
+      <nav class="nav" aria-label="Main navigation">
+
+        <a class="brand" href="/" aria-label="Habitat IAS Home">
+          <span class="brand-mark">H</span>
+          <span>Habitat IAS</span>
+        </a>
+
+        <div class="nav-links">
+
+          <a href="/">Home</a>
+          <a href="/#jpsc">JPSC</a>
+          <a href="/#upsc">UPSC</a>
+          <a href="/book/">Book</a>
+          <a href="/guidance/">Guidance</a>
+          <a href="/trends/">Trends</a>
+          <a href="/mock-tests/">Mock Tests</a>
+          <a href="/resources/">Resources</a>
+          <a href="/contact/">Contact</a>
 
           <button
-            class="btn btn-light"
+            class="nav-cta"
             type="button"
             data-open-purchase
           >
-            🛒 Buy Now
+            Get the Book
           </button>
 
         </div>
 
-      </div>
+        <button
+          class="mobile-menu"
+          type="button"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
 
-    </section>
+      </nav>
+    </header>
 
 
-    <!-- =========================
-         FAQ
-    ========================== -->
+    <main>
 
-    <section
-      class="section"
-      id="faq"
-    >
+      <!-- =========================
+           HERO
+      ========================== -->
 
-      <div class="section-header">
+      <section class="hero">
 
-        <div class="section-label">
-          FAQ
+        <div class="hero-inner">
+
+          <div>
+
+            <span class="eyebrow">
+              Habitat IAS • JPSC Prelims Preparation
+            </span>
+
+            <h1>
+              Understand
+              <span>the Exam.</span>
+            </h1>
+
+            <p class="hero-text">
+              A structured PYQ-based approach to understand what JPSC
+              actually asks, how topics repeat and where your preparation
+              should focus.
+            </p>
+
+            <div class="hero-actions">
+
+              <button
+                class="btn btn-primary"
+                type="button"
+                data-open-purchase
+              >
+                Buy the Book
+              </button>
+
+              <a
+                class="btn btn-light"
+                href={sampleBook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Sample
+              </a>
+
+            </div>
+
+          </div>
+
+
+          <aside class="hero-card">
+
+            <div class="hero-card-label">
+              Why this book?
+            </div>
+
+            <h2>
+              Preparation built around the actual examination.
+            </h2>
+
+            <ul class="check-list">
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Study previous year questions systematically.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Understand recurring topics and examination patterns.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Identify high-priority areas before the examination.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Use explanations to connect questions with concepts.
+                </span>
+              </li>
+
+            </ul>
+
+          </aside>
+
         </div>
+
+      </section>
+
+
+      <!-- =========================
+           BOOK
+      ========================== -->
+
+      <section class="section" id="book">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            The Book
+          </div>
+
+          <h2>
+            {bookTitle}
+          </h2>
+
+          <p>
+            Decode the JPSC Prelims examination through previous year
+            questions, topic classification and structured analysis.
+          </p>
+
+        </div>
+
+
+        <div class="book-layout">
+
+          <div class="book-cover-wrap">
+
+            <img
+              src="/book-cover.jpg"
+              alt="JPSC Prelims Decoded - Topic-Wise PYQs book cover"
+              class="book-cover-image"
+              width="1024"
+              height="1536"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+
+          </div>
+
+
+          <div class="book-content">
+
+            <h2>
+              JPSC PYQs, decoded topic by topic.
+            </h2>
+
+            <p>
+              This book organizes JPSC Prelims previous year questions into
+              meaningful topics so that aspirants can move beyond simply
+              solving questions and understand the pattern behind them.
+            </p>
+
+
+            <ul class="check-list">
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Topic-wise PYQs for systematic revision.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Subject-wise organization for focused preparation.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Detailed explanations for conceptual understanding.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Question distribution and trend-based analysis.
+                </span>
+              </li>
+
+              <li>
+                <span class="check">✓</span>
+                <span>
+                  Designed specifically around JPSC Prelims preparation.
+                </span>
+              </li>
+
+            </ul>
+
+
+            <!-- PRICE OPTIONS -->
+
+            <div class="edition-prices">
+
+              <div class="edition-mini">
+
+                <strong>
+                  🇮🇳 Hindi Edition
+                </strong>
+
+                <div class="mini-price">
+                  ₹{hindiPrice}
+                </div>
+
+                <small>
+                  Digital PDF • Personalized copy
+                </small>
+
+              </div>
+
+
+              <div class="edition-mini">
+
+                <strong>
+                  🇬🇧 English Edition
+                </strong>
+
+                <div class="mini-price">
+                  ₹{englishPrice}
+                </div>
+
+                <small>
+                  Digital PDF • Personalized copy
+                </small>
+
+              </div>
+
+            </div>
+
+
+            <div class="license-notice">
+
+              <strong>Personalized Digital Copy:</strong>
+              After payment, your purchased PDF will be individually
+              personalized with your name, email and unique license/order
+              information to help protect the book against unauthorized
+              redistribution.
+
+            </div>
+
+
+            <div class="hero-actions">
+
+              <button
+                class="btn btn-blue"
+                type="button"
+                data-open-purchase
+              >
+                Buy Now
+              </button>
+
+              <a
+                class="btn btn-outline"
+                href={sampleBook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Read Sample
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           FEATURES
+      ========================== -->
+
+      <section class="section analysis" id="features">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Inside the Book
+          </div>
+
+          <h2>
+            More than a collection of PYQs
+          </h2>
+
+          <p>
+            The objective is to convert previous year questions into a
+            practical preparation tool.
+          </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+          <article class="feature-card">
+            <div class="feature-number">01</div>
+            <h3>Topic-Wise PYQs</h3>
+            <p>
+              Questions are organized according to their underlying topics,
+              making revision more focused and efficient.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">02</div>
+            <h3>Subject-Wise Coverage</h3>
+            <p>
+              Major areas of the JPSC Prelims syllabus are brought together
+              in a structured format.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">03</div>
+            <h3>Detailed Explanations</h3>
+            <p>
+              Explanations are designed to help aspirants understand the
+              concept behind the question.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">04</div>
+            <h3>Trend Analysis</h3>
+            <p>
+              Previous questions are examined to identify recurring areas
+              and patterns in question distribution.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">05</div>
+            <h3>Graphical Analysis</h3>
+            <p>
+              Data-driven presentation makes question distribution easier
+              to understand and revise.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">06</div>
+            <h3>Exam-Oriented Approach</h3>
+            <p>
+              The material is designed to support prioritization, revision
+              and practical Prelims preparation.
+            </p>
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           ANALYSIS
+      ========================== -->
+
+      <section class="section" id="analysis">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Question Analysis
+          </div>
+
+          <h2>
+            Know where the questions come from
+          </h2>
+
+          <p>
+            Instead of treating every chapter equally, use previous year
+            questions to understand the relative importance of topics.
+          </p>
+
+        </div>
+
+
+        <div class="analysis-grid">
+
+          <article class="analysis-card">
+            <h3>Question Distribution</h3>
+            <p>
+              Study how questions have been distributed across different
+              topics and subjects.
+            </p>
+          </article>
+
+
+          <article class="analysis-card">
+            <h3>Recurring Themes</h3>
+            <p>
+              Identify areas that repeatedly appear in JPSC Prelims and
+              deserve greater attention.
+            </p>
+          </article>
+
+
+          <article class="analysis-card">
+            <h3>Priority Areas</h3>
+            <p>
+              Use historical question patterns to build a more rational
+              revision strategy.
+            </p>
+          </article>
+
+
+          <article class="analysis-card">
+            <h3>Conceptual Connections</h3>
+            <p>
+              Connect individual questions with broader syllabus concepts
+              instead of memorizing isolated facts.
+            </p>
+          </article>
+
+        </div>
+
+
+        <div class="topics">
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Current Affairs</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Indian Polity</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>History</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Geography</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Economy</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Science & Technology</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Environment</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-dot"></span>
+            <span>Jharkhand Specific Topics</span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           PURCHASE BENEFITS
+      ========================== -->
+
+      <section class="section">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            Digital Edition
+          </div>
+
+          <h2>
+            What you receive after purchase
+          </h2>
+
+          <p>
+            Your selected edition will be delivered as a personalized
+            digital PDF after successful payment.
+          </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+          <article class="feature-card">
+            <div class="feature-number">01</div>
+            <h3>Choose Your Language</h3>
+            <p>
+              Select the Hindi edition for ₹249 or English edition for ₹299.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">02</div>
+            <h3>Personalized Copy</h3>
+            <p>
+              Your name, email and unique license information can be
+              incorporated into the delivered PDF.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-number">03</div>
+            <h3>Digital Delivery</h3>
+            <p>
+              After successful payment, your personalized digital copy will
+              be prepared for secure delivery.
+            </p>
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           SAMPLE
+      ========================== -->
+
+      <section class="section">
+
+        <div class="sample-box">
+
+          <div>
+
+            <h2>
+              Want to see the book first?
+            </h2>
+
+            <p>
+              Read the available sample and understand the structure,
+              presentation and PYQ-based approach before purchasing.
+            </p>
+
+          </div>
+
+
+          <div class="sample-actions">
+
+            <a
+              class="btn btn-primary"
+              href={sampleBook}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              📖 View Sample PDF
+            </a>
+
+            <button
+              class="btn btn-light"
+              type="button"
+              data-open-purchase
+            >
+              🛒 Buy Now
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           FAQ
+      ========================== -->
+
+      <section class="section" id="faq">
+
+        <div class="section-header">
+
+          <div class="section-label">
+            FAQ
+          </div>
+
+          <h2>
+            Frequently asked questions
+          </h2>
+
+        </div>
+
+
+        <div class="faq-list">
+
+          <article class="faq">
+
+            <h3>
+              Who is this book for?
+            </h3>
+
+            <p>
+              It is primarily intended for aspirants preparing for the JPSC
+              Civil Services Preliminary Examination.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              What does the book contain?
+            </h3>
+
+            <p>
+              It contains previous year questions organized by subject and
+              topic, along with explanations and question-trend analysis.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              Why study PYQs?
+            </h3>
+
+            <p>
+              PYQs provide direct evidence of how the examination has tested
+              the syllabus and help aspirants identify recurring patterns.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              What are the prices?
+            </h3>
+
+            <p>
+              The Hindi digital edition costs ₹249 and the English digital
+              edition costs ₹299.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              Will I receive a personalized PDF?
+            </h3>
+
+            <p>
+              Yes. The planned delivery system will generate a personalized
+              digital copy containing purchaser identification and a unique
+              license/order identifier.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              Is Aadhaar required?
+            </h3>
+
+            <p>
+              No. Aadhaar is not required for purchasing the digital book.
+              We intend to use basic purchaser information such as name,
+              email and order information for personalization and delivery.
+            </p>
+
+          </article>
+
+
+          <article class="faq">
+
+            <h3>
+              Can I see a sample before purchasing?
+            </h3>
+
+            <p>
+              Yes. Use the View Sample button to inspect the available sample
+              before purchasing.
+            </p>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           FINAL CTA
+      ========================== -->
+
+      <section class="final-cta">
 
         <h2>
-          Frequently asked questions
+          Prepare from the questions that actually mattered.
         </h2>
 
-      </div>
+        <p>
+          Understand the JPSC examination through its previous year
+          questions and build a more focused Prelims strategy.
+        </p>
 
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-open-purchase
+        >
+          Get JPSC Prelims Decoded
+        </button>
 
-      <div class="faq-list">
+      </section>
 
-
-        <article class="faq">
-
-          <h3>
-            Who is this book for?
-          </h3>
-
-          <p>
-            It is primarily intended for aspirants preparing for the JPSC
-            Civil Services Preliminary Examination.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            What does the book contain?
-          </h3>
-
-          <p>
-            It contains previous year questions organized by subject and
-            topic, along with explanations and question-trend analysis.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            Why study PYQs?
-          </h3>
-
-          <p>
-            PYQs provide direct evidence of how the examination has tested
-            the syllabus and help aspirants identify recurring patterns.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            What are the prices?
-          </h3>
-
-          <p>
-            The Hindi digital edition costs ₹249 and the English digital
-            edition costs ₹299.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            Will I receive a personalized PDF?
-          </h3>
-
-          <p>
-            Yes. The planned delivery system will generate a personalized
-            digital copy containing purchaser identification and a unique
-            license/order identifier.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            Is Aadhaar required?
-          </h3>
-
-          <p>
-            No. Aadhaar is not required for purchasing the digital book.
-            We intend to use basic purchaser information such as name,
-            email and order information for personalization and delivery.
-          </p>
-
-        </article>
-
-
-        <article class="faq">
-
-          <h3>
-            Can I see a sample before purchasing?
-          </h3>
-
-          <p>
-            Yes. Use the View Sample button to inspect the available sample
-            before purchasing.
-          </p>
-
-        </article>
-
-
-      </div>
-
-    </section>
+    </main>
 
 
     <!-- =========================
-         FINAL CTA
+         FOOTER
     ========================== -->
 
-    <section class="final-cta">
+    <footer class="site-footer">
 
-      <h2>
-        Prepare from the questions that actually mattered.
-      </h2>
+      <div class="footer-inner">
 
-      <p>
-        Understand the JPSC examination through its previous year
-        questions and build a more focused Prelims strategy.
-      </p>
+        <div class="footer-main">
 
+          <div>
 
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-open-purchase
-      >
-        Get JPSC Prelims Decoded
-      </button>
+            <div class="footer-brand">
+              Habitat IAS
+            </div>
 
-    </section>
+            <p class="footer-description">
+              Exam-oriented preparation resources for JPSC and UPSC
+              aspirants, with a focus on PYQs, trends, concepts and
+              structured learning.
+            </p>
 
-
-  </main>
-
-
-  <!-- =========================
-       FOOTER
-  ========================== -->
-
-  <footer class="site-footer">
-
-    <div class="footer-inner">
-
-      <div class="footer-main">
-
-
-        <div>
-
-          <div class="footer-brand">
-            Habitat IAS
           </div>
 
-          <p class="footer-description">
 
-            Exam-oriented preparation resources for JPSC and UPSC
-            aspirants, with a focus on PYQs, trends, concepts and
-            structured learning.
+          <div class="footer-links">
 
-          </p>
+            <a href="/">Home</a>
+            <a href="/pyq/">JPSC PYQs</a>
+            <a href="/guidance/">Guidance</a>
+            <a href="/trends/">Trends</a>
+            <a href="/mock-tests/">Mock Tests</a>
+            <a href="/resources/">Resources</a>
+            <a href="/contact/">Contact</a>
 
-        </div>
-
-
-        <div class="footer-links">
-
-          <a href="/">
-            Home
-          </a>
-
-          <a href="/pyq/">
-            JPSC PYQs
-          </a>
-
-          <a href="/guidance/">
-            Guidance
-          </a>
-
-          <a href="/trends/">
-            Trends
-          </a>
-
-          <a href="/mock-tests/">
-            Mock Tests
-          </a>
-
-          <a href="/resources/">
-            Resources
-          </a>
-
-          <a href="/contact/">
-            Contact
-          </a>
+          </div>
 
         </div>
 
 
-      </div>
-
-
-      <div class="footer-bottom">
-
-        © {new Date().getFullYear()}
-        Habitat IAS. All rights reserved.
+        <div class="footer-bottom">
+          © {new Date().getFullYear()} Habitat IAS. All rights reserved.
+        </div>
 
       </div>
 
-    </div>
-
-  </footer>
+    </footer>
 
 
-  <!-- =========================
-       PURCHASE MODAL
-  ========================== -->
-
-  <div
-    class="modal-backdrop"
-    id="purchaseModal"
-    aria-hidden="true"
-  >
-
+    <!-- =========================
+         PURCHASE MODAL
+    ========================== -->
 
     <div
-      class="purchase-modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="purchaseModalTitle"
+      class="modal-backdrop"
+      id="purchaseModal"
+      aria-hidden="true"
     >
 
-
-      <button
-        class="modal-close"
-        type="button"
-        id="closePurchaseModal"
-        aria-label="Close purchase options"
+      <div
+        class="purchase-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="purchaseModalTitle"
       >
-        ×
-      </button>
+
+        <button
+          class="modal-close"
+          type="button"
+          id="closePurchaseModal"
+          aria-label="Close purchase options"
+        >
+          ×
+        </button>
 
 
-      <div class="modal-label">
-        JPSC PRELIMS DECODED
-      </div>
+        <div class="modal-label">
+          JPSC PRELIMS DECODED
+        </div>
+
+        <h2 id="purchaseModalTitle">
+          Choose your edition
+        </h2>
+
+        <p class="modal-description">
+          Select the language of the digital book you want to purchase.
+          Payment and personalized PDF delivery will be connected in the
+          next stage.
+        </p>
 
 
-      <h2 id="purchaseModalTitle">
-        Choose your edition
-      </h2>
+        <div class="edition-options">
 
+          <!-- HINDI -->
 
-      <p class="modal-description">
+          <div class="edition-card">
 
-        Select the language of the digital book you want to purchase.
-        Payment and personalized PDF delivery will be connected in the
-        next stage.
+            <div class="edition-flag">
+              🇮🇳
+            </div>
 
-      </p>
+            <h3>
+              Hindi Edition
+            </h3>
 
+            <div class="edition-price">
+              ₹{hindiPrice}
+            </div>
 
-      <div class="edition-options">
+            <p>
+              JPSC Prelims Decoded in Hindi with topic-wise PYQs,
+              explanations and exam-focused analysis.
+            </p>
 
+            <button
+              class="btn btn-blue edition-buy"
+              type="button"
+              data-edition="hindi"
+              data-price={hindiPrice}
+            >
+              Buy Hindi — ₹{hindiPrice}
+            </button>
 
-        <!-- =========================
-             HINDI EDITION
-        ========================== -->
-
-        <div class="edition-card">
-
-
-          <div class="edition-flag">
-            🇮🇳
           </div>
 
 
-          <h3>
-            Hindi Edition
-          </h3>
+          <!-- ENGLISH -->
 
+          <div class="edition-card">
 
-          <div class="edition-price">
-            ₹{hindiPrice}
+            <div class="edition-flag">
+              🇬🇧
+            </div>
+
+            <h3>
+              English Edition
+            </h3>
+
+            <div class="edition-price">
+              ₹{englishPrice}
+            </div>
+
+            <p>
+              JPSC Prelims Decoded in English with topic-wise PYQs,
+              explanations and exam-focused analysis.
+            </p>
+
+            <button
+              class="btn btn-blue edition-buy"
+              type="button"
+              data-edition="english"
+              data-price={englishPrice}
+            >
+              Buy English — ₹{englishPrice}
+            </button>
+
           </div>
-
-
-          <p>
-
-            JPSC Prelims Decoded in Hindi with topic-wise PYQs,
-            explanations and exam-focused analysis.
-
-          </p>
-
-
-          <button
-            class="btn btn-blue edition-buy"
-            type="button"
-            data-edition="hindi"
-          >
-            Buy Hindi — ₹{hindiPrice}
-          </button>
-
 
         </div>
 
 
-        <!-- =========================
-             ENGLISH EDITION
-        ========================== -->
+        <div class="modal-notice">
 
-        <div class="edition-card">
-
-
-          <div class="edition-flag">
-            🇬🇧
-          </div>
-
-
-          <h3>
-            English Edition
-          </h3>
-
-
-          <div class="edition-price">
-            ₹{englishPrice}
-          </div>
-
-
-          <p>
-
-            JPSC Prelims Decoded in English with topic-wise PYQs,
-            explanations and exam-focused analysis.
-
-          </p>
-
-
-          <button
-            class="btn btn-blue edition-buy"
-            type="button"
-            data-edition="english"
-          >
-            Buy English — ₹{englishPrice}
-          </button>
-
+          <strong>Personalized digital copy:</strong>
+          Your final purchased PDF will be associated with your order and
+          personalized using purchaser information. The PDF is intended for
+          personal educational use and should not be publicly shared,
+          uploaded, resold or redistributed.
 
         </div>
 
-
       </div>
-
-
-      <div class="modal-notice">
-
-        <strong>
-          Personalized digital copy:
-        </strong>
-
-        Your final purchased PDF will be associated with your order and
-        personalized using purchaser information. The PDF is intended for
-        personal educational use and should not be publicly shared,
-        uploaded, resold or redistributed.
-
-      </div>
-
 
     </div>
 
-  </div>
 
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
+    <script>
+      const menuButton =
+        document.querySelector(".mobile-menu");
 
-  <script>
+      const navLinks =
+        document.querySelector(".nav-links");
 
-    /*
-     * =========================================================
-     * MOBILE MENU
-     * =========================================================
-     */
-
-    const menuButton =
-      document.querySelector(".mobile-menu");
-
-
-    const navLinks =
-      document.querySelector(".nav-links");
-
-
-    if (
-      menuButton &&
-      navLinks
-    ) {
-
-      menuButton.addEventListener(
-        "click",
-        () => {
+      if (menuButton && navLinks) {
+        menuButton.addEventListener("click", () => {
 
           const isOpen =
-            navLinks.classList.toggle(
-              "mobile-open"
-            );
-
+            navLinks.classList.toggle("mobile-open");
 
           menuButton.setAttribute(
             "aria-expanded",
             String(isOpen)
           );
 
-        }
-      );
-
-    }
-
-
-    /*
-     * =========================================================
-     * PURCHASE MODAL
-     * =========================================================
-     */
-
-    const purchaseModal =
-      document.getElementById(
-        "purchaseModal"
-      );
-
-
-    const closePurchaseModal =
-      document.getElementById(
-        "closePurchaseModal"
-      );
-
-
-    const openPurchaseButtons =
-      document.querySelectorAll(
-        "[data-open-purchase]"
-      );
-
-
-    function openModal() {
-
-      if (!purchaseModal) {
-        return;
+        });
       }
 
 
-      purchaseModal.classList.add(
-        "active"
-      );
+      /* =========================
+         PURCHASE MODAL
+      ========================== */
+
+      const purchaseModal =
+        document.getElementById("purchaseModal");
+
+      const closePurchaseModal =
+        document.getElementById("closePurchaseModal");
+
+      const openPurchaseButtons =
+        document.querySelectorAll("[data-open-purchase]");
 
 
-      purchaseModal.setAttribute(
-        "aria-hidden",
-        "false"
-      );
+      function openModal() {
 
+        if (!purchaseModal) return;
 
-      document.body.classList.add(
-        "modal-open"
-      );
+        purchaseModal.classList.add("active");
 
-    }
+        purchaseModal.setAttribute(
+          "aria-hidden",
+          "false"
+        );
 
+        document.body.classList.add(
+          "modal-open"
+        );
 
-    function closeModal() {
-
-      if (!purchaseModal) {
-        return;
       }
 
 
-      purchaseModal.classList.remove(
-        "active"
-      );
+      function closeModal() {
+
+        if (!purchaseModal) return;
+
+        purchaseModal.classList.remove("active");
+
+        purchaseModal.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+        document.body.classList.remove(
+          "modal-open"
+        );
+
+      }
 
 
-      purchaseModal.setAttribute(
-        "aria-hidden",
-        "true"
-      );
-
-
-      document.body.classList.remove(
-        "modal-open"
-      );
-
-    }
-
-
-    openPurchaseButtons.forEach(
-      (button) => {
+      openPurchaseButtons.forEach((button) => {
 
         button.addEventListener(
           "click",
           openModal
         );
 
-      }
-    );
+      });
 
 
-    closePurchaseModal?.addEventListener(
-      "click",
-      closeModal
-    );
-
-
-    purchaseModal?.addEventListener(
-      "click",
-      (event) => {
-
-        if (
-          event.target ===
-          purchaseModal
-        ) {
-
-          closeModal();
-
-        }
-
-      }
-    );
-
-
-    document.addEventListener(
-      "keydown",
-      (event) => {
-
-        if (
-          event.key === "Escape" &&
-          purchaseModal?.classList.contains(
-            "active"
-          )
-        ) {
-
-          closeModal();
-
-        }
-
-      }
-    );
-
-
-    /*
-     * =========================================================
-     * EDITION SELECTION
-     *
-     * THIS IS THE IMPORTANT FIX.
-     *
-     * Hindi:
-     * /book/buy/?edition=hindi
-     *
-     * English:
-     * /book/buy/?edition=english
-     *
-     * PRICE IS NOT SENT IN THE URL.
-     *
-     * The server-side checkout decides:
-     *
-     * Hindi   = ₹249
-     * English = ₹299
-     *
-     * =========================================================
-     */
-
-    const editionButtons =
-      document.querySelectorAll(
-        ".edition-buy"
+      closePurchaseModal?.addEventListener(
+        "click",
+        closeModal
       );
 
 
-    editionButtons.forEach(
-      (button) => {
+      purchaseModal?.addEventListener(
+        "click",
+        (event) => {
+
+          if (
+            event.target === purchaseModal
+          ) {
+            closeModal();
+          }
+
+        }
+      );
+
+
+      document.addEventListener(
+        "keydown",
+        (event) => {
+
+          if (
+            event.key === "Escape" &&
+            purchaseModal?.classList.contains(
+              "active"
+            )
+          ) {
+            closeModal();
+          }
+
+        }
+      );
+
+
+      /* =========================
+         EDITION SELECTION
+         STAGE 1 ONLY
+      ========================== */
+
+      const editionButtons =
+        document.querySelectorAll(
+          ".edition-buy"
+        );
+
+
+      editionButtons.forEach((button) => {
 
         button.addEventListener(
           "click",
@@ -3125,58 +2142,44 @@ const englishPrice = 299;
                 "data-edition"
               );
 
-
-            /*
-             * Hindi Edition
-             */
-
-            if (
-              edition === "hindi"
-            ) {
-
-              window.location.assign(
-                "/book/buy/?edition=hindi"
+            const price =
+              button.getAttribute(
+                "data-price"
               );
 
+
+            /*
+             * Stage 1:
+             * We are only selecting the edition.
+             *
+             * Stage 2 will replace this alert
+             * with the actual checkout route.
+             */
+
+            if (edition === "hindi") {
+
+              window.location.href =
+                `/book/buy/?edition=hindi&price=${price}`;
+
               return;
+
             }
 
 
-            /*
-             * English Edition
-             */
+            if (edition === "english") {
 
-            if (
-              edition === "english"
-            ) {
-
-              window.location.assign(
-                "/book/buy/?edition=english"
-              );
+              window.location.href =
+                `/book/buy/?edition=english&price=${price}`;
 
               return;
+
             }
-
-
-            /*
-             * Invalid edition protection
-             */
-
-            console.error(
-              "Invalid book edition:",
-              edition
-            );
 
           }
         );
 
-      }
-    );
+      });
+    </script>
 
-
-  </script>
-
-
-</body>
-
+  </body>
 </html>

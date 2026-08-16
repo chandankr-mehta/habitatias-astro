@@ -1,0 +1,868 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import SEO from "../../components/SEO.astro";
+
+const articles = [
+  {
+    category: "JPSC PREPARATION",
+    title: "JPSC Prelims Syllabus 2027: Complete Paper 1 & Paper 2 Syllabus, Exam Pattern & Preparation Strategy",
+    description:
+      "Understand the JPSC Preliminary Examination syllabus, paper structure, important subjects, Jharkhand-specific preparation and a practical strategy for preparation.",
+    href: "/blog/jpsc-prelims-syllabus/",
+    date: "Updated August 2026",
+    readTime: "12 min read",
+    featured: true,
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <SEO
+      title="JPSC Blog | Preparation, PYQs, Current Affairs & Mock Tests | Habitat IAS"
+      description="Habitat IAS JPSC blog with exam preparation strategy, syllabus, PYQ analysis, Jharkhand GK, current affairs, mock-test guidance and useful resources for JPSC aspirants."
+      canonical="/blog/"
+      keywords="JPSC blog, JPSC preparation, JPSC syllabus, JPSC PYQ, JPSC current affairs, JPSC mock test, Jharkhand GK, JPSC strategy"
+    />
+
+    <meta name="theme-color" content="#1657d9" />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <!-- HERO -->
+      <section class="blog-hero">
+        <div class="hero-glow"></div>
+
+        <div class="container hero-inner">
+          <div class="hero-copy">
+            <div class="eyebrow">HABITAT IAS • JPSC KNOWLEDGE HUB</div>
+
+            <h1>
+              Prepare smarter.
+              <br />
+              <span>Understand the exam.</span>
+            </h1>
+
+            <p>
+              Practical JPSC preparation resources built around the syllabus,
+              previous year questions, Jharkhand-specific knowledge, current
+              affairs, exam trends and mock-test practice.
+            </p>
+
+            <div class="hero-actions">
+              <a href="/pyq/" class="button button-yellow">
+                Explore JPSC PYQs →
+              </a>
+
+              <a href="/mock-tests/" class="button button-outline">
+                Practice Mock Tests →
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="panel-label">WHAT YOU'LL FIND</div>
+
+            <div class="panel-grid">
+              <div>
+                <strong>PYQs</strong>
+                <span>Previous year analysis</span>
+              </div>
+
+              <div>
+                <strong>Strategy</strong>
+                <span>Exam-focused preparation</span>
+              </div>
+
+              <div>
+                <strong>Jharkhand</strong>
+                <span>State-specific knowledge</span>
+              </div>
+
+              <div>
+                <strong>Mocks</strong>
+                <span>Practice & performance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURED -->
+      <section class="section featured-section">
+        <div class="container">
+          <div class="section-heading">
+            <div class="section-label">START HERE</div>
+            <h2>
+              Featured <span>JPSC Guide</span>
+            </h2>
+            <p>
+              Start with the fundamentals, then move from syllabus to PYQs,
+              practice and performance analysis.
+            </p>
+          </div>
+
+          {articles.filter((article) => article.featured).map((article) => (
+            <article class="featured-card">
+              <div class="featured-content">
+                <div class="article-meta">
+                  <span>{article.category}</span>
+                  <span>•</span>
+                  <span>{article.readTime}</span>
+                  <span>•</span>
+                  <span>{article.date}</span>
+                </div>
+
+                <h3>{article.title}</h3>
+
+                <p>{article.description}</p>
+
+                <a href={article.href} class="read-button">
+                  Read Complete Guide →
+                </a>
+              </div>
+
+              <div class="featured-number">
+                <span>01</span>
+                <small>JPSC<br />GUIDE</small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- TOPICS -->
+      <section class="section topics-section">
+        <div class="container">
+          <div class="section-heading">
+            <div class="section-label">EXPLORE BY TOPIC</div>
+            <h2>
+              Build your preparation
+              <span>systematically.</span>
+            </h2>
+            <p>
+              The blog will grow into a structured JPSC knowledge hub instead
+              of a collection of unrelated articles.
+            </p>
+          </div>
+
+          <div class="topic-grid">
+            <a href="/blog/jpsc-prelims-syllabus/" class="topic-card">
+              <span class="topic-number">01</span>
+              <h3>JPSC Syllabus</h3>
+              <p>Paper-wise syllabus, exam pattern and preparation guidance.</p>
+              <span class="topic-link">Explore →</span>
+            </a>
+
+            <a href="/pyq/" class="topic-card">
+              <span class="topic-number">02</span>
+              <h3>PYQ Analysis</h3>
+              <p>Previous year questions organised for systematic analysis.</p>
+              <span class="topic-link">Explore PYQs →</span>
+            </a>
+
+            <a href="/jharkhand/" class="topic-card">
+              <span class="topic-number">03</span>
+              <h3>Jharkhand Special</h3>
+              <p>History, geography, culture, tribes, economy and state affairs.</p>
+              <span class="topic-link">Explore →</span>
+            </a>
+
+            <a href="/mock-tests/" class="topic-card">
+              <span class="topic-number">04</span>
+              <h3>Mock Tests</h3>
+              <p>Practice strategy, test analysis and performance improvement.</p>
+              <span class="topic-link">Practice →</span>
+            </a>
+
+            <a href="/notes/" class="topic-card">
+              <span class="topic-number">05</span>
+              <h3>Study Resources</h3>
+              <p>Structured resources designed around competitive-exam preparation.</p>
+              <span class="topic-link">Explore Notes →</span>
+            </a>
+
+            <div class="topic-card coming-card">
+              <span class="topic-number">06</span>
+              <h3>Current Affairs</h3>
+              <p>Monthly and topic-wise current affairs for JPSC preparation.</p>
+              <span class="coming">COMING NEXT</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PREPARATION PATH -->
+      <section class="section path-section">
+        <div class="container">
+          <div class="path-layout">
+            <div>
+              <div class="section-label">HABITAT IAS METHOD</div>
+
+              <h2>
+                From information
+                <span>to performance.</span>
+              </h2>
+
+              <p>
+                Use the blog to understand a topic, PYQs to understand how
+                JPSC asks it, and mock tests to measure whether you can
+                perform under examination conditions.
+              </p>
+
+              <a href="/mock-tests/" class="button button-primary">
+                Start Practising →
+              </a>
+            </div>
+
+            <div class="steps">
+              <div class="step">
+                <strong>01</strong>
+                <div>
+                  <h3>Understand</h3>
+                  <p>Learn the syllabus and core concepts.</p>
+                </div>
+              </div>
+
+              <div class="step">
+                <strong>02</strong>
+                <div>
+                  <h3>Analyse</h3>
+                  <p>Study previous year questions and trends.</p>
+                </div>
+              </div>
+
+              <div class="step">
+                <strong>03</strong>
+                <div>
+                  <h3>Practise</h3>
+                  <p>Attempt topic-wise and full-length tests.</p>
+                </div>
+              </div>
+
+              <div class="step">
+                <strong>04</strong>
+                <div>
+                  <h3>Improve</h3>
+                  <p>Analyse mistakes and strengthen weak areas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- BOOK CTA -->
+      <section class="book-cta">
+        <div class="container">
+          <div class="cta-inner">
+            <div>
+              <div class="section-label">JPSC PRELIMS • PYQs</div>
+
+              <h2>
+                Don't just study the syllabus.
+                <span>Study the questions.</span>
+              </h2>
+
+              <p>
+                Explore Habitat IAS's topic-wise JPSC PYQ resource and connect
+                syllabus topics with the questions actually asked in previous
+                examinations.
+              </p>
+            </div>
+
+            <div class="cta-actions">
+              <a href="/book/" class="button button-yellow">
+                Explore JPSC Book →
+              </a>
+
+              <a href="/pyq/" class="button button-outline">
+                Explore PYQs →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) {
+    box-sizing: border-box;
+  }
+
+  :global(html) {
+    scroll-behavior: smooth;
+  }
+
+  :global(body) {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #10264d;
+    background: #ffffff;
+    overflow-x: hidden;
+  }
+
+  :global(a) {
+    text-decoration: none;
+  }
+
+  :root {
+    --blue: #1657d9;
+    --dark-blue: #0d2450;
+    --deep-blue: #102a61;
+    --yellow: #ffd43b;
+    --light-blue: #eef4ff;
+    --border: #dce5f5;
+    --text: #10264d;
+    --muted: #64748b;
+    --white: #ffffff;
+  }
+
+  .container {
+    width: min(1200px, calc(100% - 48px));
+    margin: 0 auto;
+  }
+
+  .section {
+    padding: 95px 0;
+  }
+
+  .section-heading {
+    max-width: 780px;
+    margin-bottom: 50px;
+  }
+
+  .section-label {
+    display: inline-block;
+    margin-bottom: 16px;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+  }
+
+  .section-heading h2 {
+    margin: 0 0 18px;
+    color: var(--dark-blue);
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.02;
+    letter-spacing: -2px;
+  }
+
+  .section-heading h2 span,
+  .path-layout h2 span {
+    color: var(--blue);
+  }
+
+  .section-heading p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    padding: 0 25px;
+    border-radius: 10px;
+    font-weight: 800;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+  }
+
+  .button-primary {
+    background: var(--blue);
+    color: white;
+    box-shadow: 0 10px 25px rgba(22, 87, 217, 0.18);
+  }
+
+  .button-yellow {
+    background: var(--yellow);
+    color: var(--dark-blue);
+  }
+
+  .button-outline {
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+  }
+
+  /* HERO */
+
+  .blog-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(120deg, #123f9f 0%, #1657d9 60%, #2d6ce4 100%);
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    right: -180px;
+    top: -250px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    min-height: 560px;
+    padding: 85px 0;
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 70px;
+    align-items: center;
+  }
+
+  .hero-copy {
+    color: white;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    padding: 11px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.42);
+    border-radius: 30px;
+    color: white;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .hero-copy h1 {
+    margin: 34px 0 25px;
+    color: white;
+    font-size: clamp(52px, 6.7vw, 88px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+  }
+
+  .hero-copy h1 span {
+    color: var(--yellow);
+  }
+
+  .hero-copy p {
+    max-width: 700px;
+    margin: 0 0 32px;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .hero-panel {
+    padding: 38px;
+    border-radius: 24px;
+    background: white;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.16);
+  }
+
+  .panel-label {
+    margin-bottom: 25px;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  .panel-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .panel-grid div {
+    padding: 22px 18px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: #f8faff;
+  }
+
+  .panel-grid strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--dark-blue);
+    font-size: 20px;
+  }
+
+  .panel-grid span {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  /* FEATURED */
+
+  .featured-section {
+    background: white;
+  }
+
+  .featured-card {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    background: #f5f8ff;
+    box-shadow: 0 15px 40px rgba(16, 42, 97, 0.07);
+  }
+
+  .featured-content {
+    padding: 42px;
+  }
+
+  .article-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-bottom: 18px;
+    color: var(--blue);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+
+  .featured-content h3 {
+    max-width: 850px;
+    margin: 0 0 18px;
+    color: var(--dark-blue);
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.08;
+    letter-spacing: -1.5px;
+  }
+
+  .featured-content p {
+    max-width: 760px;
+    margin: 0 0 25px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .read-button {
+    display: inline-flex;
+    min-height: 50px;
+    align-items: center;
+    padding: 0 22px;
+    border-radius: 10px;
+    background: var(--blue);
+    color: white;
+    font-weight: 800;
+  }
+
+  .featured-number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--dark-blue);
+    color: white;
+  }
+
+  .featured-number span {
+    color: var(--yellow);
+    font-size: 70px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .featured-number small {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.5;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  /* TOPICS */
+
+  .topics-section {
+    background: #f5f8ff;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .topic-card {
+    position: relative;
+    min-height: 250px;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .topic-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(16, 42, 97, 0.09);
+  }
+
+  .topic-number {
+    display: block;
+    margin-bottom: 35px;
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .topic-card h3 {
+    margin: 0 0 10px;
+    color: var(--dark-blue);
+    font-size: 25px;
+  }
+
+  .topic-card p {
+    min-height: 60px;
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .topic-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: var(--blue);
+    font-weight: 800;
+  }
+
+  .coming-card {
+    cursor: default;
+  }
+
+  .coming-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .coming {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 7px 10px;
+    border-radius: 20px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+  }
+
+  /* PATH */
+
+  .path-section {
+    background: white;
+  }
+
+  .path-layout {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .path-layout h2 {
+    margin: 0 0 20px;
+    color: var(--dark-blue);
+    font-size: clamp(38px, 5vw, 60px);
+    line-height: 1.02;
+    letter-spacing: -2px;
+  }
+
+  .path-layout > div:first-child p {
+    margin: 0 0 28px;
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.75;
+  }
+
+  .steps {
+    display: grid;
+    gap: 14px;
+  }
+
+  .step {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 18px;
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .step > strong {
+    color: var(--blue);
+    font-size: 14px;
+  }
+
+  .step h3 {
+    margin: 0 0 5px;
+    color: var(--dark-blue);
+    font-size: 20px;
+  }
+
+  .step p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  /* BOOK CTA */
+
+  .book-cta {
+    padding: 85px 0;
+    background: linear-gradient(120deg, #123f9f, #2163dd);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+  }
+
+  .cta-inner .section-label {
+    color: var(--yellow);
+  }
+
+  .cta-inner h2 {
+    max-width: 800px;
+    margin: 0 0 18px;
+    color: white;
+    font-size: clamp(36px, 5vw, 58px);
+    line-height: 1.03;
+    letter-spacing: -2px;
+  }
+
+  .cta-inner h2 span {
+    color: var(--yellow);
+  }
+
+  .cta-inner p {
+    max-width: 700px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.76);
+    font-size: 17px;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-inner,
+    .path-layout {
+      grid-template-columns: 1fr;
+      gap: 45px;
+    }
+
+    .hero-panel {
+      max-width: 700px;
+    }
+
+    .topic-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cta-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .container {
+      width: min(100% - 32px, 600px);
+    }
+
+    .section {
+      padding: 70px 0;
+    }
+
+    .hero-inner {
+      min-height: auto;
+      padding: 65px 0;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(50px, 14vw, 76px);
+      letter-spacing: -3px;
+    }
+
+    .hero-copy p {
+      font-size: 16px;
+    }
+
+    .hero-panel {
+      padding: 28px;
+    }
+
+    .panel-grid,
+    .topic-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-card {
+      grid-template-columns: 1fr;
+    }
+
+    .featured-number {
+      min-height: 170px;
+    }
+
+    .featured-content {
+      padding: 28px;
+    }
+
+    .path-layout h2 {
+      font-size: 42px;
+    }
+
+    .button {
+      width: 100%;
+    }
+
+    .hero-actions,
+    .cta-actions {
+      width: 100%;
+      flex-direction: column;
+    }
+
+    .cta-inner h2 {
+      font-size: 42px;
+    }
+  }
+</style>

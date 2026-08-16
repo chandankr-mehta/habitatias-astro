@@ -1,0 +1,1166 @@
+---
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+
+const title =
+  "JPSC Eligibility 2026: Age Limit, Educational Qualification, Domicile, Reservation & Important Rules";
+const description =
+  "JPSC eligibility guide covering educational qualification, age limit, age relaxation, domicile and reservation, candidature rules, documents and how to verify eligibility from the latest official JPSC notification.";
+const canonical =
+  "https://habitatias.com/blog/jpsc-eligibility-age-limit-qualification/";
+
+const faqs = [
+  {
+    q: "What is the educational qualification for JPSC Combined Civil Services?",
+    a: "For the Combined Civil Services examination, candidates should check the educational qualification stated in the latest official advertisement. The JPSC application material requires candidates to certify that they have read and satisfy the prescribed educational qualification and other eligibility conditions.",
+  },
+  {
+    q: "What is the JPSC age limit?",
+    a: "The applicable minimum and maximum age, the reference date for calculating age, and category-wise relaxation are determined by the recruitment advertisement and applicable Jharkhand rules. Do not use an old advertisement as a permanent age-limit rule; verify the latest notification before applying.",
+  },
+  {
+    q: "Is Jharkhand domicile compulsory for JPSC?",
+    a: "Do not assume that every JPSC eligibility condition is identical across categories or recruitment cycles. Check the latest Combined Civil Services advertisement for domicile, reservation and certificate requirements applicable to your category.",
+  },
+  {
+    q: "Can candidates from other states apply for JPSC?",
+    a: "Eligibility and reservation benefits are separate questions. A candidate should read the current advertisement for application eligibility and then check the rules governing Jharkhand reservation or domicile benefits. Do not assume that an outside-state candidate receives the same reservation benefits as a Jharkhand-eligible reserved-category candidate.",
+  },
+  {
+    q: "Is graduation required for JPSC?",
+    a: "The Combined Civil Services recruitment requires the prescribed educational qualification specified in the applicable advertisement. Candidates should verify their degree, completion status and the required date against the latest official notification.",
+  },
+  {
+    q: "What happens if a candidate does not satisfy an eligibility condition?",
+    a: "Admission to examination stages can be provisional. JPSC states in its recruitment material that candidature may be cancelled if verification shows that an eligibility condition is not fulfilled.",
+  },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: title,
+  description,
+  url: canonical,
+  datePublished: "2026-08-16",
+  dateModified: "2026-08-16",
+  author: { "@type": "Organization", name: "Habitat IAS" },
+  publisher: {
+    "@type": "Organization",
+    name: "Habitat IAS",
+    url: "https://habitatias.com/",
+  },
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
+};
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{title} | Habitat IAS</title>
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="JPSC eligibility, JPSC eligibility criteria, JPSC age limit, JPSC qualification, JPSC educational qualification, JPSC domicile, JPSC age relaxation, JPSC reservation, JPSC eligibility 2026"
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Habitat IAS" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </head>
+
+  <body>
+    <Header />
+
+    <main>
+      <div class="crumb">
+        <div class="container">
+          <a href="/">Home</a><span>›</span>
+          <a href="/blog/">Blog</a><span>›</span>
+          <span>JPSC Eligibility</span>
+        </div>
+      </div>
+
+      <section class="hero">
+        <div class="container">
+          <div class="tag">JPSC ELIGIBILITY GUIDE</div>
+          <h1>
+            JPSC Eligibility:
+            <span>Check Before You Apply.</span>
+          </h1>
+          <p class="hero-text">
+            Age, educational qualification, domicile, reservation, certificates
+            and candidature rules — explained as a practical eligibility
+            checklist for JPSC Combined Civil Services aspirants.
+          </p>
+
+          <div class="meta">
+            <span>Updated: 16 August 2026</span>
+            <span>•</span>
+            <span>Habitat IAS</span>
+            <span>•</span>
+            <span>Eligibility & Application Guide</span>
+          </div>
+
+          <div class="buttons">
+            <a class="btn yellow" href="#checklist">Check Eligibility ↓</a>
+            <a class="btn outline" href="/blog/jpsc-prelims-syllabus-exam-pattern/">
+              See Exam Pattern →
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="warning-section">
+        <div class="container">
+          <div class="warning">
+            <strong>Important:</strong>
+            JPSC eligibility is notification-specific. Age, cut-off/reference
+            dates, category relaxation, reservation and certificate conditions
+            can depend on the applicable recruitment advertisement and rules.
+            Always verify the latest official advertisement before submitting
+            an application.
+          </div>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="container grid4">
+          <div><b>01</b><span>Qualification</span><p>Check your degree and eligibility date.</p></div>
+          <div><b>02</b><span>Age</span><p>Use the exact reference date in the notification.</p></div>
+          <div><b>03</b><span>Category</span><p>Verify reservation and relaxation rules.</p></div>
+          <div><b>04</b><span>Documents</span><p>Keep proof ready before application.</p></div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container layout">
+          <aside class="toc">
+            <strong>ON THIS PAGE</strong>
+            <a href="#checklist">Eligibility checklist</a>
+            <a href="#qualification">Educational qualification</a>
+            <a href="#age">Age limit</a>
+            <a href="#relaxation">Age relaxation</a>
+            <a href="#domicile">Domicile & reservation</a>
+            <a href="#documents">Documents</a>
+            <a href="#candidature">Candidature rules</a>
+            <a href="#other-state">Other-state candidates</a>
+            <a href="#mistakes">Common mistakes</a>
+            <a href="#after">What to do after eligibility</a>
+            <a href="#faq">FAQs</a>
+          </aside>
+
+          <article>
+            <p class="lead">
+              Before buying books, joining a mock series or spending months on
+              preparation, answer one basic question: <strong>Am I eligible
+              for the JPSC examination I intend to apply for?</strong>
+            </p>
+
+            <p>
+              Eligibility is not just an age number. A serious eligibility
+              check includes educational qualification, age calculation,
+              category, reservation or domicile claims, required certificates,
+              application declarations and the conditions stated in the
+              current recruitment advertisement.
+            </p>
+
+            <h2 id="checklist">JPSC Eligibility Checklist</h2>
+
+            <div class="check-grid">
+              <div><i>01</i><h3>Examination</h3><p>Confirm you are reading the correct Combined Civil Services notification.</p></div>
+              <div><i>02</i><h3>Qualification</h3><p>Check the prescribed educational qualification and the relevant completion date.</p></div>
+              <div><i>03</i><h3>Age</h3><p>Calculate age using the exact cut-off/reference date in the advertisement.</p></div>
+              <div><i>04</i><h3>Category</h3><p>Verify whether your claimed category and relaxation are supported by valid documents.</p></div>
+              <div><i>05</i><h3>Domicile</h3><p>Read the current rules before claiming Jharkhand-specific reservation benefits.</p></div>
+              <div><i>06</i><h3>Documents</h3><p>Keep identity, educational and category documents consistent with your application.</p></div>
+            </div>
+
+            <h2 id="qualification">1. Educational Qualification</h2>
+
+            <p>
+              The educational requirement must be taken from the specific
+              Combined Civil Services advertisement applicable to your
+              examination cycle. JPSC's application documentation explicitly
+              requires applicants to confirm that they have read the
+              advertisement and its clauses relating to educational
+              qualification, age limit and reservation.
+            </p>
+
+            <div class="rule">
+              <span>RULE</span>
+              <h3>Do not rely on coaching summaries alone.</h3>
+              <p>
+                Your final eligibility decision should be based on the official
+                JPSC advertisement and applicable rules. If your degree is
+                pending, recently completed, from a special category of
+                institution, or has an unusual result/document date, check the
+                exact notification wording.
+              </p>
+            </div>
+
+            <h3 class="sub">Qualification checklist</h3>
+
+            <ul class="list">
+              <li>Is your degree the qualification prescribed in the notification?</li>
+              <li>Will you satisfy the qualification requirement by the specified date?</li>
+              <li>Do your certificates and marksheets support the information entered in the application?</li>
+              <li>If your result is pending, does the notification permit your situation?</li>
+              <li>Can you produce the required document at the stage specified by JPSC?</li>
+            </ul>
+
+            <h2 id="age">2. JPSC Age Limit</h2>
+
+            <p>
+              Age is one of the most searched JPSC eligibility topics, but it
+              is also one of the easiest places to make a mistake. The correct
+              calculation depends on the <strong>minimum/maximum age,
+              category, reference date and applicable rules</strong> in the
+              recruitment advertisement.
+            </p>
+
+            <div class="age-box">
+              <div>
+                <span>STEP 1</span>
+                <strong>Find the reference date</strong>
+                <p>Do not calculate age from today's date unless the notification says so.</p>
+              </div>
+              <div>
+                <span>STEP 2</span>
+                <strong>Check category</strong>
+                <p>Age relaxation can depend on the category and applicable rules.</p>
+              </div>
+              <div>
+                <span>STEP 3</span>
+                <strong>Calculate precisely</strong>
+                <p>Compare your date of birth with the notification's eligibility window.</p>
+              </div>
+            </div>
+
+            <div class="warning small">
+              <strong>Do not copy an old age table into a new application.</strong>
+              The reference date and applicable limits must come from the
+              recruitment advertisement for that cycle.
+            </div>
+
+            <h2 id="relaxation">3. Age Relaxation</h2>
+
+            <p>
+              Category-wise relaxation should be treated as a legal/recruitment
+              rule, not as a generic coaching shortcut. The applicable
+              relaxation depends on the current advertisement and Jharkhand
+              rules.
+            </p>
+
+            <div class="relax-grid">
+              <div><strong>Category</strong><span>Confirm the category recognised by the notification.</span></div>
+              <div><strong>Certificate</strong><span>Check the required format, authority and validity.</span></div>
+              <div><strong>Reference date</strong><span>Confirm which date controls eligibility.</span></div>
+              <div><strong>Rule</strong><span>Read the exact relaxation provision.</span></div>
+            </div>
+
+            <h2 id="domicile">4. Domicile, Reservation & Outside-State Candidates</h2>
+
+            <p>
+              This is an area where aspirants often mix up three separate
+              concepts:
+            </p>
+
+            <div class="three">
+              <div><b>01</b><h3>Can I apply?</h3><p>Application eligibility under the current advertisement.</p></div>
+              <div><b>02</b><h3>Which category?</h3><p>The category under which your application is recognised.</p></div>
+              <div><b>03</b><h3>Which benefit?</h3><p>Whether a particular reservation or relaxation benefit applies to you.</p></div>
+            </div>
+
+            <p>
+              Therefore, an aspirant from another state should not use a simple
+              “yes/no domicile” rule without reading the current notification.
+              Application eligibility and access to state-specific reservation
+              benefits are not necessarily the same question.
+            </p>
+
+            <h2 id="documents">5. Documents You Should Prepare</h2>
+
+            <div class="documents">
+              <div><b>Identity proof</b><span>Use the document accepted by the application process.</span></div>
+              <div><b>Date of birth proof</b><span>Ensure the date matches the application.</span></div>
+              <div><b>Educational documents</b><span>Degree/marksheet or other prescribed proof.</span></div>
+              <div><b>Category certificate</b><span>If claiming a reserved category, follow the notification's requirements.</span></div>
+              <div><b>Domicile/residential proof</b><span>Only where required for the relevant claim.</span></div>
+              <div><b>Photograph/signature</b><span>Follow the current technical specifications.</span></div>
+            </div>
+
+            <h2 id="candidature">6. Candidature Is Not Automatically Final</h2>
+
+            <p>
+              JPSC's recruitment material states that admission to examination
+              stages can be provisional and that the Commission can cancel
+              candidature if verification establishes that an eligibility
+              condition has not been fulfilled. citeturn0search3
+            </p>
+
+            <div class="flow">
+              <span>APPLICATION</span><b>→</b><span>PROVISIONAL ADMISSION</span><b>→</b>
+              <span>DOCUMENT VERIFICATION</span><b>→</b><strong>ELIGIBILITY CONFIRMED</strong>
+            </div>
+
+            <p>
+              This is why the information in your application should be
+              accurate and supported by documents. Do not claim a category,
+              qualification or relaxation simply because you expect to obtain
+              proof later unless the current notification explicitly permits
+              that situation.
+            </p>
+
+            <h2 id="other-state">7. Can an Other-State Candidate Prepare for JPSC?</h2>
+
+            <p>
+              Yes, the first question should be whether the particular
+              recruitment advertisement permits the candidate to apply. The
+              second question is what reservation or category benefits are
+              available under the applicable rules.
+            </p>
+
+            <div class="state-box">
+              <h3>Think in two columns</h3>
+              <div class="columns">
+                <div>
+                  <strong>Eligibility to apply</strong>
+                  <p>Read the current advertisement.</p>
+                </div>
+                <div>
+                  <strong>Reservation / relaxation</strong>
+                  <p>Read the applicable category and Jharkhand rules.</p>
+                </div>
+              </div>
+            </div>
+
+            <h2>8. What About Final-Year Students?</h2>
+
+            <p>
+              Do not assume that being enrolled in the final year automatically
+              makes you eligible. The decisive issue is the qualification
+              requirement and the date by which it must be satisfied in the
+              applicable advertisement.
+            </p>
+
+            <div class="decision">
+              <div>Qualification completed by required date?</div>
+              <b>YES →</b>
+              <div>Check documents and remaining conditions.</div>
+            </div>
+
+            <div class="decision no">
+              <div>Not completed by required date?</div>
+              <b>CHECK →</b>
+              <div>Read the notification's exact provision before applying.</div>
+            </div>
+
+            <h2>9. JPSC Eligibility Is Different From JPSC Selection</h2>
+
+            <p>
+              Meeting eligibility conditions does not mean selection is
+              guaranteed. Eligibility allows you to enter the recruitment
+              process; preparation and performance determine how far you
+              progress.
+            </p>
+
+            <div class="selection">
+              <div><span>ELIGIBILITY</span><strong>Can I apply?</strong></div>
+              <div><span>PRELIMS</span><strong>Can I qualify?</strong></div>
+              <div><span>MAINS</span><strong>Can I compete?</strong></div>
+              <div><span>INTERVIEW</span><strong>Can I finish the process?</strong></div>
+            </div>
+
+            <h2 id="mistakes">10. Common JPSC Eligibility Mistakes</h2>
+
+            <div class="mistakes">
+              <div><b>01</b><span>Using an old advertisement to calculate current eligibility.</span></div>
+              <div><b>02</b><span>Calculating age from today's date instead of the prescribed reference date.</span></div>
+              <div><b>03</b><span>Confusing application eligibility with reservation benefits.</span></div>
+              <div><b>04</b><span>Assuming every other-state candidate has identical category treatment.</span></div>
+              <div><b>05</b><span>Entering a qualification that cannot be supported by documents.</span></div>
+              <div><b>06</b><span>Ignoring the certificate format or validity requirement.</span></div>
+              <div><b>07</b><span>Relying on a YouTube thumbnail or coaching post as the final authority.</span></div>
+              <div><b>08</b><span>Ignoring amendments or corrigenda issued after the original advertisement.</span></div>
+              <div><b>09</b><span>Assuming provisional admission means eligibility has been finally verified.</span></div>
+              <div><b>10</b><span>Waiting until the application deadline to check documents.</span></div>
+            </div>
+
+            <h2>11. Official JPSC Verification Checklist</h2>
+
+            <div class="official">
+              <h3>Before you apply, verify these five things</h3>
+              <ol>
+                <li>Current Combined Civil Services advertisement.</li>
+                <li>Any amendment/corrigendum connected to that advertisement.</li>
+                <li>Educational qualification and relevant date.</li>
+                <li>Age limit, reference date and applicable relaxation.</li>
+                <li>Reservation, domicile and certificate requirements.</li>
+              </ol>
+
+              <div class="official-links">
+                <a href="https://www.jpsc.gov.in/" target="_blank" rel="noopener noreferrer">
+                  Official JPSC Website →
+                </a>
+                <a href="https://www.jpsc.gov.in/Syllabus.php" target="_blank" rel="noopener noreferrer">
+                  JPSC Syllabus Page →
+                </a>
+                <a href="https://www.jpsc.gov.in/exam_files.php" target="_blank" rel="noopener noreferrer">
+                  JPSC Examination Documents →
+                </a>
+              </div>
+            </div>
+
+            <h2 id="after">12. You Are Eligible. What Next?</h2>
+
+            <p>
+              Eligibility is the starting line, not the finish line. Once you
+              have verified that you can apply, shift immediately to a
+              structured preparation system.
+            </p>
+
+            <div class="next-grid">
+              <a href="/blog/jpsc-prelims-syllabus-exam-pattern/">
+                <span>STEP 01</span>
+                <h3>Understand the exam</h3>
+                <p>Know the papers, marks, structure and screening role.</p>
+                <strong>Exam pattern →</strong>
+              </a>
+              <a href="/blog/jpsc-prelims-syllabus/">
+                <span>STEP 02</span>
+                <h3>Map the syllabus</h3>
+                <p>Break the syllabus into manageable subjects and topics.</p>
+                <strong>Syllabus →</strong>
+              </a>
+              <a href="/blog/jpsc-prelims-preparation-strategy/">
+                <span>STEP 03</span>
+                <h3>Build a strategy</h3>
+                <p>Convert the syllabus into a practical study plan.</p>
+                <strong>Strategy →</strong>
+              </a>
+              <a href="/blog/jpsc-previous-year-question-papers/">
+                <span>STEP 04</span>
+                <h3>Decode PYQs</h3>
+                <p>Learn from the questions the examination has actually asked.</p>
+                <strong>PYQ guide →</strong>
+              </a>
+            </div>
+
+            <div class="conversion">
+              <div>
+                <span>HABITAT IAS</span>
+                <h2>Eligibility checked? Now start preparing seriously.</h2>
+                <p>
+                  Use JPSC PYQs, structured revision and timed mocks to move
+                  from eligibility to exam readiness.
+                </p>
+              </div>
+              <div class="conversion-buttons">
+                <a class="btn yellow" href="/mock-tests/free-gs/">Attempt Free GS Mock →</a>
+                <a class="btn dark-outline" href="/book/">Explore PYQ Book →</a>
+              </div>
+            </div>
+
+            <h2 id="faq">Frequently Asked Questions</h2>
+
+            <div class="faq">
+              {faqs.map((item) => (
+                <details>
+                  <summary>{item.q}</summary>
+                  <p>{item.a}</p>
+                </details>
+              ))}
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="bottom">
+        <div class="container">
+          <div class="eyebrow">HABITAT IAS • JPSC PREPARATION</div>
+          <h2>First verify eligibility. Then build your preparation system.</h2>
+          <p>
+            Keep the latest official notification as the final authority for
+            age, qualification, reservation and other recruitment conditions.
+          </p>
+          <div class="buttons">
+            <a class="btn yellow" href="/mock-tests/free-gs/">Free JPSC Mock →</a>
+            <a class="btn outline" href="/book/">JPSC PYQ Book →</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  :global(*) { box-sizing: border-box; }
+  :global(html) { scroll-behavior: smooth; }
+  :global(body) {
+    margin: 0;
+    color: #17345f;
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+  }
+  :global(a) { text-decoration: none; }
+
+  :root {
+    --blue: #1657d9;
+    --dark: #0d2856;
+    --yellow: #ffd43b;
+    --border: #dbe5f4;
+    --muted: #657995;
+    --green: #15804a;
+  }
+
+  .container {
+    width: min(1180px, calc(100% - 48px));
+    margin: auto;
+  }
+
+  .crumb {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .crumb .container {
+    min-height: 55px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #8796ad;
+    font-size: 13px;
+  }
+
+  .crumb a {
+    color: var(--blue);
+    font-weight: 800;
+  }
+
+  .hero {
+    background:
+      radial-gradient(circle at 85% 15%, rgba(255,212,59,.2), transparent 26%),
+      linear-gradient(120deg,#0c347e,#1657d9 65%,#2f70e7);
+    color: white;
+  }
+
+  .hero .container {
+    padding: 78px 0 82px;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 8px 13px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.4px;
+  }
+
+  h1 {
+    max-width: 1000px;
+    margin: 27px 0 20px;
+    color: white;
+    font-size: clamp(45px,6.5vw,78px);
+    line-height: .98;
+    letter-spacing: -3px;
+  }
+
+  h1 span { color: var(--yellow); }
+
+  .hero-text {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+    margin-top: 24px;
+    color: rgba(255,255,255,.67);
+    font-size: 13px;
+  }
+
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 29px;
+  }
+
+  .btn {
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    border-radius: 10px;
+    font-weight: 900;
+    transition: .2s;
+  }
+
+  .btn:hover { transform: translateY(-2px); }
+  .yellow { background: var(--yellow); color: var(--dark); }
+  .outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.48);
+  }
+  .dark-outline {
+    color: white;
+    border: 1px solid rgba(255,255,255,.45);
+  }
+
+  .warning-section { padding-top: 25px; }
+
+  .warning {
+    padding: 19px 22px;
+    border: 1px solid #e4d99b;
+    border-radius: 14px;
+    background: #fffbed;
+    color: #6e6240;
+    line-height: 1.65;
+  }
+
+  .warning strong { color: var(--dark); }
+  .warning.small { margin-top: 22px; }
+
+  .stats { padding: 48px 0 20px; }
+
+  .grid4 {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 12px;
+  }
+
+  .grid4 > div {
+    min-height: 130px;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .grid4 b {
+    display: block;
+    color: var(--blue);
+    font-size: 28px;
+  }
+
+  .grid4 span {
+    display: block;
+    margin: 6px 0;
+    color: var(--dark);
+    font-weight: 900;
+  }
+
+  .grid4 p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .content { padding: 62px 0 100px; }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 235px minmax(0,1fr);
+    gap: 55px;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 90px;
+    padding: 20px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f7f9fe;
+  }
+
+  .toc strong {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--dark);
+    font-size: 10px;
+    letter-spacing: 1.2px;
+  }
+
+  .toc a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 1px solid #e8edf5;
+    color: #5b6f8b;
+    font-size: 13px;
+  }
+
+  .toc a:hover { color: var(--blue); }
+
+  article {
+    min-width: 0;
+    font-size: 17px;
+    line-height: 1.78;
+  }
+
+  .lead {
+    margin-top: 0;
+    color: #344e72;
+    font-size: 20px;
+  }
+
+  article h2 {
+    scroll-margin-top: 90px;
+    margin: 62px 0 17px;
+    color: var(--dark);
+    font-size: clamp(31px,4vw,45px);
+    line-height: 1.08;
+    letter-spacing: -1.4px;
+  }
+
+  article h3 {
+    margin: 0 0 8px;
+    color: var(--dark);
+    line-height: 1.25;
+  }
+
+  article p { color: #4c617e; }
+
+  .check-grid,
+  .age-box,
+  .relax-grid,
+  .three,
+  .documents,
+  .selection,
+  .next-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 12px;
+    margin: 27px 0;
+  }
+
+  .check-grid > div,
+  .age-box > div,
+  .relax-grid > div,
+  .three > div,
+  .documents > div,
+  .selection > div,
+  .next-grid > a {
+    padding: 23px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    background: #f8faff;
+  }
+
+  .check-grid i {
+    display: block;
+    margin-bottom: 12px;
+    color: var(--blue);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .check-grid p,
+  .age-box p,
+  .relax-grid span,
+  .three p,
+  .documents span,
+  .next-grid p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .rule {
+    margin: 28px 0;
+    padding: 26px;
+    border-left: 5px solid var(--blue);
+    border-radius: 0 14px 14px 0;
+    background: #eef4ff;
+  }
+
+  .rule > span,
+  .age-box span,
+  .selection span,
+  .next-grid span {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--blue);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  .rule p { margin-bottom: 0; }
+
+  .sub { margin-top: 35px !important; }
+
+  .list {
+    margin: 15px 0;
+    padding-left: 24px;
+    color: #4c617e;
+  }
+
+  .list li { margin: 7px 0; }
+
+  .age-box > div { border-top: 4px solid var(--blue); }
+
+  .relax-grid > div {
+    background: white;
+    border-top: 4px solid #7f92ae;
+  }
+
+  .relax-grid strong,
+  .documents b {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+
+  .three > div {
+    border-top: 4px solid var(--blue);
+  }
+
+  .three b {
+    display: block;
+    margin-bottom: 13px;
+    color: var(--blue);
+    font-size: 24px;
+  }
+
+  .state-box {
+    margin: 28px 0;
+    padding: 27px;
+    border-radius: 16px;
+    background: var(--dark);
+  }
+
+  .state-box h3 { color: white; }
+
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .columns > div {
+    padding: 18px;
+    border-radius: 11px;
+    background: rgba(255,255,255,.08);
+  }
+
+  .columns strong { color: var(--yellow); }
+  .columns p {
+    margin: 7px 0 0;
+    color: rgba(255,255,255,.7);
+    font-size: 14px;
+  }
+
+  .decision {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 14px;
+    align-items: center;
+    margin: 10px 0;
+    padding: 17px;
+    border: 1px solid #d5eadd;
+    border-radius: 12px;
+    background: #f1f8f4;
+  }
+
+  .decision b { color: var(--green); }
+  .decision.no {
+    border-color: #eadfb0;
+    background: #fffbed;
+  }
+  .decision.no b { color: #8a7121; }
+
+  .flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 28px 0;
+    padding: 26px;
+    border-radius: 15px;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .flow b { color: #91a5c5; }
+  .flow strong { color: var(--green); }
+
+  .selection > div {
+    text-align: center;
+    background: white;
+  }
+
+  .selection strong {
+    display: block;
+    color: var(--dark);
+    font-size: 17px;
+  }
+
+  .mistakes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px 12px;
+    margin: 27px 0;
+  }
+
+  .mistakes > div {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 15px;
+    border: 1px solid var(--border);
+    border-radius: 11px;
+  }
+
+  .mistakes b {
+    width: 30px;
+    height: 30px;
+    flex: 0 0 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #eef4ff;
+    color: var(--blue);
+    font-size: 10px;
+  }
+
+  .mistakes span {
+    color: #52657f;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .official {
+    margin: 28px 0;
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: #f7f9fe;
+  }
+
+  .official h3 { font-size: 22px; }
+
+  .official li {
+    margin: 8px 0;
+    color: #536780;
+  }
+
+  .official-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 20px;
+  }
+
+  .official-links a {
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 900;
+  }
+
+  .next-grid > a {
+    transition: .2s;
+  }
+
+  .next-grid > a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(16,42,97,.08);
+  }
+
+  .next-grid h3 { font-size: 20px; }
+
+  .next-grid strong {
+    display: block;
+    margin-top: 14px;
+    color: var(--blue);
+    font-size: 13px;
+  }
+
+  .conversion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin: 45px 0;
+    padding: 35px;
+    border-radius: 19px;
+    background: linear-gradient(120deg,#0d347d,#2164dd);
+  }
+
+  .conversion span {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+  }
+
+  .conversion h2 {
+    margin: 8px 0;
+    color: white;
+    font-size: 30px;
+  }
+
+  .conversion p {
+    margin: 0;
+    color: rgba(255,255,255,.72);
+    font-size: 15px;
+  }
+
+  .conversion-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    flex: 0 0 auto;
+  }
+
+  .faq {
+    display: grid;
+    gap: 9px;
+  }
+
+  details {
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  summary {
+    padding: 17px 19px;
+    cursor: pointer;
+    color: var(--dark);
+    font-weight: 800;
+  }
+
+  details p {
+    margin: 0;
+    padding: 0 19px 18px;
+    font-size: 14px;
+  }
+
+  .bottom {
+    padding: 75px 0;
+    background: var(--dark);
+    text-align: center;
+  }
+
+  .bottom .eyebrow {
+    color: var(--yellow);
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 1.3px;
+  }
+
+  .bottom h2 {
+    max-width: 800px;
+    margin: 12px auto;
+    color: white;
+    font-size: clamp(33px,5vw,55px);
+    line-height: 1.05;
+    letter-spacing: -1.8px;
+  }
+
+  .bottom p {
+    max-width: 720px;
+    margin: auto;
+    color: rgba(255,255,255,.7);
+  }
+
+  .bottom .buttons { justify-content: center; }
+
+  @media (max-width:1050px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .grid4,
+    .check-grid,
+    .age-box,
+    .relax-grid,
+    .three,
+    .documents,
+    .selection,
+    .next-grid {
+      grid-template-columns: repeat(2,1fr);
+    }
+  }
+
+  @media (max-width:760px) {
+    .container { width: min(100% - 32px,620px); }
+    .hero .container { padding: 60px 0; }
+    h1 { font-size: clamp(43px,12vw,65px); }
+    .grid4,
+    .check-grid,
+    .age-box,
+    .relax-grid,
+    .three,
+    .documents,
+    .selection,
+    .next-grid,
+    .mistakes,
+    .columns {
+      grid-template-columns: 1fr;
+    }
+
+    .buttons,
+    .conversion {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .btn { width: 100%; }
+
+    .decision {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .flow {
+      flex-direction: column;
+    }
+
+    .flow b { transform: rotate(90deg); }
+
+    .conversion-buttons {
+      flex-direction: column;
+    }
+
+    .conversion h2 { font-size: 27px; }
+  }
+</style>

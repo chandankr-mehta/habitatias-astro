@@ -1,36 +1,141 @@
 ---
+import { createClient } from "@supabase/supabase-js";
 import { supabase } from "../../lib/supabase";
+import { checkTestAccess } from "../../lib/mockAccess";
 
-export const prerender = true;
+export const prerender = false;
 
 /* =========================================================
    HABITAT IAS — JPSC PRELIMS CBT
+   SERVER-SIDE ACCESS GATE
    ========================================================= */
 
-export async function getStaticPaths() {
-  const { data, error } = await supabase
-    .from("mock_tests")
-    .select("id, test_number")
-    .order("test_number", { ascending: true });
+const supabaseUrl =
+  import.meta.env.PUBLIC_SUPABASE_URL;
 
-  if (error) {
-    console.error("getStaticPaths error:", error);
-    return [];
-  }
+const serviceRoleKey =
+  import.meta.env.SUPABASE_SERVICE_ROLE_KEY;
 
-  return (data ?? [])
-    .filter((row) => Number.isInteger(Number(row.test_number)))
-    .map((row) => ({
-      params: {
-        test: String(row.test_number),
-      },
-    }));
+if (!supabaseUrl) {
+  throw new Error(
+    "PUBLIC_SUPABASE_URL is missing."
+  );
 }
 
-const testNumber = Number(Astro.params.test);
+if (!serviceRoleKey) {
+  throw new Error(
+    "SUPABASE_SERVICE_ROLE_KEY is missing."
+  );
+}
 
-if (!Number.isInteger(testNumber) || testNumber < 1) {
+const supabaseAdmin =
+  createClient(
+    supabaseUrl,
+    serviceRoleKey,
+    {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    }
+  );
+
+/* =========================================================
+   TEST NUMBER
+   ========================================================= */
+
+const testNumber =
+  Number(Astro.params.test);
+
+if (
+  !Number.isInteger(testNumber) ||
+  testNumber < 1
+) {
   return Astro.redirect("/mock-tests");
+}
+
+/* =========================================================
+   VERIFY SERVER SESSION
+
+   The login flow creates the secure HttpOnly
+   habitat-access-token cookie. We validate that token here
+   before loading the test or its questions.
+   ========================================================= */
+
+const accessToken =
+  Astro.cookies.get(
+    "habitat-access-token"
+  )?.value;
+
+if (!accessToken) {
+  return Astro.redirect(
+    `/login?redirect=/mock-tests/${testNumber}`
+  );
+}
+
+const {
+  data: authData,
+  error: authError,
+} = await supabaseAdmin.auth.getUser(
+  accessToken
+);
+
+if (
+  authError ||
+  !authData?.user
+) {
+  Astro.cookies.delete(
+    "habitat-access-token",
+    { path: "/" }
+  );
+
+  return Astro.redirect(
+    `/login?redirect=/mock-tests/${testNumber}`
+  );
+}
+
+const userId =
+  authData.user.id;
+
+/* =========================================================
+   CHECK MOCK TEST ACCESS
+
+   Tests 21 and 22 are the two OPEN FREE MOCKS.
+   They must NOT pass through the paid 1–20 access gate.
+
+   Tests 1–20 continue to use the existing mockAccess rules
+   exactly as before.
+   ========================================================= */
+
+const isOpenFreeMock =
+  testNumber === 21 ||
+  testNumber === 22;
+
+if (!isOpenFreeMock) {
+  const accessResult =
+    await checkTestAccess(
+      userId,
+      testNumber
+    );
+
+  if (!accessResult.allowed) {
+    console.warn(
+      `[Mock Test] Access denied for Test ${testNumber}: ${accessResult.reason}`
+    );
+
+    if (
+      accessResult.reason ===
+      "not_logged_in"
+    ) {
+      return Astro.redirect(
+        `/login?redirect=/mock-tests/${testNumber}`
+      );
+    }
+
+    return Astro.redirect(
+      "/mock-tests"
+    );
+  }
 }
 
 /* =========================================================
@@ -46,9 +151,18 @@ const {
   .eq("test_number", testNumber)
   .single();
 
-if (currentTestError || !currentTest) {
-  console.error("Test loading error:", currentTestError);
-  return Astro.redirect("/mock-tests");
+if (
+  currentTestError ||
+  !currentTest
+) {
+  console.error(
+    "Test loading error:",
+    currentTestError
+  );
+
+  return Astro.redirect(
+    "/mock-tests"
+  );
 }
 
 /* =========================================================
@@ -58,7 +172,7 @@ if (currentTestError || !currentTest) {
 const {
   data: questionRows,
   error: questionError,
-} = await supabase
+} = await supabaseAdmin
   .from("mock_questions")
   .select(`
     id,
@@ -80,28 +194,45 @@ const {
   });
 
 if (questionError) {
-  console.error("Question loading error:", questionError);
+  console.error(
+    "Question loading error:",
+    questionError
+  );
 }
 
-const questions = (questionRows ?? []).map((q: any) => ({
-  id: q.id,
-  question_number: Number(q.question_number ?? 0),
-  question_text: q.question_text ?? "",
-  option_a: q.option_a ?? "",
-  option_b: q.option_b ?? "",
-  option_c: q.option_c ?? "",
-  option_d: q.option_d ?? "",
-  subject: q.subject ?? "",
-  topic: q.topic ?? "",
-  difficulty: q.difficulty ?? "",
-  image_url: q.image_url ?? null,
-}));
+const questions =
+  (questionRows ?? []).map(
+    (q: any) => ({
+      id: q.id,
+      question_number:
+        Number(q.question_number ?? 0),
+      question_text:
+        q.question_text ?? "",
+      option_a:
+        q.option_a ?? "",
+      option_b:
+        q.option_b ?? "",
+      option_c:
+        q.option_c ?? "",
+      option_d:
+        q.option_d ?? "",
+      subject:
+        q.subject ?? "",
+      topic:
+        q.topic ?? "",
+      difficulty:
+        q.difficulty ?? "",
+      image_url:
+        q.image_url ?? null,
+    })
+  );
 
 /* =========================================================
    TEST SETTINGS
    ========================================================= */
 
-const totalQuestions = questions.length;
+const totalQuestions =
+  questions.length;
 
 /*
  * JPSC MOCK TEST STANDARD DURATION
@@ -114,18 +245,22 @@ const totalQuestions = questions.length;
  */
 const durationMinutes = 120;
 
-const marksPerQuestion = Number(
-  currentTest.marks_per_question ??
-  currentTest.positive_marks ??
-  2
-);
+const marksPerQuestion =
+  Number(
+    currentTest.marks_per_question ??
+    currentTest.positive_marks ??
+    2
+  );
 
-const negativeMarks = Number(
-  currentTest.negative_marks ?? 0
-);
+const negativeMarks =
+  Number(
+    currentTest.negative_marks ??
+    0
+  );
 
 const maximumMarks =
-  totalQuestions * marksPerQuestion;
+  totalQuestions *
+  marksPerQuestion;
 
 const testTitle =
   currentTest.title ||
@@ -161,7 +296,6 @@ const examData = {
   questions,
 };
 ---
-
 <!doctype html>
 
 <html lang="en">
@@ -2493,7 +2627,7 @@ const examData = {
           class="btn btn-primary"
           type="button"
         >
-          Return to Student Dashboard
+          Return to Mock Tests
         </button>
 
       </div>
@@ -5088,13 +5222,14 @@ const examData = {
       "click",
       async () => {
 
-        /*
-         * IMPORTANT:
-         *
-         * Restart must remain available even after the previous
-         * attempt has expired or has been automatically submitted.
-         * The server will create the fresh attempt when restart=true.
-         */
+        if (
+          submitted
+        ) {
+
+          return;
+
+        }
+
 
         const confirmed =
           window.confirm(
@@ -5186,12 +5321,9 @@ const examData = {
             60;
 
 
-          /*
-           * IMPORTANT:
-           * Keep the server-provided startedAt.
-           * startServerAttempt(true) already received the authoritative
-           * start timestamp for the new attempt.
-           */
+          startedAt =
+            Date.now();
+
 
           submitted =
             false;

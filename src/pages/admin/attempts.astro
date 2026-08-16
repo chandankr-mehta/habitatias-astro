@@ -185,6 +185,69 @@ if (
 }
 
 /* =========================================================
+   STAGE 15 — DELETE ATTEMPT
+   ========================================================= */
+
+if (Astro.request.method === "POST") {
+  try {
+    const formData = await Astro.request.formData();
+    const action = String(formData.get("action") || "");
+
+    if (action === "delete_attempt") {
+      const attemptId = String(
+        formData.get("attempt_id") || ""
+      ).trim();
+
+      if (!attemptId) {
+        return new Response("Attempt ID is required.", {
+          status: 400,
+          headers: {
+            "Content-Type": "text/plain; charset=utf-8",
+          },
+        });
+      }
+
+      const { error: deleteError } =
+        await supabaseAdmin
+          .from("mock_attempts")
+          .delete()
+          .eq("id", attemptId);
+
+      if (deleteError) {
+        console.error(
+          "ADMIN ATTEMPT DELETE ERROR:",
+          deleteError
+        );
+
+        return new Response(
+          `Unable to delete attempt: ${deleteError.message}`,
+          {
+            status: 500,
+            headers: {
+              "Content-Type": "text/plain; charset=utf-8",
+            },
+          }
+        );
+      }
+
+      return Astro.redirect("/admin/attempts?deleted=1");
+    }
+  } catch (error) {
+    console.error(
+      "ADMIN ATTEMPT DELETE REQUEST ERROR:",
+      error
+    );
+
+    return new Response("Unable to process the request.", {
+      status: 500,
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+      },
+    });
+  }
+}
+
+/* =========================================================
    LOAD ATTEMPTS
    ========================================================= */
 
@@ -452,6 +515,69 @@ const averagePercentage =
         0
       ) / totalAttempts
     : 0;
+
+/* =========================================================
+   STAGE 15 — BEST ATTEMPT RANKING
+   ========================================================= */
+
+const bestAttemptByStudentTest = new Map();
+
+for (const row of rows) {
+  if (row.attempt.status !== "submitted") continue;
+
+  const key =
+    `${String(row.attempt.test_id)}:${String(row.attempt.user_id)}`;
+
+  const existing = bestAttemptByStudentTest.get(key);
+
+  if (
+    !existing ||
+    row.score > existing.score ||
+    (
+      row.score === existing.score &&
+      new Date(row.attempt.submitted_at || 0).getTime() >
+        new Date(existing.attempt.submitted_at || 0).getTime()
+    )
+  ) {
+    bestAttemptByStudentTest.set(key, row);
+  }
+}
+
+const leaderboardByAttemptId = new Map();
+const leaderboardGroups = new Map();
+
+for (const row of bestAttemptByStudentTest.values()) {
+  const key = String(row.attempt.test_id);
+  const group = leaderboardGroups.get(key) || [];
+  group.push(row);
+  leaderboardGroups.set(key, group);
+}
+
+for (const group of leaderboardGroups.values()) {
+  group.sort((a, b) => b.score - a.score);
+
+  let previousScore = null;
+  let currentRank = 0;
+
+  group.forEach((row, index) => {
+    if (
+      previousScore === null ||
+      row.score !== previousScore
+    ) {
+      currentRank = index + 1;
+    }
+
+    leaderboardByAttemptId.set(
+      String(row.attempt.id),
+      {
+        rank: currentRank,
+        participants: group.length,
+      }
+    );
+
+    previousScore = row.score;
+  });
+}
 
 /* =========================================================
    HELPERS
@@ -1472,6 +1598,42 @@ function formatTime(
         var(--red);
     }
 
+    .rank {
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .rank-muted {
+      margin-top: 3px;
+      color: #8995a8;
+      font-size: 9px;
+    }
+
+    .admin-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .view-button.secondary {
+      color: #344563;
+      border-color: var(--border-dark);
+    }
+
+    .view-button.danger {
+      color: var(--red);
+      border-color: #f0b8b3;
+      cursor: pointer;
+    }
+
+    .view-button.danger:hover {
+      background: var(--red-bg);
+      border-color: var(--red);
+    }
+
     .status {
       display:
         inline-flex;
@@ -2107,6 +2269,25 @@ function formatTime(
           accuracy, time and submission status.
         </p>
 
+        {
+          Astro.url.searchParams.get("deleted") === "1" && (
+            <div
+              style="
+                margin-top:14px;
+                padding:11px 13px;
+                border:1px solid #b8ead6;
+                border-radius:10px;
+                background:#eaf8f0;
+                color:#087443;
+                font-size:12px;
+                font-weight:800;
+              "
+            >
+              Attempt deleted successfully.
+            </div>
+          )
+        }
+
       </section>
 
 
@@ -2374,6 +2555,10 @@ function formatTime(
                     </th>
 
                     <th>
+                      Rank
+                    </th>
+
+                    <th>
                       Action
                     </th>
 
@@ -2627,16 +2812,88 @@ function formatTime(
 
                             <td>
 
-                              <a
-                                href={`/admin/attempts?attempt_id=${encodeURIComponent(
-                                  String(
-                                    attempt.id
+                              {
+                                (() => {
+                                  const ranking =
+                                    leaderboardByAttemptId.get(
+                                      String(attempt.id)
+                                    );
+
+                                  return ranking ? (
+                                    <div>
+                                      <div class="rank">
+                                        #{ranking.rank}
+                                      </div>
+
+                                      <div class="rank-muted">
+                                        of {ranking.participants}
+                                      </div>
+                                    </div>
+                                  ) : (
+                                    <span
+                                      class="rank-muted"
+                                      style="font-size:11px;"
+                                    >
+                                      Not ranked
+                                    </span>
+                                  );
+                                })()
+                              }
+
+                            </td>
+
+                            <td>
+
+                              <div class="admin-actions">
+
+                                <a
+                                  href={`/admin/attempts?attempt_id=${encodeURIComponent(
+                                    String(attempt.id)
+                                  )}`}
+                                  class="view-button"
+                                >
+                                  View
+                                </a>
+
+                                {
+                                  attempt.status === "submitted" && (
+                                    <a
+                                      href={`/admin/results?test_id=${encodeURIComponent(
+                                        String(attempt.test_id)
+                                      )}`}
+                                      class="view-button secondary"
+                                    >
+                                      Test Ranking
+                                    </a>
                                   )
-                                )}`}
-                                class="view-button"
-                              >
-                                View
-                              </a>
+                                }
+
+                                <form
+                                  method="POST"
+                                  style="display:inline;"
+                                  onsubmit="return confirm('Delete this attempt? This cannot be undone.');"
+                                >
+                                  <input
+                                    type="hidden"
+                                    name="action"
+                                    value="delete_attempt"
+                                  />
+
+                                  <input
+                                    type="hidden"
+                                    name="attempt_id"
+                                    value={String(attempt.id)}
+                                  />
+
+                                  <button
+                                    type="submit"
+                                    class="view-button danger"
+                                  >
+                                    Delete
+                                  </button>
+                                </form>
+
+                              </div>
 
                             </td>
 
